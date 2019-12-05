@@ -1,0 +1,12 @@
+a {
+  text-decoration: none;
+  width: 100%;
+  height: 30px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  transition: .3s;
+}
+a:hover {
+  background-color: #4fa588;
+}
