@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hashvich</title>
+</head>
+<body>
+  <script>
+    let number = +prompt('Քանի՞ րոպե եք աշխատել։');
+    let dollar = +prompt('Որքա՞ն է 1$-ի փոխարժեքը։');
+    function hashvich (number, dollar) {
+      let num = (number / 60) * 6.26 * dollar
+      return num.toFixed(0);
+    }
+    alert(`Գումարը դրամով՝ ${hashvich(number, dollar)}`);
+    alert(`Գումարը դոլարով՝ ${((number / 60) * 6.26).toFixed(1)}`);
+    alert(`Րոպե/օր ${(number / 30).toFixed(0)}`);
+  </script>
+</body>
+</html>
