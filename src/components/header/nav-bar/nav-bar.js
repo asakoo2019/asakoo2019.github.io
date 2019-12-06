@@ -1,8 +1,8 @@
 import React from 'react';
 import './nav-bar.css';
 
-import SignIn from './sign-in/sign-in';
-import SignUp from './sign-up/sign-up';
+import SignIn from './sign-in';
+import Registration from './registration';
 
 export default class NavBar extends React.Component {
   render () {
@@ -12,7 +12,7 @@ export default class NavBar extends React.Component {
         <a href='#s'>Ընկերություններ</a>
         <a href='#s'>Բլոգ</a>
         <SignIn/>
-        <SignUp/>
+        <Registration/>
       </nav>
     );
   };

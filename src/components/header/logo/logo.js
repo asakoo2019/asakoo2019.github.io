@@ -4,7 +4,7 @@ import './logo.css';
 
 const Logo = () => {
   return (
-    <img className='app-logo' src={logo} alt='Our logo'/>
+    <img className='app-logo' src={logo} alt='app logo'/>
   );
 };
 
