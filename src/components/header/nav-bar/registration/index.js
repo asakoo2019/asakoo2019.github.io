@@ -1,3 +1,3 @@
-import Registration from './header';
+import Registration from './registration';
 
 export default Registration;
