@@ -1,11 +1,29 @@
 import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
+
 import Header from '../components/header';
+import HomePageContainer from '../components/home-page-container';
+import Footer from '../components/footer';
 
+const styles = {
+ 
+};
 
-export default class App extends React.Component {
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+  };
+
   render () {
+    const { classes } = this.props;
     return (
-      <Header />
+      <div className={classes.main}>
+        <Header />
+        <HomePageContainer />
+        <Footer />
+      </div>
     );
   };
 };
+
+export default withStyles(styles)(App);

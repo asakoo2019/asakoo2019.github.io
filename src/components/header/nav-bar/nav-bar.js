@@ -1,19 +1,42 @@
 import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import './nav-bar.css';
 
 import SignIn from './sign-in';
 import Registration from './registration';
 
-export default class NavBar extends React.Component {
+const styles = {
+
+};
+
+class NavBar extends React.Component {
+  constructor(props) {
+    super(props);
+  };
+
   render () {
+    const { classes } = this.props;
     return (
       <nav>
-        <a href='#s'>Աշխատանք</a>
-        <a href='#s'>Ընկերություններ</a>
-        <a href='#s'>Բլոգ</a>
-        <SignIn/>
-        <Registration/>
+        <div>
+          <Button>
+            Jobs
+          </Button>
+          <Button >
+            Companies
+          </Button>
+          <Button >
+            Blog
+          </Button>
+        </div>
+        <div>
+          <SignIn/>
+          <Registration/>
+        </div>          
       </nav>
     );
   };
 };
+
+export default withStyles(styles)(NavBar);

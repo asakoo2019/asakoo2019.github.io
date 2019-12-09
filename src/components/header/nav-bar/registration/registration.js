@@ -1,10 +1,19 @@
 import React from 'react';
 import './registration.css';
 
-const Registration = () => {
+import { withStyles } from '@material-ui/core/styles';
+import { Button } from '@material-ui/core';
+
+const styles = {
+
+};
+
+const Registration = (props) => {
   return (
-    <a href='https://staff.am/am'>Registration</a>
+    <Button>
+      Registration
+    </Button>
   );
 };
 
-export default Registration;
+export default withStyles(styles)(Registration);

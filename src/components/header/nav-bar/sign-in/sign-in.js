@@ -1,10 +1,20 @@
 import React from 'react';
 import './sign-in.css';
 
-const SignIn = () => {
+import { withStyles } from '@material-ui/core/styles';
+import { Button } from '@material-ui/core';
+
+const styles = {
+
+};
+
+const SignIn = (props) => {
+  const {classes} = props;
   return (
-    <a href='https://staff.am/am'>Sign In</a>
+    <Button>
+      Sign In
+    </Button>
   );
 };
 
-export default SignIn;
+export default withStyles(styles)(SignIn);

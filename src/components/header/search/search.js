@@ -1,10 +1,19 @@
 import React from 'react';
 import './search.css';
 
-export default class Search extends React.Component {
+import { withStyles } from '@material-ui/core/styles';
+import { TextField } from '@material-ui/core';
 
-  constructor () {
-    super();
+const styles = {
+  appSearch: {
+    margin: 10
+  }
+};
+
+class Search extends React.Component {
+
+  constructor (props) {
+    super(props);
     this.state = {
       term: ''
     };
@@ -16,11 +25,15 @@ export default class Search extends React.Component {
   };
 
   render () {
-    return <input
-          className='app-search'
-          type='text'
-          placeholder="search"
+    const {classes} = this.props;
+    return <TextField
+          className={classes.appSearch}
+          label='Search'
+          variant="outlined"
+          size='small'
           value={this.state.term}
           onChange={this.onSearchChange} />;
   };
 };
+
+export default withStyles(styles)(Search);
