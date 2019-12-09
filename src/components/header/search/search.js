@@ -5,9 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { TextField } from '@material-ui/core';
 
 const styles = {
-  appSearch: {
-    margin: 10
-  }
+  
 };
 
 class Search extends React.Component {

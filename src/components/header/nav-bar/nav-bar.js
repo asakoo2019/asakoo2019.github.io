@@ -1,10 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import {Button, Grid} from '@material-ui/core';
 import './nav-bar.css';
-
-import SignIn from './sign-in';
-import Registration from './registration';
 
 const styles = {
 
@@ -19,7 +16,8 @@ class NavBar extends React.Component {
     const { classes } = this.props;
     return (
       <nav>
-        <div>
+        <Grid container
+              justify="space-between">
           <Button>
             Jobs
           </Button>
@@ -29,11 +27,13 @@ class NavBar extends React.Component {
           <Button >
             Blog
           </Button>
-        </div>
-        <div>
-          <SignIn/>
-          <Registration/>
-        </div>          
+          <Button>
+            Sign In
+          </Button>
+          <Button>
+            Registration
+          </Button>
+        </Grid>
       </nav>
     );
   };
