@@ -1,10 +1,13 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import {Button, Grid} from '@material-ui/core';
 import './nav-bar.css';
 
-const styles = {
+import { withStyles } from '@material-ui/core/styles';
+import {Button, Grid} from '@material-ui/core';
 
+const styles = {
+  navBtn: {
+    backgroundColor: '#FE654F'
+  }
 };
 
 class NavBar extends React.Component {
@@ -18,19 +21,24 @@ class NavBar extends React.Component {
       <nav>
         <Grid container
               justify="space-between">
-          <Button>
+          <Button variant='contained'
+                  className={classes.navBtn}>
             Jobs
           </Button>
-          <Button >
+          <Button variant='contained'
+                  className={classes.navBtn}>
             Companies
           </Button>
-          <Button >
+          <Button variant='contained'
+                  className={classes.navBtn}>
             Blog
           </Button>
-          <Button>
+          <Button variant='contained'
+                  className={classes.navBtn}>
             Sign In
           </Button>
-          <Button>
+          <Button variant='contained'
+                  className={classes.navBtn}>
             Registration
           </Button>
         </Grid>

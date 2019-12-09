@@ -24,10 +24,10 @@ class Header extends React.Component {
           <Grid item xs={1}>
             <Logo />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={3}>
             <Search />
           </Grid>
-          <Grid item xs={7}>
+          <Grid item xs={8}>
             <NavBar />
           </Grid>
         </Grid>

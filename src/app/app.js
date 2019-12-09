@@ -6,7 +6,7 @@ import HomePageContainer from '../components/home-page-container';
 import Footer from '../components/footer';
 
 const styles = {
- 
+  
 };
 
 class App extends React.Component {
