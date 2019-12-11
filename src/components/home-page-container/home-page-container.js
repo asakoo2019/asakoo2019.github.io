@@ -41,7 +41,7 @@ const HomePageContainer = (props) => {
                 container>
             <img className={classes.companyLogo}
                 src={image}
-                alt='comp-image'/>
+                alt='comp'/>
           </Grid>
           <Grid item xs={10}>
             <h3 className={classes.aboutCompanyText}>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquid, quaerat deleniti!
@@ -56,7 +56,7 @@ const HomePageContainer = (props) => {
                 container>
             <img className={classes.companyLogo}
                 src={image}
-                alt='comp-image'/>
+                alt='comp'/>
           </Grid>
           <Grid item xs={10}>
             <h3 className={classes.aboutCompanyText}>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquid, quaerat deleniti!
@@ -71,7 +71,7 @@ const HomePageContainer = (props) => {
                 container>
             <img className={classes.companyLogo}
                 src={image}
-                alt='comp-image'/>
+                alt='comp'/>
           </Grid>
           <Grid item xs={10}>
             <h3 className={classes.aboutCompanyText}>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquid, quaerat deleniti!
