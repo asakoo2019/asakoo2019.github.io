@@ -5,18 +5,17 @@ import Grid from '@material-ui/core/Grid';
 
 import Logo from './logo';
 import Search from './search';
-import NavBar from './nav-bar';
 
 const styles = {
 
 };
 
 class Header extends React.Component {
-  constructor(props) {
-    super(props);
-  };
+  // constructor(props) {
+  //   super(props);
+  // };
   render () {
-    const { classes } = this.props;
+    // const { classes } = this.props;
     return (
       <header>
         <Grid container
@@ -24,11 +23,8 @@ class Header extends React.Component {
           <Grid item xs={1}>
             <Logo />
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={11}>
             <Search />
-          </Grid>
-          <Grid item xs={8}>
-            <NavBar />
           </Grid>
         </Grid>
       </header>
