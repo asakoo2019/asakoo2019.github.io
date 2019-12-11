@@ -11,7 +11,6 @@ import SignIn from '../components/sign-in';
 import Registration from '../components/registration';
 import Footer from '../components/footer';
 
-
 const styles = {
   
 };
