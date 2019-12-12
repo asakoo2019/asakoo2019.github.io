@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './asakoo.jpg';
+import logo from './hrtec.jpg';
 import './logo.css';
 
 const Logo = () => {

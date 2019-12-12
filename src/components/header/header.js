@@ -11,9 +11,7 @@ const styles = {
 };
 
 class Header extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  // };
+
   render () {
     // const { classes } = this.props;
     return (
