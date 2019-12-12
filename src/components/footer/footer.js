@@ -65,7 +65,7 @@ const Footer = (props) => {
               container
               direction='column'
               alignItems='center'>
-          <h4 className={classes.allRightsFirst}>© 2019 Asakoo. All rights reserved.</h4>
+          <h4 className={classes.allRightsFirst}>© 2019 HRTEC. All rights reserved.</h4>
           <h5 className={classes.allRightsSecond}>Powered by Lav txerq</h5>
         </Grid>
       </Grid>
