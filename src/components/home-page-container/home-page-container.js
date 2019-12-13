@@ -3,6 +3,7 @@ import './home-page-container.css';
 
 import AboutUs from './about-us';
 import HomeCompanies from './home-companies';
+import HomeJobs from './home-jobs';
 
 import { withStyles } from '@material-ui/core/styles';
 import {Container} from '@material-ui/core';
@@ -16,6 +17,7 @@ const HomePageContainer = (props) => {
   return (
     <Container>
       <HomeCompanies />
+      <HomeJobs />
       <AboutUs />
     </Container>
   );

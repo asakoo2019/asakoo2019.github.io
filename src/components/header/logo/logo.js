@@ -1,10 +1,10 @@
 import React from 'react';
-import logo from './hrtec.jpg';
+import appLogo from './topteam.jpg';
 import './logo.css';
 
 const Logo = () => {
   return (
-    <img className='app-logo' src={logo} alt='app logo'/>
+    <img className='app-logo' src={appLogo} alt='TopTeam'/>
   );
 };
 
