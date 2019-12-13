@@ -240,12 +240,12 @@ function RegistrationComponent(props) {
           onBlur = {() => doTextFieldValidation('passwordError', passwordSchema.validate(values.password, { list: true }))} 
           helperText={error.passwordError === "" ? "" : error.passwordError.map(currentError => { 
             switch (currentError) {
-              case 'min': return <p key={currentError}>Minimum length 6</p>;
-              case 'max': return <p key={currentError}>Maximum length 20</p>;
-              case 'uppercase': return <p key={currentError}>Must have uppercase letters</p>;
-              case 'lowercase': return <p key={currentError}>Must have lowercase letters</p>;
-              case 'digits': return <p key={currentError}>Must have digits</p>;
-              case 'spaces': return <p key={currentError}>Should not have spaces</p>;
+              case 'min': return <p className='MuiFormHelperText-root Mui-error' key={currentError}>Minimum length 6</p>;
+              case 'max': return <p className='MuiFormHelperText-root Mui-error' key={currentError}>Maximum length 20</p>;
+              case 'uppercase': return <p className='MuiFormHelperText-root Mui-error' key={currentError}>Must have uppercase letters</p>;
+              case 'lowercase': return <p className='MuiFormHelperText-root Mui-error' key={currentError}>Must have lowercase letters</p>;
+              case 'digits': return <p className='MuiFormHelperText-root Mui-error' key={currentError}>Must have digits</p>;
+              case 'spaces': return <p className='MuiFormHelperText-root Mui-error' key={currentError}>Should not have spaces</p>;
               default: return "for avoiding warnings"
             }
           })}

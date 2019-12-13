@@ -3,6 +3,7 @@ import './header.css';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
+
 import Logo from './logo';
 import Search from './search';
 
@@ -14,6 +15,7 @@ class Header extends React.Component {
 
   render () {
     // const { classes } = this.props;
+
     return (
       <header>
         <Grid container

@@ -57,7 +57,7 @@ class Search extends React.Component {
       <Grid container>
         <Grid container spacing={1} alignItems="flex-end">
           <Grid item>
-            <TextField className={classes.appSearch} id="input-with-icon-grid" label="Search" />
+            <TextField className={classes.appSearch} label="Search" />
           </Grid>
           <Grid item>
             <SearchIcon />

@@ -4,14 +4,14 @@ const style = {
     },
     form: {
       width: '25vw',
-      background: "#f1f1f1",
-      padding: "80px 40px",
+      background: "#fff",
+      padding: 70,
       borderRadius: 10,
     },
     mainDiv: {
       padding: "20px 0",
-      minHeight: "100vh",
-      backgroundImage: 'linear-gradient(120deg, #3498db, #8e44ad)',
+      // minHeight: "100vh",
+      background: 'linear-gradient(120deg, #3498db, #8e44ad)',
     },
     txtb: {
       margin: 10
@@ -20,7 +20,7 @@ const style = {
       background: "linear-gradient(120deg, #3498db, #8e44ad, #3498db)",
       backgroundSize: "200%",
       margin: 10,
-      color: "#f1f1f1",
+      color: "#fff",
       outline: "none",
       cursor: "pointer",
       transition: ".5s",
