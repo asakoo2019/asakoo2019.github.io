@@ -3,7 +3,7 @@ import './home-companies.css';
 import companyLogo from './2.png';
 
 import { withStyles } from '@material-ui/core/styles';
-import {Grid, Button} from '@material-ui/core';
+import { Grid, Button } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
 
 const styles = {
@@ -69,7 +69,6 @@ class HomeCompanies extends React.Component {
     
     function GoAllCompanies() {
       let history = useHistory();
-      console.log(history);
       function handleClick() {
         history.push("/companies");
       };
@@ -89,8 +88,8 @@ class HomeCompanies extends React.Component {
     });
     
     const comp = newCompaniesData.slice(0, 3).map((el) => {
-      if (el.aboutCompany.length > 150) {
-        el.aboutCompany = el.aboutCompany.substring(0, 150) + "...";
+      if (el.aboutCompany.length > 100) {
+        el.aboutCompany = el.aboutCompany.substring(0, 100) + "...";
       };
       return (
         <Grid container
@@ -105,9 +104,9 @@ class HomeCompanies extends React.Component {
                 alt={el.companyName}/>
           </Grid>
           <Grid>
-            <h3 className={classes.aboutCompanyText}>
+            <h6 className={classes.aboutCompanyText}>
               {el.aboutCompany}
-            </h3>
+            </h6>
           </Grid>
         </Grid>
       );
@@ -123,7 +122,7 @@ class HomeCompanies extends React.Component {
              justify="space-around">
           {comp}
         </Grid>
-          <GoAllCompanies/>
+        <GoAllCompanies/>
       </Grid>
     );
   };

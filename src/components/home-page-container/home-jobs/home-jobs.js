@@ -3,7 +3,7 @@ import './home-jobs.css';
 import jobLogo from './2.png';
 
 import { withStyles } from '@material-ui/core/styles';
-import {Grid, Button} from '@material-ui/core';
+import { Grid, Button } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
 
 const styles = {
@@ -85,8 +85,8 @@ class HomeJobs extends React.Component {
     });
     
     const comp = newJobsData.slice(0, 3).map((el) => {
-      if (el.aboutJob.length > 150) {
-        el.aboutJob = el.aboutJob.substring(0, 150) + "...";
+      if (el.aboutJob.length > 100) {
+        el.aboutJob = el.aboutJob.substring(0, 100) + "...";
       };
       return (
         <Grid container
@@ -101,9 +101,9 @@ class HomeJobs extends React.Component {
                 alt={el.jobName}/>
           </Grid>
           <Grid>
-            <h3 className={classes.aboutJobText}>
+            <h6 className={classes.aboutJobText}>
               {el.aboutJob}
-            </h3>
+            </h6>
           </Grid>
         </Grid>
       );

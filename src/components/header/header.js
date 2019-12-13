@@ -21,7 +21,7 @@ class Header extends React.Component {
           <Grid item xs={1}>
             <Logo />
           </Grid>
-          <Grid item xs={11}>
+          <Grid item xs={10}>
             <Search />
           </Grid>
         </Grid>

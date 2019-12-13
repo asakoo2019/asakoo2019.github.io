@@ -27,10 +27,13 @@ const styles = {
     color: '#FEFEFF'
   },
   allRightsFirst: {
-    margin: '0 0 .3em 0'
+    margin: 0,
+    color: '#fff',
+
   },
   allRightsSecond: {
-    margin: 0
+    margin: 0,
+    color: '#fff'
   }
 };
 
@@ -63,10 +66,9 @@ const Footer = (props) => {
         </Grid>
         <Grid className={classes.allRightsBlock}
               container
-              direction='column'
-              alignItems='center'>
-          <h4 className={classes.allRightsFirst}>© 2019 TopTeam. All rights reserved.</h4>
-          <h5 className={classes.allRightsSecond}>Powered by TopTeam</h5>
+              justify='space-between'>
+          <p className={classes.allRightsFirst}>© 2019 TopTeam. All rights reserved.</p>
+          <p className={classes.allRightsSecond}>Powered by TopTeam</p>
         </Grid>
       </Grid>
     </footer>
