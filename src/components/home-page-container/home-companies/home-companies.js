@@ -44,7 +44,13 @@ const companiesData = [
     companyImage: companyLogo,
     viewCount: 7,
     id: 3
-  }
+  },
+  { companyName: 'Company3',
+    aboutCompany: 'vapshe urish text. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description.',
+    companyImage: companyLogo,
+    viewCount: 10,
+    id: 4
+  },
 ];
 
 class HomeCompanies extends React.Component {
@@ -63,7 +69,7 @@ class HomeCompanies extends React.Component {
       return b.viewCount - a.viewCount;
     });
     
-    const comp = newCompaniesData.map((el) => {
+    const comp = newCompaniesData.slice(0, 3).map((el) => {
       if (el.aboutCompany.length > 150) {
         el.aboutCompany = el.aboutCompany.substring(0, 150) + "...";
       };

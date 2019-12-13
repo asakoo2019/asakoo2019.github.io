@@ -44,6 +44,12 @@ const jobsData = [
     jobImage: jobLogo,
     viewCount: 7,
     id: 3
+  },
+  { jobName: 'Job3',
+    aboutJob: 'vapshe urish text. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description.',
+    jobImage: jobLogo,
+    viewCount: 10,
+    id: 4
   }
 ];
 
@@ -63,7 +69,7 @@ class HomeJobs extends React.Component {
       return b.viewCount - a.viewCount;
     });
     
-    const comp = newJobsData.map((el) => {
+    const comp = newJobsData.slice(0, 3).map((el) => {
       if (el.aboutJob.length > 150) {
         el.aboutJob = el.aboutJob.substring(0, 150) + "...";
       };
