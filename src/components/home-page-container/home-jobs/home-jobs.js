@@ -30,7 +30,7 @@ const jobsData = [
   { jobName: 'Job1',
     aboutJob: 'This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description.',
     jobImage: jobLogo,
-    viewCount: 2,
+    viewCount: 12,
     id: 1
   },
   { jobName: 'Job2',

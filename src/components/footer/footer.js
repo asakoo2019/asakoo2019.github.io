@@ -53,7 +53,7 @@ const Footer = (props) => {
             <a title='Instagram' className={classes.footerSocial} href='https://www.instagram.com/'>
               <InstagramIcon className={classes.socialIcons}/>
             </a>
-            <a title='Phone' className={classes.footerSocial} href='tel:+37493505479'>
+            <a title='+37493505479' className={classes.footerSocial} href='tel:+37493505479'>
               <PhoneIcon className={classes.socialIcons}/>
             </a>
             <a title='WhatsApp' className={classes.footerSocial} href='whatsapp://send?phone=+37493505479'>
@@ -65,8 +65,8 @@ const Footer = (props) => {
               container
               direction='column'
               alignItems='center'>
-          <h4 className={classes.allRightsFirst}>© 2019 HRTEC. All rights reserved.</h4>
-          <h5 className={classes.allRightsSecond}>Powered by Lav txerq</h5>
+          <h4 className={classes.allRightsFirst}>© 2019 TopTeam. All rights reserved.</h4>
+          <h5 className={classes.allRightsSecond}>Powered by TopTeam</h5>
         </Grid>
       </Grid>
     </footer>
