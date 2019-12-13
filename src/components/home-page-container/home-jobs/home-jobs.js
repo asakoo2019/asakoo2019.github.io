@@ -4,6 +4,7 @@ import jobLogo from './2.png';
 
 import { withStyles } from '@material-ui/core/styles';
 import {Grid, Button} from '@material-ui/core';
+import { useHistory } from "react-router-dom";
 
 const styles = {
   aboutJob: {
@@ -45,7 +46,7 @@ const jobsData = [
     viewCount: 7,
     id: 3
   },
-  { jobName: 'Job3',
+  { jobName: 'Job4',
     aboutJob: 'vapshe urish text. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description.',
     jobImage: jobLogo,
     viewCount: 10,
@@ -62,6 +63,20 @@ class HomeJobs extends React.Component {
   render () {
     const {classes} = this.props;
     const {jobsData} = this.state;
+
+    function GoAllJobs() {
+      let history = useHistory();
+      function handleClick() {
+        history.push("/jobs");
+      };
+      return (
+        <Button className={classes.allJobsBtn}
+                variant='contained'
+                onClick={handleClick}>
+          All jobs
+        </Button>
+      );
+    };
 
     const newJobsData = [...jobsData];
   
@@ -104,11 +119,7 @@ class HomeJobs extends React.Component {
              justify="space-around">
           {comp}
         </Grid>
-          <Button className={classes.allJobsBtn}
-                  variant='contained'
-                  href='http://localhost:3000/jobs'>
-            All jobs
-          </Button>
+        <GoAllJobs />
       </Grid>
     );
   };

@@ -21,46 +21,34 @@ const NavBar = (props) => {
   const { classes } = props;
   return (
     <Router>
-        <Container>
-          <nav>
-            <Grid container >
-              <Grid item xs={9}
-                    container
-                    justify='flex-start'>
-              <Link to="/" className={classes.navItem}>Home</Link>
-              <Link to="/jobs" className={classes.navItem}>Jobs</Link>
-              <Link to="/companies" className={classes.navItem}>Companies</Link>
-              <Link to="/blog" className={classes.navItem}>Blog</Link>
-              </Grid>
-              <Grid item xs={3}
-                    container
-                    justify='flex-end'>
-                <Link to="/sign-in" className={classes.navItem}>Sign In</Link>
-                <Link to="/registration" className={classes.navItem}>Registration</Link>
-              </Grid>
+      <Container>
+        <nav>
+          <Grid container >
+            <Grid item xs={9}
+                  container
+                  justify='flex-start'>
+            <Link to="/" className={classes.navItem}>Home</Link>
+            <Link to="/jobs" className={classes.navItem}>Jobs</Link>
+            <Link to="/companies" className={classes.navItem}>Companies</Link>
+            <Link to="/blog" className={classes.navItem}>Blog</Link>
             </Grid>
-          </nav>
-        </Container>
+            <Grid item xs={3}
+                  container
+                  justify='flex-end'>
+              <Link to="/sign-in" className={classes.navItem}>Sign In</Link>
+              <Link to="/registration" className={classes.navItem}>Registration</Link>
+            </Grid>
+          </Grid>
+        </nav>
+      </Container>
       <Switch>
-          <Route exact path="/jobs">
-            <Jobs />
-          </Route>
-          <Route exact path="/companies">
-            <Companies />
-          </Route>
-          <Route exact path="/blog">
-            <Blog />
-          </Route>
-          <Route exact path="/sign-in">
-            <SignIn />
-          </Route>
-          <Route exact path="/registration">
-            <Registration />
-          </Route>
-            <Route path="/">
-            <HomePageContainer />
-          </Route>
-        </Switch>
+        <Route exact path="/jobs" component={Jobs} />
+        <Route exact path="/companies" component={Companies} />
+        <Route exact path="/blog" component={Blog} />
+        <Route exact path="/sign-in" component={SignIn} />
+        <Route exact path="/registration" component={Registration} />
+        <Route path="/" component={HomePageContainer} />
+      </Switch>
     </Router>
   );
 };

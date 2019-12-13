@@ -4,6 +4,7 @@ import companyLogo from './2.png';
 
 import { withStyles } from '@material-ui/core/styles';
 import {Grid, Button} from '@material-ui/core';
+import { useHistory } from "react-router-dom";
 
 const styles = {
   aboutCompany: {
@@ -45,13 +46,15 @@ const companiesData = [
     viewCount: 7,
     id: 3
   },
-  { companyName: 'Company3',
+  { companyName: 'Company4',
     aboutCompany: 'vapshe urish text. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description.',
     companyImage: companyLogo,
     viewCount: 10,
     id: 4
   },
 ];
+
+
 
 class HomeCompanies extends React.Component {
 
@@ -60,8 +63,24 @@ class HomeCompanies extends React.Component {
   };
   
   render () {
+    
     const {classes} = this.props;
     const {companiesData} = this.state;
+    
+    function GoAllCompanies() {
+      let history = useHistory();
+      console.log(history);
+      function handleClick() {
+        history.push("/companies");
+      };
+      return (
+        <Button className={classes.allCompaniesBtn}
+                variant='contained'
+                onClick={handleClick}>
+          All companies
+        </Button>
+      );
+    };
 
     const newCompaniesData = [...companiesData];
   
@@ -104,11 +123,7 @@ class HomeCompanies extends React.Component {
              justify="space-around">
           {comp}
         </Grid>
-          <Button className={classes.allCompaniesBtn}
-                  variant='contained'
-                  href='http://localhost:3000/companies'>
-            All companies
-          </Button>
+          <GoAllCompanies/>
       </Grid>
     );
   };
