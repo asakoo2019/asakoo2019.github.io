@@ -19,7 +19,7 @@ const AboutUs = (props) => {
           container
           justify='center'>
       <h2 className={classes.aboutUsTitle}>About Us</h2>
-      <h4 className={classes.aboutUsContainer}>Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      <h5 className={classes.aboutUsContainer}>Lorem ipsum dolor sit amet consectetur adipisicing elit.
           Excepturi earum dicta sequi odio sit consectetur expedita, cum, pariatur, in enim porro voluptas!
           Mollitia omnis aspernatur quia ullam incidunt odio animi.
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -34,7 +34,7 @@ const AboutUs = (props) => {
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
           Excepturi earum dicta sequi odio sit consectetur expedita, cum, pariatur, in enim porro voluptas!
           Mollitia omnis aspernatur quia ullam incidunt odio animi.
-      </h4>
+      </h5>
     </Grid>
   );
 };
