@@ -18,7 +18,7 @@ class Companies extends React.Component {
   setElementsForCurrentPage() {
     let elements = this.state.data
                   .slice(this.state.offset, this.state.offset + this.state.perPage)
-                  .map(post => ( <img src={post.thumburl} alt={post.id} key={post.id} />));
+                  .map(post => ( <img src={post.thumburl} alt={post.file_name} key={post.id} />));
     this.setState({ elements: elements });
   };
 
@@ -54,6 +54,7 @@ class Companies extends React.Component {
 
   render() {
     let paginationElement;
+    console.log(this.state.data);
     if (this.state.pageCount > 1) {
       paginationElement = (
         <ReactPaginate
