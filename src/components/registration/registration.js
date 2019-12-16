@@ -106,15 +106,26 @@ function RegistrationComponent(props) {
       if (!emailError && !passwordError && !repeatPasswordError && !birthdayError && !nameError && !surnameError) {
           auth.createUserWithEmailAndPassword(email, password)
           .then(user => {
-            const userId = user.user.uid;
-            const {name, gender, surname, registrationType} = values;
+            const id = user.user.uid;
+            const {name, gender, surname, registrationType, email} = values;
             if (registrationType === 'Employee') {
-              firestore.collection("users").doc(userId).set({
-                name, gender, surname, birthday, userId, registrationType
+              firestore.collection("users").doc(id).set({
+                userName: name,
+                userSurname: surname,
+                userBirthDate: birthday,
+                userId: id,
+                userGender: gender,
+                userEmail: email,
+                registrationType,
               });
             } else {
-              firestore.collection("users").doc(userId).set({
-                companyName:name, name: surname, gender, surname, birthday, userId, registrationType
+              firestore.collection("users").doc(id).set({
+                companyName: name, 
+                registerName: surname, 
+                companyId: id, 
+                registrationType,
+                companyCreatingData: birthday,
+                companyView: 0,
               });
             }
           setError({
@@ -217,8 +228,8 @@ function RegistrationComponent(props) {
           <KeyboardDatePicker
             margin="normal"
             id="date-picker-dialog"
-            label="Birthday"
-            format="MM/dd/yyyy"
+            label={values.registrationType === 'Employee' ? 'Birthday' : 'Creating date'}
+            format="MM.dd.yyyy"
             className={classes.txtb}
             value={!!birthday}
             onChange={handleDateChange}
