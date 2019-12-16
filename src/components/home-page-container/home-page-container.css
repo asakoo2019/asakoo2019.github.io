@@ -1,7 +1,0 @@
-.MuiButton-root:hover {
-  background-color: #FED99B !important;
-  color: #000;
-}
-.MuiButton-root {
-  transition: .3s !important;
-}
