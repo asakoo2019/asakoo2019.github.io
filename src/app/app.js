@@ -1,8 +1,11 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import Jobs from '../components/jobs';
+<<<<<<< HEAD
+=======
+
+>>>>>>> fc1045fd00ce56a6988939827c993bc7224d99a5
 
 const styles = {
   
