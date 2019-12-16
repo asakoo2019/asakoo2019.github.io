@@ -1,5 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import { BrowserRouter as Router } from "react-router-dom";
+
 
 import Header from '../components/header';
 import NavBar from '../components/header/nav-bar'
@@ -11,13 +13,13 @@ const styles = {
 };
 
 function App(props) {
-  const { classes } = props;
+  // const { classes } = props;
   return (
-    <div className={classes.main}>
+    <Router>
       <Header />
       <NavBar />
       <Footer />
-    </div>
+    </Router>
   );
 };
 

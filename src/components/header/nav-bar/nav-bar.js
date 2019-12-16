@@ -1,6 +1,6 @@
 import React from 'react';
 import './nav-bar.css';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Switch, Route, Link } from "react-router-dom";
 import { withStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 
@@ -10,6 +10,7 @@ import Jobs from '../../jobs';
 import HomePageContainer from '../../home-page-container';
 import SignIn from '../../sign-in';
 import Registration from '../../registration';
+import UserProfile from '../../user-profile';
 
 const styles = {
   navItem: {
@@ -20,7 +21,7 @@ const styles = {
 const NavBar = (props) => {
   const { classes } = props;
   return (
-    <Router>
+    <>
       <nav>
         <Grid container >
           <Grid item xs={8}
@@ -30,6 +31,7 @@ const NavBar = (props) => {
           <Link to="/jobs" className={classes.navItem}>Jobs</Link>
           <Link to="/companies" className={classes.navItem}>Companies</Link>
           <Link to="/blog" className={classes.navItem}>Blog</Link>
+          <Link to="/user-profile" className={classes.navItem} />
           </Grid>
           <Grid item xs={4}
                 container
@@ -45,9 +47,10 @@ const NavBar = (props) => {
         <Route exact path="/blog" component={Blog} />
         <Route exact path="/sign-in" component={SignIn} />
         <Route exact path="/registration" component={Registration} />
+        <Route exact path="/user-profile" component={UserProfile} />
         <Route path="/" component={HomePageContainer} />
       </Switch>
-    </Router>
+    </>
   );
 };
 

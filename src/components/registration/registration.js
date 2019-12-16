@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { auth, firestore } from '../firebase/db';
 import style from '../Login&RegistrationStyles&Npm/login&RegStyle';
 import { withStyles } from "@material-ui/core/styles";
@@ -21,15 +21,14 @@ import {
     FormControlLabel,
     Radio
   } from "@material-ui/core";
-  import {
-    MuiPickersUtilsProvider,
-    KeyboardDatePicker,
-  } from '@material-ui/pickers'
-
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import { Switch, Route, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
 function RegistrationComponent(props) {
+    const history = useHistory();
     const [error, setError] = useState({
       nameError: '',
       surnameError: '',
@@ -39,7 +38,6 @@ function RegistrationComponent(props) {
       mailRepeatError: '',
       birthdayError: '',
     });
-
     const [values, setValues] = React.useState({
       name: '',
       surname: '',
@@ -50,12 +48,16 @@ function RegistrationComponent(props) {
       registrationType: 'Employee',
       gender: "Female",
     });
-
     const [birthday, setBirthday] = React.useState(new Date());
-
     const handleDateChange = date => {
       setBirthday(date);
     };
+    // console.log(history);
+
+    // useEffect(() => {
+    //   // Обновляем заголовок документа с помощью API браузера
+    //   return () => {console.log(8)};
+    // },[history.location.pathname]);
 
     function doTextFieldValidation(textFieldName, errorMessage) {
       switch(textFieldName) {
@@ -102,7 +104,7 @@ function RegistrationComponent(props) {
       event.preventDefault()
       const {emailError, passwordError, repeatPasswordError, birthdayError, nameError, surnameError} = error;
       const {email, password} = values;
-      debugger;
+
       if (!emailError && !passwordError && !repeatPasswordError && !birthdayError && !nameError && !surnameError) {
           auth.createUserWithEmailAndPassword(email, password)
           .then(user => {
@@ -117,15 +119,30 @@ function RegistrationComponent(props) {
                 userGender: gender,
                 userEmail: email,
                 registrationType,
+                userImage: null,
+                userPhoneNumber: null,
+                userAdress: null,
+                userWorkExperience: [],
+                userProfessionalSkills: [],
+                userLanguages: [],
               });
+              history.push("/user-profile");
             } else {
               firestore.collection("users").doc(id).set({
                 companyName: name, 
                 registerName: surname, 
-                companyId: id, 
-                registrationType,
                 companyCreatingData: birthday,
-                companyView: 0,
+                companyId: id,
+                companyEmail: email,
+                registrationType,
+                companyViewCount: 0,
+                aboutCompany: null,
+                companyImage: null,
+                companyBackground: null,
+                companyJobs: [],
+                companyWebsite: null,
+                companySocialMedias: {},
+                companyCategory: [],
               });
             }
           setError({

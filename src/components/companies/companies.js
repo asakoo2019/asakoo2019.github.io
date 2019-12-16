@@ -54,7 +54,6 @@ class Companies extends React.Component {
 
   render() {
     let paginationElement;
-    console.log(this.state.data);
     if (this.state.pageCount > 1) {
       paginationElement = (
         <ReactPaginate
