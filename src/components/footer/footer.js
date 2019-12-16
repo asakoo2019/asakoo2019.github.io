@@ -17,20 +17,20 @@ const styles = {
   },
   socialIcons: {
     fontSize: 30,
-    padding: '.5em .5em 0 0'
-  },
-  footerSocial: {
-    color: '#FE654F',
+    padding: '.5em .5em 0 0',
+    color: '#FE654F'
   },
   footerSocialBlock: {
     backgroundColor: '#383532',
     color: '#FEFEFF'
   },
   allRightsFirst: {
-    margin: '0 0 .3em 0'
+    margin: 0,
+    color: '#fff',
   },
   allRightsSecond: {
-    margin: 0
+    margin: 0,
+    color: '#fff'
   }
 };
 
@@ -44,29 +44,28 @@ const Footer = (props) => {
               alignItems='flex-start'
               className={classes.footerSocialBlock}>
           <Container>
-            <a title='Faceboo' className={classes.footerSocial} href='https://www.facebook.com/'>
+            <a title='Faceboo' href='https://www.facebook.com/'>
               <FacebookIcon className={classes.socialIcons}/>
             </a>
-            <a title='Mail' className={classes.footerSocial} href="mailto:asakoo2019@gmail.com">
+            <a title='Mail' href="mailto:asakoo2019@gmail.com">
               <MailIcon className={classes.socialIcons}/>
             </a>
-            <a title='Instagram' className={classes.footerSocial} href='https://www.instagram.com/'>
+            <a title='Instagram' href='https://www.instagram.com/'>
               <InstagramIcon className={classes.socialIcons}/>
             </a>
-            <a title='+37493505479' className={classes.footerSocial} href='tel:+37493505479'>
+            <a title='+37493505479' href='tel:+37493505479'>
               <PhoneIcon className={classes.socialIcons}/>
             </a>
-            <a title='WhatsApp' className={classes.footerSocial} href='whatsapp://send?phone=+37493505479'>
+            <a title='WhatsApp' href='whatsapp://send?phone=+37493505479'>
               <WhatsAppIcon className={classes.socialIcons}/>
             </a>
           </Container>
         </Grid>
         <Grid className={classes.allRightsBlock}
               container
-              direction='column'
-              alignItems='center'>
-          <h4 className={classes.allRightsFirst}>© 2019 TopTeam. All rights reserved.</h4>
-          <h5 className={classes.allRightsSecond}>Powered by TopTeam</h5>
+              justify='space-between'>
+          <p className={classes.allRightsFirst}>© 2019 TopTeam. All rights reserved.</p>
+          <p className={classes.allRightsSecond}>Powered by TopTeam</p>
         </Grid>
       </Grid>
     </footer>

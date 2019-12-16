@@ -2,7 +2,7 @@ import React from 'react';
 import './nav-bar.css';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { withStyles } from '@material-ui/core/styles';
-import { Grid, Container } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
 import Blog from '../../blog';
 import Companies from '../../companies';
@@ -21,26 +21,24 @@ const NavBar = (props) => {
   const { classes } = props;
   return (
     <Router>
-      <Container>
-        <nav>
-          <Grid container >
-            <Grid item xs={9}
-                  container
-                  justify='flex-start'>
-            <Link to="/" className={classes.navItem}>Home</Link>
-            <Link to="/jobs" className={classes.navItem}>Jobs</Link>
-            <Link to="/companies" className={classes.navItem}>Companies</Link>
-            <Link to="/blog" className={classes.navItem}>Blog</Link>
-            </Grid>
-            <Grid item xs={3}
-                  container
-                  justify='flex-end'>
-              <Link to="/sign-in" className={classes.navItem}>Sign In</Link>
-              <Link to="/registration" className={classes.navItem}>Registration</Link>
-            </Grid>
+      <nav>
+        <Grid container >
+          <Grid item xs={8}
+                container
+                justify='flex-start'>
+          <Link to="/" className={classes.navItem}>Home</Link>
+          <Link to="/jobs" className={classes.navItem}>Jobs</Link>
+          <Link to="/companies" className={classes.navItem}>Companies</Link>
+          <Link to="/blog" className={classes.navItem}>Blog</Link>
           </Grid>
-        </nav>
-      </Container>
+          <Grid item xs={4}
+                container
+                justify='flex-end'>
+            <Link to="/sign-in" className={classes.navItem}>Sign In</Link>
+            <Link to="/registration" className={classes.navItem}>Registration</Link>
+          </Grid>
+        </Grid>
+      </nav>
       <Switch>
         <Route exact path="/jobs" component={Jobs} />
         <Route exact path="/companies" component={Companies} />

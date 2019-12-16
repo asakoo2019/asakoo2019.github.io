@@ -6,7 +6,7 @@ import HomeCompanies from './home-companies';
 import HomeJobs from './home-jobs';
 
 import { withStyles } from '@material-ui/core/styles';
-import {Container} from '@material-ui/core';
+import { Container } from '@material-ui/core';
 
 const styles = {
   
