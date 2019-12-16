@@ -70,3 +70,6 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 =======
 # TopTeam.github.io
 >>>>>>> .merge_file_a10892
+=======
+# TopTeam.github.io
+>>>>>>> .merge_file_a05396
