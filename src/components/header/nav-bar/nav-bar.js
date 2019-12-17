@@ -11,6 +11,7 @@ import HomePageContainer from '../../home-page-container';
 import SignIn from '../../sign-in';
 import Registration from '../../registration';
 import UserProfile from '../../user-profile';
+import CompanyProfile from '../../company-profile';
 
 const styles = {
   navItem: {
@@ -32,6 +33,7 @@ const NavBar = (props) => {
           <Link to="/companies" className={classes.navItem}>Companies</Link>
           <Link to="/blog" className={classes.navItem}>Blog</Link>
           <Link to="/user-profile" className={classes.navItem} />
+          <Link to="/company-profile" className={classes.navItem} />
           </Grid>
           <Grid item xs={4}
                 container
@@ -48,6 +50,7 @@ const NavBar = (props) => {
         <Route exact path="/sign-in" component={SignIn} />
         <Route exact path="/registration" component={Registration} />
         <Route exact path="/user-profile" component={UserProfile} />
+        <Route exact path="/company-profile" component={CompanyProfile} />
         <Route path="/" component={HomePageContainer} />
       </Switch>
     </>
