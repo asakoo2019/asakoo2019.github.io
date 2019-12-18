@@ -13,17 +13,11 @@ const styles = {
 function App(props) {
   // const { classes } = props;
   return (
-<<<<<<< HEAD
-    <div className={classes.main}>
-      <Registration />
-    </div>
-=======
     <Router>
       <Header />
       <NavBar />
       <Footer />
     </Router>
->>>>>>> home
   );
 };
 
