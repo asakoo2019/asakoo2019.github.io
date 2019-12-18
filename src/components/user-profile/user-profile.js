@@ -8,7 +8,7 @@ import FormDialog from '../modal';
 
 
 const UserProfile = () => {
-  const user = firestore.collection('users').doc('IaRlvQrADIVN2lOxZytECU0fwGB3').get().then(doc => doc.data());
+  const user = firestore.collection('users').doc('cmoFjaAWDUPC4iMxeKmXp4AMapF2').get().then(doc => doc.data());
   user.then((obj) => {
     console.log(obj);
   });
