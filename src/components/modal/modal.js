@@ -31,8 +31,7 @@ function FormDialog(props) {
             Add summary to highlight your experience.
           </DialogContentText>
           <TextareaAutosize className={classes.textArea}
-            autoFocus
-            fullWidth/>
+            autoFocus/>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">

@@ -44,7 +44,7 @@ const Footer = (props) => {
               alignItems='flex-start'
               className={classes.footerSocialBlock}>
           <Container>
-            <a title='Faceboo' href='https://www.facebook.com/'>
+            <a title='Facebook' href='https://www.facebook.com/'>
               <FacebookIcon className={classes.socialIcons}/>
             </a>
             <a title='Mail' href="mailto:asakoo2019@gmail.com">
