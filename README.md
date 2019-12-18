@@ -1,8 +1,5 @@
 
-<<<<<<< HEAD
-=======
 
->>>>>>> home
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -73,12 +70,6 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
 =======
 # TopTeam.github.io
-<<<<<<< HEAD
->>>>>>> .merge_file_a10892
-=======
-# TopTeam.github.io
->>>>>>> .merge_file_a05396
-=======
 >>>>>>> .merge_file_a09120
 =======
 # TopTeam.github.io
@@ -89,4 +80,3 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 =======
 # TopTeam.github.io
 >>>>>>> origin
->>>>>>> home

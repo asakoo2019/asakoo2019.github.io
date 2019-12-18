@@ -3,7 +3,9 @@ import { withStyles } from '@material-ui/core/styles';
 import { BrowserRouter as Router } from "react-router-dom";
 
 
-import Registration from '../components/registration';
+import Header from '../components/header';
+import NavBar from '../components/header/nav-bar'
+import Footer from '../components/footer';
 
 
 const styles = {
