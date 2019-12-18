@@ -1,17 +1,11 @@
 import React from 'react';
-<<<<<<< HEAD
 // import { firestore } from '../firebase/db';
 import DropzoneDialogBlock from '../image-uploader-block';
 import userImage from './1.jpg'
-=======
-import { firestore } from '../firebase/db';
-import DropzoneDialogBlock from '../image-uploader-block';
->>>>>>> home
 import { Grid } from '@material-ui/core';
 import './user-profile.css';
 import FormDialog from '../modal';
 
-<<<<<<< HEAD
 // const user = firestore.collection('users').doc('IaRlvQrADIVN2lOxZytECU0fwGB3').get()
 //              .then(doc => doc.data());
 // console.log(user);
@@ -25,15 +19,6 @@ const user = {
 };
 
 const UserProfile = () => {
-=======
-
-
-const UserProfile = () => {
-  const user = firestore.collection('users').doc('IaRlvQrADIVN2lOxZytECU0fwGB3').get().then(doc => doc.data());
-  user.then((obj) => {
-    console.log(obj);
-  });
->>>>>>> home
   return (
     <Grid container
       className='userBlock'>
