@@ -14,9 +14,9 @@ export default class PaginationBlock extends React.Component {
   render() {
     return (
         <Pagination
+          
           limit={10}
           offset={this.state.offset}
-          total={100}
           onClick={(e, offset) => this.handleClick(offset)}
         />
     );
