@@ -8,7 +8,6 @@ const Companies = () => {
       <PaginationBlock/>
     </div>
   )
-  
 }
 
 export default Companies;

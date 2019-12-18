@@ -51,12 +51,6 @@ function RegistrationComponent(props) {
   const handleDateChange = date => {
     setBirthday(date);
   };
-    // console.log(history);
-
-    // useEffect(() => {
-    //   // Обновляем заголовок документа с помощью API браузера
-    //   return () => {console.log(8)};
-    // },[history.location.pathname]);
 
   function doTextFieldValidation(textFieldName, errorMessage) {
     switch(textFieldName) {
