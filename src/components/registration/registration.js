@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { auth, firestore } from '../firebase/db';
 import style from '../Login&RegistrationStyles&Npm/login&RegStyle';

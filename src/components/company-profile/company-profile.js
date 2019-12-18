@@ -1,5 +1,4 @@
 import React from 'react';
-
 // import { firestore } from '../firebase/db';
 import DropzoneDialogBlock from '../image-uploader-block';
 
