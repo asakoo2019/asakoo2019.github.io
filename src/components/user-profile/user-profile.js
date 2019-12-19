@@ -5,8 +5,6 @@ import { Grid } from '@material-ui/core';
 import './user-profile.css';
 import FormDialog from '../modal';
 
-
-
 const UserProfile = () => {
   const user = firestore.collection('users').doc('cmoFjaAWDUPC4iMxeKmXp4AMapF2').get().then(doc => doc.data());
   user.then((obj) => {
