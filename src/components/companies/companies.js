@@ -1,7 +1,7 @@
 import React from 'react';
 import './companies.css';
-import CompanyFilter from './components/company-filter';
-import CompaniesBar from './components/companies-bar';
+import CompanyFilter from './companies -components/company-filter';
+import CompaniesBar from './companies -components/companies-bar';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 
@@ -139,7 +139,6 @@ class Companies extends React.Component{
             <CompaniesBar employer = {workers}/>
           </Grid>
         </Grid>
-  
       </Container>
     );
   }

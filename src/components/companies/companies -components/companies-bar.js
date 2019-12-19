@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import CompanyItem from './company-item';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
+//import { Button } from '@material-ui/core';
 import {Grid} from '@material-ui/core';
+import PaginationPart from './pagein'
+
 
 
 const useStyles = makeStyles(theme => ({
@@ -27,7 +29,7 @@ function  CompaniesBar (props) {
     // const  [a, setA] = useStyles(0);
     // const  [b, setB] = useStyles(10);
     const classes  = useStyles();
-    const comps = props.employer.slice(0, 10).map((item, index) => {
+    const comps = props.employer.map((item, index) => {
         return (
             <CompanyItem 
                 userId = {item.userId}
@@ -36,24 +38,24 @@ function  CompaniesBar (props) {
             />
         );
     });
-    function otherCopmanies (num) {
-        console.log(num)
-        // useStat ({ a : num*10 - 10})
-        // setState ({ b : num*10})
-    }
-    const button = (arr)=> {
-        let x = Math.ceil(arr.length/10);
-        let result = [];
-        for (let i = 1; i <= x; i++){
-            result.push(<Button
-                onClick = {() => otherCopmanies(i)}
+    // function otherCopmanies (num) {
+    //     console.log(num)
+    //     // useStat ({ a : num*10 - 10})
+    //     // setState ({ b : num*10})
+    // }
+    // const button = (arr)=> {
+    //     let x = Math.ceil(arr.length/10);
+    //     let result = [];
+    //     for (let i = 1; i <= x; i++){
+    //         result.push(<Button
+    //             onClick = {() => otherCopmanies(i)}
 
-            >
-                {i}
-            </Button>)
-        }
-        return result
-    }
+    //         >
+    //             {i}
+    //         </Button>)
+    //     }
+    //     return result
+    // }
         return (
             <Grid container
                 direction="column"
@@ -68,17 +70,17 @@ function  CompaniesBar (props) {
                 >
                     <span>1 - 10 company results from {props.employer.length} total companies on asd.am</span>
                 </Grid>
-                <Grid container
+                {/* <Grid container
                     direction = "column"
                     justify = "flex-start"
                     alignItems = "flex-start"
                 >  
                     {comps}
-                </Grid>
+                </Grid> */}
                 <Grid container
                     className={classes.gridDown}
                 >
-                    {button(props.employer)}
+                    <PaginationPart companies = {comps}/>
                 </Grid>  
             </Grid>
             
