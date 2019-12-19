@@ -66,9 +66,9 @@ function RegistrationComponent(props) {
               userName: name,
               userSurname: surname,
               userBirthDate: birthday,
-              userId: id,
+              id: id,
               userGender: gender,
-              userEmail: email,
+              email: email,
               registrationType,
               userImage: null,
               userPhoneNumber: null,
@@ -77,14 +77,14 @@ function RegistrationComponent(props) {
               userProfessionalSkills: [],
               userLanguages: [],
             });
-            history.push("/user-profile");
+            history.push(`/${registrationType.toLowerCase()}/${id}`);
           } else {
             firestore.collection("companies").doc(id).set({
               companyName: name,
               registerName: surname,
               companyCreatingData: birthday,
-              companyId: id,
-              companyEmail: email,
+              id: id,
+              email: email,
               registrationType,
               companyViewCount: 0,
               aboutCompany: null,
@@ -95,11 +95,11 @@ function RegistrationComponent(props) {
               companySocialMedias: {},
               companyCategory: [],
             });
-            history.push("/company-profile");
+            history.push(`/${registrationType.toLowerCase()}/${id}`);
           }
         }).catch(function (err) {
           setError(e => ({ ...e, mailRepeatError: err.message }));
-        });
+      });
     }
   }, [isLogedIn]);
 
@@ -265,19 +265,13 @@ function RegistrationComponent(props) {
             .validate(values.password, { list: true }))}
           helperText={error.passwordError === "" ? "" : error.passwordError.map(currentError => {
             switch (currentError) {
-              case 'min': return <p className='MuiFormHelperText-root Mui-error' key={currentError}>
-                Minimum length 6</p>;
-              case 'max': return <p className='MuiFormHelperText-root Mui-error' key={currentError}>
-                Maximum length 20</p>;
-              case 'uppercase': return <p className='MuiFormHelperText-root Mui-error' key={currentError}>
-                Must have uppercase letters</p>;
-              case 'lowercase': return <p className='MuiFormHelperText-root Mui-error' key={currentError}>
-                Must have lowercase letters</p>;
-              case 'digits': return <p className='MuiFormHelperText-root Mui-error' key={currentError}>
-                Must have digits</p>;
-              case 'spaces': return <p className='MuiFormHelperText-root Mui-error' key={currentError}>
-                Should not have spaces</p>;
-              default: return "for avoiding warnings"
+              case 'min': return '\u2022' +'Minimum length 6';
+              case 'max': return ' \u2022' + 'Maximum length 20,'
+              case 'uppercase': return ' \u2022' + 'Must have uppercase letters'
+              case 'lowercase': return ' \u2022' + 'Must have lowercase letters';
+              case 'digits': return ' \u2022' + 'Must have digits';
+              case 'spaces': return ' \u2022' + 'Should not have spaces';
+              default: return " for avoiding warnings"
             }
           })}
           label="Password"

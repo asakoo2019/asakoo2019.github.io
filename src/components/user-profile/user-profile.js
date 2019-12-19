@@ -10,7 +10,7 @@ const UserProfile = () => {
   const [downloadURL, setDownloadURL] = useState(undefined);
   useEffect(() => {
     const docRef = firestore.collection("users").doc("rs0x1RuWYJhOjjQXnBkUDLHbFnR2");
-    let a = docRef.get().then(function(doc) {
+    docRef.get().then(function(doc) {
       if (doc.exists) {
         setUser(doc.data());
       } else {
