@@ -1,0 +1,31 @@
+.jobs-search {
+    /* border: 1px solid red;
+    box-sizing: border-box; */
+    /* width: 30%; */
+    
+}
+
+.clear-filter {
+    color: green;
+    right: 2%;
+}
+
+.jobs-category span {
+    display: inline-block;
+    margin-bottom: 2%;
+}
+
+.job-list-item img {
+    width: 100px;
+}
+
+.asd:first-child {
+    border: 1px solid greenyellow;
+    box-sizing: border-box;
+}
+
+.separate-job {
+    border: 1px solid green;
+    box-sizing: border-box;
+    margin: 1%;
+}
