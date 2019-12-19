@@ -3,17 +3,26 @@ import { firestore } from '../firebase/db';
 import DropzoneDialogBlock from '../image-uploader-block';
 import { Grid } from '@material-ui/core';
 import './user-profile.css';
-import FormDialog from '../modal';
+// import FormDialog from '../modal';
+
+const docRef = firestore.collection("users").doc("rs0x1RuWYJhOjjQXnBkUDLHbFnR2");
+
+docRef.get().then(function(doc) {
+  if (doc.exists) {
+    let user = doc.data();
+    console.log(user.userName);
+  } else {
+    console.log("No such document!");
+  }
+}).catch(function(error) {
+  console.log("Error getting document:", error);
+});
 
 const UserProfile = () => {
-  const user = firestore.collection('users').doc('cmoFjaAWDUPC4iMxeKmXp4AMapF2').get().then(doc => doc.data());
-  user.then((obj) => {
-    console.log(obj);
-  });
   return (
     <Grid container
       className='userBlock'>
-      <img src={user.userImage} alt={user.userName}/>
+      {/* <img src={user.userImage} alt={user.userName}/>
       <h6>{user.userName}</h6>
       <h6>{user.userSurname}</h6>
       <Grid container
@@ -24,7 +33,7 @@ const UserProfile = () => {
         <Grid container item xs={3}>
           <FormDialog/>
         </Grid>
-      </Grid>
+      </Grid> */}
       <DropzoneDialogBlock/>
     </Grid>
   );
