@@ -7,7 +7,6 @@ import Header from '../components/header';
 import NavBar from '../components/header/nav-bar'
 import Footer from '../components/footer';
 
-
 const styles = {
   
 };
