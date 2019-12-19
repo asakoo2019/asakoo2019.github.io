@@ -39,6 +39,7 @@ export default class DropzoneDialogBlock extends Component {
 					case 'running': // or 'running'
 						console.log('Upload is running');
 						break;
+					default: ;
 				};
 			}, function(error) {
 				alert('Autorize please');

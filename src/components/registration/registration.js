@@ -265,12 +265,12 @@ function RegistrationComponent(props) {
             .validate(values.password, { list: true }))}
           helperText={error.passwordError === "" ? "" : error.passwordError.map(currentError => {
             switch (currentError) {
-              case 'min': return '\u2022' +'Minimum length 6';
-              case 'max': return ' \u2022' + 'Maximum length 20,'
-              case 'uppercase': return ' \u2022' + 'Must have uppercase letters'
-              case 'lowercase': return ' \u2022' + 'Must have lowercase letters';
-              case 'digits': return ' \u2022' + 'Must have digits';
-              case 'spaces': return ' \u2022' + 'Should not have spaces';
+              case 'min': return '\u2022 Minimum length 6';
+              case 'max': return ' \u2022 Maximum length 20,'
+              case 'uppercase': return ' \u2022 Must have uppercase letters'
+              case 'lowercase': return ' \u2022 Must have lowercase letters';
+              case 'digits': return ' \u2022 Must have digits';
+              case 'spaces': return ' \u2022 Should not have spaces';
               default: return " for avoiding warnings"
             }
           })}

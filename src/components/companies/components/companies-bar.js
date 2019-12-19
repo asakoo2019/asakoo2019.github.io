@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import CompanyItem from './company-item';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
