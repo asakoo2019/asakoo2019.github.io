@@ -77,6 +77,7 @@ function RegistrationComponent(props) {
               userWorkExperience: [],
               userProfessionalSkills: [],
               userLanguages: [],
+              aboutUser: '',
             });
             history.push(`/${registrationType.toLowerCase()}/${id}`);
           } else {
@@ -152,10 +153,10 @@ function RegistrationComponent(props) {
 
   function passRegistration(event) {
     event.preventDefault();
-
-    const { emailError, passwordError, repeatPasswordError, birthdayError, nameError, surnameError } = error;
+    const { emailError, passwordError, repeatPasswordError, birthdayError, nameError, surnameError, mailRepeatError } = error;
     
-    if (!emailError && !passwordError && !repeatPasswordError && !birthdayError && !nameError && !surnameError) {
+    if (!emailError && !passwordError && !repeatPasswordError && !birthdayError && !nameError && !surnameError && 
+      !mailRepeatError) {
       setIsLogedIn(true);
     } else {
       const nameError = doTextFieldValidation('nameError', 'Fill this field');
@@ -170,7 +171,10 @@ function RegistrationComponent(props) {
   const handleChange = prop => event => {
     if (prop === values.showPassword) {
       setValues({ ...values, [prop]: !values.showPassword });
-    };
+    } if (prop === 'email') {
+      setError({...error, mailRepeatError : ''});
+      setIsLogedIn(false);
+    }
     setValues({ ...values, [prop]: event.target.value });
   };
 

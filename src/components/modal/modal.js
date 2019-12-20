@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { DialogContent, DialogContentText, DialogActions, Dialog, TextareaAutosize, Button } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
 
@@ -12,13 +12,15 @@ const style = {
 
 function FormDialog(props) {
   const { classes } = props;
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState('');
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
+    props.setAboutUser(value);
     setOpen(false);
   };
 
@@ -31,7 +33,9 @@ function FormDialog(props) {
             Add summary to highlight your experience.
           </DialogContentText>
           <TextareaAutosize className={classes.textArea}
-            autoFocus/>
+            autoFocus
+            defaultValue={value}
+            onChange={setValue}/>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">

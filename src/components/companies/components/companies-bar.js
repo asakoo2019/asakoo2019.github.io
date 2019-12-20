@@ -47,6 +47,7 @@ function  CompaniesBar (props) {
         let result = [];
         for (let i = 1; i <= x; i++){
             result.push(<Button
+                key={i}
                 onClick = {() => otherCopmanies(i)}
 
             >

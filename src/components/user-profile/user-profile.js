@@ -8,27 +8,54 @@ import FormDialog from '../modal';
 const UserProfile = () => {
   const [user, setUser] = useState({});
   const [id, setId] = useState(' ');
-  const [downloadURL, setDownloadURL] = useState(null);
-  console.log(id)
-  auth.onAuthStateChanged((user) => {
-    if (user) {
-      setId(user.uid);
-    } else {
-      // User not logged in or has just logged out.
-    }
-  });
+  const [downloadURL, setUserImage] = useState(null);
+  const [aboutUser, setAboutUser] = useState(' ');
+  
   useEffect(() => {
-    const docRef = firestore.collection("users").doc(id);
-    docRef.get().then(function(doc) {
-      if (doc.exists) {
-        setUser(doc.data());
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setId(user.uid);
       } else {
-        console.log("No such document!");
-      }
-    }).catch(function(error) {
-      console.log("Error getting document:", error);
+        setId(' ');
+      };
     });
-  }, [id]);
+    if (id !== ' ') {
+      const docRef = firestore.collection("users").doc(id);
+      docRef.get().then(function(doc) {
+        if (doc.exists) {
+          setUser(doc.data());
+        } else {
+          console.log("No such document!");
+        }})
+      .catch(function(error) {
+        console.log("Error getting document:", error);
+      });
+    };
+    if(downloadURL !== null) {
+      firestore.collection("users").doc(id)
+        .update({
+          userImage: downloadURL
+        }).then(function() {
+          console.log("Document successfully updated!");
+        }).catch(function(error) {
+          console.error("Error updating document: ", error);
+        });
+    };
+  }, [id, downloadURL]);
+
+  useEffect(() => {
+    if (aboutUser !== ' ' && id !== ' ') {
+      firestore.collection("users").doc(id)
+        .update({
+          aboutUser: aboutUser
+        }).then(function() {
+          console.log("Document successfully updated!");
+        }).catch(function(error) {
+          console.error("Error updating document: ", error);
+        });
+    };
+  }, [aboutUser]);
+
   return (
     <Grid container
       className='userBlock'>
@@ -41,10 +68,10 @@ const UserProfile = () => {
           <h6>{user.aboutUser}</h6>
         </Grid>
         <Grid container item xs={3}>
-          <FormDialog/>
+          <FormDialog setAboutUser={setAboutUser}/>
         </Grid>
       </Grid>
-      <DropzoneDialogBlock setDownloadURL = {setDownloadURL}/>
+      <DropzoneDialogBlock setUserImage = {setUserImage}/>
     </Grid>
   );
 };
