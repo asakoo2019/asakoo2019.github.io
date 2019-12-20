@@ -7,18 +7,18 @@ import FormDialog from '../modal';
 
 const UserProfile = () => {
   const [user, setUser] = useState({});
-  const [key, setKey] = useState(' ');
-  const [downloadURL, setDownloadURL] = useState(undefined);
-  console.log(key)
+  const [id, setId] = useState(' ');
+  const [downloadURL, setDownloadURL] = useState(null);
+  console.log(id)
   auth.onAuthStateChanged((user) => {
     if (user) {
-      setKey(user.uid);
+      setId(user.uid);
     } else {
       // User not logged in or has just logged out.
     }
   });
   useEffect(() => {
-    const docRef = firestore.collection("users").doc(key);
+    const docRef = firestore.collection("users").doc(id);
     docRef.get().then(function(doc) {
       if (doc.exists) {
         setUser(doc.data());
@@ -28,11 +28,11 @@ const UserProfile = () => {
     }).catch(function(error) {
       console.log("Error getting document:", error);
     });
-  }, [key]);
+  }, [id]);
   return (
     <Grid container
       className='userBlock'>
-      <img src={downloadURL} alt={user.userName}/>
+      <img src={user.userImage} alt={user.userName}/>
       <h6>{user.userName}</h6>
       <h6>{user.userSurname}</h6>
       <Grid container

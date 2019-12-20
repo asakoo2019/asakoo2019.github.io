@@ -25,6 +25,7 @@ import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/picker
 import { useHistory } from "react-router-dom";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import userImage from './avatar.png';
 
 function RegistrationComponent(props) {
   const history = useHistory();
@@ -70,7 +71,7 @@ function RegistrationComponent(props) {
               userGender: gender,
               email: email,
               registrationType,
-              userImage: null,
+              userImage: userImage,
               userPhoneNumber: null,
               userAdress: null,
               userWorkExperience: [],

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { DropzoneDialog } from 'material-ui-dropzone';
 import Button from '@material-ui/core/Button';
-import { storage } from '../firebase/db';
+import { storage, auth } from '../firebase/db';
 
 export default class DropzoneDialogBlock extends Component {
 	constructor(props) {
