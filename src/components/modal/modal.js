@@ -14,13 +14,16 @@ function FormDialog(props) {
   const { classes } = props;
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
-
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleSave = () => {
     props.setAboutUser(value);
+    setOpen(false);
+  };
+
+  const handleClose = () => {
     setOpen(false);
   };
 
@@ -32,16 +35,17 @@ function FormDialog(props) {
           <DialogContentText>
             Add summary to highlight your experience.
           </DialogContentText>
-          <TextareaAutosize className={classes.textArea}
+          <TextareaAutosize
+            className={classes.textArea}
             autoFocus
-            defaultValue={value}
-            onChange={setValue}/>
+            value={value}
+            onChange={(e) => setValue(e.target.value)} />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleSave} color="primary">
             Save
           </Button>
         </DialogActions>

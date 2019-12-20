@@ -102,7 +102,7 @@ function RegistrationComponent(props) {
         }).catch(function (err) {
           setError(e => ({ ...e, mailRepeatError: err.message }));
       });
-    }
+    };
   }, [isLogedIn]);
 
   function doTextFieldValidation(textFieldName, errorMessage) {

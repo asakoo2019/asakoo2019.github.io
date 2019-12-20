@@ -9,7 +9,7 @@ const UserProfile = () => {
   const [user, setUser] = useState({});
   const [id, setId] = useState(' ');
   const [downloadURL, setUserImage] = useState(null);
-  const [aboutUser, setAboutUser] = useState(' ');
+  const [aboutUser, setAboutUser] = useState(null);
   
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -41,10 +41,7 @@ const UserProfile = () => {
           console.error("Error updating document: ", error);
         });
     };
-  }, [id, downloadURL]);
-
-  useEffect(() => {
-    if (aboutUser !== ' ' && id !== ' ') {
+    if (aboutUser !== null) {
       firestore.collection("users").doc(id)
         .update({
           aboutUser: aboutUser
@@ -54,7 +51,7 @@ const UserProfile = () => {
           console.error("Error updating document: ", error);
         });
     };
-  }, [aboutUser]);
+  }, [id, downloadURL, aboutUser]);
 
   return (
     <Grid container

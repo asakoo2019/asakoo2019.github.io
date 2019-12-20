@@ -60,9 +60,7 @@ export default class DropzoneDialogBlock extends Component {
 	render() {
 		return (
 			<div>
-				<Button onClick={this.handleOpen.bind(this)}>
-					Add Image
-				</Button>
+				<Button onClick={this.handleOpen.bind(this)}>Add image</Button>
 				<DropzoneDialog
 					open={this.state.open}
 					onSave={this.handleSave.bind(this)}
