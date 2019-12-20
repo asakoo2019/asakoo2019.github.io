@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { DropzoneDialog } from 'material-ui-dropzone';
 import Button from '@material-ui/core/Button';
-import { storage } from '../firebase/db';
+import { storage, auth } from '../firebase/db';
 
 export default class DropzoneDialogBlock extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			open: false,
+			id: ' ',
 		};
 	};
 	
@@ -27,7 +28,7 @@ export default class DropzoneDialogBlock extends Component {
 		if (files.length === 1) {
 			const selectedFile = files[0];
 			const fileName = selectedFile.name;
-			const storageRef = storage.ref('/user-image/' + fileName);
+			const storageRef = storage.ref(`/${this.state.id}/` + fileName);
 			const uploadTask = storageRef.put(selectedFile);
 			uploadTask.on('state_changed', function(snapshot){
 				const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -56,6 +57,19 @@ export default class DropzoneDialogBlock extends Component {
 			alert('Only one photo');
 		};
 	};
+	componentDidMount() {
+		auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({
+					id: user.uid
+				});
+      } else {
+        this.setState({
+					id: ' '
+				});
+      };
+    });
+	}
 
 	render() {
 		return (
