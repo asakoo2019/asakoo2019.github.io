@@ -33,6 +33,7 @@ function  CompaniesBar (props) {
                 userId = {item.userId}
                 companyName =  {item.companyName}
                 regtype = {item.regtype}
+                key = {index}
             />
         );
     });
