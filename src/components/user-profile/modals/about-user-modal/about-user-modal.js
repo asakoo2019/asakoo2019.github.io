@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import { DialogContent, DialogContentText, DialogActions, Dialog, Button, TextField } from '@material-ui/core';
+import { DialogContent, DialogContentText, DialogActions, Dialog, Button, TextField, Grid } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
+import CitySelect from '../../selects/city-select';
+import CountrySelect from '../../selects/country-select';
 
 const style = {
   textArea: {
@@ -17,13 +19,17 @@ const AboutUserModal = (props) => {
   const [userSurname, setUserSurname] = useState(null);
   const [userPhoneNumber, setUserPhoneNumber] = useState(null);
   const [userAdress, setUserAdress] = useState(null);
+  const [userCity, setUserCity] = useState(null);
+  const [userCountry, setUserCountry] = useState(null);
 
   useEffect(() => {
     setUserName(user.userName);
     setUserSurname(user.userSurname);
     setUserPhoneNumber(user.userPhoneNumber);
     setUserAdress(user.userAdress);
-  }, [user.userName, user.userSurname, user.userPhoneNumber, user.userAdress])
+    setUserCity(user.userCity);
+    setUserCountry(user.userCountry);
+  }, [user.userName, user.userSurname, user.userPhoneNumber, user.userAdress, user.userCity, user.userCountry])
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -49,26 +55,34 @@ const AboutUserModal = (props) => {
           <DialogContentText>
             Personal information
           </DialogContentText>
-          <TextField
-            className={classes.userUserName}
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
-            label="Name" />
+          <Grid conteiner>
             <TextField
-            className={classes.userUserSurname}
-            value={userSurname}
-            onChange={(e) => setUserSurname(e.target.value)}
-            label="Surname" />
-          <TextField
-            className={classes.userPhoneNumber}
-            value={userPhoneNumber}
-            onChange={(e) => setUserPhoneNumber(e.target.value)}
-            label="Phone Number" />
-          <TextField
-            className={classes.userAdress}
-            value={userAdress}
-            onChange={(e) => setUserAdress(e.target.value)}
-            label="Adress" />
+              className={classes.userUserName}
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+              label="Name" />
+            <TextField
+              className={classes.userUserSurname}
+              value={userSurname}
+              onChange={(e) => setUserSurname(e.target.value)}
+              label="Surname" />
+            <TextField
+              className={classes.userPhoneNumber}
+              value={userPhoneNumber}
+              onChange={(e) => setUserPhoneNumber(e.target.value)}
+              label="Phone Number" />
+            <TextField
+              className={classes.userAdress}
+              value={userAdress}
+              onChange={(e) => setUserAdress(e.target.value)}
+              label="Adress" />
+            <Grid container>
+              <CitySelect
+                user={user}/>
+              <CountrySelect
+                user={user}/>
+            </Grid>
+          </Grid>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
@@ -81,6 +95,6 @@ const AboutUserModal = (props) => {
       </Dialog>
     </div>
   );
-}
+};
 
 export default withStyles(style)(AboutUserModal);

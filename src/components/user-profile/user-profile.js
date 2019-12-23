@@ -23,10 +23,12 @@ const styles = {
     marginRight: 15,
   },
   userPhoneNumber: {
-    padding: '0 10px',
+    padding: 10,
+    margin: 0,
   },
   userAdress: {
-    padding: '0 10px',
+    padding: 10,
+    margin: 0,
   },
 };
 
@@ -39,6 +41,8 @@ const UserProfile = (props) => {
   const [userPhoneNumber, setUserPhoneNumber] = useState(null);
   const [userAdress, setUserAdress] = useState(null);
   const [aboutUser, setAboutUser] = useState(null);
+  const [userCity, setUserCity] = useState(null);
+  const [userCountry, setUserCountry] = useState(null);
   const { classes } = props;
 
   useEffect(() => {
@@ -118,6 +122,28 @@ const UserProfile = (props) => {
         });
     };
 
+    if (userCity !== null) {
+      firestore.collection("users").doc(id)
+        .update({
+          userCity: userCity
+        }).then(function() {
+          console.log("Document successfully updated!");
+        }).catch(function(error) {
+          console.error("Error updating document: ", error);
+        });
+    };
+
+    if (userCountry !== null) {
+      firestore.collection("users").doc(id)
+        .update({
+          userCountry: userCountry
+        }).then(function() {
+          console.log("Document successfully updated!");
+        }).catch(function(error) {
+          console.error("Error updating document: ", error);
+        });
+    };
+
     if (aboutUser !== null) {
       firestore.collection("users").doc(id)
         .update({
@@ -134,7 +160,7 @@ const UserProfile = (props) => {
     <Container className='userBlock'>
       <Grid container
         className={classNames(classes.aboutUserBlock, classes.userAllBlocks)}
-        justify='space-around'
+        justify='space-between'
         alignItems='center'>
         <Grid container
           item xs={2}>
@@ -152,7 +178,10 @@ const UserProfile = (props) => {
             <PhoneIcon/>
             <p className={classes.userPhoneNumber}>{user.userPhoneNumber}</p>
             <LocationOnIcon/>
-            <p className={classes.userAdress}>{user.userAdress}</p>
+            <p className={classes.userAdress}>{user.userAdress} {user.userCity} {user.userCountry}</p>
+          </Grid>
+          <Grid>
+            <p>Gender: {user.userGender}</p>
           </Grid>
         </Grid>
         <Grid container
@@ -161,6 +190,8 @@ const UserProfile = (props) => {
             user={user}
             setUserName={setUserName}
             setUserSurname={setUserSurname}
+            setUserCity={setUserCity}
+            setUserCountry={setUserCountry}
             setUserPhoneNumber={setUserPhoneNumber}
             setUserAdress={setUserAdress}/>
         </Grid>
@@ -169,7 +200,7 @@ const UserProfile = (props) => {
       <Grid container
         className={classNames(classes.userSummaryBlock, classes.userAllBlocks)}
         alignItems='center'
-        justify='space-around'>
+        justify='space-between'>
         <Grid container item xs={10}>
           <h6>{user.aboutUser}</h6>
         </Grid>
