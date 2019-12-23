@@ -49,8 +49,8 @@ const NavBar = (props) => {
         <Route exact path="/blog" component={Blog} />
         <Route exact path="/sign-in" component={SignIn} />
         <Route exact path="/registration" component={Registration} />
-        <Route exact path="/user-profile" component={UserProfile} />
-        <Route exact path="/company-profile" component={CompanyProfile} />
+        <Route exact path="/employee/:id" component={UserProfile} />
+        <Route exact path="/employer/:id" component={CompanyProfile} />
         <Route path="/" component={HomePageContainer} />
       </Switch>
     </>

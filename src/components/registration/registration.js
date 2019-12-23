@@ -25,6 +25,7 @@ import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/picker
 import { useHistory } from "react-router-dom";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import userImage from './avatar.png';
 
 function RegistrationComponent(props) {
   const history = useHistory();
@@ -66,25 +67,28 @@ function RegistrationComponent(props) {
               userName: name,
               userSurname: surname,
               userBirthDate: birthday,
-              userId: id,
+              id: id,
               userGender: gender,
-              userEmail: email,
+              email: email,
               registrationType,
-              userImage: null,
+              userImage: userImage,
               userPhoneNumber: null,
               userAdress: null,
+              userCity: null,
+              userCountry: null,
               userWorkExperience: [],
               userProfessionalSkills: [],
               userLanguages: [],
+              aboutUser: '',
             });
-            history.push("/user-profile");
+            history.push(`/${registrationType.toLowerCase()}/${id}`);
           } else {
             firestore.collection("companies").doc(id).set({
               companyName: name,
               registerName: surname,
               companyCreatingData: birthday,
-              companyId: id,
-              companyEmail: email,
+              id: id,
+              email: email,
               registrationType,
               companyViewCount: 0,
               aboutCompany: null,
@@ -94,13 +98,16 @@ function RegistrationComponent(props) {
               companyWebsite: null,
               companySocialMedias: {},
               companyCategory: [],
+              userAdress: null,
+              userCity: null,
+              userCountry: null,
             });
-            history.push("/company-profile");
+            history.push(`/${registrationType.toLowerCase()}/${id}`);
           }
         }).catch(function (err) {
           setError(e => ({ ...e, mailRepeatError: err.message }));
-        });
-    }
+      });
+    };
   }, [isLogedIn]);
 
   function doTextFieldValidation(textFieldName, errorMessage) {
@@ -151,10 +158,10 @@ function RegistrationComponent(props) {
 
   function passRegistration(event) {
     event.preventDefault();
-
-    const { emailError, passwordError, repeatPasswordError, birthdayError, nameError, surnameError } = error;
+    const { emailError, passwordError, repeatPasswordError, birthdayError, nameError, surnameError, mailRepeatError } = error;
     
-    if (!emailError && !passwordError && !repeatPasswordError && !birthdayError && !nameError && !surnameError) {
+    if (!emailError && !passwordError && !repeatPasswordError && !birthdayError && !nameError && !surnameError && 
+      !mailRepeatError) {
       setIsLogedIn(true);
     } else {
       const nameError = doTextFieldValidation('nameError', 'Fill this field');
@@ -169,7 +176,10 @@ function RegistrationComponent(props) {
   const handleChange = prop => event => {
     if (prop === values.showPassword) {
       setValues({ ...values, [prop]: !values.showPassword });
-    };
+    } if (prop === 'email') {
+      setError({...error, mailRepeatError : ''});
+      setIsLogedIn(false);
+    }
     setValues({ ...values, [prop]: event.target.value });
   };
 
@@ -265,19 +275,13 @@ function RegistrationComponent(props) {
             .validate(values.password, { list: true }))}
           helperText={error.passwordError === "" ? "" : error.passwordError.map(currentError => {
             switch (currentError) {
-              case 'min': return <p className='MuiFormHelperText-root Mui-error' key={currentError}>
-                Minimum length 6</p>;
-              case 'max': return <p className='MuiFormHelperText-root Mui-error' key={currentError}>
-                Maximum length 20</p>;
-              case 'uppercase': return <p className='MuiFormHelperText-root Mui-error' key={currentError}>
-                Must have uppercase letters</p>;
-              case 'lowercase': return <p className='MuiFormHelperText-root Mui-error' key={currentError}>
-                Must have lowercase letters</p>;
-              case 'digits': return <p className='MuiFormHelperText-root Mui-error' key={currentError}>
-                Must have digits</p>;
-              case 'spaces': return <p className='MuiFormHelperText-root Mui-error' key={currentError}>
-                Should not have spaces</p>;
-              default: return "for avoiding warnings"
+              case 'min': return '\u2022 Minimum length 6';
+              case 'max': return ' \u2022 Maximum length 20,'
+              case 'uppercase': return ' \u2022 Must have uppercase letters'
+              case 'lowercase': return ' \u2022 Must have lowercase letters';
+              case 'digits': return ' \u2022 Must have digits';
+              case 'spaces': return ' \u2022 Should not have spaces';
+              default: return " for avoiding warnings"
             }
           })}
           label="Password"
@@ -307,10 +311,10 @@ function RegistrationComponent(props) {
             labelWidth={120} />
           <FormHelperText id="outlined-weight-helper-text">{error.repeatPasswordError}</FormHelperText>
         </FormControl>
-        <Button className={classes.btn} onClick={(event) => { passRegistration(event) }}>Authorize</Button>
+        <Button className={classes.btn} onClick={(event) => { passRegistration(event) }}>Register</Button>
       </FormControl>
     </Grid>
-  )
+  );
 };
 
 export default withStyles(style)(RegistrationComponent);
