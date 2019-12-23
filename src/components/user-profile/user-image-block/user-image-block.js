@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { DropzoneDialog } from 'material-ui-dropzone';
 import Button from '@material-ui/core/Button';
-import { storage, auth } from '../firebase/db';
+import { storage, auth } from '../../firebase/db';
 
-export default class DropzoneDialogBlock extends Component {
+export default class UserImageBlock extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -56,7 +56,8 @@ export default class DropzoneDialogBlock extends Component {
 		} else {
 			alert('Only one photo');
 		};
-	};
+  };
+  
 	componentDidMount() {
 		auth.onAuthStateChanged((user) => {
       if (user) {
@@ -69,12 +70,15 @@ export default class DropzoneDialogBlock extends Component {
 				});
       };
     });
-	}
+	};
 
 	render() {
+    const user = this.props.user;
 		return (
 			<div>
-				<Button onClick={this.handleOpen.bind(this)}>Add image</Button>
+				<Button onClick={this.handleOpen.bind(this)}>
+          <img src={user.userImage} alt={user.userName}/>
+        </Button>
 				<DropzoneDialog
 					open={this.state.open}
 					onSave={this.handleSave.bind(this)}

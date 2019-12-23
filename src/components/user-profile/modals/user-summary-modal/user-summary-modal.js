@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { DialogContent, DialogContentText, DialogActions, Dialog, TextareaAutosize, Button } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
 
@@ -6,14 +6,19 @@ const style = {
   textArea: {
     resize: 'none',
     width: '100%',
-    outline: 'none'
-  }
+    outline: 'none',
+  },
 };
 
-function FormDialog(props) {
-  const { classes } = props;
+const UserSummaryModal = (props) => {
+  const { classes, user, id } = props;
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(null);
+
+  useEffect(() => {
+    setValue(user.aboutUser);
+  }, [id, user]);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -37,8 +42,7 @@ function FormDialog(props) {
           </DialogContentText>
           <TextareaAutosize
             className={classes.textArea}
-            autoFocus
-            value={value}
+            defaultValue={value}
             onChange={(e) => setValue(e.target.value)} />
         </DialogContent>
         <DialogActions>
@@ -52,6 +56,6 @@ function FormDialog(props) {
       </Dialog>
     </div>
   );
-}
+};
 
-export default withStyles(style)(FormDialog);
+export default withStyles(style)(UserSummaryModal);
