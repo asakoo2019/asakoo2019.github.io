@@ -311,10 +311,10 @@ function RegistrationComponent(props) {
             labelWidth={120} />
           <FormHelperText id="outlined-weight-helper-text">{error.repeatPasswordError}</FormHelperText>
         </FormControl>
-        <Button className={classes.btn} onClick={(event) => { passRegistration(event) }}>Authorize</Button>
+        <Button className={classes.btn} onClick={(event) => { passRegistration(event) }}>Register</Button>
       </FormControl>
     </Grid>
-  )
+  );
 };
 
 export default withStyles(style)(RegistrationComponent);
