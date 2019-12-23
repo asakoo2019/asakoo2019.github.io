@@ -72,7 +72,7 @@ function SignIn(props) {
         break;
         case 'auth/wrong-password': setError({emailError: '', passwordError: errorMessage});
         break;
-        default:
+        default: ;
       } 
     });
 

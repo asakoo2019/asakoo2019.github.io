@@ -7,6 +7,8 @@ import { Grid, Container } from '@material-ui/core';
 import UserImageBlock from './user-image-block';
 import UserSummaryModal from './modals/user-summary-modal';
 import AboutUserModal from './modals/about-user-modal';
+import PhoneIcon from '@material-ui/icons/Phone';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 
 const styles = {
   userAllBlocks: {
@@ -20,8 +22,11 @@ const styles = {
   userName: {
     marginRight: 15,
   },
-  userSummaryBlock: {
-
+  userPhoneNumber: {
+    padding: '0 10px',
+  },
+  userAdress: {
+    padding: '0 10px',
   },
 };
 
@@ -32,6 +37,7 @@ const UserProfile = (props) => {
   const [userName, setUserName] = useState(null);
   const [userSurname, setUserSurname] = useState(null);
   const [userPhoneNumber, setUserPhoneNumber] = useState(null);
+  const [userAdress, setUserAdress] = useState(null);
   const [aboutUser, setAboutUser] = useState(null);
   const { classes } = props;
 
@@ -101,6 +107,17 @@ const UserProfile = (props) => {
       });
     };
 
+    if (userAdress !== null) {
+      firestore.collection("users").doc(id)
+        .update({
+          userAdress: userAdress
+        }).then(function() {
+          console.log("Document successfully updated!");
+        }).catch(function(error) {
+          console.error("Error updating document: ", error);
+        });
+    };
+
     if (aboutUser !== null) {
       firestore.collection("users").doc(id)
         .update({
@@ -111,13 +128,14 @@ const UserProfile = (props) => {
           console.error("Error updating document: ", error);
         });
     };
-  }, [id, downloadURL, userName, userSurname, aboutUser, userPhoneNumber]);
+  }, [id, downloadURL, userName, userSurname, aboutUser, userPhoneNumber, userAdress]);
 
   return (
     <Container className='userBlock'>
       <Grid container
         className={classNames(classes.aboutUserBlock, classes.userAllBlocks)}
-        justify='space-around'>
+        justify='space-around'
+        alignItems='center'>
         <Grid container
           item xs={2}>
           <UserImageBlock setUserImage={setUserImage} user={user}/>
@@ -129,8 +147,12 @@ const UserProfile = (props) => {
             <h6 className={classes.userName}>{user.userName}</h6>
             <h6>{user.userSurname}</h6>
           </Grid>
-          <Grid>
-            <h6>{user.userPhoneNumber}</h6>
+          <Grid container
+            alignItems='center'>
+            <PhoneIcon/>
+            <p className={classes.userPhoneNumber}>{user.userPhoneNumber}</p>
+            <LocationOnIcon/>
+            <p className={classes.userAdress}>{user.userAdress}</p>
           </Grid>
         </Grid>
         <Grid container
@@ -139,7 +161,8 @@ const UserProfile = (props) => {
             user={user}
             setUserName={setUserName}
             setUserSurname={setUserSurname}
-            setUserPhoneNumber={setUserPhoneNumber}/>
+            setUserPhoneNumber={setUserPhoneNumber}
+            setUserAdress={setUserAdress}/>
         </Grid>
       </Grid>
       {/* About User Block*/}

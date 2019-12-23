@@ -15,13 +15,15 @@ const AboutUserModal = (props) => {
   const [open, setOpen] = useState(false);
   const [userName, setUserName] = useState(null);
   const [userSurname, setUserSurname] = useState(null);
-  const [phoneNumber, setUserPhoneNumber] = useState(null);
+  const [userPhoneNumber, setUserPhoneNumber] = useState(null);
+  const [userAdress, setUserAdress] = useState(null);
 
   useEffect(() => {
     setUserName(user.userName);
     setUserSurname(user.userSurname);
     setUserPhoneNumber(user.userPhoneNumber);
-  }, [user.userName, user.userSurname, user.userPhoneNumber])
+    setUserAdress(user.userAdress);
+  }, [user.userName, user.userSurname, user.userPhoneNumber, user.userAdress])
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -30,7 +32,8 @@ const AboutUserModal = (props) => {
   const handleSave = () => {
     props.setUserName(userName);
     props.setUserSurname(userSurname);
-    props.setUserPhoneNumber(phoneNumber);
+    props.setUserPhoneNumber(userPhoneNumber);
+    props.setUserAdress(userAdress);
     setOpen(false);
   };
 
@@ -58,9 +61,14 @@ const AboutUserModal = (props) => {
             label="Surname" />
           <TextField
             className={classes.userPhoneNumber}
-            value={phoneNumber}
+            value={userPhoneNumber}
             onChange={(e) => setUserPhoneNumber(e.target.value)}
             label="Phone Number" />
+          <TextField
+            className={classes.userAdress}
+            value={userAdress}
+            onChange={(e) => setUserAdress(e.target.value)}
+            label="Adress" />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
