@@ -1,50 +1,3 @@
-<<<<<<< HEAD
-import React from 'react';
-import './jobs.css';
-import Grid from '@material-ui/core/Grid';
-import Container from '@material-ui/core/Container';
-import betimage from './betconstruct.jpg';
-
-import JobsSearch from './jobs-search';
-import JobMainContent from './job-main-content';
-
-const jobs = [
-  {
-      imageURL: betimage,
-      about: 'Lorem text about company',
-      jobCategory:'Software development',
-      id: 1,
-  },
-  {
-      imageURL: betimage,
-      about: 'Lorem text about company 1',
-      jobCategory: 'Software development',
-      id: 2,
-  },
-  {
-      imageURL: betimage,
-      about: 'Lorem text about company 2',
-      jobCategory: 'Quality Assurance',
-      id: 3,
-  }
-]
-
-function Jobs() {
-  return (
-    <Container>
-          <Grid
-            container
-            justify="flex-start"
-            alignItems="flex-start"
-          >
-            <JobsSearch />
-            <JobMainContent jobs={jobs} />
-          </ Grid>
-     </Container>
-    
-  )
-}
-=======
 import React, { Component } from 'react';
 import JobsFilter from './jobs-filter';
 import JobsContainer from './jobs-container';
@@ -58,7 +11,6 @@ const jobData = [
     {id: 'jhsfjsf', label: 'Marketolog', checked: false, viewCount: 9},
     {id: 'duhvbsihvnsiv', label: 'Marketolog', checked: false, viewCount: 1},
 ];
->>>>>>> 622fbba3c38878f9034b06d0da3c610782cfe8aa
 
 export default class Jobs extends Component {
 
