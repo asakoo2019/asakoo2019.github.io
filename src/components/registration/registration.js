@@ -74,8 +74,6 @@ function RegistrationComponent(props) {
               userImage: userImage,
               userPhoneNumber: null,
               userAdress: null,
-              userCity: null,
-              userCountry: null,
               userWorkExperience: [],
               userProfessionalSkills: [],
               userLanguages: [],
@@ -98,9 +96,6 @@ function RegistrationComponent(props) {
               companyWebsite: null,
               companySocialMedias: {},
               companyCategory: [],
-              userAdress: null,
-              userCity: null,
-              userCountry: null,
             });
             history.push(`/${registrationType.toLowerCase()}/${id}`);
           }
@@ -311,10 +306,10 @@ function RegistrationComponent(props) {
             labelWidth={120} />
           <FormHelperText id="outlined-weight-helper-text">{error.repeatPasswordError}</FormHelperText>
         </FormControl>
-        <Button className={classes.btn} onClick={(event) => { passRegistration(event) }}>Register</Button>
+        <Button className={classes.btn} onClick={(event) => { passRegistration(event) }}>Authorize</Button>
       </FormControl>
     </Grid>
-  );
+  )
 };
 
 export default withStyles(style)(RegistrationComponent);
