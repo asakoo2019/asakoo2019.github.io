@@ -10,8 +10,25 @@ class Companies extends React.Component{
     super(props);
     this.state = {
         currPage: 10,
-    }
-    this.otherCopmanies = this.otherCopmanies.bind(this)    
+        checkedA: false,
+        checkedB: false,
+        checkedC: false,
+        checkedD: false,
+        checkedE: false,
+        checkedF: false,
+        checkedG: false,
+        checkedH: false,
+        checkedI: false,
+        checkedJ: false,
+        checkedK: false,
+        checkedL: false,
+    };
+    this.otherCopmanies = this.otherCopmanies.bind(this);
+    this.fiterChecked = this.fiterChecked.bind(this);     
+  }
+  fiterChecked (e){
+    e.target.checked ?  this.setState({[`${e.target.value}`]: true}):this.setState({[`${e.target.value}`]: false});   
+    console.log(this.state[`${e.target.value}`])
   }
   otherCopmanies (e) {
     //debugger
@@ -145,7 +162,7 @@ class Companies extends React.Component{
             item xs ={3}
             className =  'companyFilterByH'
           >
-            <CompanyFilter/>
+            <CompanyFilter fiterChecked = {this.fiterChecked} state = {this.state}/>
           </Grid>
           <Grid
             container
