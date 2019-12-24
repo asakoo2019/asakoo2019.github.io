@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Grid } from '@material-ui/core';
 
 export default class  RightSide extends Component {
 
@@ -15,9 +16,11 @@ export default class  RightSide extends Component {
         })
 
         return (
-            <div>
+            <Grid container
+                direction='column'
+                item xs={8}>
                 { elements }
-            </div>
+            </Grid>
         )
     }
 }

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import { Checkbox, FormControlLabel, Grid } from '@material-ui/core';
 
 export default class JobsFilter extends Component {
 
-    checkboxChange = (id, checked, asd) => {
-        this.props.checkboxChange(id, checked, asd);
+    checkboxChange = (id, checked, index) => {
+        this.props.checkboxChange(id, checked, index);
     }
     render() {
         const { jobs } = this.props;
@@ -18,20 +19,20 @@ export default class JobsFilter extends Component {
             const { id, checked } = item;
             
             return uniqueArr[i] ? (
-                <div key={id}>
-                    <input 
-                        type='checkbox'
+                <FormControlLabel key={id} 
+                    control= {<Checkbox
                         checked={checked}
                         onChange = {() => this.checkboxChange(id, checked, uniqueArr[i])}
-                        value={uniqueArr[i]} />
-                    <span>{ uniqueArr[i] }</span>
-                </div>
+                        value={uniqueArr[i]} />}
+                    label={uniqueArr[i]} />
             ): null;
         })
         return (
-            <div>
+            <Grid container
+                direction='column'
+                item xs={3}>
                 { elements }
-            </div>
+            </Grid>
         )
     }
 }

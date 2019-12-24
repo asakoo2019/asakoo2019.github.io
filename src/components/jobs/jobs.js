@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import JobsFilter from './jobs-filter';
 import JobsContainer from './jobs-container';
+import { Container, Grid } from '@material-ui/core';
 
 const jobData = [
     {id: 'dsadsads', label: 'Marketolog', checked: false, viewCount: 9},
@@ -30,9 +31,10 @@ export default class Jobs extends Component {
     }
 
     checkboxToggle = (id, checked, a) => {
-        console.log('aaaaaaaaaa', a)
+
         const { jobs } = this.state;
         this.setState(state => {
+
             const idx = state.jobs.findIndex((item) => {
                 return item.id === id
             })
@@ -68,14 +70,16 @@ export default class Jobs extends Component {
            
         })
         return (
-            <div>
-                <JobsFilter 
-                    jobs = { jobs }
-                    checkboxChange= { this.checkboxToggle } />
-                <hr />
-                <JobsContainer
-                    jobs = { checked.length ? newJob : jobs } />
-            </div>
+            <Container>
+                <Grid container
+                    justify='space-around'>
+                    <JobsFilter 
+                        jobs = { jobs }
+                        checkboxChange= { this.checkboxToggle } />
+                    <JobsContainer
+                        jobs = { checked.length ? newJob : jobs } />
+                </Grid>
+            </Container>
         )
     }
 }
