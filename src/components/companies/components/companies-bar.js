@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import CompanyItem from './company-item';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
@@ -33,6 +33,7 @@ function  CompaniesBar (props) {
                 userId = {item.userId}
                 companyName =  {item.companyName}
                 regtype = {item.regtype}
+                key = {index}
             />
         );
     });
@@ -46,6 +47,7 @@ function  CompaniesBar (props) {
         let result = [];
         for (let i = 1; i <= x; i++){
             result.push(<Button
+                key={i}
                 onClick = {() => otherCopmanies(i)}
 
             >

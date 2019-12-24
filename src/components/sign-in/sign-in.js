@@ -14,10 +14,13 @@ import {
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { withStyles } from "@material-ui/core/styles";
-import { auth } from "../firebase/db";
+import { auth, firestore } from "../firebase/db";
 import style from '../Login&RegistrationStyles&Npm/login&RegStyle';
+import { useHistory } from "react-router-dom";
+
 
 function SignIn(props) {
+  const history = useHistory();
   const [values, setValues] = useState({
     email: '',
     password: "",
@@ -47,7 +50,17 @@ function SignIn(props) {
     auth.signInWithEmailAndPassword(email, password)
     .then(function(message) {
       setError({email: '', password: ''});
-      //continue
+      firestore.collection("users").get()
+      .then(function(doc) {
+        let key;
+        for (let i = 0; i < doc.docs.length; i++) {
+          if (doc.docs[i].data().email === values.email) {
+            key = doc.docs[i].data().id;
+          }
+        }
+        history.push(`/employee/${key}`);
+      })
+      .error(err => {console.log(err)})
     })
     .catch(function(err) {
       const errorCode = err.code;
@@ -59,7 +72,7 @@ function SignIn(props) {
         break;
         case 'auth/wrong-password': setError({emailError: '', passwordError: errorMessage});
         break;
-        default:
+        default: ;
       } 
     });
 
