@@ -6,12 +6,15 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 
 class Companies extends React.Component{
-  state = {
-    currPage: 10,
+  constructor(props){
+    super(props);
+    this.state = {
+        currPage: 10,
+    }
+    this.otherCopmanies = this.otherCopmanies.bind(this)    
   }
-  
   otherCopmanies (e) {
-    debugger
+    //debugger
     let num = e.target.innerHTML;
     let a  = num * 10;
     console.log(a)
@@ -151,7 +154,7 @@ class Companies extends React.Component{
             item xs ={9}
             className =  'companiesBarByH'
           >
-            <CompaniesBar employer = {workers} selectPage = {currPage} otherCopmanies = {this.otherCopmanies}/>
+            <CompaniesBar employer = {workers} currPage = {this.state.currPage} otherCopmanies = {this.otherCopmanies}/>
           </Grid>
         </Grid>
       </Container>
