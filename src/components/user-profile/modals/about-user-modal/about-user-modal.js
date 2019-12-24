@@ -33,7 +33,8 @@ const AboutUserModal = (props) => {
     setOpen(true);
   };
 
-  const handleSave = () => {
+  const handleSave = (e) => {
+    e.preventDefault();
     props.setUserName(userName);
     props.setUserSurname(userSurname);
     props.setUserPhoneNumber(userPhoneNumber);
@@ -75,18 +76,18 @@ const AboutUserModal = (props) => {
               value={userAdress}
               onChange={(e) => setUserAdress(e.target.value)}
               label="Adress" />
-              <CitySelect
-                user={user}
-                setUserCity={setUserCity}/>
-              <CountrySelect
-                user={user}
-                setUserCountry={setUserCountry}/>
+            <CitySelect
+              user={user}
+              setUserCity={setUserCity}/>
+            <CountrySelect
+              user={user}
+              setUserCountry={setUserCountry}/>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleSave} color="primary">
+          <Button onSubmit={handleSave} color="primary">
             Save
           </Button>
         </DialogActions>

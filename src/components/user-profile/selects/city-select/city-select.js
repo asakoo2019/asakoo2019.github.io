@@ -10,7 +10,7 @@ const style = {
 
 const CitySelect = (props) => {
   const { classes, user } = props;
-  const [city, setCity] = useState('');
+  const [city, setCity] = useState(user.userCity);
   
   useEffect(() => {
     switch (city) {
@@ -33,11 +33,11 @@ const CitySelect = (props) => {
     <div>
       <FormControl className={classes.citySelect}>
         <InputLabel>City</InputLabel>
-        <Select value={user.userCity}
+        <Select value={city}
           onChange={handleChange}>
-          <MenuItem value={'yerevan'}>Yerevan</MenuItem>
-          <MenuItem value={'gyumri'}>Gyumri</MenuItem>
-          <MenuItem value={'vanadzor'}>Vanadzor</MenuItem>
+          <MenuItem value={'Yerevan'}>Yerevan</MenuItem>
+          <MenuItem value={'Gyumri'}>Gyumri</MenuItem>
+          <MenuItem value={'Vanadzor'}>Vanadzor</MenuItem>
         </Select>
       </FormControl>
     </div>

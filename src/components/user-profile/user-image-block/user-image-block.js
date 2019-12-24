@@ -28,8 +28,10 @@ export default class UserImageBlock extends Component {
 		if (files.length === 1) {
 			const selectedFile = files[0];
 			const fileName = selectedFile.name;
-			const storageRef = storage.ref(`/${this.state.id}/` + fileName);
+			const dotIndex = fileName.lastIndexOf('.');
+			const storageRef = storage.ref(`/${this.state.id}/${this.state.id}${fileName.slice(dotIndex)}`);
 			const uploadTask = storageRef.put(selectedFile);
+
 			uploadTask.on('state_changed', function(snapshot){
 				const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 				console.log('Upload is ' + progress + '% done');
@@ -79,14 +81,12 @@ export default class UserImageBlock extends Component {
 				<Button onClick={this.handleOpen.bind(this)}>
           <img src={user.userImage} alt={user.userName}/>
         </Button>
-				<DropzoneDialog
-					open={this.state.open}
+				<DropzoneDialog open={this.state.open}
 					onSave={this.handleSave.bind(this)}
 					acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
 					showPreviews={true}
 					maxFileSize={500000}
-					onClose={this.handleClose.bind(this)}
-				/>
+					onClose={this.handleClose.bind(this)} />
 			</div>
 		);
 	};
