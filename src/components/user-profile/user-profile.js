@@ -10,6 +10,7 @@ import AboutUserModal from './modals/about-user-modal';
 import PhoneIcon from '@material-ui/icons/Phone';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import SettingsToggleMenu from '../settings-toggle-menu';
+import MailIcon from '@material-ui/icons/Mail';
 
 const styles = {
   userAllBlocks: {
@@ -23,11 +24,7 @@ const styles = {
   userName: {
     marginRight: 15,
   },
-  userPhoneNumber: {
-    padding: 8,
-    margin: 0,
-  },
-  userAdress: {
+  userSecondLine: {
     padding: 8,
     margin: 0,
   },
@@ -157,11 +154,6 @@ const UserProfile = (props) => {
     };
   }, [id, downloadURL, userName, userSurname, aboutUser, userPhoneNumber, userAdress, userCity, userCountry]);
 
-  const FirstUpperCase = (str) => {
-    if (!str) return str;
-    return str[0].toUpperCase() + str.slice(1);
-  };
-
   return (
     <Container className='userBlock'>
       <Grid container
@@ -177,16 +169,18 @@ const UserProfile = (props) => {
           item xs={8}
           direction='column'>
           <Grid container>
-            <h6 className={classes.userName}>{user.userName}</h6>
+            <h6 className={classes.SecondLine}>{user.userName}</h6>
             <h6>{user.userSurname}</h6>
           </Grid>
           <Grid container
             alignItems='center'>
             <PhoneIcon/>
-            <p className={classes.userPhoneNumber}>{user.userPhoneNumber}</p>
+            <p className={classes.userSecondLine}>{user.userPhoneNumber}</p>
+            <MailIcon/>
+            <p className={classes.userSecondLine}>{user.email}</p>
             <LocationOnIcon/>
-            <p className={classes.userAdress}>
-              {user.userAdress ? FirstUpperCase(user.userAdress) : null} {user.userCity ? FirstUpperCase(user.userCity) : null} {user.userCountry ? FirstUpperCase(user.userCountry) : null}
+            <p className={classes.userSecondLine}>
+              {user.userAdress} {user.userCity} {user.userCountry}
             </p>
           </Grid>
           <Grid>
@@ -210,10 +204,10 @@ const UserProfile = (props) => {
         className={classNames(classes.userSummaryBlock, classes.userAllBlocks)}
         alignItems='center'
         justify='space-between'>
-        <Grid container item xs={10}>
-          <h6>{user.aboutUser}</h6>
+        <Grid item xs={10}>
+          <p>{user.aboutUser}</p>
         </Grid>
-        <Grid container item xs={1}>
+        <Grid item xs={1}>
           <UserSummaryModal
             user={user}
             id={id}
