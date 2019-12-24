@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
 
@@ -12,6 +12,19 @@ const CountrySelect = (props) => {
   const { classes, user } = props;
   const [country, setCountry] = useState('');
 
+  useEffect(() => {
+    switch (country) {
+      case 'Armenia': setCountry('Armenia');
+      break;
+      case 'Russia': setCountry('Russia');
+      break;
+      case 'Georgia': setCountry('Georgia');
+      break;
+      default: ;
+    };
+    props.setUserCountry(country);
+  }, [country, props]);
+
   const handleChange = event => {
     setCountry(event.target.value);
   };
@@ -20,11 +33,11 @@ const CountrySelect = (props) => {
     <div>
       <FormControl className={classes.countrySelect}>
         <InputLabel>Country</InputLabel>
-        <Select value={country}
+        <Select value={user.userCountry}
           onChange={handleChange}>
-          <MenuItem value={user.userCountry}>Armenia</MenuItem>
-          <MenuItem value={user.userCountry}>Russia</MenuItem>
-          <MenuItem value={user.userCountry}>Gorgia</MenuItem>
+          <MenuItem value={'armenia'}>Armenia</MenuItem>
+          <MenuItem value={'russia'}>Russia</MenuItem>
+          <MenuItem value={'georgia'}>Georgia</MenuItem>
         </Select>
       </FormControl>
     </div>

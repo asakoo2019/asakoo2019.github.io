@@ -23,11 +23,11 @@ const styles = {
     marginRight: 15,
   },
   userPhoneNumber: {
-    padding: 10,
+    padding: 8,
     margin: 0,
   },
   userAdress: {
-    padding: 10,
+    padding: 8,
     margin: 0,
   },
 };
@@ -154,7 +154,12 @@ const UserProfile = (props) => {
           console.error("Error updating document: ", error);
         });
     };
-  }, [id, downloadURL, userName, userSurname, aboutUser, userPhoneNumber, userAdress]);
+  }, [id, downloadURL, userName, userSurname, aboutUser, userPhoneNumber, userAdress, userCity, userCountry]);
+
+  const FirstUpperCase = (str) => {
+    if (!str) return str;
+    return str[0].toUpperCase() + str.slice(1);
+  };
 
   return (
     <Container className='userBlock'>
@@ -162,6 +167,7 @@ const UserProfile = (props) => {
         className={classNames(classes.aboutUserBlock, classes.userAllBlocks)}
         justify='space-between'
         alignItems='center'>
+        {/* About User Block */}
         <Grid container
           item xs={2}>
           <UserImageBlock setUserImage={setUserImage} user={user}/>
@@ -178,7 +184,9 @@ const UserProfile = (props) => {
             <PhoneIcon/>
             <p className={classes.userPhoneNumber}>{user.userPhoneNumber}</p>
             <LocationOnIcon/>
-            <p className={classes.userAdress}>{user.userAdress} {user.userCity} {user.userCountry}</p>
+            <p className={classes.userAdress}>
+              {user.userAdress ? FirstUpperCase(user.userAdress) : null} {user.userCity ? FirstUpperCase(user.userCity) : null} {user.userCountry ? FirstUpperCase(user.userCountry) : null}
+            </p>
           </Grid>
           <Grid>
             <p>Gender: {user.userGender}</p>
@@ -196,7 +204,7 @@ const UserProfile = (props) => {
             setUserAdress={setUserAdress}/>
         </Grid>
       </Grid>
-      {/* About User Block*/}
+      {/* User Summary Block */}
       <Grid container
         className={classNames(classes.userSummaryBlock, classes.userAllBlocks)}
         alignItems='center'

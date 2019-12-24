@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { DialogContent, DialogContentText, DialogActions, Dialog, Button, TextField, Grid } from '@material-ui/core';
+import { DialogContent, DialogContentText, DialogActions, Dialog, Button, TextField } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
 import CitySelect from '../../selects/city-select';
 import CountrySelect from '../../selects/country-select';
@@ -19,17 +19,15 @@ const AboutUserModal = (props) => {
   const [userSurname, setUserSurname] = useState(null);
   const [userPhoneNumber, setUserPhoneNumber] = useState(null);
   const [userAdress, setUserAdress] = useState(null);
-  const [userCity, setUserCity] = useState(null);
-  const [userCountry, setUserCountry] = useState(null);
+  const [userCity, setUserCity] = useState(' ');
+  const [userCountry, setUserCountry] = useState(' ');
 
   useEffect(() => {
     setUserName(user.userName);
     setUserSurname(user.userSurname);
     setUserPhoneNumber(user.userPhoneNumber);
     setUserAdress(user.userAdress);
-    setUserCity(user.userCity);
-    setUserCountry(user.userCountry);
-  }, [user.userName, user.userSurname, user.userPhoneNumber, user.userAdress, user.userCity, user.userCountry])
+  }, [user.userName, user.userSurname, user.userPhoneNumber, user.userAdress]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -39,6 +37,8 @@ const AboutUserModal = (props) => {
     props.setUserName(userName);
     props.setUserSurname(userSurname);
     props.setUserPhoneNumber(userPhoneNumber);
+    props.setUserCity(userCity);
+    props.setUserCountry(userCountry);
     props.setUserAdress(userAdress);
     setOpen(false);
   };
@@ -55,7 +55,6 @@ const AboutUserModal = (props) => {
           <DialogContentText>
             Personal information
           </DialogContentText>
-          <Grid conteiner>
             <TextField
               className={classes.userUserName}
               value={userName}
@@ -76,13 +75,12 @@ const AboutUserModal = (props) => {
               value={userAdress}
               onChange={(e) => setUserAdress(e.target.value)}
               label="Adress" />
-            <Grid container>
               <CitySelect
-                user={user}/>
+                user={user}
+                setUserCity={setUserCity}/>
               <CountrySelect
-                user={user}/>
-            </Grid>
-          </Grid>
+                user={user}
+                setUserCountry={setUserCountry}/>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
