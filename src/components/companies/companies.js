@@ -6,7 +6,21 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 
 class Companies extends React.Component{
+  state = {
+    currPage: 10,
+  }
+  
+  otherCopmanies (e) {
+    debugger
+    let num = e.target.innerHTML;
+    let a  = num * 10;
+    console.log(a)
+    this.setState(state => ({
+      currPage: a
+    }));
+  }
   render(){
+    const {currPage} = this.state;
     const workers = [
       {
         userId: '123bank',
@@ -63,60 +77,61 @@ class Companies extends React.Component{
         industryType: 'Import/Export/Trade',
       },
       {
-        userId: '123iet',
+        userId: '234iet',
         companyName: 'Reyma',
         regtype: 'employer',
         industryType: 'Import/Export/Trade',
       },
       {
-        userId: '123iet',
+        userId: '345iet',
         companyName: 'MegaFood',
         regtype: 'employer',
         industryType: 'Import/Export/Trade',
       },
       {
-        userId: '123iet',
+        userId: '456iet',
         companyName: 'Sali',
         regtype: 'employer',
         industryType: 'Import/Export/Trade',
       },
       {
-        userId: '123iet',
+        userId: '567iet',
         companyName: 'ImexGroup',
         regtype: 'employer',
         industryType: 'Import/Export/Trade',
       },
       {
-        userId: '456qwe',
+        userId: '123qwe',
         companyName: 'eworld',
         regtype: 'employer',
         industryType: 'Marketing/Advertising/PR',
       }, 
       {
-        userId: '567qwe',
+        userId: '234qwe',
         companyName: 'Marriot Hotel',
         regtype: 'employer',
         industryType: 'Tourism/Hospitality/Entertainment',
       }, 
       {
-        userId: '678qwe',
+        userId: '345qwe',
         companyName: 'Alfa-Farm',
         regtype: 'employer',
         industryType: 'Medical/Pharmaceutical',
       }, 
       {
-        userId: '678qwe',
+        userId: '456qwe',
         companyName: 'Shant TV',
         regtype: 'employer',
         industryType: 'TV/Radio/Media',
       },
       {
-        userId: '678qwe',
+        userId: '567qwe',
         companyName: 'Ucom',
         regtype: 'employer',
         industryType: 'Telecommunications',
       },
     ];
+
     return(
       <Container maxWidth = 'lg'> 
         <Grid container>
@@ -136,7 +151,7 @@ class Companies extends React.Component{
             item xs ={9}
             className =  'companiesBarByH'
           >
-            <CompaniesBar employer = {workers}/>
+            <CompaniesBar employer = {workers} selectPage = {currPage} otherCopmanies = {this.otherCopmanies}/>
           </Grid>
         </Grid>
       </Container>
