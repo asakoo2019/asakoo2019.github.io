@@ -9,6 +9,7 @@ import UserSummaryModal from './modals/user-summary-modal';
 import AboutUserModal from './modals/about-user-modal';
 import PhoneIcon from '@material-ui/icons/Phone';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
+import SettingsToggleMenu from '../settings-toggle-menu';
 
 const styles = {
   userAllBlocks: {
@@ -218,6 +219,7 @@ const UserProfile = (props) => {
             id={id}
             setAboutUser={setAboutUser}/>
         </Grid>
+        <SettingsToggleMenu/>
       </Grid>
     </Container>
   );
