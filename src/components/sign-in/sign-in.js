@@ -21,6 +21,7 @@ import { useHistory } from "react-router-dom";
 
 function SignIn(props) {
   const history = useHistory();
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
   const [values, setValues] = useState({
     email: '',
     password: "",
@@ -32,7 +33,7 @@ function SignIn(props) {
   })
   const { classes } = props;
   const {email, password, showPassword} = values;
-  const {emailError, passwordError} = error;
+  const {emailError, passwordError} = error; 
 
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value });
@@ -67,15 +68,27 @@ function SignIn(props) {
       const errorMessage = err.message;
       switch (errorCode) {
         case 'auth/invalid-email': setError({emailError: errorMessage, passwordError: ''});
+                                  setIsForgotPassword(false);
         break;
         case 'auth/user-not-found': setError({emailError: errorMessage, passwordError: ''});
+                                  setIsForgotPassword(false);
         break;
         case 'auth/wrong-password': setError({emailError: '', passwordError: errorMessage});
+                                    setIsForgotPassword(true);
         break;
         default: ;
       } 
     });
+  }
 
+  const forgotPassword = () => {
+    auth.sendPasswordResetEmail(values.email)
+    .then(function (u) {
+    alert('Please check your email...')
+    }).catch(function (e) {
+    console.log(e);
+    console.log(email);
+    });
   }
 
   return (
@@ -127,6 +140,7 @@ function SignIn(props) {
           <FormHelperText id="outlined-weight-helper-text">{passwordError}</FormHelperText>
         </FormControl>
         <Button className={classes.btn} onClick = {(event) => passLogin(event)}>Sign in</Button>
+        {isForgotPassword ? <p className = {classes.forgotPassword} onClick={forgotPassword}>Forgot password?</p> : <p></p>}
       </FormControl>
       </Grid>
     </div>
