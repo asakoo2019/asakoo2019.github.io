@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { DialogContent, DialogContentText, DialogActions, Dialog, TextareaAutosize, Button } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
 
@@ -6,16 +6,26 @@ const style = {
   textArea: {
     resize: 'none',
     width: '100%',
-    outline: 'none'
-  }
+    outline: 'none',
+  },
 };
 
-function FormDialog(props) {
-  const { classes } = props;
-  const [open, setOpen] = React.useState(false);
+const UserSummaryModal = (props) => {
+  const { classes, user, id } = props;
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+
+  useEffect(() => {
+    setValue(user.aboutUser);
+  }, [id, user]);
 
   const handleClickOpen = () => {
     setOpen(true);
+  };
+
+  const handleSave = () => {
+    props.setAboutUser(value);
+    setOpen(false);
   };
 
   const handleClose = () => {
@@ -30,20 +40,22 @@ function FormDialog(props) {
           <DialogContentText>
             Add summary to highlight your experience.
           </DialogContentText>
-          <TextareaAutosize className={classes.textArea}
-            autoFocus/>
+          <TextareaAutosize
+            className={classes.textArea}
+            defaultValue={value}
+            onChange={(e) => setValue(e.target.value)} />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleSave} color="primary">
             Save
           </Button>
         </DialogActions>
       </Dialog>
     </div>
   );
-}
+};
 
-export default withStyles(style)(FormDialog);
+export default withStyles(style)(UserSummaryModal);
