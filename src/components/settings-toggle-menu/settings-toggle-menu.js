@@ -7,8 +7,10 @@ import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import { makeStyles } from '@material-ui/core/styles';
+import {auth} from '../firebase/db'
 // import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import SettingsIcon from '@material-ui/icons/Settings';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -20,6 +22,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function SettingsToggleMenu() {
+  const history = useHistory();
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
@@ -41,6 +44,15 @@ export default function SettingsToggleMenu() {
       event.preventDefault();
       setOpen(false);
     }
+  }
+
+  function signOut() {
+    auth.signOut().then(function() {
+      console.log('out');
+      history.replace('/')
+    }).catch(function(error) {
+      // An error happened.
+    });
   }
 
   // return focus to the button when we transitioned from !open -> open
@@ -75,7 +87,7 @@ export default function SettingsToggleMenu() {
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                     <MenuItem onClick={handleClose}>Change Password</MenuItem>
                     <MenuItem onClick={handleClose}>Delete Account</MenuItem>
-                    <MenuItem onClick={handleClose}>Log out</MenuItem>
+                    <MenuItem onClick={(event) => {handleClose(event); signOut()}}>Sign out</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
