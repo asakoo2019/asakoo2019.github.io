@@ -1,13 +1,11 @@
-import React from 'react';
+import React, {useSate} from 'react';
 import CompanyItem from './company-item';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
 import {Grid} from '@material-ui/core';
-//import PaginationPart from './pagein'
 
 
-
-const styles = makeStyles(theme => ({
+const useStyles = makeStyles(theme => ({
     root: {
       flexGrow: 1,
     },
@@ -25,9 +23,10 @@ const styles = makeStyles(theme => ({
     },
   }));
 
-function  CompaniesBar (props) {    
-        //const { classes } = styles.theme;
+function  CompaniesBar (props) {   
+    const classes = useStyles();
     const comps = props.employer.slice (props.currPage - 10, props.currPage).map((item, index) => {
+        
         return (
             <CompanyItem 
                 key = {item.userId}
@@ -54,14 +53,13 @@ function  CompaniesBar (props) {
             direction="column"
             justify="flex-start"
             alignItems="center"
-            //className={classes.root}
-
+            className = {classes.root}
         >   
             <Grid container
                 alignItems="flex-start"
-                //className={classes.gridUp}    
+                className={classes.gridUp}    
             >
-                <span>1 - 10 company results from {props.employer.length} total companies on asd.am</span>
+                <span>1 - 10 company results from {props.employer.length} total companies on asd.am</span>                
             </Grid>
             <Grid container
                 direction = "column"
@@ -71,12 +69,11 @@ function  CompaniesBar (props) {
                 {comps}
             </Grid> 
             <Grid container
-                // className={classes.gridDown}
+                className={classes.gridDown}
             >
                 {button(props.employer)}
             </Grid>  
-        </Grid>
-        
+        </Grid>      
     );   
 }
 export default CompaniesBar;
