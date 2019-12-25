@@ -78,9 +78,9 @@ function RegistrationComponent(props) {
               registrationType,
               userImage: userImage,
               userPhoneNumber: null,
-              userAdress: null,
-              userCity: null,
-              userCountry: null,
+              userAdress: ' ',
+              userCity: ' ',
+              userCountry: ' ',
               userWorkExperience: [],
               userProfessionalSkills: [],
               userLanguages: [],
@@ -107,8 +107,8 @@ function RegistrationComponent(props) {
               companyWebsite: null,
               companySocialMedias: {},
               companyCategory: [],
-              userCity: null,
-              userCountry: null,
+              userCity: ' ',
+              userCountry: ' ',
             });
             history.push(`/${registrationType.toLowerCase()}/${id}`);
           }
