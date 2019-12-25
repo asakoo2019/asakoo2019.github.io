@@ -49,6 +49,7 @@ function RegistrationComponent(props) {
     gender: "Female",
   });
   const [birthday, setBirthday] = React.useState(new Date());
+  
   const handleDateChange = date => {
     setBirthday(date);
   };

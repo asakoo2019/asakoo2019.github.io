@@ -11,6 +11,8 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import SettingsToggleMenu from '../settings-toggle-menu';
 import MailIcon from '@material-ui/icons/Mail';
+import WcIcon from '@material-ui/icons/Wc';
+import DateRangeIcon from '@material-ui/icons/DateRange';
 
 const styles = {
   userAllBlocks: {
@@ -24,9 +26,12 @@ const styles = {
   userName: {
     marginRight: 15,
   },
-  userSecondLine: {
+  userLine: {
     padding: 8,
     margin: 0,
+  },
+  aboutUserIcons: {
+    color: '#FE654F',
   },
 };
 
@@ -42,6 +47,7 @@ const UserProfile = (props) => {
   const [userCity, setUserCity] = useState(null);
   const [userCountry, setUserCountry] = useState(null);
   const { classes } = props;
+  console.log(user.userBirthDate);
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -169,22 +175,30 @@ const UserProfile = (props) => {
           item xs={8}
           direction='column'>
           <Grid container>
-            <h6 className={classes.SecondLine}>{user.userName}</h6>
+            <h6 className={classes.userName}>{user.userName}</h6>
             <h6>{user.userSurname}</h6>
           </Grid>
           <Grid container
             alignItems='center'>
-            <PhoneIcon/>
-            <p className={classes.userSecondLine}>{user.userPhoneNumber}</p>
-            <MailIcon/>
-            <p className={classes.userSecondLine}>{user.email}</p>
-            <LocationOnIcon/>
-            <p className={classes.userSecondLine}>
+            <PhoneIcon className={classes.aboutUserIcons}/>
+            <p className={classes.userLine}>{user.userPhoneNumber}</p>
+            <MailIcon className={classes.aboutUserIcons}/>
+            <p className={classes.userLine}>{user.email}</p>
+            <LocationOnIcon className={classes.aboutUserIcons}/>
+            <p className={classes.userLine}>
               {user.userAdress} {user.userCity} {user.userCountry}
             </p>
           </Grid>
-          <Grid>
-            <p>Gender: {user.userGender}</p>
+          <Grid container
+            alignItems='center'>
+            <DateRangeIcon className={classes.aboutUserIcons}/>
+            <p className={classes.userLine}>
+              {/* {user.userBirthDate} */}
+            </p>
+            <WcIcon className={classes.aboutUserIcons}/>
+            <p className={classes.userLine}>
+              {user.userGender}
+            </p>
           </Grid>
         </Grid>
         <Grid container

@@ -33,8 +33,7 @@ const AboutUserModal = (props) => {
     setOpen(true);
   };
 
-  const handleSave = (e) => {
-    e.preventDefault();
+  const handleSave = () => {
     props.setUserName(userName);
     props.setUserSurname(userSurname);
     props.setUserPhoneNumber(userPhoneNumber);
@@ -67,6 +66,11 @@ const AboutUserModal = (props) => {
               onChange={(e) => setUserSurname(e.target.value)}
               label="Surname" />
             <TextField
+              disabled
+              className={classes.userEmail}
+              value={user.email}
+              label="E-mail" />
+            <TextField
               className={classes.userPhoneNumber}
               value={userPhoneNumber}
               onChange={(e) => setUserPhoneNumber(e.target.value)}
@@ -87,7 +91,7 @@ const AboutUserModal = (props) => {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onSubmit={handleSave} color="primary">
+          <Button onClick={handleSave} color="primary">
             Save
           </Button>
         </DialogActions>
