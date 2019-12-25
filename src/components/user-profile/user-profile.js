@@ -13,8 +13,9 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import MailIcon from '@material-ui/icons/Mail';
 import WcIcon from '@material-ui/icons/Wc';
 import DateRangeIcon from '@material-ui/icons/DateRange';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { useHistory } from "react-router-dom";
+import SettingsToggleMenu from '../settings-toggle-menu';
 
 const styles = {
   userAllBlocks: {
