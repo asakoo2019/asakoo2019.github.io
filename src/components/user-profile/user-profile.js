@@ -217,7 +217,7 @@ const UserProfile = (props) => {
         {/* About User Block */}
         <Grid container
           item xs={12} sm={4} md={2}>
-          <UserImageBlock setUserImage={setUserImage} user={user}/>
+          {props.user ? <UserImageBlock setUserImage={setUserImage} user={user}/> : <UserImageBlock user={user}/>}
         </Grid>
         <Grid container
           item xs={12} sm={8} md={10}
@@ -229,7 +229,7 @@ const UserProfile = (props) => {
               <h6 className={classes.userName}>{user.userName}</h6>
               <h6>{user.userSurname}</h6>
             </Grid>
-            <AboutUserModal
+            {props.user && <AboutUserModal
               user={user}
               setUserName={setUserName}
               setUserSurname={setUserSurname}
@@ -238,7 +238,7 @@ const UserProfile = (props) => {
               setUserPhoneNumber={setUserPhoneNumber}
               setUserAdress={setUserAdress}
               setUserBirthDate={setUserBirthDate}
-              setUserGender={setUserGender}/>
+              setUserGender={setUserGender}/>}
           </Grid>
           <Grid container
             justify='space-around'>
@@ -289,10 +289,10 @@ const UserProfile = (props) => {
         </Grid>
         <Grid container item xs={1}
           justify='flex-end'>
-          <UserSummaryModal
+          {props.user && <UserSummaryModal
             user={user}
             id={id}
-            setAboutUser={setAboutUser}/>
+            setAboutUser={setAboutUser}/>}
         </Grid>
       </Grid>
       {/* User Languages Block */}
@@ -308,10 +308,10 @@ const UserProfile = (props) => {
         </Grid>
         <Grid container item xs={1}
           justify='flex-end'>
-          <UserLanguagesModal
+          {props.user && <UserLanguagesModal
             user={user}
             id={id}
-            setUserLanguages={setUserLanguages}/>
+            setUserLanguages={setUserLanguages}/>}
         </Grid>
         {props.user && <SettingsToggleMenu/>}
       </Grid>

@@ -78,9 +78,10 @@ export default class UserImageBlock extends Component {
     const user = this.props.user;
 		return (
 			<div>
-				<Button onClick={this.handleOpen.bind(this)}>
-          <img src={user.userImage} alt={user.userName}/>
-        </Button>
+				{this.props.setUserImage ? <Button onClick={this.handleOpen.bind(this)}>
+          										<img src={user.userImage} alt={user.userName}/>
+												</Button> 
+										 : <img src={user.userImage} alt={user.userName}/>}
 				<DropzoneDialog open={this.state.open}
 					onSave={this.handleSave.bind(this)}
 					acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
