@@ -11,6 +11,7 @@ import {auth} from '../firebase/db'
 // import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { useHistory } from "react-router-dom";
+import DeleteAccountDialog from './deleteAccountDialog'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,10 +29,12 @@ export default function SettingsToggleMenu() {
   const anchorRef = React.useRef(null);
 
   const handleToggle = () => {
+    debugger;
     setOpen(prevOpen => !prevOpen);
   };
 
   const handleClose = event => {
+    debugger;
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
@@ -40,16 +43,25 @@ export default function SettingsToggleMenu() {
   };
 
   function handleListKeyDown(event) {
+    debugger;
     if (event.key === 'Tab') {
       event.preventDefault();
       setOpen(false);
     }
   }
 
+  function deleteAccount() {
+    var user = auth.currentUser;
+    user.delete().then(function() {
+      history.replace('/');
+    }).catch(function(error) {
+     console.log(error)
+    });
+  }
+
   function signOut() {
     auth.signOut().then(function() {
-      console.log('out');
-      history.replace('/')
+      history.replace('/');
     }).catch(function(error) {
       // An error happened.
     });
@@ -58,6 +70,7 @@ export default function SettingsToggleMenu() {
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = React.useRef(open);
   React.useEffect(() => {
+    debugger;
     if (prevOpen.current === true && open === false) {
       anchorRef.current.focus();
     }
@@ -86,8 +99,8 @@ export default function SettingsToggleMenu() {
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                     <MenuItem onClick={handleClose}>Change Password</MenuItem>
-                    <MenuItem onClick={handleClose}>Delete Account</MenuItem>
-                    <MenuItem onClick={(event) => {handleClose(event); signOut()}}>Sign out</MenuItem>
+                    <DeleteAccountDialog deleteAccount = {deleteAccount}/>
+                    <MenuItem onClick={signOut}>Sign out</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
