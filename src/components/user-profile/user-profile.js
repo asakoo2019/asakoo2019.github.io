@@ -46,6 +46,8 @@ const UserProfile = (props) => {
   const [aboutUser, setAboutUser] = useState(null);
   const [userCity, setUserCity] = useState(null);
   const [userCountry, setUserCountry] = useState(null);
+  const [userBirthDate, setUserBirthDate] = useState(null);
+  const [userGender, setUserGender] = useState(null);
   const { classes } = props;
   console.log(user.userBirthDate);
 
@@ -148,6 +150,28 @@ const UserProfile = (props) => {
         });
     };
 
+    if (userBirthDate !== null) {
+      firestore.collection("users").doc(id)
+        .update({
+          userBirthDate: userBirthDate
+        }).then(function() {
+          console.log("Document successfully updated!");
+        }).catch(function(error) {
+          console.error("Error updating document: ", error);
+        });
+    };
+
+    if (userGender !== null) {
+      firestore.collection("users").doc(id)
+        .update({
+          userGender: userGender
+        }).then(function() {
+          console.log("Document successfully updated!");
+        }).catch(function(error) {
+          console.error("Error updating document: ", error);
+        });
+    };
+    
     if (aboutUser !== null) {
       firestore.collection("users").doc(id)
         .update({
@@ -158,7 +182,7 @@ const UserProfile = (props) => {
           console.error("Error updating document: ", error);
         });
     };
-  }, [id, downloadURL, userName, userSurname, aboutUser, userPhoneNumber, userAdress, userCity, userCountry]);
+  }, [id, downloadURL, userName, userSurname, aboutUser, userPhoneNumber, userAdress, userCity, userCountry, userGender, userBirthDate]);
 
   return (
     <Container className='userBlock'>
@@ -210,7 +234,9 @@ const UserProfile = (props) => {
             setUserCity={setUserCity}
             setUserCountry={setUserCountry}
             setUserPhoneNumber={setUserPhoneNumber}
-            setUserAdress={setUserAdress}/>
+            setUserAdress={setUserAdress}
+            setUserBirthDate={setUserBirthDate}
+            setUserGender={setUserGender}/>
         </Grid>
       </Grid>
       {/* User Summary Block */}

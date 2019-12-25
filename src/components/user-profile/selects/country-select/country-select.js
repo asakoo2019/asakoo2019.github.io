@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 const style = {
   countrySelect: {
-    minWidth: 120,
+    minWidth: 90,
   },
 };
 
@@ -30,8 +30,8 @@ const CountrySelect = (props) => {
   };
 
   return (
-    <div>
-      <FormControl className={classes.countrySelect}>
+    <>
+      <FormControl margin="normal" className={classes.countrySelect}>
         <InputLabel>Country</InputLabel>
         <Select value={country}
           onChange={handleChange}>
@@ -40,7 +40,7 @@ const CountrySelect = (props) => {
           <MenuItem value={'Georgia'}>Georgia</MenuItem>
         </Select>
       </FormControl>
-    </div>
+    </>
   );
 };
 
