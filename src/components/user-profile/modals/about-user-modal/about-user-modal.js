@@ -4,8 +4,6 @@ import { withStyles } from "@material-ui/core/styles";
 import CitySelect from '../../selects/city-select';
 import CountrySelect from '../../selects/country-select';
 import GenderSelect from '../../selects/gender-select';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
 
 const style = {
   textArea: {
