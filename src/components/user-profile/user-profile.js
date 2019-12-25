@@ -13,6 +13,10 @@ import SettingsToggleMenu from '../settings-toggle-menu';
 import MailIcon from '@material-ui/icons/Mail';
 import WcIcon from '@material-ui/icons/Wc';
 import DateRangeIcon from '@material-ui/icons/DateRange';
+import {connect} from 'react-redux';
+import { useHistory } from "react-router-dom";
+
+
 
 const styles = {
   userAllBlocks: {
@@ -35,6 +39,16 @@ const styles = {
   },
 };
 
+const mStP = (state) => ({
+  user: state,
+});
+
+// const mDtP = (dispatch) => ({
+//   signIn: v => dispatch({type: 'SIGN-IN'}),
+//   signOut: v => dispatch({type: 'SIGN-OUT'})
+// })
+
+
 const UserProfile = (props) => {
   const [user, setUser] = useState({});
   const [id, setId] = useState(' ');
@@ -48,14 +62,20 @@ const UserProfile = (props) => {
   const [userCountry, setUserCountry] = useState(null);
   const [userBirthDate, setUserBirthDate] = useState(null);
   const [userGender, setUserGender] = useState(null);
-  const { classes } = props;
+  const { classes, dispatch } = props;
+  const history = useHistory();
+  console.log(props, history)
 
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        setId(user.uid);
+    auth.onAuthStateChanged((logedInUser) => {
+      if (logedInUser) {
+        dispatch({type: "SIGN-IN", payload: user});
+        setId(logedInUser.uid);
       } else {
-        setId(' ');
+        const pathName = history.location.pathname;
+        const LastSleshIndex = pathName.lastIndexOf('/');
+        const searchId = pathName.slice(LastSleshIndex + 1);
+        setId(searchId);
       };
     });
 
@@ -262,10 +282,10 @@ const UserProfile = (props) => {
             id={id}
             setAboutUser={setAboutUser}/>
         </Grid>
-        <SettingsToggleMenu/>
+        {props.user && <SettingsToggleMenu/>}
       </Grid>
     </Container>
   );
 };
 
-export default withStyles(styles)(UserProfile);
+export default connect(mStP)(withStyles(styles)(UserProfile));

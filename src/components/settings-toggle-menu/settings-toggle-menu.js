@@ -8,8 +8,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import { makeStyles } from '@material-ui/core/styles';
 import {auth} from '../firebase/db'
-// import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import SettingsIcon from '@material-ui/icons/Settings';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+// import SettingsIcon from '@material-ui/icons/Settings';
 import { useHistory } from "react-router-dom";
 import DeleteAccountDialog from './deleteAccountDialog'
 
@@ -83,7 +83,7 @@ export default function SettingsToggleMenu() {
           aria-haspopup="true"
           onClick={handleToggle}
         >
-          <SettingsIcon/>
+          <ArrowDropDownIcon/>
         </Button>
         <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
           {({ TransitionProps, placement }) => (
