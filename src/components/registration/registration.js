@@ -51,11 +51,7 @@ function RegistrationComponent(props) {
   const [birthday, setBirthday] = React.useState(new Date());
   
   const handleDateChange = date => {
-    setBirthday(date.toLocaleDateString(undefined, {
-      day:'numeric',
-      month: 'numeric',
-      year: 'numeric'
-    }));
+    setBirthday(date);
   };
   const [isLogedIn, setIsLogedIn] = useState(false);
 
@@ -71,7 +67,11 @@ function RegistrationComponent(props) {
             firestore.collection("users").doc(id).set({
               userName: name,
               userSurname: surname,
-              userBirthDate: birthday,
+              userBirthDate: birthday.toLocaleDateString(undefined, {
+                day:'numeric',
+                month: 'numeric',
+                year: 'numeric'
+              }),
               id: id,
               userGender: gender,
               email: email,
@@ -89,7 +89,11 @@ function RegistrationComponent(props) {
             firestore.collection("companies").doc(id).set({
               companyName: name,
               registerName: surname,
-              companyCreatingData: birthday,
+              companyCreatingData: birthday.toLocaleDateString(undefined, {
+                day:'numeric',
+                month: 'numeric',
+                year: 'numeric'
+              }),
               id: id,
               email: email,
               registrationType,
