@@ -13,6 +13,8 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import MailIcon from '@material-ui/icons/Mail';
 import WcIcon from '@material-ui/icons/Wc';
 import DateRangeIcon from '@material-ui/icons/DateRange';
+import {connect} from 'react-redux';
+import { useHistory } from "react-router-dom";
 
 const styles = {
   userAllBlocks: {
@@ -35,6 +37,10 @@ const styles = {
   },
 };
 
+const mStP = (state) => ({
+  user: state,
+});
+
 const UserProfile = (props) => {
   const [user, setUser] = useState({});
   const [id, setId] = useState(' ');
@@ -49,14 +55,20 @@ const UserProfile = (props) => {
   const [userBirthDate, setUserBirthDate] = useState(null);
   const [userGender, setUserGender] = useState(null);
   const [userLanguages, setUserLanguages] = useState(null);
-  const { classes } = props;
+  const { classes, dispatch } = props;
+  const history = useHistory();
+  console.log(props, history)
 
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        setId(user.uid);
+    auth.onAuthStateChanged((logedInUser) => {
+      if (logedInUser) {
+        dispatch({type: "SIGN-IN", payload: user});
+        setId(logedInUser.uid);
       } else {
-        setId(' ');
+        const pathName = history.location.pathname;
+        const LastSleshIndex = pathName.lastIndexOf('/');
+        const searchId = pathName.slice(LastSleshIndex + 1);
+        setId(searchId);
       };
     });
 
@@ -300,9 +312,10 @@ const UserProfile = (props) => {
             id={id}
             setUserLanguages={setUserLanguages}/>
         </Grid>
+        {props.user && <SettingsToggleMenu/>}
       </Grid>
     </Container>
   );
 };
 
-export default withStyles(styles)(UserProfile);
+export default connect(mStP)(withStyles(styles)(UserProfile));
