@@ -112,14 +112,11 @@ const AboutUserModal = (props) => {
           </Grid>
           <Grid container spacing={2}>
             <Grid item>
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <KeyboardDatePicker margin="normal"
-                  label='Birthday'
-                  format="dd.MM.yyyy"
-                  value={userBirthDate}
-                  onChange={(date) => setUserBirthDate(date)}
-                  KeyboardButtonProps={{'aria-label': 'change date'}}/>
-              </MuiPickersUtilsProvider>
+              <TextField margin="normal"
+                className={classes.userBirthDate}
+                value={userBirthDate}
+                onChange={(e) => setUserBirthDate(e.target.value)}
+                label="Birthday" />
             </Grid>
             <Grid item>
               <GenderSelect user={user}

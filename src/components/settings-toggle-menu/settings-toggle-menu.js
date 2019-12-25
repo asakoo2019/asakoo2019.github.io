@@ -29,12 +29,10 @@ export default function SettingsToggleMenu() {
   const anchorRef = React.useRef(null);
 
   const handleToggle = () => {
-    debugger;
     setOpen(prevOpen => !prevOpen);
   };
 
   const handleClose = event => {
-    debugger;
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
@@ -43,7 +41,6 @@ export default function SettingsToggleMenu() {
   };
 
   function handleListKeyDown(event) {
-    debugger;
     if (event.key === 'Tab') {
       event.preventDefault();
       setOpen(false);
@@ -70,7 +67,6 @@ export default function SettingsToggleMenu() {
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = React.useRef(open);
   React.useEffect(() => {
-    debugger;
     if (prevOpen.current === true && open === false) {
       anchorRef.current.focus();
     }
