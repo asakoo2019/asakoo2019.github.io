@@ -49,7 +49,6 @@ const UserProfile = (props) => {
   const [userBirthDate, setUserBirthDate] = useState(null);
   const [userGender, setUserGender] = useState(null);
   const { classes } = props;
-  console.log(user.userBirthDate);
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -217,7 +216,7 @@ const UserProfile = (props) => {
             alignItems='center'>
             <DateRangeIcon className={classes.aboutUserIcons}/>
             <p className={classes.userLine}>
-              {/* {user.userBirthDate} */}
+              {user.userBirthDate}
             </p>
             <WcIcon className={classes.aboutUserIcons}/>
             <p className={classes.userLine}>
