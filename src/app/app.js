@@ -11,7 +11,7 @@ const styles = {
   
 };
 
-function App(props) {
+function App() {
   // const { classes } = props;
   return (
     <Provider store = {store}>
