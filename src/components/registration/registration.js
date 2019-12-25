@@ -50,7 +50,11 @@ function RegistrationComponent(props) {
   });
   const [birthday, setBirthday] = React.useState(new Date());
   const handleDateChange = date => {
-    setBirthday(date);
+    setBirthday(date.toLocaleDateString(undefined, {
+      day:'numeric',
+      month: 'numeric',
+      year: 'numeric'
+    }));
   };
   const [isLogedIn, setIsLogedIn] = useState(false);
 
