@@ -51,11 +51,11 @@ export default function SettingsToggleMenu() {
   }
 
   function deleteAccount() {
-    var user = auth.currentUser;
+    const user = auth.currentUser;
     user.delete().then(function() {
       history.replace('/');
     }).catch(function(error) {
-     console.log(error)
+     console.log(error);
     });
   }
 
