@@ -11,6 +11,9 @@ const style = {
     width: '100%',
     outline: 'none',
   },
+  aboutUserModalBtn: {
+    height: 34,
+  },
 };
 
 const AboutUserModal = (props) => {
@@ -54,8 +57,8 @@ const AboutUserModal = (props) => {
   };
 
   return (
-    <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>+</Button>
+    <>
+      <Button className={classes.aboutUserModalBtn} variant="outlined" color="primary" onClick={handleClickOpen}>+</Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogContent>
           <DialogContentText>
@@ -131,7 +134,7 @@ const AboutUserModal = (props) => {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 };
 

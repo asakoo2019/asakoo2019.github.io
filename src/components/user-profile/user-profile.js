@@ -6,10 +6,10 @@ import classNames from 'classnames';
 import { Grid, Container } from '@material-ui/core';
 import UserImageBlock from './user-image-block';
 import UserSummaryModal from './modals/user-summary-modal';
+import UserLanguagesModal from './modals/user-languages-modal';
 import AboutUserModal from './modals/about-user-modal';
 import PhoneIcon from '@material-ui/icons/Phone';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
-import SettingsToggleMenu from '../settings-toggle-menu';
 import MailIcon from '@material-ui/icons/Mail';
 import WcIcon from '@material-ui/icons/Wc';
 import DateRangeIcon from '@material-ui/icons/DateRange';
@@ -48,6 +48,7 @@ const UserProfile = (props) => {
   const [userCountry, setUserCountry] = useState(null);
   const [userBirthDate, setUserBirthDate] = useState(null);
   const [userGender, setUserGender] = useState(null);
+  const [userLanguages, setUserLanguages] = useState(null);
   const { classes } = props;
 
   useEffect(() => {
@@ -181,7 +182,18 @@ const UserProfile = (props) => {
           console.error("Error updating document: ", error);
         });
     };
-  }, [id, downloadURL, userName, userSurname, aboutUser, userPhoneNumber, userAdress, userCity, userCountry, userGender, userBirthDate]);
+
+    if (userLanguages !== null) {
+      firestore.collection("users").doc(id)
+        .update({
+          userLanguages: [...user.userLanguages, userLanguages]
+        }).then(function() {
+          console.log("Document successfully updated!");
+        }).catch(function(error) {
+          console.error("Error updating document: ", error);
+        });
+    };
+  }, [id, downloadURL, userName, userSurname, aboutUser, userPhoneNumber, userAdress, userCity, userCountry, userGender, userBirthDate, userLanguages]);
 
   return (
     <Container className='userBlock'>
@@ -195,13 +207,28 @@ const UserProfile = (props) => {
           <UserImageBlock setUserImage={setUserImage} user={user}/>
         </Grid>
         <Grid container
-          item xs={12} sm={7} md={9}
+          item xs={12} sm={8} md={10}
           direction='column'>
-          <Grid container>
-            <h6 className={classes.userName}>{user.userName}</h6>
-            <h6>{user.userSurname}</h6>
+          <Grid container
+            justify='space-around'
+            alignItems='center'>
+            <Grid container item xs={11}>
+              <h6 className={classes.userName}>{user.userName}</h6>
+              <h6>{user.userSurname}</h6>
+            </Grid>
+            <AboutUserModal
+              user={user}
+              setUserName={setUserName}
+              setUserSurname={setUserSurname}
+              setUserCity={setUserCity}
+              setUserCountry={setUserCountry}
+              setUserPhoneNumber={setUserPhoneNumber}
+              setUserAdress={setUserAdress}
+              setUserBirthDate={setUserBirthDate}
+              setUserGender={setUserGender}/>
           </Grid>
-          <Grid container>
+          <Grid container
+            justify='space-around'>
             <Grid container
               item lg={3} md={6} sm={12}
               alignItems='center'>
@@ -209,17 +236,17 @@ const UserProfile = (props) => {
               <p className={classes.userLine}>{user.userPhoneNumber}</p>
             </Grid>
             <Grid container
-              item lg={3} md={6} sm={12}
+              item lg={4} md={6} sm={12}
               alignItems='center'>
               <MailIcon className={classes.aboutUserIcons}/>
               <p className={classes.userLine}>{user.email}</p>
             </Grid>
             <Grid container
-              item lg={6} sm={12}
+              item lg={5} sm={12}
               alignItems='center'>
             <LocationOnIcon className={classes.aboutUserIcons}/>
               <p className={classes.userLine}>
-                {`${user.userAdress}, ${user.userCity}, ${user.userCountry}`}
+                {`${user.userAdress} ${user.userCity} ${user.userCountry}`}
               </p>
             </Grid>
           </Grid>
@@ -235,18 +262,6 @@ const UserProfile = (props) => {
             </p>
           </Grid>
         </Grid>
-        <Grid item xs={12} sm={1} md={1}>
-          <AboutUserModal
-            user={user}
-            setUserName={setUserName}
-            setUserSurname={setUserSurname}
-            setUserCity={setUserCity}
-            setUserCountry={setUserCountry}
-            setUserPhoneNumber={setUserPhoneNumber}
-            setUserAdress={setUserAdress}
-            setUserBirthDate={setUserBirthDate}
-            setUserGender={setUserGender}/>
-        </Grid>
       </Grid>
       {/* User Summary Block */}
       <Grid container
@@ -254,15 +269,37 @@ const UserProfile = (props) => {
         alignItems='center'
         justify='space-between'>
         <Grid item xs={10}>
-          <p>{user.aboutUser}</p>
+          <h6>Summary</h6>
+          <p>
+            {user.aboutUser ? user.aboutUser : 'Add a short professional introduction by highlighting your most valuable skills and experiences in a few sentences.'}
+          </p>
         </Grid>
-        <Grid item xs={1}>
+        <Grid container item xs={1}
+          justify='flex-end'>
           <UserSummaryModal
             user={user}
             id={id}
             setAboutUser={setAboutUser}/>
         </Grid>
-        <SettingsToggleMenu/>
+      </Grid>
+      {/* User Languages Block */}
+      <Grid container
+        className={classNames(classes.userLanguagesBlock, classes.userAllBlocks)}
+        alignItems='center'
+        justify='space-between'>
+        <Grid item xs={10}>
+          <h6>Languages</h6>
+          <p>
+            {user.userLanguages ? user.userLanguages : 'Add levels of language proficiency.'}
+          </p>
+        </Grid>
+        <Grid container item xs={1}
+          justify='flex-end'>
+          <UserLanguagesModal
+            user={user}
+            id={id}
+            setUserLanguages={setUserLanguages}/>
+        </Grid>
       </Grid>
     </Container>
   );

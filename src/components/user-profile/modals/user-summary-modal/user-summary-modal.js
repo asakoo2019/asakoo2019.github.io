@@ -11,13 +11,13 @@ const style = {
 };
 
 const UserSummaryModal = (props) => {
-  const { classes, user, id } = props;
+  const { classes, user } = props;
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
 
   useEffect(() => {
     setValue(user.aboutUser);
-  }, [id, user]);
+  }, [user]);
 
   const handleClickOpen = () => {
     setOpen(true);
