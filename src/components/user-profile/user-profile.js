@@ -191,26 +191,37 @@ const UserProfile = (props) => {
         alignItems='center'>
         {/* About User Block */}
         <Grid container
-          item xs={2}>
+          item xs={12} sm={4} md={2}>
           <UserImageBlock setUserImage={setUserImage} user={user}/>
         </Grid>
         <Grid container
-          item xs={8}
+          item xs={12} sm={7} md={9}
           direction='column'>
           <Grid container>
             <h6 className={classes.userName}>{user.userName}</h6>
             <h6>{user.userSurname}</h6>
           </Grid>
-          <Grid container
-            alignItems='center'>
-            <PhoneIcon className={classes.aboutUserIcons}/>
-            <p className={classes.userLine}>{user.userPhoneNumber}</p>
-            <MailIcon className={classes.aboutUserIcons}/>
-            <p className={classes.userLine}>{user.email}</p>
+          <Grid container>
+            <Grid container
+              item lg={3} md={6} sm={12}
+              alignItems='center'>
+              <PhoneIcon className={classes.aboutUserIcons}/>
+              <p className={classes.userLine}>{user.userPhoneNumber}</p>
+            </Grid>
+            <Grid container
+              item lg={3} md={6} sm={12}
+              alignItems='center'>
+              <MailIcon className={classes.aboutUserIcons}/>
+              <p className={classes.userLine}>{user.email}</p>
+            </Grid>
+            <Grid container
+              item lg={6} sm={12}
+              alignItems='center'>
             <LocationOnIcon className={classes.aboutUserIcons}/>
-            <p className={classes.userLine}>
-              {user.userAdress} {user.userCity} {user.userCountry}
-            </p>
+              <p className={classes.userLine}>
+                {`${user.userAdress}, ${user.userCity}, ${user.userCountry}`}
+              </p>
+            </Grid>
           </Grid>
           <Grid container
             alignItems='center'>
@@ -224,8 +235,7 @@ const UserProfile = (props) => {
             </p>
           </Grid>
         </Grid>
-        <Grid container
-          item xs={1}>
+        <Grid item xs={12} sm={1} md={1}>
           <AboutUserModal
             user={user}
             setUserName={setUserName}

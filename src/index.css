@@ -79,7 +79,7 @@ p {
 }
 
 .MuiDialog-paperWidthSm {
-	max-width: 90% !important;
+	max-width: 700px !important;
 }
 
 /*Large devices (desktops, less than 1200px)*/
