@@ -49,6 +49,7 @@ function RegistrationComponent(props) {
     gender: "Female",
   });
   const [birthday, setBirthday] = React.useState(new Date());
+  
   const handleDateChange = date => {
     setBirthday(date);
   };
@@ -66,7 +67,11 @@ function RegistrationComponent(props) {
             firestore.collection("users").doc(id).set({
               userName: name,
               userSurname: surname,
-              userBirthDate: birthday,
+              userBirthDate: birthday.toLocaleDateString(undefined, {
+                day:'numeric',
+                month: 'numeric',
+                year: 'numeric'
+              }),
               id: id,
               userGender: gender,
               email: email,
@@ -74,6 +79,8 @@ function RegistrationComponent(props) {
               userImage: userImage,
               userPhoneNumber: null,
               userAdress: null,
+              userCity: null,
+              userCountry: null,
               userWorkExperience: [],
               userProfessionalSkills: [],
               userLanguages: [],
@@ -84,7 +91,11 @@ function RegistrationComponent(props) {
             firestore.collection("companies").doc(id).set({
               companyName: name,
               registerName: surname,
-              companyCreatingData: birthday,
+              companyCreatingData: birthday.toLocaleDateString(undefined, {
+                day:'numeric',
+                month: 'numeric',
+                year: 'numeric'
+              }),
               id: id,
               email: email,
               registrationType,
@@ -96,6 +107,8 @@ function RegistrationComponent(props) {
               companyWebsite: null,
               companySocialMedias: {},
               companyCategory: [],
+              userCity: null,
+              userCountry: null,
             });
             history.push(`/${registrationType.toLowerCase()}/${id}`);
           }
@@ -306,7 +319,7 @@ function RegistrationComponent(props) {
             labelWidth={120} />
           <FormHelperText id="outlined-weight-helper-text">{error.repeatPasswordError}</FormHelperText>
         </FormControl>
-        <Button className={classes.btn} onClick={(event) => { passRegistration(event) }}>Authorize</Button>
+        <Button className={classes.btn} onClick={(event) => { passRegistration(event) }}>Register</Button>
       </FormControl>
     </Grid>
   )

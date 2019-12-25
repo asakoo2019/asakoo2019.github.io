@@ -11,6 +11,8 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import SettingsToggleMenu from '../settings-toggle-menu';
 import MailIcon from '@material-ui/icons/Mail';
+import WcIcon from '@material-ui/icons/Wc';
+import DateRangeIcon from '@material-ui/icons/DateRange';
 
 const styles = {
   userAllBlocks: {
@@ -24,9 +26,12 @@ const styles = {
   userName: {
     marginRight: 15,
   },
-  userSecondLine: {
+  userLine: {
     padding: 8,
     margin: 0,
+  },
+  aboutUserIcons: {
+    color: '#FE654F',
   },
 };
 
@@ -41,6 +46,8 @@ const UserProfile = (props) => {
   const [aboutUser, setAboutUser] = useState(null);
   const [userCity, setUserCity] = useState(null);
   const [userCountry, setUserCountry] = useState(null);
+  const [userBirthDate, setUserBirthDate] = useState(null);
+  const [userGender, setUserGender] = useState(null);
   const { classes } = props;
 
   useEffect(() => {
@@ -142,6 +149,28 @@ const UserProfile = (props) => {
         });
     };
 
+    if (userBirthDate !== null) {
+      firestore.collection("users").doc(id)
+        .update({
+          userBirthDate: userBirthDate
+        }).then(function() {
+          console.log("Document successfully updated!");
+        }).catch(function(error) {
+          console.error("Error updating document: ", error);
+        });
+    };
+
+    if (userGender !== null) {
+      firestore.collection("users").doc(id)
+        .update({
+          userGender: userGender
+        }).then(function() {
+          console.log("Document successfully updated!");
+        }).catch(function(error) {
+          console.error("Error updating document: ", error);
+        });
+    };
+    
     if (aboutUser !== null) {
       firestore.collection("users").doc(id)
         .update({
@@ -152,7 +181,7 @@ const UserProfile = (props) => {
           console.error("Error updating document: ", error);
         });
     };
-  }, [id, downloadURL, userName, userSurname, aboutUser, userPhoneNumber, userAdress, userCity, userCountry]);
+  }, [id, downloadURL, userName, userSurname, aboutUser, userPhoneNumber, userAdress, userCity, userCountry, userGender, userBirthDate]);
 
   return (
     <Container className='userBlock'>
@@ -162,33 +191,51 @@ const UserProfile = (props) => {
         alignItems='center'>
         {/* About User Block */}
         <Grid container
-          item xs={2}>
+          item xs={12} sm={4} md={2}>
           <UserImageBlock setUserImage={setUserImage} user={user}/>
         </Grid>
         <Grid container
-          item xs={8}
+          item xs={12} sm={7} md={9}
           direction='column'>
           <Grid container>
-            <h6 className={classes.SecondLine}>{user.userName}</h6>
+            <h6 className={classes.userName}>{user.userName}</h6>
             <h6>{user.userSurname}</h6>
+          </Grid>
+          <Grid container>
+            <Grid container
+              item lg={3} md={6} sm={12}
+              alignItems='center'>
+              <PhoneIcon className={classes.aboutUserIcons}/>
+              <p className={classes.userLine}>{user.userPhoneNumber}</p>
+            </Grid>
+            <Grid container
+              item lg={3} md={6} sm={12}
+              alignItems='center'>
+              <MailIcon className={classes.aboutUserIcons}/>
+              <p className={classes.userLine}>{user.email}</p>
+            </Grid>
+            <Grid container
+              item lg={6} sm={12}
+              alignItems='center'>
+            <LocationOnIcon className={classes.aboutUserIcons}/>
+              <p className={classes.userLine}>
+                {`${user.userAdress}, ${user.userCity}, ${user.userCountry}`}
+              </p>
+            </Grid>
           </Grid>
           <Grid container
             alignItems='center'>
-            <PhoneIcon/>
-            <p className={classes.userSecondLine}>{user.userPhoneNumber}</p>
-            <MailIcon/>
-            <p className={classes.userSecondLine}>{user.email}</p>
-            <LocationOnIcon/>
-            <p className={classes.userSecondLine}>
-              {user.userAdress} {user.userCity} {user.userCountry}
+            <DateRangeIcon className={classes.aboutUserIcons}/>
+            <p className={classes.userLine}>
+              {user.userBirthDate}
+            </p>
+            <WcIcon className={classes.aboutUserIcons}/>
+            <p className={classes.userLine}>
+              {user.userGender}
             </p>
           </Grid>
-          <Grid>
-            <p>Gender: {user.userGender}</p>
-          </Grid>
         </Grid>
-        <Grid container
-          item xs={1}>
+        <Grid item xs={12} sm={1} md={1}>
           <AboutUserModal
             user={user}
             setUserName={setUserName}
@@ -196,7 +243,9 @@ const UserProfile = (props) => {
             setUserCity={setUserCity}
             setUserCountry={setUserCountry}
             setUserPhoneNumber={setUserPhoneNumber}
-            setUserAdress={setUserAdress}/>
+            setUserAdress={setUserAdress}
+            setUserBirthDate={setUserBirthDate}
+            setUserGender={setUserGender}/>
         </Grid>
       </Grid>
       {/* User Summary Block */}

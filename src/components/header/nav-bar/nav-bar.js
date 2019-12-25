@@ -16,7 +16,7 @@ import CompanyProfile from '../../company-profile';
 const styles = {
   navItem: {
     padding: 15
-  }
+  },
 };
 
 const NavBar = (props) => {
@@ -26,18 +26,18 @@ const NavBar = (props) => {
       <nav>
         <Grid container >
           <Grid item xs={8}
-                container
-                justify='flex-start'>
-          <Link to="/" className={classes.navItem}>Home</Link>
-          <Link to="/jobs" className={classes.navItem}>Jobs</Link>
-          <Link to="/companies" className={classes.navItem}>Companies</Link>
-          <Link to="/blog" className={classes.navItem}>Blog</Link>
-          <Link to="/user-profile" className={classes.navItem} />
-          <Link to="/company-profile" className={classes.navItem} />
+            container
+            justify='flex-start'>
+            <Link to="/" className={classes.navItem}>Home</Link>
+            <Link to="/jobs" className={classes.navItem}>Jobs</Link>
+            <Link to="/companies" className={classes.navItem}>Companies</Link>
+            <Link to="/blog" className={classes.navItem}>Blog</Link>
+            <Link to="/user-profile" className={classes.navItem} />
+            <Link to="/company-profile" className={classes.navItem} />
           </Grid>
           <Grid item xs={4}
-                container
-                justify='flex-end'>
+            container
+            justify='flex-end'>
             <Link to="/sign-in" className={classes.navItem}>Sign In</Link>
             <Link to="/registration" className={classes.navItem}>Registration</Link>
           </Grid>

@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import { DialogContent, DialogContentText, DialogActions, Dialog, Button, TextField } from '@material-ui/core';
+import { DialogContent, DialogContentText, DialogActions, Dialog, Button, TextField, Grid } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
 import CitySelect from '../../selects/city-select';
 import CountrySelect from '../../selects/country-select';
+import GenderSelect from '../../selects/gender-select';
 
 const style = {
   textArea: {
@@ -21,26 +22,30 @@ const AboutUserModal = (props) => {
   const [userAdress, setUserAdress] = useState(null);
   const [userCity, setUserCity] = useState(' ');
   const [userCountry, setUserCountry] = useState(' ');
+  const [userGender, setUserGender] = useState(' ');
+  const [userBirthDate, setUserBirthDate] = useState(user.userBirthDate);
 
   useEffect(() => {
     setUserName(user.userName);
     setUserSurname(user.userSurname);
     setUserPhoneNumber(user.userPhoneNumber);
     setUserAdress(user.userAdress);
-  }, [user.userName, user.userSurname, user.userPhoneNumber, user.userAdress]);
+    setUserBirthDate(user.userBirthDate);
+  }, [user.userName, user.userSurname, user.userPhoneNumber, user.userAdress, user.userBirthDate]);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-  const handleSave = (e) => {
-    e.preventDefault();
+  const handleSave = () => {
     props.setUserName(userName);
     props.setUserSurname(userSurname);
     props.setUserPhoneNumber(userPhoneNumber);
     props.setUserCity(userCity);
     props.setUserCountry(userCountry);
+    props.setUserGender(userGender);
     props.setUserAdress(userAdress);
+    props.setUserBirthDate(userBirthDate);
     setOpen(false);
   };
 
@@ -51,43 +56,77 @@ const AboutUserModal = (props) => {
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>+</Button>
-      <Dialog className={classes.formDialog} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogContent>
           <DialogContentText>
             Personal information
           </DialogContentText>
-            <TextField
-              className={classes.userUserName}
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
-              label="Name" />
-            <TextField
-              className={classes.userUserSurname}
-              value={userSurname}
-              onChange={(e) => setUserSurname(e.target.value)}
-              label="Surname" />
-            <TextField
-              className={classes.userPhoneNumber}
-              value={userPhoneNumber}
-              onChange={(e) => setUserPhoneNumber(e.target.value)}
-              label="Phone Number" />
-            <TextField
-              className={classes.userAdress}
-              value={userAdress}
-              onChange={(e) => setUserAdress(e.target.value)}
-              label="Adress" />
-            <CitySelect
-              user={user}
-              setUserCity={setUserCity}/>
-            <CountrySelect
-              user={user}
-              setUserCountry={setUserCountry}/>
+          <Grid container spacing={2}>
+            <Grid item>
+              <TextField margin="normal"
+                className={classes.userUserName}
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+                label="Name" />
+            </Grid>
+            <Grid item>
+              <TextField margin="normal"
+                className={classes.userUserSurname}
+                value={userSurname}
+                onChange={(e) => setUserSurname(e.target.value)}
+                label="Surname" />
+            </Grid>
+            <Grid item>
+              <TextField margin="normal"
+                disabled
+                className={classes.userEmail}
+                value={user.email}
+                label="E-mail" />
+            </Grid>
+          </Grid>
+          <Grid container spacing={2}>
+            <Grid item>
+              <TextField margin="normal"
+                className={classes.userPhoneNumber}
+                value={userPhoneNumber}
+                onChange={(e) => setUserPhoneNumber(e.target.value)}
+                label="Phone Number" />
+            </Grid>
+            <Grid item>
+              <TextField margin="normal"
+                className={classes.userAdress}
+                value={userAdress}
+                onChange={(e) => setUserAdress(e.target.value)}
+                label="Adress" />
+            </Grid>
+            <Grid item>
+              <CitySelect user={user}
+                setUserCity={setUserCity}/>
+            </Grid>
+            <Grid item>
+              <CountrySelect user={user}
+                setUserCountry={setUserCountry}/>
+            </Grid>
+          </Grid>
+          <Grid container spacing={2}>
+            <Grid item>
+              <TextField margin="normal"
+                className={classes.userBirthDate}
+                value={userBirthDate}
+                onChange={(e) => setUserBirthDate(e.target.value)}
+                label="Birthday" />
+            </Grid>
+            <Grid item>
+              <GenderSelect user={user}
+                setUserGender={setUserGender}/>
+            </Grid>
+          </Grid>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onSubmit={handleSave} color="primary">
+          <Button onClick={handleSave} color="primary">
             Save
           </Button>
         </DialogActions>
