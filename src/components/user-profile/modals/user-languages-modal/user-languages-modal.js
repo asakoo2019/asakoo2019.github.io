@@ -1,18 +1,21 @@
 import React, {useState, useEffect} from 'react';
 import
-  { DialogContent, DialogContentText, DialogActions, Dialog, Button, FormControl, InputLabel, Select, MenuItem }
+  { DialogContent, DialogContentText, DialogActions, Dialog, Button, FormControl, InputLabel, Select, MenuItem, Grid }
 from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
 
 const style = {
-  
+  lenguageSelect: {
+    minWidth: 200,
+  },
 };
 
 const UserLanguagesModal = (props) => {
   const { classes, user} = props;
   const [open, setOpen] = useState(false);
 
-  const [language, setLanguage] = useState(user.userLanguages);
+  const [language, setLanguage] = useState(' ');
+  const [level, setLevel] = useState(' ');
 
   useEffect(() => {
     switch (language) {
@@ -24,19 +27,28 @@ const UserLanguagesModal = (props) => {
       break;
       default: ;
     };
-    // setValue(user.userLanguages.push(value));
-  }, [language, user]);
-
-  const handleChange = event => {
-    setLanguage(event.target.value);
-  };
+  }, [language, user])
+  
+  useEffect(() => {
+    switch (level) {
+      case 'Beginner': setLevel('Beginner');
+      break;
+      case 'Advanced': setLevel('Advanced');
+      break;
+      case 'Full proficiency': setLevel('Full proficiency');
+      break;
+      default: ;
+    };
+  }, [level, user]);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleSave = () => {
-    props.setUserLanguages(language);
+    if (language !== ' ' && level !== ' '){
+      props.setUserLanguages({language, level});
+    };
     setOpen(false);
   };
 
@@ -46,21 +58,36 @@ const UserLanguagesModal = (props) => {
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>+</Button>
+      {props.setUserLanguages && <Button variant="outlined" color="primary" onClick={handleClickOpen}>+</Button>}
       <Dialog className={classes.formDialog} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogContent>
           <DialogContentText>
-            Choose the level for your languages.
+            Choose the level for your language.
           </DialogContentText>
-          <FormControl margin="normal" className={classes.languageSelect}>
-            <InputLabel>Language</InputLabel>
-            <Select value={language}
-              onChange={handleChange}>
-              <MenuItem value={'Armenian'}>Armenian</MenuItem>
-              <MenuItem value={'Russian'}>Russian</MenuItem>
-              <MenuItem value={'English'}>English</MenuItem>
-            </Select>
-          </FormControl>
+          <Grid container spacing={2}>
+            <Grid item>
+              <FormControl margin="normal" className={classes.lenguageSelect}>
+                <InputLabel>Language</InputLabel>
+                <Select value={language}
+                  onChange={event => setLanguage(event.target.value)}>
+                  <MenuItem value={'Armenian'}>Armenian</MenuItem>
+                  <MenuItem value={'Russian'}>Russian</MenuItem>
+                  <MenuItem value={'English'}>English</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item>
+              <FormControl margin="normal" className={classes.lenguageSelect}>
+                <InputLabel>Level</InputLabel>
+                <Select value={level}
+                  onChange={event => setLevel(event.target.value)}>
+                  <MenuItem value={'Beginner'}>Beginner</MenuItem>
+                  <MenuItem value={'Advanced'}>Advanced</MenuItem>
+                  <MenuItem value={'Full proficiency'}>Full proficiency</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">

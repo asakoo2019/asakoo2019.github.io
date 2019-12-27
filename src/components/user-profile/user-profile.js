@@ -16,6 +16,7 @@ import DateRangeIcon from '@material-ui/icons/DateRange';
 import { connect } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import SettingsToggleMenu from '../settings-toggle-menu';
+import Languages from './languages';
 
 const styles = {
   userAllBlocks: {
@@ -90,7 +91,7 @@ const UserProfile = (props) => {
         .update({
           userImage: downloadURL
         }).then(function() {
-          console.log("Document successfully updated!");
+          // console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -101,7 +102,7 @@ const UserProfile = (props) => {
         .update({
           userName: userName
         }).then(function() {
-          console.log("Document successfully updated!");
+          // console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -112,7 +113,7 @@ const UserProfile = (props) => {
         .update({
           userSurname: userSurname
         }).then(function() {
-          console.log("Document successfully updated!");
+          // console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -123,7 +124,7 @@ const UserProfile = (props) => {
       .update({
         userPhoneNumber: userPhoneNumber
       }).then(function() {
-        console.log("Document successfully updated!");
+        // console.log("Document successfully updated!");
       }).catch(function(error) {
         console.error("Error updating document: ", error);
       });
@@ -134,7 +135,7 @@ const UserProfile = (props) => {
         .update({
           userAdress: userAdress
         }).then(function() {
-          console.log("Document successfully updated!");
+          // console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -145,7 +146,7 @@ const UserProfile = (props) => {
         .update({
           userCity: userCity
         }).then(function() {
-          console.log("Document successfully updated!");
+          // console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -156,7 +157,7 @@ const UserProfile = (props) => {
         .update({
           userCountry: userCountry
         }).then(function() {
-          console.log("Document successfully updated!");
+          // console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -167,7 +168,7 @@ const UserProfile = (props) => {
         .update({
           userBirthDate: userBirthDate
         }).then(function() {
-          console.log("Document successfully updated!");
+          // console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -178,7 +179,7 @@ const UserProfile = (props) => {
         .update({
           userGender: userGender
         }).then(function() {
-          console.log("Document successfully updated!");
+          // console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -189,31 +190,34 @@ const UserProfile = (props) => {
         .update({
           aboutUser: aboutUser
         }).then(function() {
-          console.log("Document successfully updated!");
+          // console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
     };
 
     if (userLanguages !== null) {
+      console.log(userLanguages);
       firestore.collection("users").doc(id)
         .update({
           userLanguages: [...user.userLanguages, userLanguages]
         }).then(function() {
-          console.log("Document successfully updated!");
+          // console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
     };
+
   }, [id, downloadURL, userName, userSurname, aboutUser, userPhoneNumber, userAdress, userCity, userCountry, userGender, userBirthDate, userLanguages]);
 
   return (
     <Container className='userBlock'>
+
+      {/* About User Block */}
       <Grid container
         className={classNames(classes.aboutUserBlock, classes.userAllBlocks)}
         justify='space-between'
         alignItems='center'>
-        {/* About User Block */}
         <Grid container
           item xs={12} sm={4} md={2}>
           {props.user ? <UserImageBlock setUserImage={setUserImage} user={user}/> : <UserImageBlock user={user}/>}
@@ -225,8 +229,8 @@ const UserProfile = (props) => {
             justify='space-around'
             alignItems='center'>
             <Grid container item xs={11}>
-              <h6 className={classes.userName}>{user.userName}</h6>
-              <h6>{user.userSurname}</h6>
+              <h5 className={classes.userName}>{user.userName}</h5>
+              <h5>{user.userSurname}</h5>
             </Grid>
             {props.user && <AboutUserModal
               user={user}
@@ -275,13 +279,14 @@ const UserProfile = (props) => {
           </Grid>
         </Grid>
       </Grid>
+      
       {/* User Summary Block */}
       <Grid container
         className={classNames(classes.userSummaryBlock, classes.userAllBlocks)}
         alignItems='center'
         justify='space-between'>
         <Grid item xs={10}>
-          <h6>Summary</h6>
+          <h5>Summary</h5>
           <p>
             {user.aboutUser ? user.aboutUser : 'Add a short professional introduction by highlighting your most valuable skills and experiences in a few sentences.'}
           </p>
@@ -294,26 +299,26 @@ const UserProfile = (props) => {
             setAboutUser={setAboutUser}/>}
         </Grid>
       </Grid>
+
       {/* User Languages Block */}
       <Grid container
         className={classNames(classes.userLanguagesBlock, classes.userAllBlocks)}
         alignItems='center'
         justify='space-between'>
         <Grid item xs={10}>
-          <h6>Languages</h6>
-          <p>
-            {user.userLanguages ? user.userLanguages : 'Add levels of language proficiency.'}
-          </p>
+          <h5>Languages</h5>
+          {props.user ? <Languages user={user} setUserLanguages={setUserLanguages} /> : <Languages user={user} />}
         </Grid>
         <Grid container item xs={1}
           justify='flex-end'>
-          {props.user && <UserLanguagesModal
-            user={user}
-            id={id}
-            setUserLanguages={setUserLanguages}/>}
+          {props.user ? <UserLanguagesModal user={user} setUserLanguages={setUserLanguages} /> : <UserLanguagesModal user={user} />}
         </Grid>
-        {props.user && <SettingsToggleMenu/>}
       </Grid>
+
+      
+
+      {props.user && <SettingsToggleMenu/>}
+
     </Container>
   );
 };
