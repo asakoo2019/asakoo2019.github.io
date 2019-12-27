@@ -15,7 +15,6 @@ import WcIcon from '@material-ui/icons/Wc';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import { connect } from 'react-redux';
 import { useHistory } from "react-router-dom";
-import SettingsToggleMenu from '../settings-toggle-menu';
 import Languages from './languages';
 
 const styles = {
@@ -190,6 +189,19 @@ const UserProfile = (props) => {
   }, [id, downloadURL, userName, userSurname, userPhoneNumber, userAdress, userCity, userCountry, userGender, userBirthDate]);
 
   useEffect(() => {
+    if (id !== ' ') {
+      const docRef = firestore.collection("users").doc(id);
+      docRef.get().then(function(doc) {
+        if (doc.exists) {
+          setUser(doc.data());
+        } else {
+          console.log("No such document!");
+        }})
+      .catch(function(error) {
+        console.log("Error getting document:", error);
+      });
+    };
+
     if (aboutUser !== null) {
       firestore.collection("users").doc(id)
         .update({
@@ -200,10 +212,22 @@ const UserProfile = (props) => {
           console.error("Error updating document: ", error);
         });
       };
-    setAboutUser(aboutUser);
   }, [id, aboutUser]);
 
   useEffect(() => {
+    if (id !== ' ') {
+      const docRef = firestore.collection("users").doc(id);
+      docRef.get().then(function(doc) {
+        if (doc.exists) {
+          setUser(doc.data());
+        } else {
+          console.log("No such document!");
+        }})
+      .catch(function(error) {
+        console.log("Error getting document:", error);
+      });
+    };
+    
     if (userLanguages !== null) {
       console.log(1);
       firestore.collection("users").doc(id)
@@ -321,8 +345,6 @@ const UserProfile = (props) => {
           {props.user ? <UserLanguagesModal user={user} setUserLanguages={setUserLanguages} /> : <UserLanguagesModal user={user} />}
         </Grid>
       </Grid>
-
-      {props.user && <SettingsToggleMenu/>}
 
     </Container>
   );
