@@ -3,7 +3,6 @@ import './nav-bar.css';
 import { Switch, Route, Link } from "react-router-dom";
 import { withStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
-
 import Blog from '../../blog';
 import Companies from '../../companies';
 import Jobs from '../../jobs';
@@ -12,6 +11,8 @@ import SignIn from '../../sign-in';
 import Registration from '../../registration';
 import UserProfile from '../../user-profile';
 import CompanyProfile from '../../company-profile';
+import SettingsToggleMenu from '../../settings-toggle-menu';
+import {connect} from 'react-redux';
 
 const styles = {
   navItem: {
@@ -19,8 +20,13 @@ const styles = {
   },
 };
 
+const mStP = (state) => ({
+  user: state,
+});
+
 const NavBar = (props) => {
   const { classes } = props;
+  const regAndLogArray = [<Link to="/sign-in" className={classes.navItem}>Sign In</Link>,<Link to="/registration" className={classes.navItem}>Registration</Link>];
   return (
     <>
       <nav>
@@ -38,8 +44,7 @@ const NavBar = (props) => {
           <Grid item xs={4}
             container
             justify='flex-end'>
-            <Link to="/sign-in" className={classes.navItem}>Sign In</Link>
-            <Link to="/registration" className={classes.navItem}>Registration</Link>
+            {!props.user ? regAndLogArray : <SettingsToggleMenu/>}
           </Grid>
         </Grid>
       </nav>
@@ -57,4 +62,4 @@ const NavBar = (props) => {
   );
 };
 
-export default withStyles(styles)(NavBar);
+export default connect(mStP)(withStyles(styles)(NavBar));
