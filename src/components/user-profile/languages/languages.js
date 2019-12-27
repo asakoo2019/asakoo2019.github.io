@@ -7,7 +7,7 @@ const Languages = (props) => {
   const [element, setElement] = useState([]);
 
   useEffect(() => {
-    if (user.userLanguages && user.userLanguages.length !== 0){
+    if (user.userLanguages){
       const language = user.userLanguages.map((item, i) => {
         return (
           <Grid container

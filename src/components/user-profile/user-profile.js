@@ -186,7 +186,10 @@ const UserProfile = (props) => {
           console.error("Error updating document: ", error);
         });
     };
-    
+
+  }, [id, downloadURL, userName, userSurname, userPhoneNumber, userAdress, userCity, userCountry, userGender, userBirthDate]);
+
+  useEffect(() => {
     if (aboutUser !== null) {
       firestore.collection("users").doc(id)
         .update({
@@ -196,9 +199,13 @@ const UserProfile = (props) => {
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
-    };
+      };
+    setAboutUser(aboutUser);
+  }, [id, aboutUser]);
 
+  useEffect(() => {
     if (userLanguages !== null) {
+      console.log(1);
       firestore.collection("users").doc(id)
         .update({
           userLanguages: [...user.userLanguages, userLanguages]
@@ -208,8 +215,7 @@ const UserProfile = (props) => {
           console.error("Error updating document: ", error);
         });
     };
-
-  }, [id, downloadURL, userName, userSurname, aboutUser, userPhoneNumber, userAdress, userCity, userCountry, userGender, userBirthDate, userLanguages]);
+  }, [id, userLanguages]);
 
   return (
     <Container className='userBlock'>
@@ -308,7 +314,7 @@ const UserProfile = (props) => {
         justify='space-between'>
         <Grid item xs={10}>
           <h5>Languages</h5>
-          {user.userLanguages ? (user.userLanguages.length ? (props.user ? <Languages user={user} setUserLanguages={setUserLanguages} /> : <Languages user={user} />) : 'Add levels of language proficiency.') : null}
+          {user.userLanguages ? (user.userLanguages.length ? (props.user ? <Languages user={user} setUserLanguages={setUserLanguages}/> : <Languages user={user} />) : 'Add levels of language proficiency.') : null}
         </Grid>
         <Grid container item xs={1}
           justify='flex-end'>
