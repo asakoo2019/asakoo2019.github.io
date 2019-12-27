@@ -59,8 +59,6 @@ const UserProfile = (props) => {
   const { classes, dispatch } = props;
   const history = useHistory();
 
-  console.log(user.userLanguages);
-
   useEffect(() => {
     auth.onAuthStateChanged((logedInUser) => {
       if (logedInUser) {
@@ -86,16 +84,46 @@ const UserProfile = (props) => {
         console.log("Error getting document:", error);
       });
     };
+  }, [id]);
 
-    if(downloadURL !== null) {
+  useEffect(() => {
+    if (id !== ' ') {
+      const docRef = firestore.collection("users").doc(id);
+      docRef.get().then(function(doc) {
+        if (doc.exists) {
+          setUser(doc.data());
+        } else {
+          console.log("No such document!");
+        }})
+      .catch(function(error) {
+        console.log("Error getting document:", error);
+      });
+    };
+
+    if (downloadURL !== null) {
       firestore.collection("users").doc(id)
         .update({
-          userImage: downloadURL
+          downloadURL: downloadURL
         }).then(function() {
           console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
+    };
+  }, [id, downloadURL]);
+
+  useEffect(() => {
+    if (id !== ' ') {
+      const docRef = firestore.collection("users").doc(id);
+      docRef.get().then(function(doc) {
+        if (doc.exists) {
+          setUser(doc.data());
+        } else {
+          console.log("No such document!");
+        }})
+      .catch(function(error) {
+        console.log("Error getting document:", error);
+      });
     };
 
     if (userName !== null) {
@@ -108,6 +136,21 @@ const UserProfile = (props) => {
           console.error("Error updating document: ", error);
         });
     };
+  }, [id, userName]);
+
+  useEffect(() => {
+    if (id !== ' ') {
+      const docRef = firestore.collection("users").doc(id);
+      docRef.get().then(function(doc) {
+        if (doc.exists) {
+          setUser(doc.data());
+        } else {
+          console.log("No such document!");
+        }})
+      .catch(function(error) {
+        console.log("Error getting document:", error);
+      });
+    };
 
     if (userSurname !== null) {
       firestore.collection("users").doc(id)
@@ -119,15 +162,45 @@ const UserProfile = (props) => {
           console.error("Error updating document: ", error);
         });
     };
+  }, [id, userSurname]);
+
+  useEffect(() => {
+    if (id !== ' ') {
+      const docRef = firestore.collection("users").doc(id);
+      docRef.get().then(function(doc) {
+        if (doc.exists) {
+          setUser(doc.data());
+        } else {
+          console.log("No such document!");
+        }})
+      .catch(function(error) {
+        console.log("Error getting document:", error);
+      });
+    };
 
     if (userPhoneNumber !== null) {
       firestore.collection("users").doc(id)
-      .update({
-        userPhoneNumber: userPhoneNumber
-      }).then(function() {
-        console.log("Document successfully updated!");
-      }).catch(function(error) {
-        console.error("Error updating document: ", error);
+        .update({
+          userPhoneNumber: userPhoneNumber
+        }).then(function() {
+          console.log("Document successfully updated!");
+        }).catch(function(error) {
+          console.error("Error updating document: ", error);
+        });
+    };
+  }, [id, userPhoneNumber]);
+
+  useEffect(() => {
+    if (id !== ' ') {
+      const docRef = firestore.collection("users").doc(id);
+      docRef.get().then(function(doc) {
+        if (doc.exists) {
+          setUser(doc.data());
+        } else {
+          console.log("No such document!");
+        }})
+      .catch(function(error) {
+        console.log("Error getting document:", error);
       });
     };
 
@@ -141,6 +214,21 @@ const UserProfile = (props) => {
           console.error("Error updating document: ", error);
         });
     };
+  }, [id, userAdress]);
+
+  useEffect(() => {
+    if (id !== ' ') {
+      const docRef = firestore.collection("users").doc(id);
+      docRef.get().then(function(doc) {
+        if (doc.exists) {
+          setUser(doc.data());
+        } else {
+          console.log("No such document!");
+        }})
+      .catch(function(error) {
+        console.log("Error getting document:", error);
+      });
+    };
 
     if (userCity !== null) {
       firestore.collection("users").doc(id)
@@ -151,6 +239,21 @@ const UserProfile = (props) => {
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
+    };
+  }, [id, userCity]);
+
+  useEffect(() => {
+    if (id !== ' ') {
+      const docRef = firestore.collection("users").doc(id);
+      docRef.get().then(function(doc) {
+        if (doc.exists) {
+          setUser(doc.data());
+        } else {
+          console.log("No such document!");
+        }})
+      .catch(function(error) {
+        console.log("Error getting document:", error);
+      });
     };
 
     if (userCountry !== null) {
@@ -163,16 +266,20 @@ const UserProfile = (props) => {
           console.error("Error updating document: ", error);
         });
     };
+  }, [id, userCountry]);
 
-    if (userBirthDate !== null) {
-      firestore.collection("users").doc(id)
-        .update({
-          userBirthDate: userBirthDate
-        }).then(function() {
-          console.log("Document successfully updated!");
-        }).catch(function(error) {
-          console.error("Error updating document: ", error);
-        });
+  useEffect(() => {
+    if (id !== ' ') {
+      const docRef = firestore.collection("users").doc(id);
+      docRef.get().then(function(doc) {
+        if (doc.exists) {
+          setUser(doc.data());
+        } else {
+          console.log("No such document!");
+        }})
+      .catch(function(error) {
+        console.log("Error getting document:", error);
+      });
     };
 
     if (userGender !== null) {
@@ -185,8 +292,33 @@ const UserProfile = (props) => {
           console.error("Error updating document: ", error);
         });
     };
+  }, [id, userGender]);
 
-  }, [id, downloadURL, userName, userSurname, userPhoneNumber, userAdress, userCity, userCountry, userGender, userBirthDate]);
+  useEffect(() => {
+    if (id !== ' ') {
+      const docRef = firestore.collection("users").doc(id);
+      docRef.get().then(function(doc) {
+        if (doc.exists) {
+          setUser(doc.data());
+        } else {
+          console.log("No such document!");
+        }})
+      .catch(function(error) {
+        console.log("Error getting document:", error);
+      });
+    };
+
+    if (userBirthDate !== null) {
+      firestore.collection("users").doc(id)
+        .update({
+          userBirthDate: userBirthDate
+        }).then(function() {
+          console.log("Document successfully updated!");
+        }).catch(function(error) {
+          console.error("Error updating document: ", error);
+        });
+    };
+  }, [id, userBirthDate]);
 
   useEffect(() => {
     if (id !== ' ') {
