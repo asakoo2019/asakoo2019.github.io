@@ -58,7 +58,6 @@ const UserProfile = (props) => {
   const [userLanguages, setUserLanguages] = useState(null);
   const { classes, dispatch } = props;
   const history = useHistory();
-  console.log(props, history)
 
   useEffect(() => {
     auth.onAuthStateChanged((logedInUser) => {

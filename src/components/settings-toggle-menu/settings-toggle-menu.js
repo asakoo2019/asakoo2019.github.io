@@ -11,7 +11,8 @@ import {auth} from '../firebase/db'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 // import SettingsIcon from '@material-ui/icons/Settings';
 import { useHistory } from "react-router-dom";
-import DeleteAccountDialog from './deleteAccountDialog'
+import DeleteAccountDialog from './deleteAccountDialog';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -22,7 +23,8 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SettingsToggleMenu() {
+function SettingsToggleMenu(props) {
+  const {dispatch} = props;
   const history = useHistory();
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -58,6 +60,7 @@ export default function SettingsToggleMenu() {
 
   function signOut() {
     auth.signOut().then(function() {
+      dispatch({type: 'SIGN-OUT'});
       history.replace('/');
     }).catch(function(error) {
       // An error happened.
@@ -107,3 +110,5 @@ export default function SettingsToggleMenu() {
     </div>
   );
 }
+
+export default connect()(SettingsToggleMenu);
