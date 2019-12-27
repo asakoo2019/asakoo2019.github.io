@@ -83,7 +83,7 @@ function RegistrationComponent(props) {
               userCountry: ' ',
               userWorkExperience: [],
               userProfessionalSkills: [],
-              userLanguages: null,
+              userLanguages: [],
               aboutUser: '',
             });
             history.push(`/${registrationType.toLowerCase()}/${id}`);
