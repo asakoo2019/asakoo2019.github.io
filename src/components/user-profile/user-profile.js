@@ -60,6 +60,8 @@ const UserProfile = (props) => {
   const { classes, dispatch } = props;
   const history = useHistory();
 
+  console.log(user.userLanguages);
+
   useEffect(() => {
     auth.onAuthStateChanged((logedInUser) => {
       if (logedInUser) {
@@ -91,7 +93,7 @@ const UserProfile = (props) => {
         .update({
           userImage: downloadURL
         }).then(function() {
-          // console.log("Document successfully updated!");
+          console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -102,7 +104,7 @@ const UserProfile = (props) => {
         .update({
           userName: userName
         }).then(function() {
-          // console.log("Document successfully updated!");
+          console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -113,7 +115,7 @@ const UserProfile = (props) => {
         .update({
           userSurname: userSurname
         }).then(function() {
-          // console.log("Document successfully updated!");
+          console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -124,7 +126,7 @@ const UserProfile = (props) => {
       .update({
         userPhoneNumber: userPhoneNumber
       }).then(function() {
-        // console.log("Document successfully updated!");
+        console.log("Document successfully updated!");
       }).catch(function(error) {
         console.error("Error updating document: ", error);
       });
@@ -135,7 +137,7 @@ const UserProfile = (props) => {
         .update({
           userAdress: userAdress
         }).then(function() {
-          // console.log("Document successfully updated!");
+          console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -146,7 +148,7 @@ const UserProfile = (props) => {
         .update({
           userCity: userCity
         }).then(function() {
-          // console.log("Document successfully updated!");
+          console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -157,7 +159,7 @@ const UserProfile = (props) => {
         .update({
           userCountry: userCountry
         }).then(function() {
-          // console.log("Document successfully updated!");
+          console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -168,7 +170,7 @@ const UserProfile = (props) => {
         .update({
           userBirthDate: userBirthDate
         }).then(function() {
-          // console.log("Document successfully updated!");
+          console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -179,7 +181,7 @@ const UserProfile = (props) => {
         .update({
           userGender: userGender
         }).then(function() {
-          // console.log("Document successfully updated!");
+          console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -190,19 +192,18 @@ const UserProfile = (props) => {
         .update({
           aboutUser: aboutUser
         }).then(function() {
-          // console.log("Document successfully updated!");
+          console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
     };
 
     if (userLanguages !== null) {
-      console.log(userLanguages);
       firestore.collection("users").doc(id)
         .update({
           userLanguages: [...user.userLanguages, userLanguages]
         }).then(function() {
-          // console.log("Document successfully updated!");
+          console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -307,15 +308,13 @@ const UserProfile = (props) => {
         justify='space-between'>
         <Grid item xs={10}>
           <h5>Languages</h5>
-          {props.user ? <Languages user={user} setUserLanguages={setUserLanguages} /> : <Languages user={user} />}
+          {user.userLanguages ? (user.userLanguages.length ? (props.user ? <Languages user={user} setUserLanguages={setUserLanguages} /> : <Languages user={user} />) : 'Add levels of language proficiency.') : null}
         </Grid>
         <Grid container item xs={1}
           justify='flex-end'>
           {props.user ? <UserLanguagesModal user={user} setUserLanguages={setUserLanguages} /> : <UserLanguagesModal user={user} />}
         </Grid>
       </Grid>
-
-      
 
       {props.user && <SettingsToggleMenu/>}
 
