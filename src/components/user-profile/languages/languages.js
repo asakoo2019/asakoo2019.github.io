@@ -19,7 +19,7 @@ const Languages = (props) => {
               <p>{item.level}</p>
             </Grid>
             <Grid item xs={1}>
-              {props.setUserLanguages && <Button variant="outlined" color='primary' onClick={(e)=>{console.log(e)}}>
+              {props.setUserLanguages && <Button variant="outlined" color='primary' onClick={()=>{console.log(item.id)}}>
                 <DeleteIcon color='error'/>
               </Button>}
             </Grid>

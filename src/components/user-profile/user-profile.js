@@ -17,6 +17,7 @@ import { connect } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import Languages from './languages';
 import UserExperienceModal from './modals/user-experience-modal';
+import Experiences from './experiences/experiences';
 
 const styles = {
   userAllBlocks: {
@@ -378,7 +379,7 @@ const UserProfile = (props) => {
         justify='space-between'>
         <Grid item xs={10}>
           <h5>Work experience</h5>
-          {user.userWorkExperience ? (user.userWorkExperience.length ? (props.user ? <Languages user={user} setUserWorkExperience={setUserWorkExperience}/> : <Languages user={user} />) : 'Add your work experience and any significant accomplishments.') : null}
+          {user.userWorkExperience ? (user.userWorkExperience.length ? (props.user ? <Experiences user={user} setUserWorkExperience={setUserWorkExperience}/> : <Experiences user={user} />) : 'Add your work experience and any significant accomplishments.') : null}
         </Grid>
         <Grid container item xs={1}
           justify='flex-end'>
