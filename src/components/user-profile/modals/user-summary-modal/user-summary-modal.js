@@ -7,6 +7,7 @@ const style = {
     resize: 'none',
     width: '100%',
     outline: 'none',
+    height: '200px !important',
   },
 };
 

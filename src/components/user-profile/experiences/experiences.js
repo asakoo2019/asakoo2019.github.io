@@ -2,33 +2,33 @@ import React, { useState, useEffect } from 'react';
 import { Grid, Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-const Languages = (props) => {
+const Experiences = (props) => {
   const {user} = props;
   const [element, setElement] = useState([]);
 
   useEffect(() => {
-    if (user.userLanguages){
-      const language = user.userLanguages.map((item) => {
+    if (user.userWorkExperiences){
+      const experience = user.userWorkExperiences.map((item) => {
         return (
           <Grid container
             key={item.id}>
             <Grid item xs={3}>
-              <h6>{item.language}</h6>
+              <h6>{item.companyName}</h6>
             </Grid>
             <Grid item xs={8}>
-              <p>{item.level}</p>
+              <p>{item.jobTitle}</p>
             </Grid>
             <Grid item xs={1}>
-              {props.setUserLanguages && <Button variant="outlined" color='primary' onClick={(e)=>{console.log(e)}}>
+              {props.setUserExperiences && <Button variant="outlined" color='primary' onClick={(e)=>{console.log(e)}}>
                 <DeleteIcon color='error'/>
               </Button>}
             </Grid>
           </Grid>
         );
       });
-      setElement(language);
+      setElement(experience);
     };
-  }, [user.userLanguages]);
+  }, [user.userWorkExperiences]);
 
   return (
     <>
@@ -37,4 +37,4 @@ const Languages = (props) => {
   );
 };
 
-export default Languages;
+export default Experiences;

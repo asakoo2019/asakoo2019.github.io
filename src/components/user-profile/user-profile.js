@@ -16,6 +16,7 @@ import DateRangeIcon from '@material-ui/icons/DateRange';
 import { connect } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import Languages from './languages';
+import UserExperienceModal from './modals/user-experience-modal';
 
 const styles = {
   userAllBlocks: {
@@ -56,6 +57,7 @@ const UserProfile = (props) => {
   const [userBirthDate, setUserBirthDate] = useState(null);
   const [userGender, setUserGender] = useState(null);
   const [userLanguages, setUserLanguages] = useState(null);
+  const [userWorkExperience, setUserWorkExperience] = useState(null);
   const { classes, dispatch } = props;
   const history = useHistory();
 
@@ -84,21 +86,6 @@ const UserProfile = (props) => {
         console.log("Error getting document:", error);
       });
     };
-  }, [id]);
-
-  useEffect(() => {
-    if (id !== ' ') {
-      const docRef = firestore.collection("users").doc(id);
-      docRef.get().then(function(doc) {
-        if (doc.exists) {
-          setUser(doc.data());
-        } else {
-          console.log("No such document!");
-        }})
-      .catch(function(error) {
-        console.log("Error getting document:", error);
-      });
-    };
 
     if (downloadURL !== null) {
       firestore.collection("users").doc(id)
@@ -109,21 +96,6 @@ const UserProfile = (props) => {
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
-    };
-  }, [id, downloadURL]);
-
-  useEffect(() => {
-    if (id !== ' ') {
-      const docRef = firestore.collection("users").doc(id);
-      docRef.get().then(function(doc) {
-        if (doc.exists) {
-          setUser(doc.data());
-        } else {
-          console.log("No such document!");
-        }})
-      .catch(function(error) {
-        console.log("Error getting document:", error);
-      });
     };
 
     if (userName !== null) {
@@ -136,21 +108,6 @@ const UserProfile = (props) => {
           console.error("Error updating document: ", error);
         });
     };
-  }, [id, userName]);
-
-  useEffect(() => {
-    if (id !== ' ') {
-      const docRef = firestore.collection("users").doc(id);
-      docRef.get().then(function(doc) {
-        if (doc.exists) {
-          setUser(doc.data());
-        } else {
-          console.log("No such document!");
-        }})
-      .catch(function(error) {
-        console.log("Error getting document:", error);
-      });
-    };
 
     if (userSurname !== null) {
       firestore.collection("users").doc(id)
@@ -161,21 +118,6 @@ const UserProfile = (props) => {
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
-    };
-  }, [id, userSurname]);
-
-  useEffect(() => {
-    if (id !== ' ') {
-      const docRef = firestore.collection("users").doc(id);
-      docRef.get().then(function(doc) {
-        if (doc.exists) {
-          setUser(doc.data());
-        } else {
-          console.log("No such document!");
-        }})
-      .catch(function(error) {
-        console.log("Error getting document:", error);
-      });
     };
 
     if (userPhoneNumber !== null) {
@@ -188,21 +130,6 @@ const UserProfile = (props) => {
           console.error("Error updating document: ", error);
         });
     };
-  }, [id, userPhoneNumber]);
-
-  useEffect(() => {
-    if (id !== ' ') {
-      const docRef = firestore.collection("users").doc(id);
-      docRef.get().then(function(doc) {
-        if (doc.exists) {
-          setUser(doc.data());
-        } else {
-          console.log("No such document!");
-        }})
-      .catch(function(error) {
-        console.log("Error getting document:", error);
-      });
-    };
 
     if (userAdress !== null) {
       firestore.collection("users").doc(id)
@@ -213,21 +140,6 @@ const UserProfile = (props) => {
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
-    };
-  }, [id, userAdress]);
-
-  useEffect(() => {
-    if (id !== ' ') {
-      const docRef = firestore.collection("users").doc(id);
-      docRef.get().then(function(doc) {
-        if (doc.exists) {
-          setUser(doc.data());
-        } else {
-          console.log("No such document!");
-        }})
-      .catch(function(error) {
-        console.log("Error getting document:", error);
-      });
     };
 
     if (userCity !== null) {
@@ -240,21 +152,6 @@ const UserProfile = (props) => {
           console.error("Error updating document: ", error);
         });
     };
-  }, [id, userCity]);
-
-  useEffect(() => {
-    if (id !== ' ') {
-      const docRef = firestore.collection("users").doc(id);
-      docRef.get().then(function(doc) {
-        if (doc.exists) {
-          setUser(doc.data());
-        } else {
-          console.log("No such document!");
-        }})
-      .catch(function(error) {
-        console.log("Error getting document:", error);
-      });
-    };
 
     if (userCountry !== null) {
       firestore.collection("users").doc(id)
@@ -265,21 +162,6 @@ const UserProfile = (props) => {
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
-    };
-  }, [id, userCountry]);
-
-  useEffect(() => {
-    if (id !== ' ') {
-      const docRef = firestore.collection("users").doc(id);
-      docRef.get().then(function(doc) {
-        if (doc.exists) {
-          setUser(doc.data());
-        } else {
-          console.log("No such document!");
-        }})
-      .catch(function(error) {
-        console.log("Error getting document:", error);
-      });
     };
 
     if (userGender !== null) {
@@ -292,21 +174,6 @@ const UserProfile = (props) => {
           console.error("Error updating document: ", error);
         });
     };
-  }, [id, userGender]);
-
-  useEffect(() => {
-    if (id !== ' ') {
-      const docRef = firestore.collection("users").doc(id);
-      docRef.get().then(function(doc) {
-        if (doc.exists) {
-          setUser(doc.data());
-        } else {
-          console.log("No such document!");
-        }})
-      .catch(function(error) {
-        console.log("Error getting document:", error);
-      });
-    };
 
     if (userBirthDate !== null) {
       firestore.collection("users").doc(id)
@@ -318,7 +185,7 @@ const UserProfile = (props) => {
           console.error("Error updating document: ", error);
         });
     };
-  }, [id, userBirthDate]);
+  }, [id, downloadURL, userName, userSurname, userPhoneNumber, userAdress, userCity, userCountry, userGender, userBirthDate]);
 
   useEffect(() => {
     if (id !== ' ') {
@@ -372,6 +239,32 @@ const UserProfile = (props) => {
         });
     };
   }, [id, userLanguages]);
+
+  useEffect(() => {
+    if (id !== ' ') {
+      const docRef = firestore.collection("users").doc(id);
+      docRef.get().then(function(doc) {
+        if (doc.exists) {
+          setUser(doc.data());
+        } else {
+          console.log("No such document!");
+        }})
+      .catch(function(error) {
+        console.log("Error getting document:", error);
+      });
+    };
+    
+    if (userWorkExperience !== null) {
+      firestore.collection("users").doc(id)
+        .update({
+          userWorkExperience: [...user.userWorkExperience, userWorkExperience]
+        }).then(function() {
+          console.log("Document successfully updated!");
+        }).catch(function(error) {
+          console.error("Error updating document: ", error);
+        });
+    };
+  }, [id, userWorkExperience]);
 
   return (
     <Container className='userBlock'>
@@ -475,6 +368,21 @@ const UserProfile = (props) => {
         <Grid container item xs={1}
           justify='flex-end'>
           {props.user ? <UserLanguagesModal user={user} setUserLanguages={setUserLanguages} /> : <UserLanguagesModal user={user} />}
+        </Grid>
+      </Grid>
+
+      {/* User Experience Block */}
+      <Grid container
+        className={classNames(classes.userWorkExperienceBlock, classes.userAllBlocks)}
+        alignItems='center'
+        justify='space-between'>
+        <Grid item xs={10}>
+          <h5>Work experience</h5>
+          {user.userWorkExperience ? (user.userWorkExperience.length ? (props.user ? <Languages user={user} setUserWorkExperience={setUserWorkExperience}/> : <Languages user={user} />) : 'Add your work experience and any significant accomplishments.') : null}
+        </Grid>
+        <Grid container item xs={1}
+          justify='flex-end'>
+          {props.user && <UserExperienceModal user={user} setUserWorkExperience={setUserWorkExperience} />}
         </Grid>
       </Grid>
 

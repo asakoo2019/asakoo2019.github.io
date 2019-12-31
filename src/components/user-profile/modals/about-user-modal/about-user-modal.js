@@ -6,11 +6,6 @@ import CountrySelect from '../../selects/country-select';
 import GenderSelect from '../../selects/gender-select';
 
 const style = {
-  textArea: {
-    resize: 'none',
-    width: '100%',
-    outline: 'none',
-  },
   aboutUserModalBtn: {
     height: 34,
   },

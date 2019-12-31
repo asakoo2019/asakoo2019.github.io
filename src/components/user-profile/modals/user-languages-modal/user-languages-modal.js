@@ -13,9 +13,9 @@ const style = {
 const UserLanguagesModal = (props) => {
   const { classes, user} = props;
   const [open, setOpen] = useState(false);
-
   const [language, setLanguage] = useState(' ');
   const [level, setLevel] = useState(' ');
+  const id = require('uuid/v4');
 
   useEffect(() => {
     switch (language) {
@@ -27,7 +27,7 @@ const UserLanguagesModal = (props) => {
       break;
       default: ;
     };
-  }, [language, user])
+  }, [language])
   
   useEffect(() => {
     switch (level) {
@@ -39,7 +39,7 @@ const UserLanguagesModal = (props) => {
       break;
       default: ;
     };
-  }, [level, user]);
+  }, [level]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -47,7 +47,7 @@ const UserLanguagesModal = (props) => {
 
   const handleSave = () => {
     if (language !== ' ' && level !== ' '){
-      props.setUserLanguages({language, level});
+      props.setUserLanguages({language, level, id: id()});
     };
     setOpen(false);
   };
