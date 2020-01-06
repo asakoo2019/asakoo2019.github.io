@@ -15,6 +15,7 @@ import WcIcon from '@material-ui/icons/Wc';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import { connect } from 'react-redux';
 import { useHistory } from "react-router-dom";
+import SettingsToggleMenu from '../settings-toggle-menu';
 import Languages from './languages';
 
 const styles = {
@@ -185,23 +186,7 @@ const UserProfile = (props) => {
           console.error("Error updating document: ", error);
         });
     };
-
-  }, [id, downloadURL, userName, userSurname, userPhoneNumber, userAdress, userCity, userCountry, userGender, userBirthDate]);
-
-  useEffect(() => {
-    if (id !== ' ') {
-      const docRef = firestore.collection("users").doc(id);
-      docRef.get().then(function(doc) {
-        if (doc.exists) {
-          setUser(doc.data());
-        } else {
-          console.log("No such document!");
-        }})
-      .catch(function(error) {
-        console.log("Error getting document:", error);
-      });
-    };
-
+    
     if (aboutUser !== null) {
       firestore.collection("users").doc(id)
         .update({
@@ -211,25 +196,9 @@ const UserProfile = (props) => {
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
-      };
-  }, [id, aboutUser]);
-
-  useEffect(() => {
-    if (id !== ' ') {
-      const docRef = firestore.collection("users").doc(id);
-      docRef.get().then(function(doc) {
-        if (doc.exists) {
-          setUser(doc.data());
-        } else {
-          console.log("No such document!");
-        }})
-      .catch(function(error) {
-        console.log("Error getting document:", error);
-      });
     };
-    
+
     if (userLanguages !== null) {
-      console.log(1);
       firestore.collection("users").doc(id)
         .update({
           userLanguages: [...user.userLanguages, userLanguages]
@@ -239,7 +208,8 @@ const UserProfile = (props) => {
           console.error("Error updating document: ", error);
         });
     };
-  }, [id, userLanguages]);
+
+  }, [id, downloadURL, userName, userSurname, aboutUser, userPhoneNumber, userAdress, userCity, userCountry, userGender, userBirthDate, userLanguages]);
 
   return (
     <Container className='userBlock'>
@@ -338,13 +308,15 @@ const UserProfile = (props) => {
         justify='space-between'>
         <Grid item xs={10}>
           <h5>Languages</h5>
-          {user.userLanguages ? (user.userLanguages.length ? (props.user ? <Languages user={user} setUserLanguages={setUserLanguages}/> : <Languages user={user} />) : 'Add levels of language proficiency.') : null}
+          {user.userLanguages ? (user.userLanguages.length ? (props.user ? <Languages user={user} setUserLanguages={setUserLanguages} /> : <Languages user={user} />) : 'Add levels of language proficiency.') : null}
         </Grid>
         <Grid container item xs={1}
           justify='flex-end'>
           {props.user ? <UserLanguagesModal user={user} setUserLanguages={setUserLanguages} /> : <UserLanguagesModal user={user} />}
         </Grid>
       </Grid>
+
+      {props.user && <SettingsToggleMenu/>}
 
     </Container>
   );
