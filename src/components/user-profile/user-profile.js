@@ -229,7 +229,6 @@ const UserProfile = (props) => {
     };
     
     if (userLanguages !== null) {
-      console.log(1);
       firestore.collection("users").doc(id)
         .update({
           userLanguages: [...user.userLanguages, userLanguages]
@@ -258,7 +257,7 @@ const UserProfile = (props) => {
     if (userWorkExperience !== null) {
       firestore.collection("users").doc(id)
         .update({
-          userWorkExperience: [...user.userWorkExperience, userWorkExperience]
+          userWorkExperience: userWorkExperience
         }).then(function() {
           console.log("Document successfully updated!");
         }).catch(function(error) {
@@ -379,7 +378,7 @@ const UserProfile = (props) => {
         justify='space-between'>
         <Grid item xs={10}>
           <h5>Work experience</h5>
-          {user.userWorkExperience ? (user.userWorkExperience.length ? (props.user ? <Experiences user={user} setUserWorkExperience={setUserWorkExperience}/> : <Experiences user={user} />) : 'Add your work experience and any significant accomplishments.') : null}
+          {user.userWorkExperience ? (user.userWorkExperience.length ? (props.user ? <Experiences user={user} setUserWorkExperience={setUserWorkExperience} id={id} /> : <Experiences user={user} />) : 'Add your work experience and any significant accomplishments.') : null}
         </Grid>
         <Grid container item xs={1}
           justify='flex-end'>

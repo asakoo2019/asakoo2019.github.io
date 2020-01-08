@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState } from 'react';
 import { DialogContent, DialogActions, Dialog, Button, TextField, Grid, TextareaAutosize, DialogContentText } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
 
@@ -15,13 +15,13 @@ const style = {
 };
 
 const UserExperienceModal = (props) => {
-  const { classes } = props;
+  const { classes, user } = props;
   const [open, setOpen] = useState(false);
   const [companyName, setCompanyName] = useState('');
   const [jobTitle, setJobTitle] = useState('');
   const [location, setLocation] = useState('');
   const [from, setFrom] = useState('');
-  const [to, setTo] = useState('');
+  let [to, setTo] = useState('');
   const [jobDetails, setJobDetails] = useState('');
   const id = require('uuid/v4');
 
@@ -30,8 +30,13 @@ const UserExperienceModal = (props) => {
   };
 
   const handleSave = () => {
-    if (companyName !== '' && jobTitle !== '' && location !== '' && from !== '' && to !== ''){
-      props.setUserWorkExperience({companyName, jobTitle, location, from, to, jobDetails, id: id()});
+    if (to === '') {
+      to = 'until now'
+    };
+    if (companyName !== '' && jobTitle !== '' && location !== '' && from !== ''){
+      props.setUserWorkExperience(
+        [...user.userWorkExperience, {companyName, jobTitle, location, from, to, jobDetails, id: id()}]
+      );
     };
     setOpen(false);
   };

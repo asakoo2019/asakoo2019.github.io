@@ -7,6 +7,15 @@ const Experiences = (props) => {
   const {user} = props;
   const [element, setElement] = useState([]);
 
+  const deleteItem = (id) => {
+    const index = user.userWorkExperience.findIndex((el) => el.id === id);
+    const newArray = [
+      ...user.userWorkExperience.slice(0, index),
+      ...user.userWorkExperience.slice(index + 1)
+    ];
+    props.setUserWorkExperience(newArray);
+  };
+
   useEffect(() => {
     if (user.userWorkExperience){
       const experience = user.userWorkExperience.map((item) => {
@@ -23,7 +32,7 @@ const Experiences = (props) => {
               <p>{`${item.from} - ${item.to}`}</p>
             </Grid>
             <Grid item xs={1}>
-              {props.setUserWorkExperience && <Button variant="outlined" color='primary' onClick={()=>{console.log(item.id)}}>
+              {props.setUserWorkExperience && <Button variant="outlined" color='primary' onClick={() => deleteItem(item.id)}>
                 <DeleteIcon color='error'/>
               </Button>}
             </Grid>
@@ -40,6 +49,7 @@ const Experiences = (props) => {
       });
       setElement(experience);
     };
+    console.log(user.userWorkExperience)
   }, [user.userWorkExperience]);
 
   return (
