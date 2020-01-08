@@ -6,6 +6,15 @@ const Languages = (props) => {
   const {user} = props;
   const [element, setElement] = useState([]);
 
+  const deleteItem = (id) => {
+    const index = user.userLanguages.findIndex((el) => el.id === id);
+    const newArray = [
+      ...user.userLanguages.slice(0, index),
+      ...user.userLanguages.slice(index + 1)
+    ];
+    props.setUserLanguages(newArray);
+  };
+
   useEffect(() => {
     if (user.userLanguages){
       const language = user.userLanguages.map((item) => {
@@ -19,7 +28,7 @@ const Languages = (props) => {
               <p>{item.level}</p>
             </Grid>
             <Grid item xs={1}>
-              {props.setUserLanguages && <Button variant="outlined" color='primary' onClick={()=>{console.log(item.id)}}>
+              {props.setUserLanguages && <Button variant="outlined" color='primary' onClick={() => deleteItem(item.id)}>
                 <DeleteIcon color='error'/>
               </Button>}
             </Grid>

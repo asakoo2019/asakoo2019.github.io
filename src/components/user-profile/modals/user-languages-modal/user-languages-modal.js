@@ -11,7 +11,7 @@ const style = {
 };
 
 const UserLanguagesModal = (props) => {
-  const { classes } = props;
+  const { classes, user } = props;
   const [open, setOpen] = useState(false);
   const [language, setLanguage] = useState(' ');
   const [level, setLevel] = useState(' ');
@@ -47,7 +47,7 @@ const UserLanguagesModal = (props) => {
 
   const handleSave = () => {
     if (language !== ' ' && level !== ' '){
-      props.setUserLanguages({language, level, id: id()});
+      props.setUserLanguages([...user.userLanguages, {language, level, id: id()}]);
     };
     setOpen(false);
   };

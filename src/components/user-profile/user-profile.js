@@ -231,7 +231,7 @@ const UserProfile = (props) => {
     if (userLanguages !== null) {
       firestore.collection("users").doc(id)
         .update({
-          userLanguages: [...user.userLanguages, userLanguages]
+          userLanguages: userLanguages
         }).then(function() {
           console.log("Document successfully updated!");
         }).catch(function(error) {
