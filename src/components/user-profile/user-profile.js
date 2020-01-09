@@ -18,6 +18,7 @@ import { useHistory } from "react-router-dom";
 import Languages from './languages';
 import UserExperienceModal from './modals/user-experience-modal';
 import Experiences from './experiences/experiences';
+import SettingsToggleMenu from '../settings-toggle-menu';
 
 const styles = {
   userAllBlocks: {
@@ -51,7 +52,7 @@ const UserProfile = (props) => {
   const [userName, setUserName] = useState(null);
   const [userSurname, setUserSurname] = useState(null);
   const [userPhoneNumber, setUserPhoneNumber] = useState(null);
-  const [userAdress, setUserAdress] = useState(null);
+  const [userAdress, setUserAdress] = useState('');
   const [aboutUser, setAboutUser] = useState(null);
   const [userCity, setUserCity] = useState(null);
   const [userCountry, setUserCountry] = useState(null);
@@ -385,7 +386,7 @@ const UserProfile = (props) => {
           {props.user && <UserExperienceModal user={user} setUserWorkExperience={setUserWorkExperience} />}
         </Grid>
       </Grid>
-
+      <SettingsToggleMenu />
     </Container>
   );
 };
