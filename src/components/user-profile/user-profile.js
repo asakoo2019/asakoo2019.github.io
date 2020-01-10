@@ -52,7 +52,7 @@ const UserProfile = (props) => {
   const [userName, setUserName] = useState(null);
   const [userSurname, setUserSurname] = useState(null);
   const [userPhoneNumber, setUserPhoneNumber] = useState(null);
-  const [userAdress, setUserAdress] = useState('');
+  const [userAdress, setUserAdress] = useState(null);
   const [aboutUser, setAboutUser] = useState(null);
   const [userCity, setUserCity] = useState(null);
   const [userCountry, setUserCountry] = useState(null);
@@ -92,7 +92,7 @@ const UserProfile = (props) => {
     if (downloadURL !== null) {
       firestore.collection("users").doc(id)
         .update({
-          downloadURL: downloadURL
+          userImage: downloadURL
         }).then(function() {
           console.log("Document successfully updated!");
         }).catch(function(error) {
