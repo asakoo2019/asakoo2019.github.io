@@ -18,7 +18,6 @@ import { useHistory } from "react-router-dom";
 import Languages from './languages';
 import UserExperienceModal from './modals/user-experience-modal';
 import Experiences from './experiences/experiences';
-import SettingsToggleMenu from '../settings-toggle-menu';
 
 const styles = {
   userAllBlocks: {
