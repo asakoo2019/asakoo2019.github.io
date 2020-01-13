@@ -3,26 +3,24 @@ import { Checkbox, FormControlLabel, Grid } from '@material-ui/core';
 
 export default class JobsFilter extends Component {
 
-    checkboxChange = (id, checked, index) => {
-        this.props.checkboxChange(id, checked, index);
+    checkboxChange = (uniqueJob, item) => {
+        
+        this.props.checkboxChange(uniqueJob, item);
     }
     render() {
         const { jobs } = this.props;
-        const uniqueArr = jobs.map(item => {
-            return item.label
-        })
-        .filter((job, i, arr) => {
-            return arr.indexOf(job) === i
-        })
+
+        const uniqueArr = jobs.map(item => item.jobCategory)
+        .filter((job, i, arr) => arr.indexOf(job) === i);
 
         const elements = jobs.map((item, i) => {
             const { id, checked } = item;
-            
+           
             return uniqueArr[i] ? (
                 <FormControlLabel key={id} 
                     control= {<Checkbox
                         checked={checked}
-                        onChange = {() => this.checkboxChange(id, checked, uniqueArr[i])}
+                        onChange = {() => this.checkboxChange(uniqueArr[i], item)}
                         value={uniqueArr[i]} />}
                     label={uniqueArr[i]} />
             ): null;
