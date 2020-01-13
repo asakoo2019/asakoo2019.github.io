@@ -386,7 +386,6 @@ const UserProfile = (props) => {
           {props.user && <UserExperienceModal user={user} setUserWorkExperience={setUserWorkExperience} />}
         </Grid>
       </Grid>
-      <SettingsToggleMenu />
     </Container>
   );
 };
