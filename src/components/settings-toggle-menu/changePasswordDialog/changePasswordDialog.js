@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -7,13 +7,14 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import MenuItem from '@material-ui/core/MenuItem';
+import passwordSchema from "../../Login&RegistrationStyles&Npm/passwordValidation";
+
 import {
     InputAdornment,
     IconButton,
     FormControl,
     InputLabel,
     OutlinedInput,
-    Button,
     FormHelperText,
   } from "@material-ui/core";
   import Visibility from "@material-ui/icons/Visibility";
@@ -23,12 +24,14 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function changePasswordDialog(props) {
+export default function ChangePasswordDialog(props) {
   const [newPassword, setNewPassword] = useState('');
-  newPasswordHandleChange = (event) => {
+  const [passwordError, setPasswordError] = useState([]);
+  const newPasswordHandleChange = (event) => {
     setNewPassword(event.target.value);
   }
   const [open, setOpen] = React.useState(false);
+  const [showPassword, setShowPassword] = useState(false)
   const { deleteAccount } = props;
   console.log(deleteAccount);
 
@@ -39,6 +42,24 @@ export default function changePasswordDialog(props) {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleMouseDownPassword = event => {
+    event.preventDefault();
+  };
+
+  const validatePassword = () => {
+      const passwordValidationArray = passwordSchema.validate(newPassword, { list: true });
+      if(passwordValidationArray.length) {
+        setPasswordError(passwordValidationArray);
+        return;
+      }
+      props.changePassword(newPassword);
+      handleClose();
+  }
 
   return (
     <div>
@@ -58,7 +79,7 @@ export default function changePasswordDialog(props) {
           <DialogContentText id="alert-dialog-slide-description">
             Write your new password
           </DialogContentText>
-          <FormControl className={classes.txtb} variant="outlined" error = {!!passwordError}>
+          <FormControl variant="outlined">
           <InputLabel htmlFor="outlined-adornment-password">
             Password
           </InputLabel>
@@ -66,6 +87,7 @@ export default function changePasswordDialog(props) {
             id="outlined-adornment-password"
             type={showPassword ? "text" : "password"}
             value={newPassword}
+            error = {!!passwordError.length}
             onChange={newPasswordHandleChange}
             endAdornment={
               <InputAdornment position="end">
@@ -81,14 +103,24 @@ export default function changePasswordDialog(props) {
             }
             labelWidth={70}
           />
-          {/* <FormHelperText id="outlined-weight-helper-text">{passwordError}</FormHelperText> */}
+          <FormHelperText id="outlined-weight-helper-text">{passwordError.map(currentError => {
+            switch (currentError) {
+              case 'min': return '\u2022 Minimum length 6';
+              case 'max': return ' \u2022 Maximum length 20,'
+              case 'uppercase': return ' \u2022 Must have uppercase letters'
+              case 'lowercase': return ' \u2022 Must have lowercase letters';
+              case 'digits': return ' \u2022 Must have digits';
+              case 'spaces': return ' \u2022 Should not have spaces';
+              default: return " for avoiding warnings"
+            }
+          })}</FormHelperText>
         </FormControl>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Disagree
           </Button>
-          <Button onClick={deleteAccount} color="primary">
+          <Button onClick={() => validatePassword()} color="primary">
             Agree
           </Button>
         </DialogActions>
@@ -96,3 +128,5 @@ export default function changePasswordDialog(props) {
     </div>
   );
 }
+
+

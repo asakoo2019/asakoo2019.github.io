@@ -13,6 +13,7 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { useHistory } from "react-router-dom";
 import DeleteAccountDialog from './deleteAccountDialog';
 import { connect } from 'react-redux';
+import ChangePasswordDialog from './changePasswordDialog'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -67,7 +68,14 @@ function SettingsToggleMenu(props) {
     });
   }
 
-  // return focus to the button when we transitioned from !open -> open
+  function changePassword(newPassword) {
+    auth.currentUser.updatePassword(newPassword).then(function() {
+      alert('Your password changed')
+    }).catch(function(error) {
+      alert(error);
+    });
+  }
+
   const prevOpen = React.useRef(open);
   React.useEffect(() => {
     if (prevOpen.current === true && open === false) {
@@ -95,9 +103,10 @@ function SettingsToggleMenu(props) {
               style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
             >
               <Paper>
-                <ClickAwayListener onClickAway={handleClose}>
+                <ClickAwayListener>
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                    <MenuItem onClick={handleClose}>Change Password</MenuItem>
+                    {/* <MenuItem onClick={handleClose}>Change Password</MenuItem> */}
+                    <ChangePasswordDialog changePassword = {changePassword}/>
                     <DeleteAccountDialog deleteAccount = {deleteAccount}/>
                     <MenuItem onClick={signOut}>Sign out</MenuItem>
                   </MenuList>
