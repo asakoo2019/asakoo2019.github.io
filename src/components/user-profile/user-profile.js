@@ -63,6 +63,7 @@ const UserProfile = (props) => {
   const history = useHistory();
 
   useEffect(() => {
+    let unmounted = false;
     auth.onAuthStateChanged((logedInUser) => {
       if (logedInUser) {
         dispatch({type: "SIGN-IN", payload: user});
@@ -71,7 +72,9 @@ const UserProfile = (props) => {
         const pathName = history.location.pathname;
         const LastSleshIndex = pathName.lastIndexOf('/');
         const searchId = pathName.slice(LastSleshIndex + 1);
-        setId(searchId);
+        if(!unmounted){
+          setId(searchId);
+        }
       };
     });
 
@@ -79,7 +82,9 @@ const UserProfile = (props) => {
       const docRef = firestore.collection("users").doc(id);
       docRef.get().then(function(doc) {
         if (doc.exists) {
-          setUser(doc.data());
+          if(!unmounted) {
+            setUser(doc.data());
+          };
         } else {
           console.log("No such document!");
         }})
@@ -186,14 +191,20 @@ const UserProfile = (props) => {
           console.error("Error updating document: ", error);
         });
     };
+    return () => {
+      unmounted = true;
+    };
   }, [id, downloadURL, userName, userSurname, userPhoneNumber, userAdress, userCity, userCountry, userGender, userBirthDate]);
 
   useEffect(() => {
+    let unmounted = false;
     if (id !== ' ') {
       const docRef = firestore.collection("users").doc(id);
       docRef.get().then(function(doc) {
         if (doc.exists) {
-          setUser(doc.data());
+          if(!unmounted) {
+            setUser(doc.data());
+          };
         } else {
           console.log("No such document!");
         }})
@@ -212,14 +223,20 @@ const UserProfile = (props) => {
           console.error("Error updating document: ", error);
         });
       };
+      return () => {
+        unmounted = true;
+      };
   }, [id, aboutUser]);
 
   useEffect(() => {
+    let unmounted = false;
     if (id !== ' ') {
       const docRef = firestore.collection("users").doc(id);
       docRef.get().then(function(doc) {
         if (doc.exists) {
-          setUser(doc.data());
+          if(!unmounted) {
+            setUser(doc.data());
+          };
         } else {
           console.log("No such document!");
         }})
@@ -238,14 +255,20 @@ const UserProfile = (props) => {
           console.error("Error updating document: ", error);
         });
     };
+    return () => {
+      unmounted = true;
+    };
   }, [id, userLanguages]);
 
   useEffect(() => {
+    let unmounted = false;
     if (id !== ' ') {
       const docRef = firestore.collection("users").doc(id);
       docRef.get().then(function(doc) {
         if (doc.exists) {
-          setUser(doc.data());
+          if(!unmounted) {
+            setUser(doc.data());
+          };
         } else {
           console.log("No such document!");
         }})
@@ -263,6 +286,9 @@ const UserProfile = (props) => {
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
+    };
+    return () => {
+      unmounted = true;
     };
   }, [id, userWorkExperience]);
 

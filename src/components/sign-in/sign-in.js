@@ -54,12 +54,28 @@ function SignIn(props) {
       firestore.collection("users").get()
       .then(function(doc) {
         let key;
+        let registrationType;
         for (let i = 0; i < doc.docs.length; i++) {
           if (doc.docs[i].data().email === values.email) {
             key = doc.docs[i].data().id;
+            registrationType = doc.docs[i].data().registrationType.toLowerCase();
           }
         }
-        history.push(`/employee/${key}`);
+
+        if (key) {
+          history.push(`/${registrationType}/${key}`);
+        } else {
+          firestore.collection("companies").get()
+          .then(function(doc) {
+            for (let i = 0; i < doc.docs.length; i++) {
+              if (doc.docs[i].data().email === values.email) {
+                key = doc.docs[i].data().id;
+                registrationType = doc.docs[i].data().registrationType.toLowerCase();
+              }
+            }
+            history.push(`/${registrationType}/${key}`);
+          })
+        }
       })
       .error(err => {console.log(err)})
     })
