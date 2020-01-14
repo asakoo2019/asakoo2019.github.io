@@ -33,7 +33,6 @@ export default function ChangePasswordDialog(props) {
   const [open, setOpen] = React.useState(false);
   const [showPassword, setShowPassword] = useState(false)
   const { deleteAccount } = props;
-  console.log(deleteAccount);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -72,8 +71,7 @@ export default function ChangePasswordDialog(props) {
         keepMounted
         onClose={handleClose}
         aria-labelledby="alert-dialog-slide-title"
-        aria-describedby="alert-dialog-slide-description"
-      >
+        aria-describedby="alert-dialog-slide-description">
         <DialogTitle id="alert-dialog-slide-title">{"TopTeam"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">

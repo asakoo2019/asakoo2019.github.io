@@ -1,54 +1,36 @@
-import React from 'react';
-import Button from '@material-ui/core/Button';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Grow from '@material-ui/core/Grow';
-import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper';
-import MenuItem from '@material-ui/core/MenuItem';
-import MenuList from '@material-ui/core/MenuList';
-import { makeStyles } from '@material-ui/core/styles';
-import {auth} from '../firebase/db'
+import React, { useState, useRef, useEffect } from 'react';
+import { Button, Paper, Popper, MenuItem, MenuList } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-// import SettingsIcon from '@material-ui/icons/Settings';
-import { useHistory } from "react-router-dom";
+import { makeStyles } from '@material-ui/core/styles';
+import { auth } from '../firebase/db'
 import DeleteAccountDialog from './deleteAccountDialog';
+import ChangePasswordDialog from './changePasswordDialog';
+import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
-import ChangePasswordDialog from './changePasswordDialog'
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
+const useStyles = makeStyles({
+  toggleBtn: {
+    marginRight: 40,
   },
-  paper: {
-    marginRight: theme.spacing(2),
-  },
-}));
+});
 
 function SettingsToggleMenu(props) {
   const {dispatch} = props;
+  const [open, setOpen] = useState(false);
+  const anchorRef = useRef(null);
   const history = useHistory();
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const anchorRef = React.useRef(null);
 
   const handleToggle = () => {
     setOpen(prevOpen => !prevOpen);
-  };
-
-  const handleClose = event => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      return;
-    }
-
-    setOpen(false);
   };
 
   function handleListKeyDown(event) {
     if (event.key === 'Tab') {
       event.preventDefault();
       setOpen(false);
-    }
-  }
+    };
+  };
 
   function deleteAccount() {
     const user = auth.currentUser;
@@ -57,7 +39,7 @@ function SettingsToggleMenu(props) {
     }).catch(function(error) {
      console.log(error);
     });
-  }
+  };
 
   function signOut() {
     auth.signOut().then(function() {
@@ -66,7 +48,7 @@ function SettingsToggleMenu(props) {
     }).catch(function(error) {
       // An error happened.
     });
-  }
+  };
 
   function changePassword(newPassword) {
     auth.currentUser.updatePassword(newPassword).then(function() {
@@ -74,50 +56,37 @@ function SettingsToggleMenu(props) {
     }).catch(function(error) {
       alert(error);
     });
-  }
+  };
 
-  const prevOpen = React.useRef(open);
-  React.useEffect(() => {
+  const prevOpen = useRef(open);
+
+  useEffect(() => {
     if (prevOpen.current === true && open === false) {
       anchorRef.current.focus();
-    }
-
+    };
     prevOpen.current = open;
   }, [open]);
 
   return (
-    <div className={classes.root}>
-      <div>
-        <Button
-          ref={anchorRef}
-          aria-controls={open ? 'menu-list-grow' : undefined}
-          aria-haspopup="true"
-          onClick={handleToggle}
-        >
-          <ArrowDropDownIcon/>
-        </Button>
-        <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
-          {({ TransitionProps, placement }) => (
-            <Grow
-              {...TransitionProps}
-              style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-            >
-              <Paper>
-                <ClickAwayListener>
-                  <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                    {/* <MenuItem onClick={handleClose}>Change Password</MenuItem> */}
-                    <ChangePasswordDialog changePassword = {changePassword}/>
-                    <DeleteAccountDialog deleteAccount = {deleteAccount}/>
-                    <MenuItem onClick={signOut}>Sign out</MenuItem>
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Popper>
-      </div>
-    </div>
+    <>
+      <Button className={classes.toggleBtn}
+        ref={anchorRef}
+        aria-controls={open ? 'menu-list-grow' : undefined}
+        aria-haspopup="true"
+        onClick={handleToggle}>
+        <ArrowDropDownIcon/>
+      </Button>
+      <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+        <Paper>
+          <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+            <ChangePasswordDialog changePassword = {changePassword}/>
+            <DeleteAccountDialog deleteAccount = {deleteAccount}/>
+            <MenuItem onClick={signOut}>Sign out</MenuItem>
+          </MenuList>
+        </Paper>
+      </Popper>
+    </>
   );
-}
+};
 
 export default connect()(SettingsToggleMenu);
