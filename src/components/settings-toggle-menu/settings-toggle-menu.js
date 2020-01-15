@@ -3,8 +3,8 @@ import { Button, Paper, Popper, MenuItem, MenuList } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { makeStyles } from '@material-ui/core/styles';
 import { auth } from '../firebase/db'
-import DeleteAccountDialog from './deleteAccountDialog';
-import ChangePasswordDialog from './changePasswordDialog';
+import DeleteAccountDialog from './delete-account-dialog';
+import ChangePasswordDialog from './change-password-dialog';
 import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
 

@@ -67,7 +67,13 @@ const CompanyProfile = (props) => {
         };
       };
     });
+    return () => {
+      unmounted = true;
+    };
+  }, [dispatch, history.location.pathname, company]);
 
+  useEffect(() => {
+    let unmounted = false;
     if (id !== ' ') {
       const docRef = firestore.collection("companies").doc(id);
       docRef.get().then(function(doc) {
@@ -82,7 +88,6 @@ const CompanyProfile = (props) => {
         console.log("Error getting document:", error);
       });
     };
-
     if (downloadURL !== null) {
       firestore.collection("companies").doc(id)
         .update({
@@ -185,7 +190,7 @@ const CompanyProfile = (props) => {
         alignItems='center'>
         <Grid container
           item xs={12} sm={4} md={2}>
-          {props.company ? <CompanyImageBlock setCompanyImage={setCompanyImage} company={company}/> : <CompanyImageBlock company={company}/>}
+          {props.company ? <CompanyImageBlock setCompanyImage={setCompanyImage} company={company} id={id} /> : <CompanyImageBlock company={company} id={id} />}
         </Grid>
         <Grid container
           item xs={12} sm={8} md={10}

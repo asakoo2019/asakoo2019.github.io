@@ -64,6 +64,26 @@ const UserProfile = (props) => {
 
   useEffect(() => {
     let unmounted = false;
+    auth.onAuthStateChanged((logedInUser) => {
+      if (logedInUser) {
+        dispatch({type: "SIGN-IN", payload: user});
+        setId(logedInUser.uid);
+      } else {
+        const pathName = history.location.pathname;
+        const LastSleshIndex = pathName.lastIndexOf('/');
+        const searchId = pathName.slice(LastSleshIndex + 1);
+        if(!unmounted){
+          setId(searchId);
+        };
+      };
+    });
+    return () => {
+      unmounted = true;
+    };
+  }, [dispatch, history.location.pathname, user]);
+
+  useEffect(() => {
+    let unmounted = false;
     if (id !== ' ') {
       const docRef = firestore.collection("users").doc(id);
       docRef.get().then(function(doc) {
@@ -78,33 +98,6 @@ const UserProfile = (props) => {
         console.log("Error getting document:", error);
       });
     };
-    return () => {
-      unmounted = true;
-    };
-  }, [id]);
-
-  useEffect(() => {
-    let unmounted = false;
-    auth.onAuthStateChanged((logedInUser) => {
-      if (logedInUser) {
-        dispatch({type: "SIGN-IN", payload: user});
-        setId(logedInUser.uid);
-      } else {
-        const pathName = history.location.pathname;
-        const LastSleshIndex = pathName.lastIndexOf('/');
-        const searchId = pathName.slice(LastSleshIndex + 1);
-        if(!unmounted){
-          setId(searchId);
-        };
-      };
-    });
-    console.log(1);
-    return () => {
-      unmounted = true;
-    };
-  }, [dispatch, history.location.pathname, user]);
-
-  useEffect(() => {
     if (downloadURL !== null) {
       firestore.collection("users").doc(id)
         .update({
@@ -203,6 +196,9 @@ const UserProfile = (props) => {
           console.error("Error updating document: ", error);
         });
     };
+    return () => {
+      unmounted = true;
+    };
   }, [id, downloadURL, userName, userSurname, userPhoneNumber, userAdress, userCity, userCountry, userGender, userBirthDate]);
 
   useEffect(() => {
@@ -221,7 +217,6 @@ const UserProfile = (props) => {
         console.log("Error getting document:", error);
       });
     };
-
     if (aboutUser !== null) {
       firestore.collection("users").doc(id)
         .update({
@@ -233,8 +228,8 @@ const UserProfile = (props) => {
         });
       };
       return () => {
-        unmounted = true;
-      };
+      unmounted = true;
+    };
   }, [id, aboutUser]);
 
   useEffect(() => {
@@ -253,7 +248,6 @@ const UserProfile = (props) => {
         console.log("Error getting document:", error);
       });
     };
-    
     if (userLanguages !== null) {
       firestore.collection("users").doc(id)
         .update({
@@ -285,7 +279,6 @@ const UserProfile = (props) => {
         console.log("Error getting document:", error);
       });
     };
-    
     if (userWorkExperience !== null) {
       firestore.collection("users").doc(id)
         .update({
@@ -311,7 +304,7 @@ const UserProfile = (props) => {
         alignItems='center'>
         <Grid container
           item xs={12} sm={4} md={2}>
-          {props.user ? <UserImageBlock setUserImage={setUserImage} user={user}/> : <UserImageBlock user={user}/>}
+          {props.user ? <UserImageBlock setUserImage={setUserImage} user={user} id={id}/> : <UserImageBlock user={user} id={id}/>}
         </Grid>
         <Grid container
           item xs={12} sm={8} md={10}
