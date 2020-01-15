@@ -26,6 +26,7 @@ import { useHistory } from "react-router-dom";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import userImage from './avatar.png';
+import companyImage from './company-icon.png';
 
 function RegistrationComponent(props) {
   const history = useHistory();
@@ -100,15 +101,17 @@ function RegistrationComponent(props) {
               email: email,
               registrationType,
               companyViewCount: 0,
-              aboutCompany: null,
-              companyImage: null,
+              aboutCompany: '',
+              companyImage: companyImage,
               companyBackground: null,
               companyJobs: [],
               companyWebsite: null,
+              companyPhoneNumber: null,
               companySocialMedias: {},
               companyCategory: [],
-              userCity: ' ',
-              userCountry: ' ',
+              companyCity: ' ',
+              companyCountry: ' ',
+              companyAdress: ' ',
             });
             history.push(`/${registrationType.toLowerCase()}/${id}`);
           }

@@ -87,7 +87,7 @@ const AboutUserModal = (props) => {
               <TextField margin="normal"
                 className={classes.userPhoneNumber}
                 value={userPhoneNumber}
-                placeholder='+374-00-11-22-33'
+                placeholder='+37400112233'
                 onChange={(e) => setUserPhoneNumber(e.target.value)}
                 label="Phone Number" />
             </Grid>

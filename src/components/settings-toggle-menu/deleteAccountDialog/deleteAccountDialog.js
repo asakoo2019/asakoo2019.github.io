@@ -25,7 +25,7 @@ export default function DeleteAccountDialog(props) {
   };
 
   return (
-    <div>
+    <>
       <MenuItem onClick={handleClickOpen}>
         Delete Account
       </MenuItem>
@@ -51,6 +51,6 @@ export default function DeleteAccountDialog(props) {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 }

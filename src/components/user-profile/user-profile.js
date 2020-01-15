@@ -74,7 +74,7 @@ const UserProfile = (props) => {
         const searchId = pathName.slice(LastSleshIndex + 1);
         if(!unmounted){
           setId(searchId);
-        }
+        };
       };
     });
 

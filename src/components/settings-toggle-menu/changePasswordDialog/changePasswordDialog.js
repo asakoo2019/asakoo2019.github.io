@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -32,7 +32,6 @@ export default function ChangePasswordDialog(props) {
   }
   const [open, setOpen] = React.useState(false);
   const [showPassword, setShowPassword] = useState(false)
-  const { deleteAccount } = props;
 
   const handleClickOpen = () => {
     setOpen(true);
