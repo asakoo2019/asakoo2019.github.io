@@ -64,20 +64,6 @@ const UserProfile = (props) => {
 
   useEffect(() => {
     let unmounted = false;
-    auth.onAuthStateChanged((logedInUser) => {
-      if (logedInUser) {
-        dispatch({type: "SIGN-IN", payload: user});
-        setId(logedInUser.uid);
-      } else {
-        const pathName = history.location.pathname;
-        const LastSleshIndex = pathName.lastIndexOf('/');
-        const searchId = pathName.slice(LastSleshIndex + 1);
-        if(!unmounted){
-          setId(searchId);
-        };
-      };
-    });
-
     if (id !== ' ') {
       const docRef = firestore.collection("users").doc(id);
       docRef.get().then(function(doc) {
@@ -92,7 +78,33 @@ const UserProfile = (props) => {
         console.log("Error getting document:", error);
       });
     };
+    return () => {
+      unmounted = true;
+    };
+  }, [id]);
 
+  useEffect(() => {
+    let unmounted = false;
+    auth.onAuthStateChanged((logedInUser) => {
+      if (logedInUser) {
+        dispatch({type: "SIGN-IN", payload: user});
+        setId(logedInUser.uid);
+      } else {
+        const pathName = history.location.pathname;
+        const LastSleshIndex = pathName.lastIndexOf('/');
+        const searchId = pathName.slice(LastSleshIndex + 1);
+        if(!unmounted){
+          setId(searchId);
+        };
+      };
+    });
+    console.log(1);
+    return () => {
+      unmounted = true;
+    };
+  }, [dispatch, history.location.pathname, user]);
+
+  useEffect(() => {
     if (downloadURL !== null) {
       firestore.collection("users").doc(id)
         .update({
@@ -190,9 +202,6 @@ const UserProfile = (props) => {
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
-    };
-    return () => {
-      unmounted = true;
     };
   }, [id, downloadURL, userName, userSurname, userPhoneNumber, userAdress, userCity, userCountry, userGender, userBirthDate]);
 
