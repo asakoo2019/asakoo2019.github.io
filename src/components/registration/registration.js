@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState } from 'react';
 import { auth, firestore } from '../firebase/db';
 import style from '../Login&RegistrationStyles&Npm/login&RegStyle';
 import { withStyles } from "@material-ui/core/styles";
@@ -54,72 +54,11 @@ function RegistrationComponent(props) {
   const handleDateChange = date => {
     setBirthday(date);
   };
-  const [isLogedIn, setIsLogedIn] = useState(false);
+  // const [isLogedIn, setIsLogedIn] = useState(false);
 
-  useEffect(() => {
-    if (isLogedIn) {
-      const { email, password } = values;
-
-      auth.createUserWithEmailAndPassword(email, password)
-        .then(user => {
-          const id = user.user.uid;
-          const { name, gender, surname, registrationType, email } = values;
-          if (registrationType === 'Employee') {
-            firestore.collection("users").doc(id).set({
-              userName: name,
-              userSurname: surname,
-              userBirthDate: birthday.toLocaleDateString(undefined, {
-                day:'numeric',
-                month: 'numeric',
-                year: 'numeric'
-              }),
-              id: id,
-              userGender: gender,
-              email: email,
-              registrationType,
-              userImage: userImage,
-              userPhoneNumber: null,
-              userAdress: ' ',
-              userCity: ' ',
-              userCountry: ' ',
-              userWorkExperience: [],
-              userProfessionalSkills: [],
-              userLanguages: [],
-              aboutUser: '',
-            });
-            history.push(`/${registrationType.toLowerCase()}/${id}`);
-          } else {
-            firestore.collection("companies").doc(id).set({
-              companyName: name,
-              registerName: surname,
-              companyCreatingData: birthday.toLocaleDateString(undefined, {
-                day:'numeric',
-                month: 'numeric',
-                year: 'numeric'
-              }),
-              id: id,
-              email: email,
-              registrationType,
-              companyViewCount: 0,
-              aboutCompany: '',
-              companyImage: companyImage,
-              companyBackground: null,
-              companyJobs: [],
-              companyWebsite: null,
-              companyPhoneNumber: null,
-              companySocialMedias: {},
-              companyCategory: [],
-              companyCity: ' ',
-              companyCountry: ' ',
-              companyAdress: ' ',
-            });
-            history.push(`/${registrationType.toLowerCase()}/${id}`);
-          }
-        }).catch(function (err) {
-          setError(e => ({ ...e, mailRepeatError: err.message }));
-      });
-    };
-  }, [isLogedIn]);
+  // useEffect(() => {
+    
+  // }, [isLogedIn]);
 
   function doTextFieldValidation(textFieldName, errorMessage) {
     switch (textFieldName) {
@@ -173,7 +112,65 @@ function RegistrationComponent(props) {
     
     if (!emailError && !passwordError && !repeatPasswordError && !birthdayError && !nameError && !surnameError && 
       !mailRepeatError) {
-      setIsLogedIn(true);
+        // if (isLogedIn) {
+          auth.createUserWithEmailAndPassword(values.email, values.password)
+            .then(user => {
+              const id = user.user.uid;
+              // const { name, gender, surname, registrationType, email } = values;
+              if (values.registrationType === 'Employee') {
+                firestore.collection("users").doc(id).set({
+                  userName: values.name,
+                  userSurname: values.surname,
+                  userBirthDate: birthday.toLocaleDateString(undefined, {
+                    day:'numeric',
+                    month: 'numeric',
+                    year: 'numeric'
+                  }),
+                  id: id,
+                  userGender: values.gender,
+                  email: values.email,
+                  registrationType: values.registrationType,
+                  userImage: userImage,
+                  userPhoneNumber: null,
+                  userAdress: ' ',
+                  userCity: ' ',
+                  userCountry: ' ',
+                  userWorkExperience: [],
+                  userProfessionalSkills: [],
+                  userLanguages: [],
+                  aboutUser: '',
+                });
+                history.push(`/${values.registrationType.toLowerCase()}/${id}`);
+              } else {
+                firestore.collection("companies").doc(id).set({
+                  companyName: values.name,
+                  registerName: values.surname,
+                  companyCreatingData: birthday.toLocaleDateString(undefined, {
+                    day:'numeric',
+                    month: 'numeric',
+                    year: 'numeric'
+                  }),
+                  id: id,
+                  email: values.email,
+                  registrationType: values.registrationType,
+                  companyViewCount: 0,
+                  aboutCompany: '',
+                  companyImage: companyImage,
+                  companyBackground: null,
+                  companyJobs: [],
+                  companyWebsite: null,
+                  companyPhoneNumber: null,
+                  companySocialMedias: {},
+                  companyCategory: [],
+                  companyCity: ' ',
+                  companyCountry: ' ',
+                  companyAdress: ' ',
+                });
+                history.push(`/${values.registrationType.toLowerCase()}/${id}`);
+              }
+            }).catch(function (err) {
+              setError(e => ({ ...e, mailRepeatError: err.message }));
+          });
     } else {
       const nameError = doTextFieldValidation('nameError', 'Fill this field');
       const surnameError = doTextFieldValidation('surnameError', 'Fill this field');
@@ -189,7 +186,7 @@ function RegistrationComponent(props) {
       setValues({ ...values, [prop]: !values.showPassword });
     } if (prop === 'email') {
       setError({...error, mailRepeatError : ''});
-      setIsLogedIn(false);
+      // setIsLogedIn(false);
     }
     setValues({ ...values, [prop]: event.target.value });
   };
