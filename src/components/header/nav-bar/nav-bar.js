@@ -1,6 +1,6 @@
 import React from 'react';
 import './nav-bar.css';
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route, Link, Redirect } from "react-router-dom";
 import { withStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import Companies from '../../companies';
@@ -34,11 +34,9 @@ const NavBar = (props) => {
           <Grid item xs={8}
             container
             justify='flex-start'>
-            <Link to="/" className={classes.navItem}>Home</Link>
+            <Link to="/home" className={classes.navItem}>Home</Link>
             <Link to="/jobs" className={classes.navItem}>Jobs</Link>
             <Link to="/companies" className={classes.navItem}>Companies</Link>
-            <Link to="/user-profile" className={classes.navItem} />
-            <Link to="/company-profile" className={classes.navItem} />
           </Grid>
           <Grid item xs={4}
             container
@@ -54,7 +52,8 @@ const NavBar = (props) => {
         <Route exact path="/registration" component={Registration} />
         <Route exact path="/employee/:id" component={UserProfile} />
         <Route exact path="/employer/:id" component={CompanyProfile} />
-        <Route path="/" component={HomePageContainer} />
+        <Route path="/home" component={HomePageContainer} />
+        <Redirect to="/home" />
       </Switch>
     </>
   );
