@@ -15,6 +15,7 @@ const useStyles = makeStyles({
   },
   myProfileBtn: {
     marginRight: 10,
+    padding: 15,
   },
 });
 
