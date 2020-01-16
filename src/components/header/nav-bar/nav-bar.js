@@ -1,6 +1,6 @@
 import React from 'react';
 import './nav-bar.css';
-import { Switch, Route, Link, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect, NavLink } from "react-router-dom";
 import { withStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import Companies from '../../companies';
@@ -25,7 +25,8 @@ const mStP = (state) => ({
 
 const NavBar = (props) => {
   const { classes } = props;
-  const regAndLogArray = [<Link key={1} to="/sign-in" className={classes.navItem}>Sign In</Link>,<Link key={2} to="/registration" className={classes.navItem}>Registration</Link>];
+  const regAndLogArray = [<NavLink key={1} to="/sign-in" activeClassName='active' className={classes.navItem}>Sign In</NavLink>,
+                          <NavLink key={2} to="/registration" activeClassName='active' className={classes.navItem}>Registration</NavLink>];
   return (
     <>
       <nav>
@@ -34,9 +35,9 @@ const NavBar = (props) => {
           <Grid item xs={8}
             container
             justify='flex-start'>
-            <Link to="/home" className={classes.navItem}>Home</Link>
-            <Link to="/jobs" className={classes.navItem}>Jobs</Link>
-            <Link to="/companies" className={classes.navItem}>Companies</Link>
+            <NavLink to="/home" activeClassName='active' className={classes.navItem}>Home</NavLink>
+            <NavLink to="/jobs" activeClassName='active' className={classes.navItem}>Jobs</NavLink>
+            <NavLink to="/companies" activeClassName='active' className={classes.navItem}>Companies</NavLink>
           </Grid>
           <Grid item xs={4}
             container
