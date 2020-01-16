@@ -17,9 +17,9 @@ const useStyles = makeStyles({
   toggleBtn: {
     marginRight: 40,
   },
-  myProfile: {
+  myProfileBtn: {
     marginRight: 10,
-  }
+  },
 });
 
 const mStP = (state) => ({
@@ -101,16 +101,17 @@ function SettingsToggleMenu(props) {
 
   return (
     <>
-      <Grid alignItems="center">
-      <Link to= {link}>My Profile</Link>
-    
-      <Button className={classes.toggleBtn}
-        ref={anchorRef}
-        aria-controls={open ? 'menu-list-grow' : undefined}
-        aria-haspopup="true"
-        onClick={handleToggle}>
-        <ArrowDropDownIcon/>
-      </Button>
+      <Grid container
+        alignItems="center"
+        justify='flex-end'>
+        <Link to={link} className={classes.myProfileBtn}>My Profile</Link>
+        <Button className={classes.toggleBtn}
+          ref={anchorRef}
+          aria-controls={open ? 'menu-list-grow' : undefined}
+          aria-haspopup="true"
+          onClick={handleToggle}>
+          <ArrowDropDownIcon/>
+        </Button>
       </Grid>
       <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
         <Paper>
