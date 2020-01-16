@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Button, Paper, Popper, MenuItem, MenuList } from '@material-ui/core';
+import { Button, Paper, Popper, MenuItem, MenuList, Grid } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { makeStyles } from '@material-ui/core/styles';
 import { auth, firestore } from '../firebase/db'
@@ -7,11 +7,19 @@ import DeleteAccountDialog from './delete-account-dialog';
 import ChangePasswordDialog from './change-password-dialog';
 import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
+import { Switch, Route, Link, Redirect } from "react-router-dom";
+// import { Grid } from '@material-ui/core';
+
+
+// import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const useStyles = makeStyles({
   toggleBtn: {
     marginRight: 40,
   },
+  myProfile: {
+    marginRight: 10,
+  }
 });
 
 const mStP = (state) => ({
@@ -19,7 +27,9 @@ const mStP = (state) => ({
 });
 
 function SettingsToggleMenu(props) {
-  const {dispatch} = props;
+  let {registrationType, id, dispatch} = props.user;
+  registrationType = !!registrationType ?  registrationType.toLowerCase() : '';
+  const link = `/${registrationType}/${id}`;
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
   const history = useHistory();
@@ -91,6 +101,9 @@ function SettingsToggleMenu(props) {
 
   return (
     <>
+      <Grid alignItems="center">
+      <Link to= {link}>My Profile</Link>
+    
       <Button className={classes.toggleBtn}
         ref={anchorRef}
         aria-controls={open ? 'menu-list-grow' : undefined}
@@ -98,6 +111,7 @@ function SettingsToggleMenu(props) {
         onClick={handleToggle}>
         <ArrowDropDownIcon/>
       </Button>
+      </Grid>
       <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
         <Paper>
           <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
