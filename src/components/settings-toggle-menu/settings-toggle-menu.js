@@ -7,11 +7,7 @@ import DeleteAccountDialog from './delete-account-dialog';
 import ChangePasswordDialog from './change-password-dialog';
 import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
-import { Switch, Route, Link, Redirect } from "react-router-dom";
-// import { Grid } from '@material-ui/core';
-
-
-// import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { NavLink } from "react-router-dom";
 
 const useStyles = makeStyles({
   toggleBtn: {
@@ -104,7 +100,7 @@ function SettingsToggleMenu(props) {
       <Grid container
         alignItems="center"
         justify='flex-end'>
-        <Link to={link} className={classes.myProfileBtn}>My Profile</Link>
+        <NavLink to={link} activeClassName="active" className={classes.myProfileBtn}>My Profile</NavLink>
         <Button className={classes.toggleBtn}
           ref={anchorRef}
           aria-controls={open ? 'menu-list-grow' : undefined}
