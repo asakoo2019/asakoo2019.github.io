@@ -11,6 +11,7 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import MailIcon from '@material-ui/icons/Mail';
 import DateRangeIcon from '@material-ui/icons/DateRange';
+import CompanSummaryModal from './company-summary-modal';
 import './company-profile.css';
 
 const styles = {
@@ -49,8 +50,30 @@ const CompanyProfile = (props) => {
   const [companyCity, setCompanyCity] = useState(null);
   const [companyCountry, setCompanyCountry] = useState(null);
   const [companyCreatingData, setCompanyCreatingData] = useState(null);
+  const [aboutCompany, setAboutCompany] = useState(null);
   const { classes, dispatch } = props;
   const history = useHistory();
+
+  useEffect(() => {
+    let unmounted = false;
+    if (id !== ' ') {
+      const docRef = firestore.collection("companies").doc(id);
+      docRef.get().then(function(doc) {
+        if (doc.exists) {
+          if(!unmounted) {
+            setCompany(doc.data());
+          };
+        } else {
+          console.log("No such document!");
+        }})
+      .catch(function(error) {
+        console.log("Error getting document:", error);
+      });
+    };
+    return () => {
+      unmounted = true;
+    };
+  }, [id, downloadURL, companyName, registerName, companyPhoneNumber, companyAdress, companyCity, companyCountry, companyCreatingData, aboutCompany])
 
   useEffect(() => {
     let unmounted = false;
@@ -73,21 +96,6 @@ const CompanyProfile = (props) => {
   }, [dispatch, history.location.pathname, company]);
 
   useEffect(() => {
-    let unmounted = false;
-    if (id !== ' ') {
-      const docRef = firestore.collection("companies").doc(id);
-      docRef.get().then(function(doc) {
-        if (doc.exists) {
-          if(!unmounted) {
-            setCompany(doc.data());
-          };
-        } else {
-          console.log("No such document!");
-        }})
-      .catch(function(error) {
-        console.log("Error getting document:", error);
-      });
-    };
     if (downloadURL !== null) {
       firestore.collection("companies").doc(id)
         .update({
@@ -175,10 +183,20 @@ const CompanyProfile = (props) => {
           console.error("Error updating document: ", error);
         });
     };
-    return () => {
-      unmounted = true;
-    };
   }, [id, downloadURL, companyName, registerName, companyPhoneNumber, companyAdress, companyCity, companyCountry, companyCreatingData]);
+  
+  useEffect(() => {
+    if (aboutCompany !== null) {
+      firestore.collection("companies").doc(id)
+      .update({
+        aboutCompany: aboutCompany
+      }).then(function() {
+        console.log("Document successfully updated!");
+      }).catch(function(error) {
+        console.error("Error updating document: ", error);
+      });
+    };
+  }, [id, aboutCompany]);
 
   return (
     <Container className='companyBlock'>
@@ -242,6 +260,46 @@ const CompanyProfile = (props) => {
               {company.companyCreatingData}
             </p>
           </Grid>
+        </Grid>
+      </Grid>
+
+      {/* Company Summary Block */}
+      <Grid container
+        className={classNames(classes.companySummaryBlock, classes.companyAllBlocks)}
+        alignItems='center'
+        justify='space-between'>
+        <Grid item xs={10}>
+          <h5>Summary</h5>
+          <p>
+            {company.aboutCompany ? company.aboutCompany : 'Add a short professional introduction by highlighting your most valuable skills and experiences in a few sentences.'}
+          </p>
+        </Grid>
+        <Grid container item xs={1}
+          justify='flex-end'>
+          {props.company && <CompanSummaryModal
+            company={company}
+            id={id}
+            setAboutCompany={setAboutCompany}/>}
+        </Grid>
+      </Grid>
+
+      {/* Company Category Block */}
+      <Grid container
+        className={classNames(classes.companyCategoryBlock, classes.companyAllBlocks)}
+        alignItems='center'
+        justify='space-between'>
+        <Grid item xs={10}>
+          <h5>Category</h5>
+          <p>
+            {company.aboutCompany ? company.aboutCompany : 'Add a short professional introduction by highlighting your most valuable skills and experiences in a few sentences.'}
+          </p>
+        </Grid>
+        <Grid container item xs={1}
+          justify='flex-end'>
+          {props.company && <CompanSummaryModal
+            company={company}
+            id={id}
+            setAboutCompany={setAboutCompany}/>}
         </Grid>
       </Grid>
       
