@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Button, Paper, Popper, MenuItem, MenuList } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { makeStyles } from '@material-ui/core/styles';
-import { auth } from '../firebase/db'
+import { auth, firestore } from '../firebase/db'
 import DeleteAccountDialog from './delete-account-dialog';
 import ChangePasswordDialog from './change-password-dialog';
 import { useHistory } from "react-router-dom";
@@ -12,6 +12,10 @@ const useStyles = makeStyles({
   toggleBtn: {
     marginRight: 40,
   },
+});
+
+const mStP = (state) => ({
+  user: state,
 });
 
 function SettingsToggleMenu(props) {
@@ -24,7 +28,6 @@ function SettingsToggleMenu(props) {
   const handleToggle = () => {
     setOpen(prevOpen => !prevOpen);
   };
-
   function handleListKeyDown(event) {
     if (event.key === 'Tab') {
       event.preventDefault();
@@ -35,6 +38,25 @@ function SettingsToggleMenu(props) {
   function deleteAccount() {
     const user = auth.currentUser;
     user.delete().then(function() {
+      const collectionName = props.user.registerType === 'Employee' ? 'companies' : 'users';
+      const userId = props.user.id;
+    //   let removedArray = [];
+    //   firestore.collection(collectionName).get().then(function(querySnapshot) {
+    //     querySnapshot.forEach(doc => {
+    //         if (doc.id !== userId) {
+    //           removedArray.push(doc);
+    //         }
+    //     })
+    // }).catch(function(error) {
+    //     console.error("Error removing document: ", error);
+    // });
+
+    firestore.collection(collectionName).doc(userId).delete().then(function() {
+      console.log("Document successfully deleted!");
+    }).catch(function(error) {
+      console.error("Error removing document: ", error);
+    });
+      dispatch({type: 'SIGN-OUT'});
       history.replace('/');
     }).catch(function(error) {
      console.log(error);
@@ -89,4 +111,4 @@ function SettingsToggleMenu(props) {
   );
 };
 
-export default connect()(SettingsToggleMenu);
+export default connect(mStP)(SettingsToggleMenu);
