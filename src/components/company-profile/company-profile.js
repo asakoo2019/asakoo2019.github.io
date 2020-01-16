@@ -12,6 +12,8 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import MailIcon from '@material-ui/icons/Mail';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import CompanSummaryModal from './company-summary-modal';
+import CompanyCategoriesModal from './company-category-modal';
+import Categories from './categories';
 import './company-profile.css';
 
 const styles = {
@@ -51,6 +53,7 @@ const CompanyProfile = (props) => {
   const [companyCountry, setCompanyCountry] = useState(null);
   const [companyCreatingData, setCompanyCreatingData] = useState(null);
   const [aboutCompany, setAboutCompany] = useState(null);
+  const [companyCategories, setCompanyCategories] = useState(null);
   const { classes, dispatch } = props;
   const history = useHistory();
 
@@ -73,7 +76,7 @@ const CompanyProfile = (props) => {
     return () => {
       unmounted = true;
     };
-  }, [id, downloadURL, companyName, registerName, companyPhoneNumber, companyAdress, companyCity, companyCountry, companyCreatingData, aboutCompany])
+  }, [id, downloadURL, companyName, registerName, companyPhoneNumber, companyAdress, companyCity, companyCountry, companyCreatingData, aboutCompany, companyCategories])
 
   useEffect(() => {
     let unmounted = false;
@@ -198,6 +201,19 @@ const CompanyProfile = (props) => {
     };
   }, [id, aboutCompany]);
 
+  useEffect(() => {
+    if (companyCategories !== null) {
+      firestore.collection("companies").doc(id)
+      .update({
+        companyCategories: companyCategories
+      }).then(function() {
+        console.log("Document successfully updated!");
+      }).catch(function(error) {
+        console.error("Error updating document: ", error);
+      });
+    };
+  }, [id, companyCategories]);
+
   return (
     <Container className='companyBlock'>
       
@@ -285,21 +301,21 @@ const CompanyProfile = (props) => {
 
       {/* Company Category Block */}
       <Grid container
-        className={classNames(classes.companyCategoryBlock, classes.companyAllBlocks)}
+        className={classNames(classes.companyCategoriesBlock, classes.companyAllBlocks)}
         alignItems='center'
         justify='space-between'>
         <Grid item xs={10}>
           <h5>Category</h5>
           <p>
-            {company.aboutCompany ? company.aboutCompany : 'Add a short professional introduction by highlighting your most valuable skills and experiences in a few sentences.'}
+            {company.companyCategories ? (company.companyCategories.length ? (props.company ? <Categories company={company} setCompanyCategories={setCompanyCategories}/> : <Categories company={company} />) : 'Add company categories.') : null}
           </p>
         </Grid>
         <Grid container item xs={1}
           justify='flex-end'>
-          {props.company && <CompanSummaryModal
+          {props.company && <CompanyCategoriesModal
             company={company}
             id={id}
-            setAboutCompany={setAboutCompany}/>}
+            setCompanyCategories={setCompanyCategories} />}
         </Grid>
       </Grid>
       
