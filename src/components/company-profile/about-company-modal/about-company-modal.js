@@ -20,6 +20,7 @@ const AboutCompanyModal = (props) => {
   const [companyCity, setCompanyCity] = useState(' ');
   const [companyCountry, setCompanyCountry] = useState(' ');
   const [companyCreatingData, setCompanyCreatingData] = useState(company.companyCreatingData);
+  const [companyCategory, setCompanyCategory] = useState(null);
 
   useEffect(() => {
     setCompanyName(company.companyName);
@@ -27,6 +28,7 @@ const AboutCompanyModal = (props) => {
     setCompanyPhoneNumber(company.companyPhoneNumber);
     setCompanyAdress(company.companyAdress);
     setCompanyCreatingData(company.companyCreatingData);
+    setCompanyCategory(company.companyCategory);
   }, [company.companyName, company.registerName, company.companyPhoneNumber, company.companyAdress, company.companyCreatingData]);
 
   const handleClickOpen = () => {
@@ -41,6 +43,7 @@ const AboutCompanyModal = (props) => {
     props.setCompanyCountry(companyCountry);
     props.setCompanyAdress(companyAdress);
     props.setCompanyCreatingData(companyCreatingData);
+    props.setCompanyCategory(companyCategory)
     setOpen(false);
   };
 
@@ -110,7 +113,14 @@ const AboutCompanyModal = (props) => {
                 className={classes.companyCreatingData}
                 value={companyCreatingData}
                 onChange={(e) => setCompanyCreatingData(e.target.value)}
-                label="Birthday" />
+                label="Company creating data" />
+            </Grid>
+            <Grid item>
+              <TextField margin="normal"
+                className={classes.companyCategory}
+                value={companyCategory}
+                onChange={(e) => setCompanyCategory(e.target.value)}
+                label="Company category" />
             </Grid>
           </Grid>
         </DialogContent>

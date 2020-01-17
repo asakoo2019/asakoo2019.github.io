@@ -10,10 +10,9 @@ import CompanyImageBlock from './company-image-block';
 import PhoneIcon from '@material-ui/icons/Phone';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import MailIcon from '@material-ui/icons/Mail';
+import CategoryIcon from '@material-ui/icons/Category';
 import DateRangeIcon from '@material-ui/icons/DateRange';
-import CompanSummaryModal from './company-summary-modal';
-import CompanyCategoriesModal from './company-category-modal';
-import Categories from './categories';
+import CompanySummaryModal from './company-summary-modal';
 import './company-profile.css';
 
 const styles = {
@@ -53,7 +52,7 @@ const CompanyProfile = (props) => {
   const [companyCountry, setCompanyCountry] = useState(null);
   const [companyCreatingData, setCompanyCreatingData] = useState(null);
   const [aboutCompany, setAboutCompany] = useState(null);
-  const [companyCategories, setCompanyCategories] = useState(null);
+  const [companyCategory, setCompanyCategory] = useState(null);
   const { classes, dispatch } = props;
   const history = useHistory();
 
@@ -76,7 +75,7 @@ const CompanyProfile = (props) => {
     return () => {
       unmounted = true;
     };
-  }, [id, downloadURL, companyName, registerName, companyPhoneNumber, companyAdress, companyCity, companyCountry, companyCreatingData, aboutCompany, companyCategories])
+  }, [id, downloadURL, companyName, registerName, companyPhoneNumber, companyAdress, companyCity, companyCountry, companyCreatingData, aboutCompany, companyCategory])
 
   useEffect(() => {
     let unmounted = false;
@@ -186,7 +185,18 @@ const CompanyProfile = (props) => {
           console.error("Error updating document: ", error);
         });
     };
-  }, [id, downloadURL, companyName, registerName, companyPhoneNumber, companyAdress, companyCity, companyCountry, companyCreatingData]);
+
+    if (companyCategory !== null) {
+      firestore.collection("companies").doc(id)
+      .update({
+        companyCategory: companyCategory
+      }).then(function() {
+        console.log("Document successfully updated!");
+      }).catch(function(error) {
+        console.error("Error updating document: ", error);
+      });
+    };
+  }, [id, downloadURL, companyName, registerName, companyPhoneNumber, companyAdress, companyCity, companyCountry, companyCreatingData, companyCategory]);
   
   useEffect(() => {
     if (aboutCompany !== null) {
@@ -200,19 +210,6 @@ const CompanyProfile = (props) => {
       });
     };
   }, [id, aboutCompany]);
-
-  useEffect(() => {
-    if (companyCategories !== null) {
-      firestore.collection("companies").doc(id)
-      .update({
-        companyCategories: companyCategories
-      }).then(function() {
-        console.log("Document successfully updated!");
-      }).catch(function(error) {
-        console.error("Error updating document: ", error);
-      });
-    };
-  }, [id, companyCategories]);
 
   return (
     <Container className='companyBlock'>
@@ -244,7 +241,8 @@ const CompanyProfile = (props) => {
               setCompanyCountry={setCompanyCountry}
               setCompanyPhoneNumber={setCompanyPhoneNumber}
               setCompanyAdress={setCompanyAdress}
-              setCompanyCreatingData={setCompanyCreatingData}/>}
+              setCompanyCreatingData={setCompanyCreatingData}
+              setCompanyCategory={setCompanyCategory}/>}
           </Grid>
           <Grid container
             justify='space-around'>
@@ -276,6 +274,13 @@ const CompanyProfile = (props) => {
               {company.companyCreatingData}
             </p>
           </Grid>
+          <Grid container
+            alignItems='center'>
+            <CategoryIcon className={classes.aboutCompanyIcons}/>
+            <p className={classes.companyLine}>
+              {company.companyCategory}
+            </p>
+          </Grid>
         </Grid>
       </Grid>
 
@@ -292,30 +297,10 @@ const CompanyProfile = (props) => {
         </Grid>
         <Grid container item xs={1}
           justify='flex-end'>
-          {props.company && <CompanSummaryModal
+          {props.company && <CompanySummaryModal
             company={company}
             id={id}
             setAboutCompany={setAboutCompany}/>}
-        </Grid>
-      </Grid>
-
-      {/* Company Category Block */}
-      <Grid container
-        className={classNames(classes.companyCategoriesBlock, classes.companyAllBlocks)}
-        alignItems='center'
-        justify='space-between'>
-        <Grid item xs={10}>
-          <h5>Category</h5>
-          <p>
-            {company.companyCategories ? (company.companyCategories.length ? (props.company ? <Categories company={company} setCompanyCategories={setCompanyCategories}/> : <Categories company={company} />) : 'Add company categories.') : null}
-          </p>
-        </Grid>
-        <Grid container item xs={1}
-          justify='flex-end'>
-          {props.company && <CompanyCategoriesModal
-            company={company}
-            id={id}
-            setCompanyCategories={setCompanyCategories} />}
         </Grid>
       </Grid>
       

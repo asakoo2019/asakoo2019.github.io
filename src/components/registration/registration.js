@@ -161,7 +161,7 @@ function RegistrationComponent(props) {
                   companyWebsite: null,
                   companyPhoneNumber: null,
                   companySocialMedias: {},
-                  companyCategories: [],
+                  companyCategory: null,
                   companyCity: ' ',
                   companyCountry: ' ',
                   companyAdress: ' ',
