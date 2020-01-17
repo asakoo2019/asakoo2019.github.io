@@ -13,6 +13,8 @@ import MailIcon from '@material-ui/icons/Mail';
 import CategoryIcon from '@material-ui/icons/Category';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import CompanySummaryModal from './company-summary-modal';
+import Jobs from './jobs';
+import CompanyJobsModal from './company-jobs-modal';
 import './company-profile.css';
 
 const styles = {
@@ -53,6 +55,7 @@ const CompanyProfile = (props) => {
   const [companyCreatingData, setCompanyCreatingData] = useState(null);
   const [aboutCompany, setAboutCompany] = useState(null);
   const [companyCategory, setCompanyCategory] = useState(null);
+  const [companyJobs, setCompanyJobs] = useState(null);
   const { classes, dispatch } = props;
   const history = useHistory();
 
@@ -75,7 +78,7 @@ const CompanyProfile = (props) => {
     return () => {
       unmounted = true;
     };
-  }, [id, downloadURL, companyName, registerName, companyPhoneNumber, companyAdress, companyCity, companyCountry, companyCreatingData, aboutCompany, companyCategory])
+  }, [id, downloadURL, companyName, registerName, companyPhoneNumber, companyAdress, companyCity, companyCountry, companyCreatingData, aboutCompany, companyCategory, companyJobs])
 
   useEffect(() => {
     let unmounted = false;
@@ -211,6 +214,19 @@ const CompanyProfile = (props) => {
     };
   }, [id, aboutCompany]);
 
+  useEffect(() => {
+    if (companyJobs !== null) {
+      firestore.collection("companies").doc(id)
+      .update({
+        companyJobs: companyJobs
+      }).then(function() {
+        console.log("Document successfully updated!");
+      }).catch(function(error) {
+        console.error("Error updating document: ", error);
+      });
+    };
+  }, [id, companyJobs]);
+
   return (
     <Container className='companyBlock'>
       
@@ -301,6 +317,21 @@ const CompanyProfile = (props) => {
             company={company}
             id={id}
             setAboutCompany={setAboutCompany}/>}
+        </Grid>
+      </Grid>
+
+      {/* Company Jobs Block */}
+      <Grid container
+        className={classNames(classes.companyJobsBlock, classes.companyAllBlocks)}
+        alignItems='center'
+        justify='space-between'>
+        <Grid item xs={10}>
+          <h5>Jobs</h5>
+          {company.companyJobs ? (company.companyJobs.length ? (props.company ? <Jobs company={company} setCompanyJobs={setCompanyJobs}/> : <Jobs company={company} />) : 'Add jobs.') : null}
+        </Grid>
+        <Grid container item xs={1}
+          justify='flex-end'>
+          {props.company ? <CompanyJobsModal company={company} setCompanyJobs={setCompanyJobs} /> : <CompanyJobsModal company={company} />}
         </Grid>
       </Grid>
       

@@ -26,6 +26,12 @@ const UserExperienceModal = (props) => {
   const id = require('uuid/v4');
 
   const handleClickOpen = () => {
+    setCompanyName('');
+    setJobTitle('');
+    setLocation('');
+    setFrom('');
+    setTo('');
+    setJobDetails('');
     setOpen(true);
   };
 

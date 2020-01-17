@@ -13,8 +13,8 @@ const style = {
 const UserLanguagesModal = (props) => {
   const { classes, user } = props;
   const [open, setOpen] = useState(false);
-  const [language, setLanguage] = useState('Armenian');
-  const [level, setLevel] = useState('Beginner');
+  const [language, setLanguage] = useState('');
+  const [level, setLevel] = useState('');
   const id = require('uuid/v4');
 
   useEffect(() => {
@@ -42,6 +42,8 @@ const UserLanguagesModal = (props) => {
   }, [level]);
 
   const handleClickOpen = () => {
+    setLanguage('');
+    setLevel('');
     setOpen(true);
   };
 

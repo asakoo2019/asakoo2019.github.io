@@ -29,7 +29,7 @@ const AboutCompanyModal = (props) => {
     setCompanyAdress(company.companyAdress);
     setCompanyCreatingData(company.companyCreatingData);
     setCompanyCategory(company.companyCategory);
-  }, [company.companyName, company.registerName, company.companyPhoneNumber, company.companyAdress, company.companyCreatingData]);
+  }, [company.companyName, company.registerName, company.companyPhoneNumber, company.companyAdress, company.companyCreatingData, company.companyCategory]);
 
   const handleClickOpen = () => {
     setOpen(true);
