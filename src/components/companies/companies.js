@@ -1,119 +1,72 @@
 import React from 'react';
 import './companies.css';
-import CompanyFilter from './companies -components/company-filter';
-import CompaniesBar from './companies -components/companies-bar';
+import CompanyFilter from './companies-components/company-filter';
+import CompaniesBar from './companies-components/companies-bar';
+//import CompaniesSinglePage from './single-page/company-single-page';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
-const emp = [
-  {
-    userId: '123bank',
-    companyName: 'AmeriaBank',
-    regtype: 'employer',
-    industryType: 'Finance/Banking/Insurance',
-  }, 
-  {
-  userId: '234bank',
-  companyName: 'IdBank',
-  regtype: 'employer',
-  industryType: 'Finance/Banking/Insurance',
-  },
-  {
-    userId: '345bank',
-    companyName: 'HSBC',
-    regtype: 'employer',
-    industryType: 'Finance/Banking/Insurance',
-  },
-  {
-    userId: '456bank',
-    companyName: 'InecoBank',
-    regtype: 'employer',
-    industryType: 'Finance/Banking/Insurance',
-  },
-  {
-    userId: '123inftech',
-    companyName: 'Digitain',
-    regtype: 'employer',
-    industryType: 'Information technologies',
-  }, 
-  {
-    userId: '234inftech',
-    companyName: 'SoftConstract',
-    regtype: 'employer',
-    industryType: 'Information technologies',
-  },
-  { 
-    userId: '345inftech',
-    companyName: 'PicsArt',
-    regtype: 'employer',
-    industryType: 'Information technologies',
-  },
-  { 
-    userId: '456inftech',
-    companyName: 'Workfront',
-    regtype: 'employer',
-    industryType: 'Information technologies',
-  },
-   {
-    userId: '123iet',
-    companyName: 'SAS',
-    regtype: 'employer',
-    industryType: 'Import/Export/Trade',
-  },
-  {
-    userId: '234iet',
-    companyName: 'Reyma',
-    regtype: 'employer',
-    industryType: 'Import/Export/Trade',
-  },
-  {
-    userId: '345iet',
-    companyName: 'MegaFood',
-    regtype: 'employer',
-    industryType: 'Import/Export/Trade',
-  },
-  {
-    userId: '456iet',
-    companyName: 'Sali',
-    regtype: 'employer',
-    industryType: 'Import/Export/Trade',
-  },
-  {
-    userId: '567iet',
-    companyName: 'ImexGroup',
-    regtype: 'employer',
-    industryType: 'Import/Export/Trade',
-  },
-  {
-    userId: '123qwe',
-    companyName: 'eworld',
-    regtype: 'employer',
-    industryType: 'Marketing/Advertising/PR',
-  }, 
-  {
-    userId: '234qwe',
-    companyName: 'Marriot Hotel',
-    regtype: 'employer',
-    industryType: 'Tourism/Hospitality/Entertainment',
-  }, 
-  {
-    userId: '345qwe',
-    companyName: 'Alfa-Farm',
-    regtype: 'employer',
-    industryType: 'Medical/Pharmaceutical',
-  }, 
-  {
-    userId: '456qwe',
-    companyName: 'Shant TV',
-    regtype: 'employer',
-    industryType: 'TV/Radio/Media',
-  },
-  {
-    userId: '567qwe',
-    companyName: 'Ucom',
-    regtype: 'employer',
-    industryType: 'Telecommunications',
-  },
-];
+//import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+
+
+const companyCategoryArr = ['Finance/Banking/Insurance', 'Information technologies', 'Import/Export/Trade', 'Marketing/Advertising/PR', 'Tourism/Hospitality/Entertainment', 'Medical/Pharmaceutical', 'TV/Radio/Media', 'Telecommunications', 'Service', 'Government',
+'Agriculture/Winemaking', 'Online Service',];
+const createData = () => {
+  class Company {
+    constructor(companyName, registerName, companyCreatingData, id, email, companyViewCount, companyJobs, companyCategory) { 
+      this.companyName = companyName;
+      this.registerName = registerName;
+      this.companyCreatingData = companyCreatingData;
+      this.id = id;
+      this.email = `${email}@mail.ru`;
+      this.registrationType = 'emloyer';
+      this.companyViewCount = companyViewCount;
+      this.aboutCompany = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.' 
+      this.companyImage = "https://library.kissclipart.com/20180922/eve/kissclipart-icon-full-name-clipart-computer-icons-avatar-icon-f6cf26ff2213f36e.jpg";
+      this.companyBackground = 'http://braingapps.com/wp-content/uploads/2013/08/some-company.png';
+      this.companyJobs = companyJobs;
+      this.companyWebsite =  null;
+      this.companyCategory =  companyCategory;
+      this.userCity =  'Yerevan';
+      this.userCountry =  'Armenia';
+    }
+  }
+  let data = [];
+  let c = 0;
+  let companyName = 'compName';
+  let registerName = 'regName';
+  let companyCreatingData = 1910
+  for (let i = 0; i < 100; i++){
+    let id  = `${i}`;
+    let email = companyName + '_' + i;
+    let companyViewCount = Math.floor(Math.random() * 100) + 1;
+    let companyJobs = Math.floor(Math.random() * 10) + 1;
+    let companyCategory = '';
+    if (c < 12){
+      companyCategory = companyCategoryArr[c++]
+    } else {
+      c = 0;
+      companyCategory = companyCategoryArr[c++]
+  }
+  let comp = new Company(companyName + '_' + i, registerName + '_' + i, companyCreatingData++, id, email, companyViewCount, companyJobs, companyCategory)
+  data.push(comp);
+  }
+  return data
+}
+const data = createData();  
+
+// function Companies ({match}){
+//   return(
+//     <Router>
+//       <Switch>
+//         <Route exact path = {`${match.url}/:id`}>
+//           <CompaniesSinglePage data = {data}/>
+//         </Route> 
+//         <Route exact path = {`${match.url}`}  component = {CompanyConatiner}/>
+                 
+//       </Switch>
+//     </Router>  
+//   );
+// }
 
 class Companies extends React.Component{
   constructor(props){
@@ -136,7 +89,6 @@ class Companies extends React.Component{
           ['Online Service']: false,
         },
     };
-
     this.otherCopmanies = this.otherCopmanies.bind(this);
     this.fiterChecked = this.fiterChecked.bind(this);     
   }
@@ -156,6 +108,7 @@ class Companies extends React.Component{
     } else {
       this.setState({allCompanies: true})
     }
+    this.setState({currPage: 10})
   }
   otherCopmanies (e) {
     let num = e.target.innerHTML*10;
@@ -163,27 +116,29 @@ class Companies extends React.Component{
       currPage: num
     }));
   }
-  drawCompanies (emp){
+  drawCompanies (data){
     const {type} = this.state;
     const arr = [];
-    let result =[];
+    let result = [];
     for (let key in type){
-      if (type[key]){ arr.push(key)} 
+      if ( type[key] ){ arr.push(key)} 
     }
-    for(let i = 0; i <arr.length; i++){
-      for (let j = 0; j < emp.length; j++){
-        if (arr[i] === emp[j].industryType){
-          result.push(emp[j])
+    for(let i = 0; i < arr.length; i++){
+      for (let j = 0; j < data.length; j++){
+        if (arr[i] === data[j].companyCategory){
+          result.push(data[j])
         }
       }
     }
     return result
   }
+  
   render(){
     const {currPage} = this.state;
-     
+    const employer = this.state.allCompanies ? [...data] : this.drawCompanies(data);
+
     return(
-      <Container maxWidth = 'lg'> 
+      <Container maxWidth = 'lg'>         
         <Grid container>
           <Grid 
             container
@@ -201,10 +156,11 @@ class Companies extends React.Component{
             item xs ={9}
             className =  'companiesBarByH'
           >
-            <CompaniesBar employer = {this.state.allCompanies ? [...emp] : this.drawCompanies(emp)} currPage = {currPage} otherCopmanies = {this.otherCopmanies}/>
+            <CompaniesBar employer = {employer} currPage = {currPage} otherCopmanies = {this.otherCopmanies}/>
           </Grid>
-        </Grid>
+        </Grid>     
       </Container>
+
     );
   }
 }

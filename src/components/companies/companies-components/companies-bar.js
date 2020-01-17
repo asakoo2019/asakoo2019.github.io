@@ -25,13 +25,14 @@ const useStyles = makeStyles(theme => ({
 
 function  CompaniesBar (props) {   
     const classes = useStyles();
+    const {employer} = props;
     const comps = props.employer.slice (props.currPage - 10, props.currPage).map((item, index) => {
         
         return (
             <CompanyItem 
-                key = {item.userId}
-                companyName =  {item.companyName}
-                regtype = {item.regtype}
+                key = {item.id}
+                currentCompany = {item}
+                employer={employer}
             />
         );
     });

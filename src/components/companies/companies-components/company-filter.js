@@ -35,5 +35,4 @@ function CompanyFilter (props){
         </FormControl>
     );
 }
-
 export default CompanyFilter;
