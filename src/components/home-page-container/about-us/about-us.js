@@ -2,7 +2,6 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import {Grid} from '@material-ui/core';
 
-
 const styles = {
   aboutUsContainer: {
     textAlign: 'justify',
@@ -16,24 +15,24 @@ const AboutUs = (props) => {
   const {classes} = props;
   return (
     <Grid className="aboutAs"
-          container
-          justify='center'>
+      container
+      justify='center'>
       <h2 className={classes.aboutUsTitle}>About Us</h2>
       <h5 className={classes.aboutUsContainer}>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Excepturi earum dicta sequi odio sit consectetur expedita, cum, pariatur, in enim porro voluptas!
-          Mollitia omnis aspernatur quia ullam incidunt odio animi.
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Excepturi earum dicta sequi odio sit consectetur expedita, cum, pariatur, in enim porro voluptas!
-          Mollitia omnis aspernatur quia ullam incidunt odio animi.
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Excepturi earum dicta sequi odio sit consectetur expedita, cum, pariatur, in enim porro voluptas!
-          Mollitia omnis aspernatur quia ullam incidunt odio animi.
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Excepturi earum dicta sequi odio sit consectetur expedita, cum, pariatur, in enim porro voluptas!
-          Mollitia omnis aspernatur quia ullam incidunt odio animi.
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Excepturi earum dicta sequi odio sit consectetur expedita, cum, pariatur, in enim porro voluptas!
-          Mollitia omnis aspernatur quia ullam incidunt odio animi.
+        Excepturi earum dicta sequi odio sit consectetur expedita, cum, pariatur, in enim porro voluptas!
+        Mollitia omnis aspernatur quia ullam incidunt odio animi.
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        Excepturi earum dicta sequi odio sit consectetur expedita, cum, pariatur, in enim porro voluptas!
+        Mollitia omnis aspernatur quia ullam incidunt odio animi.
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        Excepturi earum dicta sequi odio sit consectetur expedita, cum, pariatur, in enim porro voluptas!
+        Mollitia omnis aspernatur quia ullam incidunt odio animi.
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        Excepturi earum dicta sequi odio sit consectetur expedita, cum, pariatur, in enim porro voluptas!
+        Mollitia omnis aspernatur quia ullam incidunt odio animi.
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        Excepturi earum dicta sequi odio sit consectetur expedita, cum, pariatur, in enim porro voluptas!
+        Mollitia omnis aspernatur quia ullam incidunt odio animi.
       </h5>
     </Grid>
   );

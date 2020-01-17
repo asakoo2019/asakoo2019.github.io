@@ -14,10 +14,14 @@ import {
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { withStyles } from "@material-ui/core/styles";
-import { auth } from "../firebase/db";
+import { auth, firestore } from "../firebase/db";
 import style from '../Login&RegistrationStyles&Npm/login&RegStyle';
+import { useHistory } from "react-router-dom";
+
 
 function SignIn(props) {
+  const history = useHistory();
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
   const [values, setValues] = useState({
     email: '',
     password: "",
@@ -29,7 +33,7 @@ function SignIn(props) {
   })
   const { classes } = props;
   const {email, password, showPassword} = values;
-  const {emailError, passwordError} = error;
+  const {emailError, passwordError} = error; 
 
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value });
@@ -47,22 +51,60 @@ function SignIn(props) {
     auth.signInWithEmailAndPassword(email, password)
     .then(function(message) {
       setError({email: '', password: ''});
-      //continue
+      firestore.collection("users").get()
+      .then(function(doc) {
+        let key;
+        let registrationType;
+        for (let i = 0; i < doc.docs.length; i++) {
+          if (doc.docs[i].data().email === values.email) {
+            key = doc.docs[i].data().id;
+            registrationType = doc.docs[i].data().registrationType.toLowerCase();
+          }
+        }
+
+        if (key) {
+          history.push(`/${registrationType}/${key}`);
+        } else {
+          firestore.collection("companies").get()
+          .then(function(doc) {
+            for (let i = 0; i < doc.docs.length; i++) {
+              if (doc.docs[i].data().email === values.email) {
+                key = doc.docs[i].data().id;
+                registrationType = doc.docs[i].data().registrationType.toLowerCase();
+              }
+            }
+            history.push(`/${registrationType}/${key}`);
+          })
+        }
+      })
+      .error(err => {console.log(err)})
     })
     .catch(function(err) {
       const errorCode = err.code;
       const errorMessage = err.message;
       switch (errorCode) {
         case 'auth/invalid-email': setError({emailError: errorMessage, passwordError: ''});
+                                  setIsForgotPassword(false);
         break;
         case 'auth/user-not-found': setError({emailError: errorMessage, passwordError: ''});
+                                  setIsForgotPassword(false);
         break;
         case 'auth/wrong-password': setError({emailError: '', passwordError: errorMessage});
+                                    setIsForgotPassword(true);
         break;
-        default:
+        default: ;
       } 
     });
+  }
 
+  const forgotPassword = () => {
+    auth.sendPasswordResetEmail(values.email)
+    .then(function (u) {
+    alert('Please check your email...')
+    }).catch(function (e) {
+    console.log(e);
+    console.log(email);
+    });
   }
 
   return (
@@ -114,6 +156,7 @@ function SignIn(props) {
           <FormHelperText id="outlined-weight-helper-text">{passwordError}</FormHelperText>
         </FormControl>
         <Button className={classes.btn} onClick = {(event) => passLogin(event)}>Sign in</Button>
+        {isForgotPassword ? <p className = {classes.forgotPassword} onClick={forgotPassword}>Forgot password?</p> : <p></p>}
       </FormControl>
       </Grid>
     </div>

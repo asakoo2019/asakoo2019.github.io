@@ -28,6 +28,11 @@ const style = {
         backgroundPosition: "right",
       }
     },
+    forgotPassword: {
+      textAlign : 'center',
+      cursor: 'pointer',
+      textDecoration: 'underline',
+    }
   };
 
 export default style;

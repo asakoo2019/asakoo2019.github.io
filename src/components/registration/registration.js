@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState } from 'react';
 import { auth, firestore } from '../firebase/db';
 import style from '../Login&RegistrationStyles&Npm/login&RegStyle';
 import { withStyles } from "@material-ui/core/styles";
@@ -25,6 +25,8 @@ import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/picker
 import { useHistory } from "react-router-dom";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import userImage from './avatar.png';
+import companyImage from './company-icon.png';
 
 function RegistrationComponent(props) {
   const history = useHistory();
@@ -48,60 +50,15 @@ function RegistrationComponent(props) {
     gender: "Female",
   });
   const [birthday, setBirthday] = React.useState(new Date());
+  
   const handleDateChange = date => {
     setBirthday(date);
   };
-  const [isLogedIn, setIsLogedIn] = useState(false);
+  // const [isLogedIn, setIsLogedIn] = useState(false);
 
-  useEffect(() => {
-    if (isLogedIn) {
-      const { email, password } = values;
-
-      auth.createUserWithEmailAndPassword(email, password)
-        .then(user => {
-          const id = user.user.uid;
-          const { name, gender, surname, registrationType, email } = values;
-          if (registrationType === 'Employee') {
-            firestore.collection("users").doc(id).set({
-              userName: name,
-              userSurname: surname,
-              userBirthDate: birthday,
-              userId: id,
-              userGender: gender,
-              userEmail: email,
-              registrationType,
-              userImage: null,
-              userPhoneNumber: null,
-              userAdress: null,
-              userWorkExperience: [],
-              userProfessionalSkills: [],
-              userLanguages: [],
-            });
-            history.push("/user-profile");
-          } else {
-            firestore.collection("companies").doc(id).set({
-              companyName: name,
-              registerName: surname,
-              companyCreatingData: birthday,
-              companyId: id,
-              companyEmail: email,
-              registrationType,
-              companyViewCount: 0,
-              aboutCompany: null,
-              companyImage: null,
-              companyBackground: null,
-              companyJobs: [],
-              companyWebsite: null,
-              companySocialMedias: {},
-              companyCategory: [],
-            });
-            history.push("/company-profile");
-          }
-        }).catch(function (err) {
-          setError(e => ({ ...e, mailRepeatError: err.message }));
-        });
-    }
-  }, [isLogedIn]);
+  // useEffect(() => {
+    
+  // }, [isLogedIn]);
 
   function doTextFieldValidation(textFieldName, errorMessage) {
     switch (textFieldName) {
@@ -151,11 +108,69 @@ function RegistrationComponent(props) {
 
   function passRegistration(event) {
     event.preventDefault();
-
-    const { emailError, passwordError, repeatPasswordError, birthdayError, nameError, surnameError } = error;
+    const { emailError, passwordError, repeatPasswordError, birthdayError, nameError, surnameError, mailRepeatError } = error;
     
-    if (!emailError && !passwordError && !repeatPasswordError && !birthdayError && !nameError && !surnameError) {
-      setIsLogedIn(true);
+    if (!emailError && !passwordError && !repeatPasswordError && !birthdayError && !nameError && !surnameError && 
+      !mailRepeatError) {
+        // if (isLogedIn) {
+          auth.createUserWithEmailAndPassword(values.email, values.password)
+            .then(user => {
+              const id = user.user.uid;
+              // const { name, gender, surname, registrationType, email } = values;
+              if (values.registrationType === 'Employee') {
+                firestore.collection("users").doc(id).set({
+                  userName: values.name,
+                  userSurname: values.surname,
+                  userBirthDate: birthday.toLocaleDateString(undefined, {
+                    day:'numeric',
+                    month: 'numeric',
+                    year: 'numeric'
+                  }),
+                  id: id,
+                  userGender: values.gender,
+                  email: values.email,
+                  registrationType: values.registrationType,
+                  userImage: userImage,
+                  userPhoneNumber: '',
+                  userAdress: '',
+                  userCity: 'Yerevan',
+                  userCountry: 'Armenia',
+                  userWorkExperience: [],
+                  userProfessionalSkills: [],
+                  userLanguages: [],
+                  aboutUser: '',
+                });
+                history.push(`/${values.registrationType.toLowerCase()}/${id}`);
+              } else {
+                firestore.collection("companies").doc(id).set({
+                  companyName: values.name,
+                  registerName: values.surname,
+                  companyCreatingData: birthday.toLocaleDateString(undefined, {
+                    day:'numeric',
+                    month: 'numeric',
+                    year: 'numeric'
+                  }),
+                  id: id,
+                  email: values.email,
+                  registrationType: values.registrationType,
+                  companyViewCount: 0,
+                  aboutCompany: '',
+                  companyImage: companyImage,
+                  companyBackground: null,
+                  companyJobs: [],
+                  companyWebsite: null,
+                  companyPhoneNumber: '',
+                  companySocialMedias: {},
+                  companyCategory: '',
+                  companyCity: 'Yerevan',
+                  companyCountry: 'Armenia',
+                  companyAdress: '',
+                });
+                history.push(`/${values.registrationType.toLowerCase()}/${id}`);
+              }
+            }).catch(function (err) {
+              setError(e => ({ ...e, mailRepeatError: err.message }));
+          });
     } else {
       const nameError = doTextFieldValidation('nameError', 'Fill this field');
       const surnameError = doTextFieldValidation('surnameError', 'Fill this field');
@@ -169,7 +184,10 @@ function RegistrationComponent(props) {
   const handleChange = prop => event => {
     if (prop === values.showPassword) {
       setValues({ ...values, [prop]: !values.showPassword });
-    };
+    } if (prop === 'email') {
+      setError({...error, mailRepeatError : ''});
+      // setIsLogedIn(false);
+    }
     setValues({ ...values, [prop]: event.target.value });
   };
 
@@ -265,19 +283,13 @@ function RegistrationComponent(props) {
             .validate(values.password, { list: true }))}
           helperText={error.passwordError === "" ? "" : error.passwordError.map(currentError => {
             switch (currentError) {
-              case 'min': return <p className='MuiFormHelperText-root Mui-error' key={currentError}>
-                Minimum length 6</p>;
-              case 'max': return <p className='MuiFormHelperText-root Mui-error' key={currentError}>
-                Maximum length 20</p>;
-              case 'uppercase': return <p className='MuiFormHelperText-root Mui-error' key={currentError}>
-                Must have uppercase letters</p>;
-              case 'lowercase': return <p className='MuiFormHelperText-root Mui-error' key={currentError}>
-                Must have lowercase letters</p>;
-              case 'digits': return <p className='MuiFormHelperText-root Mui-error' key={currentError}>
-                Must have digits</p>;
-              case 'spaces': return <p className='MuiFormHelperText-root Mui-error' key={currentError}>
-                Should not have spaces</p>;
-              default: return "for avoiding warnings"
+              case 'min': return '\u2022 Minimum length 6';
+              case 'max': return ' \u2022 Maximum length 20,'
+              case 'uppercase': return ' \u2022 Must have uppercase letters'
+              case 'lowercase': return ' \u2022 Must have lowercase letters';
+              case 'digits': return ' \u2022 Must have digits';
+              case 'spaces': return ' \u2022 Should not have spaces';
+              default: return " for avoiding warnings"
             }
           })}
           label="Password"
@@ -307,7 +319,7 @@ function RegistrationComponent(props) {
             labelWidth={120} />
           <FormHelperText id="outlined-weight-helper-text">{error.repeatPasswordError}</FormHelperText>
         </FormControl>
-        <Button className={classes.btn} onClick={(event) => { passRegistration(event) }}>Authorize</Button>
+        <Button className={classes.btn} onClick={(event) => { passRegistration(event) }}>Register</Button>
       </FormControl>
     </Grid>
   )

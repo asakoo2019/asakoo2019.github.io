@@ -1,3 +1,7 @@
 nav {
 background-color: #FE654F;
 }
+
+nav .active {
+    background-color: #fff;
+}
