@@ -39,7 +39,7 @@ function RegistrationComponent(props) {
     mailRepeatError: '',
     birthdayError: '',
   });
-  const [values, setValues] = React.useState({
+  const [values, setValues] = useState({
     name: '',
     surname: '',
     email: '',
@@ -49,7 +49,7 @@ function RegistrationComponent(props) {
     registrationType: 'Employee',
     gender: "Female",
   });
-  const [birthday, setBirthday] = React.useState(new Date());
+  const [birthday, setBirthday] = useState(new Date());
   
   const handleDateChange = date => {
     setBirthday(date);
