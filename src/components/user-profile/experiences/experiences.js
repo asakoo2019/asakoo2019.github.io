@@ -47,7 +47,7 @@ const Experiences = (props) => {
             </Button>}
           </Grid>
           <Grid item xs={12}>
-            <p>{item.jobDetails}</p>
+            <p>{item.experienceDetails}</p>
           </Grid>
         </Grid>
       );

@@ -106,7 +106,7 @@ const CompanyProfile = (props) => {
         .update({
           companyImage: downloadURL
         }).then(function() {
-          console.log("Document successfully updated!");
+          // console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -117,7 +117,7 @@ const CompanyProfile = (props) => {
         .update({
           companyName: companyName
         }).then(function() {
-          console.log("Document successfully updated!");
+          // console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -128,7 +128,7 @@ const CompanyProfile = (props) => {
         .update({
           registerName: registerName
         }).then(function() {
-          console.log("Document successfully updated!");
+          // console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -139,7 +139,7 @@ const CompanyProfile = (props) => {
         .update({
           companyPhoneNumber: companyPhoneNumber
         }).then(function() {
-          console.log("Document successfully updated!");
+          // console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -150,7 +150,7 @@ const CompanyProfile = (props) => {
         .update({
           companyAdress: companyAdress
         }).then(function() {
-          console.log("Document successfully updated!");
+          // console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -161,7 +161,7 @@ const CompanyProfile = (props) => {
         .update({
           companyCity: companyCity
         }).then(function() {
-          console.log("Document successfully updated!");
+          // console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -172,7 +172,7 @@ const CompanyProfile = (props) => {
         .update({
           companyCountry: companyCountry
         }).then(function() {
-          console.log("Document successfully updated!");
+          // console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -183,7 +183,7 @@ const CompanyProfile = (props) => {
         .update({
           companyCreatingData: companyCreatingData
         }).then(function() {
-          console.log("Document successfully updated!");
+          // console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -194,7 +194,7 @@ const CompanyProfile = (props) => {
       .update({
         companyCategory: companyCategory
       }).then(function() {
-        console.log("Document successfully updated!");
+        // console.log("Document successfully updated!");
       }).catch(function(error) {
         console.error("Error updating document: ", error);
       });
@@ -207,7 +207,7 @@ const CompanyProfile = (props) => {
       .update({
         aboutCompany: aboutCompany
       }).then(function() {
-        console.log("Document successfully updated!");
+        // console.log("Document successfully updated!");
       }).catch(function(error) {
         console.error("Error updating document: ", error);
       });
@@ -220,7 +220,7 @@ const CompanyProfile = (props) => {
       .update({
         companyJobs: companyJobs
       }).then(function() {
-        console.log("Document successfully updated!");
+        // console.log("Document successfully updated!");
       }).catch(function(error) {
         console.error("Error updating document: ", error);
       });

@@ -71,6 +71,42 @@ const CompanyJobsModal = (props) => {
     };
   }, [location]);
 
+  useEffect(() => {
+    switch (jobCategory) {
+      case 'Software development': setJobCategory('Software development');
+      break;
+      case 'Quality Assurance /Control': setJobCategory('Quality Assurance /Control');
+      break;
+      case 'Web/Graphic design': setJobCategory('Web/Graphic design');
+      break;
+      case 'Product/Project Management': setJobCategory('Product/Project Management');
+      break;
+      case 'Other IT': setJobCategory('Other IT');
+      break;
+      case 'Sales/service management': setJobCategory('Sales/service management');
+      break;
+      case 'Administrative/office-work': setJobCategory('Administrative/office-work');
+      break;
+      case 'Tourism/Hospitality/HoReCa': setJobCategory('Tourism/Hospitality/HoReCa');
+      break;
+      case 'Marketing/Advertising': setJobCategory('Marketing/Advertising');
+      break;
+      case 'Communications/Journalism/PR': setJobCategory('Communications/Journalism/PR');
+      break;
+      case 'Construction': setJobCategory('Construction');
+      break;
+      case 'Business/Management': setJobCategory('Business/Management');
+      break;
+      case 'Art/Design/Architecture': setJobCategory('Art/Design/Architecture');
+      break;
+      case 'Production': setJobCategory('Production');
+      break;
+      case 'Foreign language': setJobCategory('Foreign language');
+      break;
+      default: ;
+    };
+  }, [jobCategory]);
+
   const handleClickOpen = () => {
     setJobName('');
     setLocation('');
@@ -134,10 +170,27 @@ const CompanyJobsModal = (props) => {
           <Grid container spacing={2}
             justify='space-around'>
             <Grid item>
-              <TextField margin="normal"
-                value={jobCategory}
-                onChange={(e) => setJobCategory(e.target.value)}
-                label="Job category" />
+            <FormControl margin="normal" className={classes.select}>
+                <InputLabel>Job category</InputLabel>
+                <Select value={jobCategory}
+                  onChange={(e) => setJobCategory(e.target.value)}>
+                  <MenuItem value={'Software development'}>Software development</MenuItem>
+                  <MenuItem value={'Quality Assurance/Control'}>Quality Assurance /Control</MenuItem>
+                  <MenuItem value={'Web/Graphic design'}>Web/Graphic design</MenuItem>
+                  <MenuItem value={'Product/Project Management'}>Product/Project Management</MenuItem>
+                  <MenuItem value={'Other IT'}>Other IT</MenuItem>
+                  <MenuItem value={'Sales/service management'}>Sales/service management</MenuItem>
+                  <MenuItem value={'Administrative/office-work'}>Administrative/office-work</MenuItem>
+                  <MenuItem value={'Tourism/Hospitality/HoReCa'}>Tourism/Hospitality/HoReCa</MenuItem>
+                  <MenuItem value={'Marketing/Advertising'}>Marketing/Advertising</MenuItem>
+                  <MenuItem value={'Communications/Journalism/PR'}>Communications/Journalism/PR</MenuItem>
+                  <MenuItem value={'Construction'}>Construction</MenuItem>
+                  <MenuItem value={'Business/Management'}>Business/Management</MenuItem>
+                  <MenuItem value={'Art/Design/Architecture'}>Art/Design/Architecture</MenuItem>
+                  <MenuItem value={'Production'}>Production</MenuItem>
+                  <MenuItem value={'Foreign language'}>Foreign language</MenuItem>
+                </Select>
+              </FormControl>
             </Grid>
             <Grid item>
             <FormControl margin="normal" className={classes.select}>

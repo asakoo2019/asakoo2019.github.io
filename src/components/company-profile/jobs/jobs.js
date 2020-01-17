@@ -46,6 +46,9 @@ const Jobs = (props) => {
               <DeleteIcon color='error'/>
             </Button>}
           </Grid>
+          <Grid item xs={12}>
+            <p>{item.jobDetails}</p>
+          </Grid>
         </Grid>
       );
     });

@@ -103,7 +103,7 @@ const UserProfile = (props) => {
         .update({
           userImage: downloadURL
         }).then(function() {
-          console.log("Document successfully updated!");
+          // console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -114,7 +114,7 @@ const UserProfile = (props) => {
         .update({
           userName: userName
         }).then(function() {
-          console.log("Document successfully updated!");
+          // console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -125,7 +125,7 @@ const UserProfile = (props) => {
         .update({
           userSurname: userSurname
         }).then(function() {
-          console.log("Document successfully updated!");
+          // console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -136,7 +136,7 @@ const UserProfile = (props) => {
         .update({
           userPhoneNumber: userPhoneNumber
         }).then(function() {
-          console.log("Document successfully updated!");
+          // console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -147,7 +147,7 @@ const UserProfile = (props) => {
         .update({
           userAdress: userAdress
         }).then(function() {
-          console.log("Document successfully updated!");
+          // console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -158,7 +158,7 @@ const UserProfile = (props) => {
         .update({
           userCity: userCity
         }).then(function() {
-          console.log("Document successfully updated!");
+          // console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -169,7 +169,7 @@ const UserProfile = (props) => {
         .update({
           userCountry: userCountry
         }).then(function() {
-          console.log("Document successfully updated!");
+          // console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -180,7 +180,7 @@ const UserProfile = (props) => {
         .update({
           userGender: userGender
         }).then(function() {
-          console.log("Document successfully updated!");
+          // console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -191,7 +191,7 @@ const UserProfile = (props) => {
         .update({
           userBirthDate: userBirthDate
         }).then(function() {
-          console.log("Document successfully updated!");
+          // console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -222,7 +222,7 @@ const UserProfile = (props) => {
         .update({
           aboutUser: aboutUser
         }).then(function() {
-          console.log("Document successfully updated!");
+          // console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -253,7 +253,7 @@ const UserProfile = (props) => {
         .update({
           userLanguages: userLanguages
         }).then(function() {
-          console.log("Document successfully updated!");
+          // console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
@@ -284,7 +284,7 @@ const UserProfile = (props) => {
         .update({
           userWorkExperience: userWorkExperience
         }).then(function() {
-          console.log("Document successfully updated!");
+          // console.log("Document successfully updated!");
         }).catch(function(error) {
           console.error("Error updating document: ", error);
         });
