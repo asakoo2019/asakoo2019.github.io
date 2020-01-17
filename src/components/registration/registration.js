@@ -54,11 +54,6 @@ function RegistrationComponent(props) {
   const handleDateChange = date => {
     setBirthday(date);
   };
-  // const [isLogedIn, setIsLogedIn] = useState(false);
-
-  // useEffect(() => {
-    
-  // }, [isLogedIn]);
 
   function doTextFieldValidation(textFieldName, errorMessage) {
     switch (textFieldName) {
