@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Button, Paper, Popper, MenuItem, MenuList, Grid } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Button, MenuItem, Grid, Menu } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { makeStyles } from '@material-ui/core/styles';
-import { auth, firestore } from '../firebase/db'
+import { auth } from '../firebase/db'
 import DeleteAccountDialog from './delete-account-dialog';
 import ChangePasswordDialog from './change-password-dialog';
 import { useHistory } from "react-router-dom";
@@ -24,35 +24,33 @@ const mStP = (state) => ({
 });
 
 function SettingsToggleMenu(props) {
-  let {registrationType, id, dispatch} = props.user;
+  let {registrationType, id} = props.user;
+  const {dispatch} = props;
   registrationType = !!registrationType ?  registrationType.toLowerCase() : '';
   const link = `/${registrationType}/${id}`;
-  const [open, setOpen] = useState(false);
-  const anchorRef = useRef(null);
   const history = useHistory();
   const classes = useStyles();
+  const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleToggle = () => {
-    setOpen(prevOpen => !prevOpen);
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
   };
-  function handleListKeyDown(event) {
-    if (event.key === 'Tab') {
-      event.preventDefault();
-      setOpen(false);
-    };
-  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  }
 
   function deleteAccount() {
     const user = auth.currentUser;
     user.delete().then(function() {
-      const collectionName = props.user.registerType === 'Employee' ? 'companies' : 'users';
-      const userId = props.user.id;
+    //   const collectionName = props.user.registerType === 'Employee' ? 'companies' : 'users';
+    //   const userId = props.user.id;
 
-    firestore.collection(collectionName).doc(userId).delete().then(function() {
-      console.log("Document successfully deleted!");
-    }).catch(function(error) {
-      console.error("Error removing document: ", error);
-    });
+    // firestore.collection(collectionName).doc(userId).delete().then(function() {
+    //   console.log("Document successfully deleted!");
+    // }).catch(function(error) {
+    //   console.error("Error removing document: ", error);
+    // });
       dispatch({type: 'SIGN-OUT'});
       history.replace('/');
     }).catch(function(error) {
@@ -63,7 +61,7 @@ function SettingsToggleMenu(props) {
   function signOut() {
     auth.signOut().then(function() {
       dispatch({type: 'SIGN-OUT'});
-      history.replace('/');
+      history.replace('/home');
     }).catch(function(error) {
       // An error happened.
     });
@@ -77,38 +75,27 @@ function SettingsToggleMenu(props) {
     });
   };
 
-  const prevOpen = useRef(open);
-
-  useEffect(() => {
-    if (prevOpen.current === true && open === false) {
-      anchorRef.current.focus();
-    };
-    prevOpen.current = open;
-  }, [open]);
-
   return (
     <>
       <Grid container
         alignItems="center"
         justify='flex-end'>
         <NavLink to={link} activeClassName="active" className={classes.myProfileBtn}>My Profile</NavLink>
-        <Button className={classes.toggleBtn}
-          ref={anchorRef}
-          aria-controls={open ? 'menu-list-grow' : undefined}
-          aria-haspopup="true"
-          onClick={handleToggle}>
+        <Button aria-controls="simple-menu" className={classes.toggleBtn} aria-haspopup="true" onClick={handleClick} >
           <ArrowDropDownIcon/>
         </Button>
       </Grid>
-      <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
-        <Paper>
-          <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-            <ChangePasswordDialog changePassword = {changePassword}/>
-            <DeleteAccountDialog deleteAccount = {deleteAccount}/>
+          <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+          >
+            <div><ChangePasswordDialog changePassword = {changePassword}/></div>
+            <div><DeleteAccountDialog deleteAccount = {deleteAccount}/></div>
             <MenuItem onClick={signOut}>Sign out</MenuItem>
-          </MenuList>
-        </Paper>
-      </Popper>
+        </Menu>
     </>
   );
 };
