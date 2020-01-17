@@ -47,16 +47,6 @@ function SettingsToggleMenu(props) {
     user.delete().then(function() {
       const collectionName = props.user.registerType === 'Employee' ? 'companies' : 'users';
       const userId = props.user.id;
-    //   let removedArray = [];
-    //   firestore.collection(collectionName).get().then(function(querySnapshot) {
-    //     querySnapshot.forEach(doc => {
-    //         if (doc.id !== userId) {
-    //           removedArray.push(doc);
-    //         }
-    //     })
-    // }).catch(function(error) {
-    //     console.error("Error removing document: ", error);
-    // });
 
     firestore.collection(collectionName).doc(userId).delete().then(function() {
       console.log("Document successfully deleted!");

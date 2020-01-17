@@ -1,9 +1,17 @@
 import React from 'react';
 import { Grid, Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { withStyles } from "@material-ui/core/styles";
+
+const style = {
+  jobBtn: {
+    padding: '5px !important',
+    minWidth: 0,
+  },
+};
 
 const Jobs = (props) => {
-  const {company} = props;
+  const {company, classes} = props;
 
   const deleteItem = (id) => {
     const index = company.companyJobs.findIndex((el) => el.id === id);
@@ -34,7 +42,7 @@ const Jobs = (props) => {
             <h6>{item.location}</h6>
           </Grid>
           <Grid item xs={1}>
-            {props.setCompanyJobs && <Button variant="outlined" color='primary' onClick={() => deleteItem(item.id)}>
+            {props.setCompanyJobs && <Button className={classes.jobBtn} color='primary' onClick={() => deleteItem(item.id)}>
               <DeleteIcon color='error'/>
             </Button>}
           </Grid>
@@ -50,4 +58,4 @@ const Jobs = (props) => {
   );
 };
 
-export default Jobs;
+export default withStyles(style)(Jobs);

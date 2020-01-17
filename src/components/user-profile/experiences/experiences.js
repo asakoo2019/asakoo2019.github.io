@@ -2,10 +2,17 @@ import React from 'react';
 import { Grid, Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CreateIcon from '@material-ui/icons/Create';
+import { withStyles } from "@material-ui/core/styles";
+
+const style = {
+  experienceBtn: {
+    padding: '5px !important',
+    minWidth: 0,
+  },
+};
 
 const Experiences = (props) => {
-  const {user} = props;
-
+  const {user, classes} = props;
   const deleteItem = (id) => {
     const index = user.userWorkExperience.findIndex((el) => el.id === id);
     const newArray = [
@@ -31,13 +38,11 @@ const Experiences = (props) => {
           <Grid item xs={3}>
             <p>{`${item.from} - ${item.to}`}</p>
           </Grid>
-          <Grid item xs={1}>
-            {props.setUserWorkExperience && <Button variant="outlined" color='primary' onClick={() => deleteItem(item.id)}>
+          <Grid item xs={2}>
+            {props.setUserWorkExperience && <Button className={classes.experienceBtn} color='primary' onClick={() => deleteItem(item.id)}>
               <DeleteIcon color='error'/>
             </Button>}
-          </Grid>
-          <Grid item xs={1}>
-            {props.setUserWorkExperience && <Button variant="outlined" color='primary' onClick={()=>{console.log(item.id)}}>
+            {props.setUserWorkExperience && <Button className={classes.experienceBtn} color='primary' onClick={()=>{console.log(item.id)}}>
               <CreateIcon color='error'/>
             </Button>}
           </Grid>
@@ -56,4 +61,4 @@ const Experiences = (props) => {
   );
 };
 
-export default Experiences;
+export default withStyles(style)(Experiences);

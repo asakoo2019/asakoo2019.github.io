@@ -1,9 +1,17 @@
 import React from 'react';
 import { Grid, Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { withStyles } from "@material-ui/core/styles";
+
+const style = {
+  languageBtn: {
+    padding: '5px !important',
+    minWidth: 0,
+  },
+};
 
 const Languages = (props) => {
-  const {user} = props;
+  const {user, classes} = props;
 
   const deleteItem = (id) => {
     const index = user.userLanguages.findIndex((el) => el.id === id);
@@ -28,7 +36,7 @@ const Languages = (props) => {
             <p>{item.level}</p>
           </Grid>
           <Grid item xs={1}>
-            {props.setUserLanguages && <Button variant="outlined" color='primary' onClick={() => deleteItem(item.id)}>
+            {props.setUserLanguages && <Button className={classes.languageBtn} color='primary' onClick={() => deleteItem(item.id)}>
               <DeleteIcon color='error'/>
             </Button>}
           </Grid>
@@ -44,4 +52,4 @@ const Languages = (props) => {
   );
 };
 
-export default Languages;
+export default withStyles(style)(Languages);

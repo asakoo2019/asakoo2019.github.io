@@ -389,7 +389,7 @@ const UserProfile = (props) => {
         className={classNames(classes.userLanguagesBlock, classes.userAllBlocks)}
         alignItems='center'
         justify='space-between'>
-        <Grid item xs={10}>
+        <Grid item xs={11}>
           <h5>Languages</h5>
           {user.userLanguages ? (user.userLanguages.length ? (props.user ? <Languages user={user} setUserLanguages={setUserLanguages}/> : <Languages user={user} />) : 'Add levels of language proficiency.') : null}
         </Grid>
@@ -404,7 +404,7 @@ const UserProfile = (props) => {
         className={classNames(classes.userWorkExperienceBlock, classes.userAllBlocks)}
         alignItems='center'
         justify='space-between'>
-        <Grid item xs={10}>
+        <Grid item xs={11}>
           <h5>Work experience</h5>
           {user.userWorkExperience ? (user.userWorkExperience.length ? (props.user ? <Experiences user={user} setUserWorkExperience={setUserWorkExperience} id={id} /> : <Experiences user={user} />) : 'Add your work experience and any significant accomplishments.') : null}
         </Grid>

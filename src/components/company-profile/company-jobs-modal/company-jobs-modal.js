@@ -5,7 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 const style = {
   textAreaBlock: {
-    marginJobTypep: 20,
+    marginTop: 20,
   },
   textArea: {
     resize: 'none',
