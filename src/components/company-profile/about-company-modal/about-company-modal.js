@@ -15,7 +15,7 @@ const AboutCompanyModal = (props) => {
   const [open, setOpen] = useState(false);
   const [companyName, setCompanyName] = useState(null);
   const [registerName, setRegisterName] = useState(null);
-  const [companyPhoneNumber, setCompanyPhoneNumber] = useState(null);
+  const [companyPhoneNumber, setCompanyPhoneNumber] = useState(' ');
   const [companyAdress, setCompanyAdress] = useState(null);
   const [companyCity, setCompanyCity] = useState(' ');
   const [companyCountry, setCompanyCountry] = useState(' ');
