@@ -17,7 +17,6 @@ const CompanyImageBlock = (props) => {
 	};
 
 	const handleSave = (files) => {
-		if (files.length === 1) {
 			const selectedFile = files[0];
 			const fileName = selectedFile.name;
 			const dotIndex = fileName.lastIndexOf('.');
@@ -43,9 +42,6 @@ const CompanyImageBlock = (props) => {
 				});
 			});
 			setOpen(false);
-		} else {
-			alert('Only one photo');
-		};
 	};
 
 	return (
@@ -57,6 +53,7 @@ const CompanyImageBlock = (props) => {
 				onSave={handleSave}
 				acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
 				showPreviews={true}
+				filesLimit={1}
 				maxFileSize={500000}
 				onClose={handleClose} />
 		</>
