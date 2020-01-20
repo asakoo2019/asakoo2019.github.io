@@ -27,7 +27,7 @@ const CompanyJobsModal = (props) => {
   const [jobType, setJobType] = useState('');
   const [jobDetails, setJobDetails] = useState('');
   const [term, setTerm] = useState('');
-  const [deadline, setDeadline] = useState('');
+  const [jobDeadline, setJobDeadline] = useState('');
   const id = require('uuid/v4');
   
   useEffect(() => {
@@ -115,14 +115,14 @@ const CompanyJobsModal = (props) => {
     setJobType('');
     setJobDetails('');
     setTerm('');
-    setDeadline('');
+    setJobDeadline('');
     setOpen(true);
   };
 
   const handleSave = () => {
-    if (jobName !== '' && term !== '' && location !== '' && jobCategory !== '' && jobType !== '' && deadline !== ''){
+    if (jobName !== '' && term !== '' && location !== '' && jobCategory !== '' && jobType !== '' && jobDeadline !== ''){
       props.setCompanyJobs(
-        [...company.companyJobs, {jobName, term, location, jobCategory, jobType, jobDetails, id: id(), checked: false,viewCount: 0, deadline}]
+        [...company.companyJobs, {jobName, term, location, jobCategory, jobType, jobDetails, id: id(), checked: false,viewCount: 0, jobDeadline}]
       );
     };
     setOpen(false);
@@ -134,7 +134,7 @@ const CompanyJobsModal = (props) => {
 
   return (
     <>
-      {props.setCompanyJobs ? <Button variant="outlined" color="primary" onClick={handleClickOpen}>+</Button> : null}
+      {props.setCompanyJobs && <Button variant="outlined" color="primary" onClick={handleClickOpen}>+</Button>}
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogContent>
           <Grid container spacing={2}>
@@ -205,6 +205,12 @@ const CompanyJobsModal = (props) => {
                   <MenuItem value={'Fixed term contract'}>Fixed term contract</MenuItem>
                 </Select>
               </FormControl>
+            </Grid>
+            <Grid item>
+              <TextField margin="normal"
+                value={jobDeadline}
+                onChange={(e) => setJobDeadline(e.target.value)}
+                label="Job deadline" />
             </Grid>
           </Grid>
           <Grid container spacing={2} className={classes.textAreaBlock}>
