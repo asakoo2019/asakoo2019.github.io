@@ -27,6 +27,7 @@ const CompanyJobsModal = (props) => {
   const [jobType, setJobType] = useState('');
   const [jobDetails, setJobDetails] = useState('');
   const [term, setTerm] = useState('');
+  const [deadline, setDeadline] = useState('');
   const id = require('uuid/v4');
   
   useEffect(() => {
@@ -114,13 +115,14 @@ const CompanyJobsModal = (props) => {
     setJobType('');
     setJobDetails('');
     setTerm('');
+    setDeadline('');
     setOpen(true);
   };
 
   const handleSave = () => {
-    if (jobName !== '' && term !== '' && location !== '' && jobCategory !== '' && jobType !== ''){
+    if (jobName !== '' && term !== '' && location !== '' && jobCategory !== '' && jobType !== '' && deadline !== ''){
       props.setCompanyJobs(
-        [...company.companyJobs, {jobName, term, location, jobCategory, jobType, jobDetails, id: id()}]
+        [...company.companyJobs, {jobName, term, location, jobCategory, jobType, jobDetails, id: id(), checked: false,viewCount: 0, deadline}]
       );
     };
     setOpen(false);
@@ -132,7 +134,7 @@ const CompanyJobsModal = (props) => {
 
   return (
     <>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>+</Button>
+      {props.setCompanyJobs ? <Button variant="outlined" color="primary" onClick={handleClickOpen}>+</Button> : null}
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogContent>
           <Grid container spacing={2}>
