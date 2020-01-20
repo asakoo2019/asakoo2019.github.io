@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from '@material-ui/core';
-import { firestore } from '../../firebase/db';
+import { firestore } from '../../../../firebase/db';
 
 const JobSingleHeader = () => {
 

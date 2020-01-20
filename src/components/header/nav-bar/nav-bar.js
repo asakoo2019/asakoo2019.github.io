@@ -12,7 +12,7 @@ import UserProfile from '../../user-profile';
 import CompanyProfile from '../../company-profile';
 import SettingsToggleMenu from '../../settings-toggle-menu';
 import {connect} from 'react-redux';
-import JobSingle from '../../job-single';
+import JobSingle from '../../jobs/jobs-container/job-single';
 
 const styles = {
   navItem: {
