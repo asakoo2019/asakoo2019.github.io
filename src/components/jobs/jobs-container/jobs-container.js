@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
 
 const styles = {
     jobBlock: {
@@ -10,46 +11,51 @@ const styles = {
     },
 };
 
-class JobsContainer extends Component {
+const JobsContainer = (props) => {
+
+    const history = useHistory();
+
+    const viewMore = (id) => {
+        history.push(`/jobs/${id}`);
+    };
+        
+    const { jobs, classes } = props;
+    const job1 = [...jobs];
     
-    render() {
-        
-        const { jobs, classes } = this.props;
-        const job1 = [...jobs];
-        console.log(job1);
-        
-        const elements = job1.sort((a, b) => a.viewCount - b.viewCount).map(item => {
-            const { jobCategory, id, jobImage, aboutJob,viewCount } = item;
-            return (
-                <Grid 
-                    className={ classes.jobBlock}
-                    key={ id }
-                    container
-                    justify='space-between'>
-                    <Grid item xs>
-                        <img src={ jobImage } width='64' height='64' alt={ jobCategory } />
-                    </Grid>
-                    <Grid item xs>
-                        <p>{ jobCategory }</p>
-                    </Grid>
-                    <Grid item xs>
-                        <p>{ aboutJob }</p>
-                    </Grid>
-                    <Grid container justify= 'flex-end' item xs>
-                        <p>{viewCount}</p>
-                    </Grid>
-                </Grid>
-            )
-        })
-        
+    const elements = job1.sort((a, b) => b.viewCount - a.viewCount).map(item => {
+        const { jobCategory, id, jobImage, aboutJob,viewCount } = item;
         return (
-            <Grid container
-                
-                item xs = {8}>
-                { elements }
+            <Grid 
+                className={ classes.jobBlock}
+                key={ id }
+                container
+                justify='space-between'>
+                <Grid item xs>
+                    <img src={ jobImage } width='64' height='64' alt={ jobCategory } />
+                </Grid>
+                <Grid item xs>
+                    <p>{ jobCategory }</p>
+                </Grid>
+                <Grid item xs>
+                    <p>{ aboutJob }</p>
+                </Grid>
+                <Grid container justify= 'flex-end' item xs>
+                    <p>{viewCount}</p>
+                </Grid>
+                <Button onClick={ () => viewMore(id)}>
+                    View More
+                </Button>
             </Grid>
         )
-    }
+    })
+    
+    return (
+        <Grid container
+            
+            item xs = {8}>
+            { elements }
+        </Grid>
+    )
 }
 
-export default withStyles(styles)(JobsContainer)
+export default withStyles(styles)(JobsContainer);
