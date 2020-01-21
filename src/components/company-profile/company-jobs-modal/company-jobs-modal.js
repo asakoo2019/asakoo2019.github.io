@@ -18,6 +18,10 @@ const style = {
   select: {
     minWidth: 200,
   },
+  jobDeadline: {
+    maxWidth: 200,
+    marginTop: 15,
+  },
 };
 
 const CompanyJobsModal = (props) => {
@@ -208,9 +212,9 @@ const CompanyJobsModal = (props) => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item>
+            <Grid item className={classes.jobDeadline}>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <KeyboardDatePicker margin="normal"
+                  <KeyboardDatePicker size='small'
                     id="date-picker-dialog"
                     label='Job deadline'
                     format="dd.MM.yyyy"
