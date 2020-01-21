@@ -14,7 +14,13 @@ function Jobs() {
             querySnapshot.forEach(function(doc) {
                 if (doc.data().companyJobs && doc.data().companyJobs.length !== 0){
                 job.push(doc.data().companyJobs);
-                setJobs(job[0]);}
+                let newArray = [];
+                job.map(item => {
+                    // console.log(item)
+                    newArray = newArray.concat(item);
+                });
+                setJobs(newArray);
+                };
             });
         });
     }, []);
