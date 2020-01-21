@@ -64,14 +64,19 @@ const UserProfile = (props) => {
 
   useEffect(() => {
     let unmounted = false;
+    const pathName = history.location.pathname;
+    const LastSleshIndex = pathName.lastIndexOf('/');
+    const searchId = pathName.slice(LastSleshIndex + 1);
     auth.onAuthStateChanged((logedInUser) => {
       if (logedInUser) {
         dispatch({type: "SIGN-IN", payload: user});
-        setId(logedInUser.uid);
+        if (!searchId) {
+          setId(logedInUser.uid);
+          // dispatch({type: "SIGN-OUT", payload: user});
+        } else {
+          setId(searchId);
+        }
       } else {
-        const pathName = history.location.pathname;
-        const LastSleshIndex = pathName.lastIndexOf('/');
-        const searchId = pathName.slice(LastSleshIndex + 1);
         if(!unmounted){
           setId(searchId);
         };

@@ -8,6 +8,7 @@ import ChangePasswordDialog from './change-password-dialog';
 import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
 import { NavLink } from "react-router-dom";
+import { firestore } from '../firebase/db'
 
 const useStyles = makeStyles({
   toggleBtn: {
@@ -42,20 +43,21 @@ function SettingsToggleMenu(props) {
 
   function deleteAccount() {
     const user = auth.currentUser;
-    user.delete().then(function() {
-    //   const collectionName = props.user.registerType === 'Employee' ? 'companies' : 'users';
-    //   const userId = props.user.id;
+    const collectionName = props.user.registerType === 'Employee' ? 'companies' : 'users';
+    const userId = props.user.id;
 
-    // firestore.collection(collectionName).doc(userId).delete().then(function() {
-    //   console.log("Document successfully deleted!");
-    // }).catch(function(error) {
-    //   console.error("Error removing document: ", error);
-    // });
-      dispatch({type: 'SIGN-OUT'});
-      history.replace('/');
+    user.delete().then(function() {
     }).catch(function(error) {
      console.log(error);
     });
+
+    firestore.collection(collectionName).doc(userId).delete().then(function() {
+      console.log("Document successfully deleted!");
+    }).catch(function(error) {
+      console.error("Error removing document: ", error);
+    });
+      dispatch({type: 'SIGN-OUT'});
+      history.replace('/home');
   };
 
   function signOut() {
