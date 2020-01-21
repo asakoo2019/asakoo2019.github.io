@@ -94,7 +94,7 @@ const AboutUserModal = (props) => {
                 country="Armenia"
                 placeholder="Enter phone number"
                 value={userPhoneNumber}
-                className={classes.companyPhoneNumber}
+                className={classes.userPhoneNumber}
                 onChange={setUserPhoneNumber}/>
             </Grid>
             <Grid item>

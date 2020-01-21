@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Grid, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';

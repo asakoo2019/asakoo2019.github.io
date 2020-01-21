@@ -261,6 +261,7 @@ function RegistrationComponent(props) {
             className={classes.txtb}
             value={birthday}
             onChange={handleDateChange}
+            maxDate={new Date()}
             KeyboardButtonProps={{
               'aria-label': 'change date',
             }}

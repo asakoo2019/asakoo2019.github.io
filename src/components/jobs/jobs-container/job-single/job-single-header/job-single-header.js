@@ -22,7 +22,7 @@ const JobSingleHeader = () => {
 
     return (
         <Container>
-            <img src='' alt='company image' />
+            {/* <img src='' alt='company image' /> */}
         </Container>
     )
 }
