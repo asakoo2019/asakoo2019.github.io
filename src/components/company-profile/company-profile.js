@@ -61,6 +61,31 @@ const CompanyProfile = (props) => {
 
   useEffect(() => {
     let unmounted = false;
+    const pathName = history.location.pathname;
+    const LastSleshIndex = pathName.lastIndexOf('/');
+    const searchId = pathName.slice(LastSleshIndex + 1);
+    auth.onAuthStateChanged((logedInCompany) => {
+      if (logedInCompany) {
+        dispatch({type: "SIGN-IN", payload: company});
+        if (!searchId) {
+          setId(logedInCompany.uid);
+          // dispatch({type: "SIGN-OUT", payload: company});
+        } else {
+          setId(searchId);
+        }
+      } else {
+        if(!unmounted){
+          setId(searchId);
+        };
+      };
+    });
+    return () => {
+      unmounted = true;
+    };
+  }, [dispatch, history.location.pathname, company]);
+
+  useEffect(() => {
+    let unmounted = false;
     if (id !== ' ') {
       const docRef = firestore.collection("companies").doc(id);
       docRef.get().then(function(doc) {
@@ -79,26 +104,6 @@ const CompanyProfile = (props) => {
       unmounted = true;
     };
   }, [id, downloadURL, companyName, registerName, companyPhoneNumber, companyAdress, companyCity, companyCountry, companyCreatingData, aboutCompany, companyCategory, companyJobs])
-
-  useEffect(() => {
-    let unmounted = false;
-    auth.onAuthStateChanged((logedInCompany) => {
-      if (logedInCompany) {
-        dispatch({type: "SIGN-IN", payload: company});
-        setId(logedInCompany.uid);
-      } else {
-        const pathName = history.location.pathname;
-        const LastSleshIndex = pathName.lastIndexOf('/');
-        const searchId = pathName.slice(LastSleshIndex + 1);
-        if(!unmounted){
-          setId(searchId);
-        };
-      };
-    });
-    return () => {
-      unmounted = true;
-    };
-  }, [dispatch, history.location.pathname, company]);
 
   useEffect(() => {
     if (downloadURL !== null) {
