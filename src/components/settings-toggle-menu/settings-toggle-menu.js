@@ -43,7 +43,7 @@ function SettingsToggleMenu(props) {
 
   function deleteAccount() {
     const user = auth.currentUser;
-    const collectionName = props.user.registerType === 'Employee' ? 'companies' : 'users';
+    const collectionName = props.user.registerType === 'Employee' ? 'users' : 'companies';
     const userId = props.user.id;
 
     user.delete().then(function() {
