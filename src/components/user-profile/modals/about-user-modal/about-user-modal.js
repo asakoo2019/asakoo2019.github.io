@@ -4,10 +4,16 @@ import { withStyles } from "@material-ui/core/styles";
 import CitySelect from '../../selects/city-select';
 import CountrySelect from '../../selects/country-select';
 import GenderSelect from '../../selects/gender-select';
+import 'react-phone-number-input/style.css';
+import PhoneInput from 'react-phone-number-input';
 
 const style = {
   aboutUserModalBtn: {
     height: 34,
+  },
+  userPhoneNumber: {
+    maxWidth: 200,
+    marginTop: 36,
   },
 };
 
@@ -84,12 +90,12 @@ const AboutUserModal = (props) => {
           </Grid>
           <Grid container spacing={2}>
             <Grid item>
-              <TextField margin="normal"
-                className={classes.userPhoneNumber}
+              <PhoneInput
+                country="Armenia"
+                placeholder="Enter phone number"
                 value={userPhoneNumber}
-                placeholder='+37400112233'
-                onChange={(e) => setUserPhoneNumber(e.target.value)}
-                label="Phone Number" />
+                className={classes.companyPhoneNumber}
+                onChange={setUserPhoneNumber}/>
             </Grid>
             <Grid item>
               <TextField margin="normal"

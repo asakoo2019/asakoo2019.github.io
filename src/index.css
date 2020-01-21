@@ -83,6 +83,16 @@ p {
 	min-width: 500px !important;
 }
 
+.PhoneInputInput {
+	border: unset;
+	border-bottom: 1px solid;
+	outline: none;
+}
+
+.PhoneInputInput:hover {
+	border-bottom: 2px solid;
+}
+
 /*Large devices (desktops, less than 1200px)*/
 @media (max-width: 1199px) {
 

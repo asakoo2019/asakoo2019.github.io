@@ -13,7 +13,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import CategoryIcon from '@material-ui/icons/Category';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import CompanySummaryModal from './company-summary-modal';
-import Jobs from './jobs';
+import CompanyJobs from './company-jobs';
 import CompanyJobsModal from './company-jobs-modal';
 import './company-profile.css';
 
@@ -327,7 +327,7 @@ const CompanyProfile = (props) => {
         justify='space-between'>
         <Grid item xs={10}>
           <h5>Jobs</h5>
-          {company.companyJobs ? (company.companyJobs.length ? (props.company ? <Jobs company={company} setCompanyJobs={setCompanyJobs}/> : <Jobs company={company} />) : 'Add jobs.') : null}
+          {company.companyJobs ? (company.companyJobs.length ? (props.company ? <CompanyJobs company={company} setCompanyJobs={setCompanyJobs}/> : <CompanyJobs company={company} />) : 'Add jobs.') : null}
         </Grid>
         <Grid container item xs={1}
           justify='flex-end'>

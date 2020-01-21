@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { DialogContent, DialogActions, Dialog, Button, TextField, Grid,
   TextareaAutosize, DialogContentText, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 const style = {
   textAreaBlock: {
@@ -115,14 +117,14 @@ const CompanyJobsModal = (props) => {
     setJobType('');
     setJobDetails('');
     setTerm('');
-    setJobDeadline('');
+    setJobDeadline(new Date());
     setOpen(true);
   };
 
   const handleSave = () => {
     if (jobName !== '' && term !== '' && location !== '' && jobCategory !== '' && jobType !== '' && jobDeadline !== ''){
       props.setCompanyJobs(
-        [...company.companyJobs, {jobName, term, location, jobCategory, jobType, jobDetails, id: id(), checked: false,viewCount: 0, jobDeadline}]
+        [...company.companyJobs, {jobName, term, location, jobCategory, jobType, jobDetails, id: id(), checked: false,viewCount: 0, jobDeadline: jobDeadline.toLocaleDateString(undefined, { day:'numeric', month: 'numeric', year: 'numeric' })}]
       );
     };
     setOpen(false);
@@ -207,10 +209,16 @@ const CompanyJobsModal = (props) => {
               </FormControl>
             </Grid>
             <Grid item>
-              <TextField margin="normal"
-                value={jobDeadline}
-                onChange={(e) => setJobDeadline(e.target.value)}
-                label="Job deadline" />
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  <KeyboardDatePicker margin="normal"
+                    id="date-picker-dialog"
+                    label='Job deadline'
+                    format="dd.MM.yyyy"
+                    value={jobDeadline}
+                    onChange={(date) => setJobDeadline(date)}
+                    KeyboardButtonProps={{'aria-label': 'change date',}}
+                    minDate={new Date()} />
+                </MuiPickersUtilsProvider>
             </Grid>
           </Grid>
           <Grid container spacing={2} className={classes.textAreaBlock}>

@@ -10,7 +10,7 @@ const style = {
   },
 };
 
-const Jobs = (props) => {
+const CompanyJobs = (props) => {
   const {company, classes} = props;
 
   const deleteItem = (id) => {
@@ -61,4 +61,4 @@ const Jobs = (props) => {
   );
 };
 
-export default withStyles(style)(Jobs);
+export default withStyles(style)(CompanyJobs);

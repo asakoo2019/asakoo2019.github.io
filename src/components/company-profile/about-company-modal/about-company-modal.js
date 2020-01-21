@@ -1,12 +1,22 @@
 import React, {useState, useEffect} from 'react';
-import { DialogContent, DialogContentText, DialogActions, Dialog, Button, TextField, Grid } from '@material-ui/core';
+import { DialogContent, DialogContentText, DialogActions,
+  Dialog, Button, TextField, Grid, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
 import CitySelect from '../selects/city-select';
 import CountrySelect from '../selects/country-select';
+import 'react-phone-number-input/style.css';
+import PhoneInput from 'react-phone-number-input';
 
 const style = {
   aboutCompanyModalBtn: {
     height: 34,
+  },
+  select: {
+    minWidth: 200,
+  },
+  companyPhoneNumber: {
+    maxWidth: 200,
+    marginTop: 36,
   },
 };
 
@@ -51,6 +61,42 @@ const AboutCompanyModal = (props) => {
     setOpen(false);
   };
 
+  useEffect(() => {
+    switch (companyCategory) {
+      case 'Finance/Banking/Insurance': setCompanyCategory('Finance/Banking/Insurance');
+      break;
+      case 'Information technologies': setCompanyCategory('Information technologies');
+      break;
+      case 'Design/Architecture/Construction': setCompanyCategory('Design/Architecture/Construction');
+      break;
+      case 'Consulting/ Legal': setCompanyCategory('Consulting/ Legal');
+      break;
+      case 'Import/Export/Trade': setCompanyCategory('Import/Export/Trade');
+      break;
+      case 'Marketing/Advertising/PR': setCompanyCategory('Marketing/Advertising/PR');
+      break;
+      case 'Tourism/Hospitality/Entertainment': setCompanyCategory('Tourism/Hospitality/Entertainment');
+      break;
+      case 'Medical/Pharmaceutical': setCompanyCategory('Medical/Pharmaceutical');
+      break;
+      case 'Sports /Beauty': setCompanyCategory('Sports /Beauty');
+      break;
+      case 'Education': setCompanyCategory('Education');
+      break;
+      case 'Retail business': setCompanyCategory('Retail business');
+      break;
+      case 'NGO/International organization': setCompanyCategory('NGO/International organization');
+      break;
+      case 'Services': setCompanyCategory('Services');
+      break;
+      case 'Mining/Manufacturing/Production': setCompanyCategory('Mining/Manufacturing/Production');
+      break;
+      case 'Online Service': setCompanyCategory('Online Service');
+      break;
+      default: ;
+    };
+  }, [companyCategory]);
+
   return (
     <>
       <Button className={classes.aboutCompanyModalBtn} variant="outlined" color="primary" onClick={handleClickOpen}>+</Button>
@@ -84,12 +130,12 @@ const AboutCompanyModal = (props) => {
           </Grid>
           <Grid container spacing={2}>
             <Grid item>
-              <TextField margin="normal"
-                className={classes.companyPhoneNumber}
+              <PhoneInput
+                country="Armenia"
+                placeholder="Enter phone number"
                 value={companyPhoneNumber}
-                placeholder='+37400112233'
-                onChange={(e) => setCompanyPhoneNumber(e.target.value)}
-                label="Phone Number" />
+                className={classes.companyPhoneNumber}
+                onChange={setCompanyPhoneNumber}/>
             </Grid>
             <Grid item>
               <TextField margin="normal"
@@ -116,11 +162,27 @@ const AboutCompanyModal = (props) => {
                 label="Company creating data" />
             </Grid>
             <Grid item>
-              <TextField margin="normal"
-                className={classes.companyCategory}
-                value={companyCategory}
-                onChange={(e) => setCompanyCategory(e.target.value)}
-                label="Company category" />
+            <FormControl margin="normal" className={classes.select}>
+                <InputLabel>Company category</InputLabel>
+                <Select value={companyCategory}
+                  onChange={(e) => setCompanyCategory(e.target.value)}>
+                  <MenuItem value={'Finance/Banking/Insurance'}>Finance/Banking/Insurance</MenuItem>
+                  <MenuItem value={'Quality Assurance/Control'}>Information technologies</MenuItem>
+                  <MenuItem value={'Design/Architecture/Construction'}>Design/Architecture/Construction</MenuItem>
+                  <MenuItem value={'Consulting/ Legal'}>Consulting/ Legal</MenuItem>
+                  <MenuItem value={'Import/Export/Trade'}>Import/Export/Trade</MenuItem>
+                  <MenuItem value={'Marketing/Advertising/PR'}>Marketing/Advertising/PR</MenuItem>
+                  <MenuItem value={'Tourism/Hospitality/Entertainment'}>Tourism/Hospitality/Entertainment</MenuItem>
+                  <MenuItem value={'Medical/Pharmaceutical'}>Medical/Pharmaceutical</MenuItem>
+                  <MenuItem value={'Sports /Beauty'}>Sports /Beauty</MenuItem>
+                  <MenuItem value={'Education'}>Education</MenuItem>
+                  <MenuItem value={'Retail business'}>Retail business</MenuItem>
+                  <MenuItem value={'NGO/International organization'}>NGO/International organization</MenuItem>
+                  <MenuItem value={'Services'}>Services</MenuItem>
+                  <MenuItem value={'Mining/Manufacturing/Production'}>Mining/Manufacturing/Production</MenuItem>
+                  <MenuItem value={'Online Service'}>Online Service</MenuItem>
+                </Select>
+              </FormControl>
             </Grid>
           </Grid>
         </DialogContent>
