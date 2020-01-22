@@ -61,6 +61,17 @@ import {firestore} from '../firebase/db';
         
 //   );
 // }
+const getData = () => { 
+   return firestore.collection("companies").get().then((querySnapshot) => {
+    let companies = [];
+    querySnapshot.forEach((doc) => {
+      if (Object.keys(doc.data()).length !== 0) {
+        companies.push(doc.data());
+      };
+    });
+    return companies;
+  });
+}
 
 function Companies (){
   const [currPage, setCurrentPage] = useState(10);
@@ -80,17 +91,9 @@ function Companies (){
     ['Online Service']: false,
   });
   const [data, setData] = useState([]);
-  
+
   useEffect(() => {
-    firestore.collection("companies").get().then((querySnapshot) => {
-      let companies = [];
-      querySnapshot.forEach((doc) => {
-        if (Object.keys(doc.data()).length !== 0) {
-          companies.push(doc.data());
-        };
-      });
-      setData(companies);
-    });
+    getData().then(smth => setData(smth) );
   }, []);
 
 
@@ -136,8 +139,8 @@ function Companies (){
     const employer = allCompanies ? [...data] : drawCompanies(data);
     // console.log(employer);
     return(
-      <Switch>
-        <Route>
+     
+     <>
           <Container maxWidth = 'lg'>         
             <Grid container>
               <Grid 
@@ -160,11 +163,12 @@ function Companies (){
               </Grid>
             </Grid>     
           </Container>
-      </Route> 
+      <Switch> 
       <Route exact path = {`companies/:name`}>
         <CompaniesSinglePage/>
       </Route> 
     </Switch>
+    </>
     );
 }
 

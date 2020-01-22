@@ -2,6 +2,8 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 //import './topBar.css'
+
+
 const useStyles = makeStyles(theme => ({
     root: {
       flexGrow: 1,
@@ -11,7 +13,7 @@ const useStyles = makeStyles(theme => ({
       textAlign: 'center',
       width: '100%',
       height: '350px',
-      bgImage: 'url(https://images.staff.am/upload/1/6/7/2/1672956e.jpg)',
+      backgroundImage: 'url(https://images.staff.am/upload/1/6/7/2/1672956e.jpg)',
       color: 'white',
     },
     topBarImg: {
@@ -21,28 +23,30 @@ const useStyles = makeStyles(theme => ({
 }));
 function TopBar ({companyInfo}) {
     const classes = useStyles();
+    console.log(companyInfo.companyJobs);
     return(
         <Grid
             container
             alignItems="flex-end"
-            className = 'topBarDiv'
+            className = {classes.root}
         >
             <Grid 
                 container
                 direction="row"
                 justify="space-between"
                 alignItems="center"
+                className = {classes.topBarDiv}
             >
                 <Grid 
                 >
-                    {/* <img src = {companyInfo.companyImage} className = 'topBarImg'/> */}
+                    <img src = {companyInfo.companyImage} className = {classes.topBarImg}/>
                 </Grid>
                 <Grid >
-                    {/* <h1>{companyInfo.companyName}</h1>
-                    <span>{companyInfo.companyViewCount}</span> */}
+                    <h1>{companyInfo.companyName}</h1>
+                    <span>{companyInfo.companyViewCount}</span>
                 </Grid>
                 <Grid >
-                    {/* <p>{companyInfo.companyJobs}</p> */}
+                    <p>{companyInfo.companyJobs ? companyInfo.companyJobs.length : "" }</p>
                 </Grid>
             </Grid>
         </Grid>
