@@ -1,71 +1,66 @@
-import React from 'react';
-import './search.css';
-
-import { withStyles } from '@material-ui/core/styles';
-import { TextField, Checkbox, Grid } from '@material-ui/core';
-import { FormControlLabel, FormControl } from '@material-ui/core';
-
+import React, { useState, useEffect } from 'react';
+import { TextField, Grid, Button } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
+import { firestore } from '../../firebase/db';
 
-const styles = {
-  
-};
+const Search = () => {
+  const [term, setTerm] = useState('');
+  const [companySearch, setCompanySearch] = useState('');
+  const [jobSearch, setJobSearch] = useState('');
+  let searchArray = [];
+  searchArray = searchArray.concat(companySearch, jobSearch);
+  const [renderArray, setRenderArray] = useState([]);
 
-
-
-class Search extends React.Component {
-
-  constructor (props) {
-    super(props);
-    this.state = {
-      term: ''
+  const searching = () => {
+    if (term) {
+      let newArray = [];
+      searchArray.forEach(item => {
+        for(let value of Object.values(item)) {
+          if (typeof value === 'string'){
+            if (value.toLowerCase() === term.toLowerCase()) {
+              newArray.push(item);
+              setRenderArray(newArray);
+            };
+          };
+        };
+      });
     };
   };
 
-  render () {
-    const {classes} = this.props;
-
-    function CheckboxesGroup() {
-      const [state, setState] = React.useState({
-        jobsChecked: false,
-        companiesChecked: false
+  useEffect(() => {
+    firestore.collection("companies").get().then((querySnapshot) => {
+      let companies = [];
+      let jobs = [];
+      querySnapshot.forEach((doc) => {
+        if (Object.keys(doc.data()).length !== 0) {
+          companies.push(doc.data());
+        };
+      setCompanySearch(companies);
       });
+      companies.forEach(item => {
+        jobs = jobs.concat(item.companyJobs);
+      });
+      setJobSearch(jobs);
+    });
+  }, []);
 
-      const handleChange = name => event => {
-        setState({ ...state, [name]: event.target.checked });
-      };
-
-      const { jobsChecked, companiesChecked } = state;
-
-      return (
-        <FormControl component="fieldset">
-          <Grid container>
-              <FormControlLabel
-                control={<Checkbox checked={jobsChecked} onChange={handleChange('jobsChecked')} value="jobsChecked" />}
-                label="Jobs"
-              />
-              <FormControlLabel
-                control={<Checkbox checked={companiesChecked} onChange={handleChange('companiesChecked')} value="companiesChecked" />}
-                label="Companies"
-              />
-          </Grid>
-        </FormControl>
-      );
-    };
-
-    return (
-      <Grid container>
-        <Grid container spacing={1} alignItems="flex-end">
-          <Grid item>
-            <TextField className={classes.appSearch} label="Search" />
-          </Grid>
-          <Grid item>
-            <SearchIcon />
-          </Grid>
+  return (
+    <Grid container>
+      <Grid container
+        spacing={1}
+        alignItems="flex-end">
+        <Grid item>
+          <TextField label="Search"
+          onChange={(e) => setTerm(e.target.value)} />
         </Grid>
-        <CheckboxesGroup />
+        <Grid item>
+          <Button onClick={searching}>
+            <SearchIcon />
+          </Button>
+        </Grid>
       </Grid>
-  )};
+    </Grid>
+  );
 };
 
-export default withStyles(styles)(Search);
+export default Search;
