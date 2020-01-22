@@ -5,11 +5,13 @@ import { firestore } from '../../firebase/db';
 
 const Search = () => {
   const [term, setTerm] = useState('');
-  const [companySearch, setCompanySearch] = useState('');
+  const [companySearch, setCompanySearch] = useState({});
   const [jobSearch, setJobSearch] = useState('');
   let searchArray = [];
   searchArray = searchArray.concat(companySearch, jobSearch);
   const [renderArray, setRenderArray] = useState([]);
+
+  console.log(companySearch);
 
   const searching = () => {
     if (term) {
@@ -35,8 +37,8 @@ const Search = () => {
         if (Object.keys(doc.data()).length !== 0) {
           companies.push(doc.data());
         };
-      setCompanySearch(companies);
       });
+      setCompanySearch(companies);
       companies.forEach(item => {
         jobs = jobs.concat(item.companyJobs);
       });
