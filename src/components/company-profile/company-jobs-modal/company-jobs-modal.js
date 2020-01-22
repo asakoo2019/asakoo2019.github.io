@@ -128,7 +128,7 @@ const CompanyJobsModal = (props) => {
   const handleSave = () => {
     if (jobName !== '' && term !== '' && location !== '' && jobCategory !== '' && jobType !== '' && jobDeadline !== ''){
       props.setCompanyJobs(
-        [...company.companyJobs, {jobName, term, location, jobCategory, jobType, jobDetails, id: id(), checked: false,viewCount: 0, jobDeadline: jobDeadline.toLocaleDateString(undefined, { day:'numeric', month: 'numeric', year: 'numeric' })}]
+        [...company.companyJobs, {jobName, term, location, jobCategory, jobType, jobDetails, id: id(), checked: false,viewCount: 0, jobDeadline: jobDeadline.toLocaleDateString(undefined, { day:'numeric', month: 'numeric', year: 'numeric' }), companyName: company.companyName}]
       );
     };
     setOpen(false);
