@@ -35,14 +35,14 @@ function TopBar ({companyInfo}) {
             >
                 <Grid 
                 >
-                    <img src = {companyInfo.companyImage} className = 'topBarImg'/>
+                    {/* <img src = {companyInfo.companyImage} className = 'topBarImg'/> */}
                 </Grid>
                 <Grid >
-                    <h1>{companyInfo.companyName}</h1>
-                    <span>{companyInfo.companyViewCount}</span>
+                    {/* <h1>{companyInfo.companyName}</h1>
+                    <span>{companyInfo.companyViewCount}</span> */}
                 </Grid>
                 <Grid >
-                    <p>{companyInfo.companyJobs}</p>
+                    {/* <p>{companyInfo.companyJobs}</p> */}
                 </Grid>
             </Grid>
         </Grid>

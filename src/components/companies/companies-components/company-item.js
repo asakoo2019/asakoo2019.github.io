@@ -1,11 +1,8 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
-import { makeStyles } from '@material-ui/core/styles';
-import {Link} from 'react-router-dom';
-import CompaniesSinglePage from '../single-page/company-single-page';
-//import {Redirect} from "react-router-dom"
+import {makeStyles } from '@material-ui/core/styles';
+import {useHistory, useRouteMatch} from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -16,6 +13,8 @@ const useStyles = makeStyles(theme => ({
 
 function CompanyItem (props){
   const classes =  useStyles();
+  const history = useHistory();
+  const match = useRouteMatch();
 
     return(
         <Grid container
@@ -39,14 +38,14 @@ function CompanyItem (props){
             <Grid
                 item xs ={6}
             >
-              <span>Active jobs({props.currentCompany.companyJobs})</span>
+              <span>Active jobs({props.currentCompany.companyJobs.length})</span>
             </Grid>
             <Grid
                 item xs ={2}
             >
-              <Link to = {`/companies/${props.currentCompany.companyName}`} >
+              <button  onClick = { ()=>{history.push(`${match.url}/${props.currentCompany.id}`)}    } >
                   View More
-              </Link>
+              </button>
             </Grid>
         </Grid>
     );

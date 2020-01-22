@@ -12,6 +12,7 @@ import UserProfile from '../../user-profile';
 import CompanyProfile from '../../company-profile';
 import SettingsToggleMenu from '../../settings-toggle-menu';
 import {connect} from 'react-redux';
+import CompaniesSinglePage from '../../companies/single-page/company-single-page';
 
 const styles = {
   navItem: {
@@ -49,6 +50,7 @@ const NavBar = (props) => {
       <Switch>
         <Route exact path="/jobs" component={Jobs} />
         <Route exact path="/companies" component={Companies} />
+        <Route exact path="/companies/:id" component={CompaniesSinglePage} />
         <Route exact path="/sign-in" component={SignIn} />
         <Route exact path="/registration" component={Registration} />
         <Route exact path="/employee/:id" component={UserProfile} />

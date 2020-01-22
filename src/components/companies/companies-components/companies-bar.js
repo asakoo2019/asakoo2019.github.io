@@ -1,4 +1,4 @@
-import React, {useSate} from 'react';
+import React from 'react';
 import CompanyItem from './company-item';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
@@ -25,17 +25,16 @@ const useStyles = makeStyles(theme => ({
 
 function  CompaniesBar (props) {   
     const classes = useStyles();
-    const {employer} = props;
-    const comps = props.employer.slice (props.currPage - 10, props.currPage).map((item, index) => {
-        
+    // console.log(props.employer.slice (props.currPage - 10));
+    const comps = props.employer.map((item) => {
         return (
             <CompanyItem 
                 key = {item.id}
                 currentCompany = {item}
-                employer={employer}
             />
         );
     });
+    //console.log(comps)
     const button = (arr)=> {
         let maxButtons = Math.ceil(arr.length/10);
         let result = [];

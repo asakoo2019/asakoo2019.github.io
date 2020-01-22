@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 //import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import TopBar from './single-page-components/top-bar/topBar';
@@ -16,7 +16,7 @@ function CompaniesSinglePage ({data}){
 
   function fetchCompany (name){
     // setCompany(data.filter(item=> item.companyName == name))
-    return data.filter(item=> item.companyName == name);
+    return data.filter(item=> item.companyName === name);
   }
   const company = fetchCompany(companyName.id);
   return(

@@ -16,7 +16,7 @@ class JobsContainer extends Component {
         
         const { jobs, classes } = this.props;
         const job1 = [...jobs];
-        console.log(job1);
+       
         
         const elements = job1.sort((a, b) => a.viewCount - b.viewCount).map(item => {
             const { jobCategory, id, jobImage, aboutJob,viewCount } = item;
