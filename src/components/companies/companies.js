@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import './companies.css';
 import CompanyFilter from './companies-components/company-filter';
 import CompaniesBar from './companies-components/companies-bar';
 import CompaniesSinglePage from './single-page/company-single-page';
