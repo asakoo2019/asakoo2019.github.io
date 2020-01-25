@@ -54,7 +54,7 @@ const Search = (props) => {
 
   useEffect(() => {
     dispatch({type: "SEARCH", payload: renderArray});
-  }, [renderArray]);
+  }, [renderArray, dispatch]);
 
   useEffect(() => {
     firestore.collection("companies").get().then((querySnapshot) => {

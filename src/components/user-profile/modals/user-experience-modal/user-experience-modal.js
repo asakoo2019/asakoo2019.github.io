@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { DialogContent, DialogActions, Dialog, Button, TextField, Grid, TextareaAutosize, DialogContentText } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
+import CreateIcon from '@material-ui/icons/Create';
 
 const style = {
   textAreaBlock: {
@@ -53,7 +54,9 @@ const UserExperienceModal = (props) => {
 
   return (
     <>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>+</Button>
+      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+        <CreateIcon/>
+      </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogContent>
           <Grid container spacing={2}>

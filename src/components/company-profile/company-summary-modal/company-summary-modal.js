@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { DialogContent, DialogContentText, DialogActions, Dialog, TextareaAutosize, Button } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
+import CreateIcon from '@material-ui/icons/Create';
 
 const style = {
   textArea: {
@@ -35,7 +36,9 @@ const CompanySummaryModal = (props) => {
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>+</Button>
+      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+        <CreateIcon/>
+      </Button>
       <Dialog className={classes.formDialog} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogContent>
           <DialogContentText>
