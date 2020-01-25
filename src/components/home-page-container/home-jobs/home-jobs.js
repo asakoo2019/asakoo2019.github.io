@@ -1,7 +1,5 @@
 import React from 'react';
-import './home-jobs.css';
 import jobLogo from './2.png';
-
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Button } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
@@ -54,75 +52,57 @@ const jobsData = [
   }
 ];
 
-class HomeJobs extends React.Component {
+const HomeJobs = (props) => {
+  const {classes} = props;
+  const newJobsData = [...jobsData];
+  const history = useHistory();
 
-  state = {
-    jobsData
+  const handleClick = () => {
+    history.push("/jobs");
   };
-  
-  render () {
-    const {classes} = this.props;
-    const {jobsData} = this.state;
 
-    function GoAllJobs() {
-      let history = useHistory();
-      function handleClick() {
-        history.push("/jobs");
-      };
-      return (
-        <Button className={classes.allJobsBtn}
-                variant='contained'
-                onClick={handleClick}>
-          All jobs
-        </Button>
-      );
+  newJobsData.sort((a, b) => {
+    return b.viewCount - a.viewCount;
+  });
+  
+  const job = newJobsData.slice(0, 3).map((el) => {
+    if (el.aboutJob.length > 50) {
+      el.aboutJob = el.aboutJob.substring(0, 50) + "...";
     };
-
-    const newJobsData = [...jobsData];
-  
-    newJobsData.sort((a, b) => {
-      return b.viewCount - a.viewCount;
-    });
-    
-    const comp = newJobsData.slice(0, 3).map((el) => {
-      if (el.aboutJob.length > 100) {
-        el.aboutJob = el.aboutJob.substring(0, 100) + "...";
-      };
-      return (
-        <Grid container
-              className={classes.aboutJob}
-              alignItems="center"
-              item xs={3}
-              key={el.id}>
-          <Grid justify="center"
-                container>
-            <img className={classes.jobLogo}
-                src={el.jobImage}
-                alt={el.jobName}/>
-          </Grid>
-          <Grid>
-            <h6 className={classes.aboutJobText}>
-              {el.aboutJob}
-            </h6>
-          </Grid>
-        </Grid>
-      );
-    });
-
     return (
-      <Grid className={classes.jobs}
-            container
-            direction='column'
-            alignItems='center'>
-        <h2>Top jobs</h2>
-        <Grid container
-             justify="space-around">
-          {comp}
+      <Grid container
+        className={classes.aboutJob}
+        alignItems="center"
+        item xs={3}
+        key={el.id}>
+        <Grid justify="center"
+          container>
+          <img className={classes.jobLogo} src={el.jobImage} alt={el.jobName}/>
         </Grid>
-        <GoAllJobs />
+        <Grid>
+          <h6 className={classes.aboutJobText}> {el.aboutJob} </h6>
+        </Grid>
       </Grid>
     );
-  };
+  });
+
+  return (
+    <Grid className={classes.jobs}
+      container
+      direction='column'
+      alignItems='center'>
+      <h2>Top jobs</h2>
+      <Grid container
+        justify="space-around">
+        {job}
+      </Grid>
+      <Button className={classes.allJobsBtn}
+        variant='contained'
+        onClick={handleClick}>
+        All jobs
+      </Button>
+    </Grid>
+  );
 };
 
 export default withStyles(styles)(HomeJobs);
