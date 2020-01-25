@@ -21,11 +21,11 @@ const useStyles = makeStyles({
 });
 
 const mStP = (state) => ({
-  user: state,
+  data: state,
 });
 
 function SettingsToggleMenu(props) {
-  let {registrationType, id} = props.user;
+  let {registrationType, id} = props.data;
   const {dispatch} = props;
   registrationType = !!registrationType ?  registrationType.toLowerCase() : '';
   const link = `/${registrationType}/${id}`;
@@ -39,25 +39,23 @@ function SettingsToggleMenu(props) {
 
   const handleClose = () => {
     setAnchorEl(null);
-  }
+  };
 
   function deleteAccount() {
-    const user = auth.currentUser;
-    const collectionName = props.user.registrationType === 'Employee' ? 'users' : 'companies';
-    const userId = props.user.id;
-
-    user.delete().then(function() {
+    const data = auth.currentUser;
+    const collectionName = props.data.registrationType === 'Employee' ? 'users' : 'companies';
+    const dataId = props.data.id;
+    data.delete().then(function() {
     }).catch(function(error) {
      console.log(error);
     });
-
-    firestore.collection(collectionName).doc(userId).delete().then(function() {
+    firestore.collection(collectionName).doc(dataId).delete().then(function() {
       console.log("Document successfully deleted!");
     }).catch(function(error) {
       console.error("Error removing document: ", error);
     });
-      dispatch({type: 'SIGN-OUT'});
-      history.replace('/home');
+    dispatch({type: 'SIGN-OUT'});
+    history.replace('/home');
   };
 
   function signOut() {

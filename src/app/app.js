@@ -3,14 +3,16 @@ import Header from '../components/header';
 import NavBar from '../components/header/nav-bar'
 import Footer from '../components/footer';
 import { auth } from '../components/firebase/db';
+import { connect } from 'react-redux';
 
 const App = () => {
-  const [id, setId] = useState('');
-  console.log(id);
+  const [id, setId] = useState(' ');
+  
   useEffect(() => {
     auth.onAuthStateChanged((logedIn) => {
-      console.log(logedIn.uid);
-      setId(logedIn.uid);
+      if (logedIn) {
+        setId(logedIn.uid);
+      };
     });
   }, []);
 
@@ -23,4 +25,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default connect()(App);

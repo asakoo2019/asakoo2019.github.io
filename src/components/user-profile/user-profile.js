@@ -16,6 +16,7 @@ import DateRangeIcon from '@material-ui/icons/DateRange';
 import Languages from './languages';
 import UserExperienceModal from './modals/user-experience-modal';
 import Experiences from './experiences/experiences';
+import { connect } from 'react-redux';
 
 const styles = {
   userAllBlocks: {
@@ -52,24 +53,24 @@ const UserProfile = (props) => {
   const [userGender, setUserGender] = useState(null);
   const [userLanguages, setUserLanguages] = useState(null);
   const [userWorkExperience, setUserWorkExperience] = useState(null);
-  const { classes, id } = props;
+  const { classes, id, dispatch } = props;
 
   useEffect(() => {
-    let unmounted = false;
-    if (id !== ' ') {
-      const docRef = firestore.collection("users").doc(id);
-      docRef.get().then(function(doc) {
-        if (doc.exists) {
-          if(!unmounted) {
-            setUser(doc.data());
-          };
-        } else {
-          console.log("No such document!");
-        }})
-      .catch(function(error) {
-        console.log("Error getting document:", error);
-      });
-    };
+    dispatch({type: "SIGN-IN", payload: user});
+  }, [user, dispatch]);
+
+  useEffect(() => {
+    const docRefUser = firestore.collection("users").doc(id);
+    docRefUser.get().then(function(doc) {
+      if (doc.exists) {
+        setUser(doc.data());
+      }})
+    .catch(function(error) {
+      console.log("Error getting document:", error);
+    });
+  }, [id, downloadURL, userName, userSurname, userPhoneNumber, userAdress, userCity, userCountry, userGender, userBirthDate, aboutUser, userLanguages, userWorkExperience]);
+
+  useEffect(() => { 
     if (downloadURL !== null) {
       firestore.collection("users").doc(id)
         .update({
@@ -168,101 +169,44 @@ const UserProfile = (props) => {
           console.error("Error updating document: ", error);
         });
     };
-    return () => {
-      unmounted = true;
-    };
   }, [id, downloadURL, userName, userSurname, userPhoneNumber, userAdress, userCity, userCountry, userGender, userBirthDate]);
 
   useEffect(() => {
-    let unmounted = false;
-    if (id !== ' ') {
-      const docRef = firestore.collection("users").doc(id);
-      docRef.get().then(function(doc) {
-        if (doc.exists) {
-          if(!unmounted) {
-            setUser(doc.data());
-          };
-        } else {
-          console.log("No such document!");
-        }})
-      .catch(function(error) {
-        console.log("Error getting document:", error);
-      });
-    };
     if (aboutUser !== null) {
       firestore.collection("users").doc(id)
-        .update({
-          aboutUser: aboutUser
-        }).then(function() {
-          // console.log("Document successfully updated!");
-        }).catch(function(error) {
-          console.error("Error updating document: ", error);
-        });
-      };
-      return () => {
-      unmounted = true;
+      .update({
+        aboutUser: aboutUser
+      }).then(function() {
+        // console.log("Document successfully updated!");
+      }).catch(function(error) {
+        console.error("Error updating document: ", error);
+      });
     };
   }, [id, aboutUser]);
 
   useEffect(() => {
-    let unmounted = false;
-    if (id !== ' ') {
-      const docRef = firestore.collection("users").doc(id);
-      docRef.get().then(function(doc) {
-        if (doc.exists) {
-          if(!unmounted) {
-            setUser(doc.data());
-          };
-        } else {
-          console.log("No such document!");
-        }})
-      .catch(function(error) {
-        console.log("Error getting document:", error);
-      });
-    };
     if (userLanguages !== null) {
       firestore.collection("users").doc(id)
-        .update({
-          userLanguages: userLanguages
-        }).then(function() {
-          // console.log("Document successfully updated!");
-        }).catch(function(error) {
-          console.error("Error updating document: ", error);
-        });
-    };
-    return () => {
-      unmounted = true;
+      .update({
+        userLanguages: userLanguages
+      }).then(function() {
+        // console.log("Document successfully updated!");
+      }).catch(function(error) {
+        console.error("Error updating document: ", error);
+      });
     };
   }, [id, userLanguages]);
 
   useEffect(() => {
-    let unmounted = false;
-    if (id !== ' ') {
-      const docRef = firestore.collection("users").doc(id);
-      docRef.get().then(function(doc) {
-        if (doc.exists) {
-          if(!unmounted) {
-            setUser(doc.data());
-          };
-        } else {
-          console.log("No such document!");
-        }})
-      .catch(function(error) {
-        console.log("Error getting document:", error);
-      });
-    };
     if (userWorkExperience !== null) {
       firestore.collection("users").doc(id)
-        .update({
-          userWorkExperience: userWorkExperience
-        }).then(function() {
-          // console.log("Document successfully updated!");
-        }).catch(function(error) {
-          console.error("Error updating document: ", error);
-        });
-    };
-    return () => {
-      unmounted = true;
+      .update({
+        userWorkExperience: userWorkExperience
+      }).then(function() {
+        // console.log("Document successfully updated!");
+      }).catch(function(error) {
+        console.error("Error updating document: ", error);
+      });
     };
   }, [id, userWorkExperience]);
 
@@ -389,4 +333,4 @@ const UserProfile = (props) => {
   );
 };
 
-export default withStyles(styles)(UserProfile);
+export default connect()(withStyles(styles)(UserProfile));
