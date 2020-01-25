@@ -18,7 +18,6 @@ import { auth, firestore } from "../firebase/db";
 import style from '../Login&RegistrationStyles&Npm/login&RegStyle';
 import { useHistory } from "react-router-dom";
 
-
 function SignIn(props) {
   const history = useHistory();
   const [isForgotPassword, setIsForgotPassword] = useState(false);
@@ -59,9 +58,8 @@ function SignIn(props) {
           if (doc.docs[i].data().email === values.email) {
             key = doc.docs[i].data().id;
             registrationType = doc.docs[i].data().registrationType.toLowerCase();
-          }
-        }
-
+          };
+        };
         if (key) {
           history.push(`/${registrationType}/${key}`);
         } else {
@@ -71,31 +69,31 @@ function SignIn(props) {
               if (doc.docs[i].data().email === values.email) {
                 key = doc.docs[i].data().id;
                 registrationType = doc.docs[i].data().registrationType.toLowerCase();
-              }
-            }
+              };
+            };
             history.push(`/${registrationType}/${key}`);
-          })
-        }
+          });
+        };
       })
-      .error(err => {console.log(err)})
+      .error(err => {console.log(err)});
     })
     .catch(function(err) {
       const errorCode = err.code;
       const errorMessage = err.message;
       switch (errorCode) {
         case 'auth/invalid-email': setError({emailError: errorMessage, passwordError: ''});
-                                  setIsForgotPassword(false);
+                                   setIsForgotPassword(false);
         break;
         case 'auth/user-not-found': setError({emailError: errorMessage, passwordError: ''});
-                                  setIsForgotPassword(false);
+                                    setIsForgotPassword(false);
         break;
         case 'auth/wrong-password': setError({emailError: '', passwordError: errorMessage});
                                     setIsForgotPassword(true);
         break;
         default: ;
-      } 
+      };
     });
-  }
+  };
 
   const forgotPassword = () => {
     auth.sendPasswordResetEmail(values.email)
@@ -105,7 +103,7 @@ function SignIn(props) {
     console.log(e);
     console.log(email);
     });
-  }
+  };
 
   return (
     <div>
