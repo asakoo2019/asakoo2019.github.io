@@ -1,20 +1,25 @@
-import React from 'react';
-import { BrowserRouter as Router } from "react-router-dom";
-import store from '../components/react-redux/store';
-import { Provider } from 'react-redux';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/header';
 import NavBar from '../components/header/nav-bar'
 import Footer from '../components/footer';
+import { auth } from '../components/firebase/db';
 
-function App() {
+const App = () => {
+  const [id, setId] = useState('');
+  console.log(id);
+  useEffect(() => {
+    auth.onAuthStateChanged((logedIn) => {
+      console.log(logedIn.uid);
+      setId(logedIn.uid);
+    });
+  }, []);
+
   return (
-    <Provider store = {store}>
-      <Router>
-        <Header />
-        <NavBar />
-        <Footer />
-      </Router>
-    </Provider>
+    <>
+      <Header />
+      <NavBar id = {id} />
+      <Footer />
+    </>
   );
 };
 

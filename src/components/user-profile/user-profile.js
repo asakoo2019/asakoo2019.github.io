@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import './user-profile.css';
-import { firestore, auth } from '../firebase/db';
+import { firestore } from '../firebase/db';
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import { Grid, Container } from '@material-ui/core';
@@ -13,8 +13,6 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import MailIcon from '@material-ui/icons/Mail';
 import WcIcon from '@material-ui/icons/Wc';
 import DateRangeIcon from '@material-ui/icons/DateRange';
-import { connect } from 'react-redux';
-import { useHistory } from "react-router-dom";
 import Languages from './languages';
 import UserExperienceModal from './modals/user-experience-modal';
 import Experiences from './experiences/experiences';
@@ -40,13 +38,8 @@ const styles = {
   },
 };
 
-const mStP = (state) => ({
-  user: state,
-});
-
 const UserProfile = (props) => {
   const [user, setUser] = useState({});
-  const [id, setId] = useState(' ');
   const [downloadURL, setUserImage] = useState(null);
   const [userName, setUserName] = useState(null);
   const [userSurname, setUserSurname] = useState(null);
@@ -59,33 +52,7 @@ const UserProfile = (props) => {
   const [userGender, setUserGender] = useState(null);
   const [userLanguages, setUserLanguages] = useState(null);
   const [userWorkExperience, setUserWorkExperience] = useState(null);
-  const { classes, dispatch } = props;
-  const history = useHistory();
-
-  useEffect(() => {
-    let unmounted = false;
-    const pathName = history.location.pathname;
-    const LastSleshIndex = pathName.lastIndexOf('/');
-    const searchId = pathName.slice(LastSleshIndex + 1);
-    auth.onAuthStateChanged((logedInUser) => {
-      if (logedInUser) {
-        dispatch({type: "SIGN-IN", payload: user});
-        if (!searchId) {
-          setId(logedInUser.uid);
-          // dispatch({type: "SIGN-OUT", payload: user});
-        } else {
-          setId(searchId);
-        }
-      } else {
-        if(!unmounted){
-          setId(searchId);
-        };
-      };
-    });
-    return () => {
-      unmounted = true;
-    };
-  }, [dispatch, history.location.pathname, user]);
+  const { classes, id } = props;
 
   useEffect(() => {
     let unmounted = false;
@@ -309,7 +276,7 @@ const UserProfile = (props) => {
         alignItems='center'>
         <Grid container
           item xs={12} sm={4} md={2}>
-          {props.user ? <UserImageBlock setUserImage={setUserImage} user={user} id={id}/> : <UserImageBlock user={user} id={id}/>}
+          {user ? <UserImageBlock setUserImage={setUserImage} user={user} id={id}/> : <UserImageBlock user={user} id={id}/>}
         </Grid>
         <Grid container
           item xs={12} sm={8} md={10}
@@ -321,7 +288,7 @@ const UserProfile = (props) => {
               <h5 className={classes.userName}>{user.userName}</h5>
               <h5>{user.userSurname}</h5>
             </Grid>
-            {props.user && <AboutUserModal
+            {user && <AboutUserModal
               user={user}
               setUserName={setUserName}
               setUserSurname={setUserSurname}
@@ -382,7 +349,7 @@ const UserProfile = (props) => {
         </Grid>
         <Grid container item xs={1}
           justify='flex-end'>
-          {props.user && <UserSummaryModal
+          {user && <UserSummaryModal
             user={user}
             id={id}
             setAboutUser={setAboutUser}/>}
@@ -396,11 +363,11 @@ const UserProfile = (props) => {
         justify='space-between'>
         <Grid item xs={11}>
           <h5>Languages</h5>
-          {user.userLanguages ? (user.userLanguages.length ? (props.user ? <Languages user={user} setUserLanguages={setUserLanguages}/> : <Languages user={user} />) : 'Add levels of language proficiency.') : null}
+          {user.userLanguages ? (user.userLanguages.length ? (user ? <Languages user={user} setUserLanguages={setUserLanguages}/> : <Languages user={user} />) : 'Add levels of language proficiency.') : null}
         </Grid>
         <Grid container item xs={1}
           justify='flex-end'>
-          {props.user ? <UserLanguagesModal user={user} setUserLanguages={setUserLanguages} /> : <UserLanguagesModal user={user} />}
+          {user ? <UserLanguagesModal user={user} setUserLanguages={setUserLanguages} /> : <UserLanguagesModal user={user} />}
         </Grid>
       </Grid>
 
@@ -411,15 +378,15 @@ const UserProfile = (props) => {
         justify='space-between'>
         <Grid item xs={11}>
           <h5>Work experience</h5>
-          {user.userWorkExperience ? (user.userWorkExperience.length ? (props.user ? <Experiences user={user} setUserWorkExperience={setUserWorkExperience} id={id} /> : <Experiences user={user} />) : 'Add your work experience and any significant accomplishments.') : null}
+          {user.userWorkExperience ? (user.userWorkExperience.length ? (user ? <Experiences user={user} setUserWorkExperience={setUserWorkExperience} id={id} /> : <Experiences user={user} />) : 'Add your work experience and any significant accomplishments.') : null}
         </Grid>
         <Grid container item xs={1}
           justify='flex-end'>
-          {props.user && <UserExperienceModal user={user} setUserWorkExperience={setUserWorkExperience} />}
+          {user && <UserExperienceModal user={user} setUserWorkExperience={setUserWorkExperience} />}
         </Grid>
       </Grid>
     </Container>
   );
 };
 
-export default connect(mStP)(withStyles(styles)(UserProfile));
+export default withStyles(styles)(UserProfile);

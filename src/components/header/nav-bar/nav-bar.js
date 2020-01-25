@@ -1,5 +1,4 @@
 import React from 'react';
-import './nav-bar.css';
 import { Switch, Route, Redirect, NavLink } from "react-router-dom";
 import { withStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
@@ -11,7 +10,7 @@ import Registration from '../../registration';
 import UserProfile from '../../user-profile';
 import CompanyProfile from '../../company-profile';
 import SettingsToggleMenu from '../../settings-toggle-menu';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import JobSingle from '../../jobs/jobs-container/job-single';
 import CompaniesSinglePage from '../../companies/single-page/company-single-page';
 
@@ -27,8 +26,8 @@ const mStP = (state) => ({
 
 const NavBar = (props) => {
   const { classes } = props;
-  const regAndLogArray = [<NavLink key={1} to="/sign-in" activeClassName='active' className={classes.navItem}>Sign In</NavLink>,
-                          <NavLink key={2} to="/registration" activeClassName='active' className={classes.navItem}>Registration</NavLink>];
+  const regAndLogArray = [<NavLink key={1} to="/sign-in" activeClassName='active' className={classes.navItem}>Sign In</NavLink>, <NavLink key={2} to="/registration" activeClassName='active' className={classes.navItem}>Registration</NavLink>];
+
   return (
     <>
       <nav>
@@ -55,8 +54,12 @@ const NavBar = (props) => {
         <Route exact path="/companies/:id" component={CompaniesSinglePage} />
         <Route exact path="/sign-in" component={SignIn} />
         <Route exact path="/registration" component={Registration} />
-        <Route exact path="/employee/:id" component={UserProfile} />
-        <Route exact path="/employer/:id" component={CompanyProfile} />
+        <Route exact path="/employee/:id">
+          <UserProfile id = {props.id} />
+        </Route>
+        <Route exact path="/employer/:id">
+          <CompanyProfile id = {props.id} />
+        </Route>
         <Route path="/home" component={HomePageContainer} />
         <Redirect to="/home" />
       </Switch>
