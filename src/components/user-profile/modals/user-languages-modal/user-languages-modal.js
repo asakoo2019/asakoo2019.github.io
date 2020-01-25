@@ -3,6 +3,7 @@ import
   { DialogContent, DialogContentText, DialogActions, Dialog, Button, FormControl, InputLabel, Select, MenuItem, Grid }
 from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
+import CreateIcon from '@material-ui/icons/Create';
 
 const style = {
   lenguageSelect: {
@@ -60,7 +61,9 @@ const UserLanguagesModal = (props) => {
 
   return (
     <div>
-      {props.setUserLanguages && <Button variant="outlined" color="primary" onClick={handleClickOpen}>+</Button>}
+      {props.setUserLanguages && <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+          <CreateIcon/>
+        </Button>}
       <Dialog className={classes.formDialog} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogContent>
           <DialogContentText>

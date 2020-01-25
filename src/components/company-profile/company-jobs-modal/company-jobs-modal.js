@@ -4,6 +4,7 @@ import { DialogContent, DialogActions, Dialog, Button, TextField, Grid,
 import { withStyles } from "@material-ui/core/styles";
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
+import CreateIcon from '@material-ui/icons/Create';
 
 const style = {
   textAreaBlock: {
@@ -128,7 +129,7 @@ const CompanyJobsModal = (props) => {
   const handleSave = () => {
     if (jobName !== '' && term !== '' && location !== '' && jobCategory !== '' && jobType !== '' && jobDeadline !== ''){
       props.setCompanyJobs(
-        [...company.companyJobs, {jobName, term, location, jobCategory, jobType, jobDetails, id: id(), checked: false,viewCount: 0, jobDeadline: jobDeadline.toLocaleDateString(undefined, { day:'numeric', month: 'numeric', year: 'numeric' })}]
+        [...company.companyJobs, {jobName, term, location, jobCategory, jobType, jobDetails, id: id(), checked: false,viewCount: 0, jobDeadline: jobDeadline.toLocaleDateString(undefined, { day:'numeric', month: 'numeric', year: 'numeric' }), companyName: company.companyName}]
       );
     };
     setOpen(false);
@@ -140,7 +141,9 @@ const CompanyJobsModal = (props) => {
 
   return (
     <>
-      {props.setCompanyJobs && <Button variant="outlined" color="primary" onClick={handleClickOpen}>+</Button>}
+      {props.setCompanyJobs && <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+          <CreateIcon/>
+        </Button>}
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogContent>
           <Grid container spacing={2}>

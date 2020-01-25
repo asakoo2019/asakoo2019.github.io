@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import Header from '../components/header';
 import NavBar from '../components/header/nav-bar'
 import Footer from '../components/footer';
+
 function App() {
   return (
     <Provider store = {store}>

@@ -15,9 +15,8 @@ function Jobs() {
                 if (doc.data().companyJobs && doc.data().companyJobs.length !== 0){
                 job.push(doc.data().companyJobs);
                 let newArray = [];
-                job.map(item => {
-                    // console.log(item)
-                    newArray = newArray.concat(item);
+                job.forEach(item => {
+                    newArray = newArray.concat(item)
                 });
                 setJobs(newArray);
                 };

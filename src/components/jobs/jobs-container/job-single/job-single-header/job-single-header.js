@@ -18,11 +18,11 @@ const JobSingleHeader = () => {
         });
     }, []);
 
-    console.log(job);
+    console.log(job[0])
 
     return (
         <Container>
-            {/* <img src='' alt='company image' /> */}
+            <h1>{job.id}</h1>
         </Container>
     )
 }
