@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
 
 const mStP = (state) => ({
-  user: state,
+  searchData: state,
 });
 
 const Search = (props) => {
