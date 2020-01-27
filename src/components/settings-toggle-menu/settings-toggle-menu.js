@@ -25,7 +25,9 @@ const mStP = (state) => ({
 });
 
 function SettingsToggleMenu(props) {
-  let {registrationType, id} = props.data;
+  let {data} = props;
+  data = data ? data : {};
+  let {registrationType, id} = data;
   const {dispatch} = props;
   registrationType = !!registrationType ?  registrationType.toLowerCase() : '';
   const link = `/${registrationType}/${id}`;
@@ -60,8 +62,9 @@ function SettingsToggleMenu(props) {
 
   function signOut() {
     auth.signOut().then(function() {
-      dispatch({type: 'SIGN-OUT'});
+      props.setShowItems(false);
       history.replace('/home');
+      dispatch({type: 'SIGN-OUT'});
     }).catch(function(error) {
       // An error happened.
     });

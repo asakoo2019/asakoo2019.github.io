@@ -43,7 +43,7 @@ const NavBar = (props) => {
           <Grid item xs={4}
             container
             justify='flex-end'>
-            {!props.user ? regAndLogArray : <SettingsToggleMenu/>}
+            {!props.showItems ? regAndLogArray : <SettingsToggleMenu setShowItems = {props.setShowItems} />}
           </Grid>
         </Grid>
       </nav>
@@ -55,10 +55,10 @@ const NavBar = (props) => {
         <Route exact path="/sign-in" component={SignIn} />
         <Route exact path="/registration" component={Registration} />
         <Route exact path="/employee/:id">
-          <UserProfile id = {props.id} />
+          <UserProfile id = {props.id} showItems = {props.showItems}/>
         </Route>
         <Route exact path="/employer/:id">
-          <CompanyProfile id = {props.id} />
+          <CompanyProfile id = {props.id} showItems = {props.showItems}/>
         </Route>
         <Route path="/home" component={HomePageContainer} />
         <Redirect to="/home" />
