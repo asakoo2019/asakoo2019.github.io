@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
     },
   }));
 
-function CompanyItem (props){
+function CompanyItem ({currentCompany}){
   const classes =  useStyles();
   const history = useHistory();
   const match = useRouteMatch();
@@ -29,8 +29,8 @@ function CompanyItem (props){
                 justify="flex-start"
                 alignItems="center"
               >
-                <Avatar src="https://library.kissclipart.com/20180922/eve/kissclipart-icon-full-name-clipart-computer-icons-avatar-icon-f6cf26ff2213f36e.jpg" /> 
-                <span> {props.currentCompany.companyName}<br/>{props.currentCompany.companyViewCount} total views </span>
+                <Avatar src={currentCompany.companyImage} /> 
+                <span> {currentCompany.companyName}<br/>{currentCompany.companyViewCount} total views </span>
                 
               </Grid>
 
@@ -38,12 +38,12 @@ function CompanyItem (props){
             <Grid
                 item xs ={6}
             >
-              <span>Active jobs({props.currentCompany.companyJobs.length})</span>
+              <span>Active jobs({currentCompany.companyJobs.length})</span>
             </Grid>
             <Grid
                 item xs ={2}
             >
-              <button  onClick = { ()=>{history.push(`${match.url}/${props.currentCompany.id}`)}    } >
+              <button  onClick = { ()=>{history.push(`${match.url}/${currentCompany.id}`)}    } >
                   View More
               </button>
             </Grid>

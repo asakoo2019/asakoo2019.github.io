@@ -23,13 +23,12 @@ const useStyles = makeStyles(theme => ({
     },
   }));
 
-function  CompaniesBar (props) {   
+function  CompaniesBar ({employer, otherCopmanies, currPage}) {   
     const classes = useStyles();
-    // console.log(props.employer.slice (props.currPage - 10));
-    const comps = props.employer.map((item) => {
+    const comps = employer.slice (currPage - 10, currPage).map((item) => {
         return (
             <CompanyItem 
-                key = {item.id}
+                key = {`${item.id}asd`}
                 currentCompany = {item}
             />
         );
@@ -41,7 +40,7 @@ function  CompaniesBar (props) {
         for (let i = 1; i <= maxButtons; i++){
             result.push(<Button
                 key  = {i}
-                onClick = {props.otherCopmanies}
+                onClick = {(e)=> otherCopmanies(e, i)}
             >
                 {i}
             </Button>)
@@ -59,7 +58,7 @@ function  CompaniesBar (props) {
                 alignItems="flex-start"
                 className={classes.gridUp}    
             >
-                <span>1 - 10 company results from {props.employer.length} total companies on asd.am</span>                
+                <span>1 - 10 company results from {employer.length} total companies on asd.am</span>                
             </Grid>
             <Grid container
                 direction = "column"
@@ -71,7 +70,7 @@ function  CompaniesBar (props) {
             <Grid container
                 className={classes.gridDown}
             >
-                {button(props.employer)}
+                {button(employer)}
             </Grid>  
         </Grid>      
     );   
