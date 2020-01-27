@@ -24,7 +24,8 @@ const useStyles = makeStyles(theme => ({
 }));
 function TopBar ({companyInfo}) {
     const classes = useStyles();
-    //bgimage = companyInfo.companyBackground? companyInfo.companyBackground: bgimage;
+    //
+    bgimage = companyInfo.companyBackground? companyInfo.companyBackground: bgimage;
     //console.log(companyInfo.companyBackground);
     return(
         <Grid
@@ -41,7 +42,7 @@ function TopBar ({companyInfo}) {
             >
                 <Grid 
                 >
-                    <img src = {companyInfo.companyImage} className = {classes.topBarImg}/>
+                    <img src = {companyInfo.companyImage} alt = 'Company pic' className = {classes.topBarImg}/>
                 </Grid>
                 <Grid >
                     <h1>{companyInfo.companyName}</h1>

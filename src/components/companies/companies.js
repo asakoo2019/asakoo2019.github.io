@@ -1,10 +1,8 @@
 import React, {useState, useEffect} from 'react';
 //import CompanyFilter from './companies-components/company-filter';
 import CompaniesBar from './companies-components/companies-bar';
-import CompaniesSinglePage from './single-page/company-single-page';
 import {Grid, Container, FormLabel, FormControl, FormGroup, FormControlLabel, Checkbox} from '@material-ui/core';
-import {BrowserRouter as Switch, Route} from "react-router-dom";
-import {firestore} from '../firebase/db';
+//import {firestore} from '../firebase/db';
 
 
 const companyCategoryArr = [
@@ -26,7 +24,7 @@ const companyCategoryArr = [
 ];
 const createData = () => {
   class Company {
-    constructor(companyName, registerName, companyCreatingData, id, email, companyViewCount, companyJobs, companyCategory) { 
+    constructor(companyName, registerName, companyCreatingData, id, email, companyViewCount, aboutCompany, companyJobs, companyCategory) { 
       this.companyName = companyName;
       this.registerName = registerName;
       this.companyCreatingData = companyCreatingData;
@@ -34,9 +32,9 @@ const createData = () => {
       this.email = `${email}@mail.ru`;
       this.registrationType = 'emloyer';
       this.companyViewCount = companyViewCount;
-      this.aboutCompany = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.' 
+      this.aboutCompany = aboutCompany;  
       this.companyImage = "https://library.kissclipart.com/20180922/eve/kissclipart-icon-full-name-clipart-computer-icons-avatar-icon-f6cf26ff2213f36e.jpg";
-      this.companyBackground = 'https://www.seoclerk.com/pics/300098-1w49RY1417628053.jpg';
+      this.companyBackground = 'http://braingapps.com/wp-content/uploads/2013/08/some-company.png';
       this.companyJobs = companyJobs;
       this.companyWebsite =  null;
       this.companyCategory =  companyCategory;
@@ -53,8 +51,15 @@ const createData = () => {
     let id  = `${i}`;
     let email = companyName + '_' + i;
     let companyViewCount = Math.floor(Math.random() * 100) + 1;
-    let companyJobs = []
-    companyJobs.length = Math.floor(Math.random() * 10) + 1;
+    let companyJobs = [];
+    if (i%2 === 0){
+      companyJobs = [1, 2, 3, 4]
+      // companyJobs.length = Math.floor(Math.random() * 10) + 1;
+    }
+    let aboutCompany = '';
+    if (i%2 === 0){
+      aboutCompany = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'
+    }
     let companyCategory = '';
     if (c < 12){
       companyCategory = companyCategoryArr[c++]
@@ -62,7 +67,7 @@ const createData = () => {
       c = 0;
       companyCategory = companyCategoryArr[c++]
   }
-  let comp = new Company(companyName + '_' + i, registerName + '_' + i, companyCreatingData++, id, email, companyViewCount, companyJobs, companyCategory)
+  let comp = new Company(companyName + '_' + i, registerName + '_' + i, companyCreatingData++, id, email, companyViewCount, aboutCompany, companyJobs, companyCategory)
   data.push(comp);
   }
   return data
@@ -84,7 +89,7 @@ const createData = () => {
 //   });
 // }
 
-function Companies (){
+export default function Companies (){
   const [currPage, setCurrentPage] = useState(10);
   const [allCompanies, setAllCompanies] = useState (true);
   const [type, setType] = useState ([]);
@@ -147,8 +152,7 @@ function Companies (){
   }
     const employer = allCompanies ? [...data] : drawCompanies(data);
     return(
-     
-     <>
+
           <Container maxWidth = 'lg'>         
             <Grid container>
               <Grid 
@@ -176,13 +180,6 @@ function Companies (){
               </Grid>
             </Grid>     
           </Container>
-      <Switch> 
-      {/* <Route exact path = {`companies/:name`}>
-        <CompaniesSinglePage/>
-      </Route>  */}
-    </Switch>
-    </>
+
     );
 }
-
-export default Companies;

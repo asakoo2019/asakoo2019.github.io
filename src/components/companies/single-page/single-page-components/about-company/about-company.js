@@ -30,7 +30,6 @@ export default function AboutCompany ({companyInfo}) {
             >
                 
                 <p>{companyInfo.aboutCompany}</p> 
-                <p>here must be information about company</p>
             </Grid>
             <Grid 
                 className = {classes.aboutCompDiv}

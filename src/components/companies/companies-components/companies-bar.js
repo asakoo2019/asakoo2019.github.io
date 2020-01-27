@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
     },
   }));
 
-function  CompaniesBar ({employer, otherCopmanies, currPage}) {   
+  export default function  CompaniesBar ({employer, otherCopmanies, currPage}) {   
     const classes = useStyles();
     const comps = employer.slice (currPage - 10, currPage).map((item) => {
         return (
@@ -33,20 +33,22 @@ function  CompaniesBar ({employer, otherCopmanies, currPage}) {
             />
         );
     });
-    //console.log(comps)
     const button = (arr)=> {
         let maxButtons = Math.ceil(arr.length/10);
         let result = [];
-        for (let i = 1; i <= maxButtons; i++){
-            result.push(<Button
-                key  = {i}
-                onClick = {(e)=> otherCopmanies(e, i)}
-            >
-                {i}
-            </Button>)
+        if (maxButtons > 1){
+            for (let i = 1; i <= maxButtons; i++){
+                result.push(<Button
+                    key  = {`${i}page`}
+                    onClick = {(e)=> otherCopmanies(e, i)}
+                >
+                    {i}
+                </Button>)
+            }
         }
         return result
     }
+    
     return (
         <Grid container
             direction="column"
@@ -75,4 +77,3 @@ function  CompaniesBar ({employer, otherCopmanies, currPage}) {
         </Grid>      
     );   
 }
-export default CompaniesBar;
