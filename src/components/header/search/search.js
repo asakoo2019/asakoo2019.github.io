@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Grid, Button } from '@material-ui/core';
+import { TextField, Grid, Button, Radio, RadioGroup, FormControlLabel } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { firestore } from '../../firebase/db';
+import { useHistory } from "react-router-dom";
+import { connect } from 'react-redux';
 
-const Search = () => {
+const mStP = (state) => ({
+  searchData: state,
+});
+
+const Search = (props) => {
   const [term, setTerm] = useState('');
-  const [companySearch, setCompanySearch] = useState({});
+  const [companySearch, setCompanySearch] = useState('');
   const [jobSearch, setJobSearch] = useState('');
-  let searchArray = [];
-  searchArray = searchArray.concat(companySearch, jobSearch);
+  const [searchUrl, setSearchUrl] = useState('');
   const [renderArray, setRenderArray] = useState([]);
+  const history = useHistory();
+  const { dispatch } = props;
 
-  console.log(companySearch);
-
-  const searching = () => {
+  const searchingJobs = () => {
     if (term) {
       let newArray = [];
-      searchArray.forEach(item => {
+      jobSearch.forEach(item => {
         for(let value of Object.values(item)) {
           if (typeof value === 'string'){
             if (value.toLowerCase() === term.toLowerCase()) {
@@ -26,8 +31,30 @@ const Search = () => {
           };
         };
       });
+      history.push(`/${searchUrl}`);
     };
   };
+
+  const searchingCompanies = () => {
+    if (term) {
+      let newArray = [];
+      companySearch.forEach(item => {
+        for(let value of Object.values(item)) {
+          if (typeof value === 'string'){
+            if (value.toLowerCase() === term.toLowerCase()) {
+              newArray.push(item);
+              setRenderArray(newArray);
+            };
+          };
+        };
+      });
+      history.push(`/${searchUrl}`);
+    };
+  };
+
+  useEffect(() => {
+    dispatch({type: "SEARCH", payload: renderArray});
+  }, [renderArray, dispatch]);
 
   useEffect(() => {
     firestore.collection("companies").get().then((querySnapshot) => {
@@ -56,13 +83,26 @@ const Search = () => {
           onChange={(e) => setTerm(e.target.value)} />
         </Grid>
         <Grid item>
-          <Button onClick={searching}>
+          <Button onClick={searchUrl === 'jobs' ? searchingJobs : searchingCompanies}>
             <SearchIcon />
           </Button>
         </Grid>
+      </Grid>
+      <Grid container>
+        <RadioGroup
+          onChange={(e) => setSearchUrl(e.target.value)}>
+            <Grid container spacing={3}>
+              <Grid item xs={6}>
+                <FormControlLabel value="jobs" control={<Radio color="primary" />} label="Jobs" />
+              </Grid>
+              <Grid item xs={6}>
+                <FormControlLabel value="companies" control={<Radio color="primary" />} label="Companies" />
+              </Grid>
+            </Grid>
+          </RadioGroup>
       </Grid>
     </Grid>
   );
 };
 
-export default Search;
+export default connect(mStP)(Search);

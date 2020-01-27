@@ -27,8 +27,10 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import userImage from './avatar.png';
 import companyImage from './company-icon.png';
+import { connect } from 'react-redux';
 
 function RegistrationComponent(props) {
+  const {dispatch} = props;
   const history = useHistory();
   const [error, setError] = useState({
     nameError: '',
@@ -113,7 +115,7 @@ function RegistrationComponent(props) {
               const id = user.user.uid;
               // const { name, gender, surname, registrationType, email } = values;
               if (values.registrationType === 'Employee') {
-                firestore.collection("users").doc(id).set({
+                const user = {
                   userName: values.name,
                   userSurname: values.surname,
                   userBirthDate: birthday.toLocaleDateString(undefined, {
@@ -134,10 +136,12 @@ function RegistrationComponent(props) {
                   userProfessionalSkills: [],
                   userLanguages: [],
                   aboutUser: '',
-                });
+                };
+                firestore.collection("users").doc(id).set();
+                dispatch({type: "SIGN-IN", payload: user});
                 history.push(`/${values.registrationType.toLowerCase()}/${id}`);
               } else {
-                firestore.collection("companies").doc(id).set({
+                const company = {
                   companyName: values.name,
                   registerName: values.surname,
                   companyCreatingData: birthday.toLocaleDateString(undefined, {
@@ -160,7 +164,9 @@ function RegistrationComponent(props) {
                   companyCity: 'Yerevan',
                   companyCountry: 'Armenia',
                   companyAdress: '',
-                });
+                };
+                firestore.collection("companies").doc(id).set(company);
+                dispatch({type: "SIGN-IN", payload: company});
                 history.push(`/${values.registrationType.toLowerCase()}/${id}`);
               }
             }).catch(function (err) {
@@ -321,4 +327,4 @@ function RegistrationComponent(props) {
   )
 };
 
-export default withStyles(style)(RegistrationComponent);
+export default connect()(withStyles(style)(RegistrationComponent));

@@ -1,7 +1,5 @@
 import React from 'react';
-import './home-companies.css';
 import companyLogo from './2.png';
-
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Button } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
@@ -54,78 +52,55 @@ const companiesData = [
   },
 ];
 
-
-
-class HomeCompanies extends React.Component {
-
-  state = {
-    companiesData
+const HomeCompanies = (props) => {
+  const {classes} = props;
+  const history = useHistory();
+  const newCompaniesData = [...companiesData];
+  const handleClick = () => {
+    history.push("/companies");
   };
-  
-  render () {
-    
-    const {classes} = this.props;
-    const {companiesData} = this.state;
-    
-    function GoAllCompanies() {
-      let history = useHistory();
-      function handleClick() {
-        history.push("/companies");
-      };
-      return (
-        <Button className={classes.allCompaniesBtn}
-                variant='contained'
-                onClick={handleClick}>
-          All companies
-        </Button>
-      );
+  newCompaniesData.sort((a, b) => {
+    return b.viewCount - a.viewCount;
+  });
+
+  const company = newCompaniesData.slice(0, 3).map((el) => {
+    if (el.aboutCompany.length > 50) {
+      el.aboutCompany = el.aboutCompany.substring(0, 50) + "...";
     };
-
-    const newCompaniesData = [...companiesData];
-  
-    newCompaniesData.sort((a, b) => {
-      return b.viewCount - a.viewCount;
-    });
-    
-    const comp = newCompaniesData.slice(0, 3).map((el) => {
-      if (el.aboutCompany.length > 100) {
-        el.aboutCompany = el.aboutCompany.substring(0, 100) + "...";
-      };
-      return (
-        <Grid container
-              className={classes.aboutCompany}
-              alignItems="center"
-              item xs={3}
-              key={el.id}>
-          <Grid justify="center"
-                container>
-            <img className={classes.companyLogo}
-                src={el.companyImage}
-                alt={el.companyName}/>
-          </Grid>
-          <Grid>
-            <h6 className={classes.aboutCompanyText}>
-              {el.aboutCompany}
-            </h6>
-          </Grid>
-        </Grid>
-      );
-    });
-
     return (
-      <Grid className={classes.companies}
-            container
-            direction='column'
-            alignItems='center'>
-        <h2>Top companies</h2>
-        <Grid container
-             justify="space-around">
-          {comp}
+      <Grid container
+        className={classes.aboutCompany}
+        alignItems="center"
+        item xs={3}
+        key={el.id}>
+        <Grid justify="center"
+          container>
+          <img className={classes.companyLogo} src={el.companyImage} alt={el.companyName}/>
         </Grid>
-        <GoAllCompanies/>
+        <Grid>
+          <h6 className={classes.aboutCompanyText}> {el.aboutCompany} </h6>
+        </Grid>
       </Grid>
     );
-  };
+  });
+
+  return (
+    <Grid className={classes.companies}
+      container
+      direction='column'
+      alignItems='center'>
+      <h2>Top companies</h2>
+      <Grid container
+        justify="space-around">
+        {company}
+      </Grid>
+      <Button className={classes.allCompaniesBtn}
+        variant='contained'
+        onClick={handleClick}>
+        All companies
+      </Button>
+    </Grid>
+  );
 };
 
 export default withStyles(styles)(HomeCompanies);

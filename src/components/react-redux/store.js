@@ -11,6 +11,6 @@ function counter(state = null, action) {
   };
 };
 
-let store = createStore(counter);
+const store = createStore(counter);
 
 export default store;

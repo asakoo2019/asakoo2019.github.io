@@ -6,6 +6,7 @@ import CountrySelect from '../../selects/country-select';
 import GenderSelect from '../../selects/gender-select';
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
+import CreateIcon from '@material-ui/icons/Create';
 
 const style = {
   aboutUserModalBtn: {
@@ -59,7 +60,9 @@ const AboutUserModal = (props) => {
 
   return (
     <>
-      <Button className={classes.aboutUserModalBtn} variant="outlined" color="primary" onClick={handleClickOpen}>+</Button>
+      <Button className={classes.aboutUserModalBtn} variant="outlined" color="primary" onClick={handleClickOpen}>
+        <CreateIcon/>
+      </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogContent>
           <DialogContentText>
