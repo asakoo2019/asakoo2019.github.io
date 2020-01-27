@@ -56,8 +56,9 @@ function SettingsToggleMenu(props) {
     }).catch(function(error) {
       console.error("Error removing document: ", error);
     });
-    dispatch({type: 'SIGN-OUT'});
+    props.setShowItems(false);
     history.replace('/home');
+    dispatch({type: 'SIGN-OUT'});
   };
 
   function signOut() {
