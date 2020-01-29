@@ -25,7 +25,7 @@ const mStP = (state) => ({
 });
 
 const NavBar = (props) => {
-  const { classes } = props;
+  const { classes, showItems } = props;
   const regAndLogArray = [<NavLink key={1} to="/sign-in" activeClassName='active' className={classes.navItem}>Sign In</NavLink>, <NavLink key={2} to="/registration" activeClassName='active' className={classes.navItem}>Registration</NavLink>];
 
   return (
@@ -43,7 +43,7 @@ const NavBar = (props) => {
           <Grid item xs={4}
             container
             justify='flex-end'>
-            {!props.showItems ? regAndLogArray : <SettingsToggleMenu setShowItems = {props.setShowItems} />}
+            {showItems ? <SettingsToggleMenu setShowItems = {props.setShowItems} /> : regAndLogArray }
           </Grid>
         </Grid>
       </nav>
@@ -55,10 +55,10 @@ const NavBar = (props) => {
         <Route exact path="/sign-in" component={SignIn} />
         <Route exact path="/registration" component={Registration} />
         <Route exact path="/employee/:id">
-          <UserProfile id = {props.id} showItems = {props.showItems}/>
+          <UserProfile id = {props.id} showItems = {showItems}/>
         </Route>
         <Route exact path="/employer/:id">
-          <CompanyProfile id = {props.id} showItems = {props.showItems}/>
+          <CompanyProfile id = {props.id} showItems = {showItems}/>
         </Route>
         <Route path="/home" component={HomePageContainer} />
         <Redirect to="/home" />

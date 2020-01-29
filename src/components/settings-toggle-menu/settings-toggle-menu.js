@@ -25,7 +25,7 @@ const mStP = (state) => ({
 });
 
 function SettingsToggleMenu(props) {
-  let {data} = props;
+  let { data } = props;
   data = data ? data : {};
   let {registrationType, id} = data;
   const {dispatch} = props;
@@ -44,6 +44,9 @@ function SettingsToggleMenu(props) {
   };
 
   function deleteAccount() {
+    props.setShowItems(false);
+    history.replace('/home');
+    dispatch({type: 'SIGN-OUT'});
     const data = auth.currentUser;
     const collectionName = props.data.registrationType === 'Employee' ? 'users' : 'companies';
     const dataId = props.data.id;
@@ -56,9 +59,6 @@ function SettingsToggleMenu(props) {
     }).catch(function(error) {
       console.error("Error removing document: ", error);
     });
-    props.setShowItems(false);
-    history.replace('/home');
-    dispatch({type: 'SIGN-OUT'});
   };
 
   function signOut() {
