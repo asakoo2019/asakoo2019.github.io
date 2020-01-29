@@ -1,143 +1,158 @@
 import React, {useState, useEffect} from 'react';
-import CompanyFilter from './companies-components/company-filter';
+//import CompanyFilter from './companies-components/company-filter';
 import CompaniesBar from './companies-components/companies-bar';
-import CompaniesSinglePage from './single-page/company-single-page';
-import Grid from '@material-ui/core/Grid';
-import Container from '@material-ui/core/Container';
-import {BrowserRouter as Switch, Route} from "react-router-dom";
-import {firestore} from '../firebase/db';
+import {Grid, Container, FormLabel, FormControl, FormGroup, FormControlLabel, Checkbox} from '@material-ui/core';
+//import {firestore} from '../firebase/db';
 
 
-// const companyCategoryArr = ['Finance/Banking/Insurance', 'Information technologies', 'Import/Export/Trade', 'Marketing/Advertising/PR', 'Tourism/Hospitality/Entertainment', 'Medical/Pharmaceutical', 'TV/Radio/Media', 'Telecommunications', 'Service', 'Government',
-// 'Agriculture/Winemaking', 'Online Service',];
-// const createData = () => {
-//   class Company {
-//     constructor(companyName, registerName, companyCreatingData, id, email, companyViewCount, companyJobs, companyCategory) { 
-//       this.companyName = companyName;
-//       this.registerName = registerName;
-//       this.companyCreatingData = companyCreatingData;
-//       this.id = id;
-//       this.email = `${email}@mail.ru`;
-//       this.registrationType = 'emloyer';
-//       this.companyViewCount = companyViewCount;
-//       this.aboutCompany = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.' 
-//       this.companyImage = "https://library.kissclipart.com/20180922/eve/kissclipart-icon-full-name-clipart-computer-icons-avatar-icon-f6cf26ff2213f36e.jpg";
-//       this.companyBackground = 'http://braingapps.com/wp-content/uploads/2013/08/some-company.png';
-//       this.companyJobs = companyJobs;
-//       this.companyWebsite =  null;
-//       this.companyCategory =  companyCategory;
-//       this.userCity =  'Yerevan';
-//       this.userCountry =  'Armenia';
-//     }
-//   }
-//   let data = [];
-//   let c = 0;
-//   let companyName = 'compName';
-//   let registerName = 'regName';
-//   let companyCreatingData = 1910
-//   for (let i = 0; i < 100; i++){
-//     let id  = `${i}`;
-//     let email = companyName + '_' + i;
-//     let companyViewCount = Math.floor(Math.random() * 100) + 1;
-//     let companyJobs = Math.floor(Math.random() * 10) + 1;
-//     let companyCategory = '';
-//     if (c < 12){
-//       companyCategory = companyCategoryArr[c++]
-//     } else {
-//       c = 0;
-//       companyCategory = companyCategoryArr[c++]
-//   }
-//   let comp = new Company(companyName + '_' + i, registerName + '_' + i, companyCreatingData++, id, email, companyViewCount, companyJobs, companyCategory)
-//   data.push(comp);
-//   }
-//   return data
-// }
+const companyCategoryArr = [
+  'Finance/Banking/Insurance',
+  'Quality Assurance/Control',
+  'Design/Architecture/Construction',
+  'Consulting/ Legal',
+  'Import/Export/Trade',
+  'Marketing/Advertising/PR',
+  'Tourism/Hospitality/Entertainment',
+  'Medical/Pharmaceutical',
+  'Sports /Beauty',
+  'Education',
+  'Retail business',
+  'NGO/International organization',
+  'Services',
+  'Mining/Manufacturing/Production',
+  'Online Service',
+];
+const createData = () => {
+  class Company {
+    constructor(companyName, registerName, companyCreatingData, id, email, companyViewCount, aboutCompany, companyJobs, companyCategory) { 
+      this.companyName = companyName;
+      this.registerName = registerName;
+      this.companyCreatingData = companyCreatingData;
+      this.id = id;
+      this.email = `${email}@mail.ru`;
+      this.registrationType = 'emloyer';
+      this.companyViewCount = companyViewCount;
+      this.aboutCompany = aboutCompany;  
+      this.companyImage = "https://library.kissclipart.com/20180922/eve/kissclipart-icon-full-name-clipart-computer-icons-avatar-icon-f6cf26ff2213f36e.jpg";
+      this.companyBackground = 'http://braingapps.com/wp-content/uploads/2013/08/some-company.png';
+      this.companyJobs = companyJobs;
+      this.companyWebsite =  null;
+      this.companyCategory =  companyCategory;
+      this.userCity =  'Yerevan';
+      this.userCountry =  'Armenia';
+    }
+  }
+  let data = [];
+  let c = 0;
+  let companyName = 'compName';
+  let registerName = 'regName';
+  let companyCreatingData = 1910
+  for (let i = 0; i < 100; i++){
+    let id  = `${i}`;
+    let email = companyName + '_' + i;
+    let companyViewCount = Math.floor(Math.random() * 100) + 1;
+    let companyJobs = [];
+    if (i%2 === 0){
+      companyJobs = [1, 2, 3, 4]
+      // companyJobs.length = Math.floor(Math.random() * 10) + 1;
+    }
+    let aboutCompany = '';
+    if (i%2 === 0){
+      aboutCompany = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'
+    }
+    let companyCategory = '';
+    if (c < 12){
+      companyCategory = companyCategoryArr[c++]
+    } else {
+      c = 0;
+      companyCategory = companyCategoryArr[c++]
+  }
+  let comp = new Company(companyName + '_' + i, registerName + '_' + i, companyCreatingData++, id, email, companyViewCount, aboutCompany, companyJobs, companyCategory)
+  data.push(comp);
+  }
+  return data
+}
 // const data = createData(); 
 
-
-// function Companies (){
-
-//   return(
-        
-//   );
+// const getData = () => { 
+  
+//    return firestore.collection("companies").get().then((querySnapshot) => {
+//     debugger
+//     let companies = [];
+//     querySnapshot.forEach((doc) => {
+//       if (Object.keys(doc.data()).length !== 0) {
+//         companies.push(doc.data());
+//       };
+//     });
+//     console.log(companies)
+//     return companies;
+//   });
 // }
 
-function Companies (){
+export default function Companies (){
   const [currPage, setCurrentPage] = useState(10);
   const [allCompanies, setAllCompanies] = useState (true);
-  const [type, setType] = useState ({
-    ['Finance/Banking/Insurance']: false,
-    ['Information technologies']: false,
-    ['Import/Export/Trade']: false,
-    ['Marketing/Advertising/PR']: false,
-    ['Tourism/Hospitality/Entertainment']: false,
-    ['Medical/Pharmaceutical']: false,
-    ['TV/Radio/Media']: false,
-    ['Telecommunications']: false,
-    ['Service']: false,
-    ['Government']: false,
-    ['Agriculture/Winemaking']: false,
-    ['Online Service']: false,
-  });
+  const [type, setType] = useState ([]);
   const [data, setData] = useState([]);
-  
-  useEffect(() => {
-    firestore.collection("companies").get().then((querySnapshot) => {
-      let companies = [];
-      querySnapshot.forEach((doc) => {
-        if (Object.keys(doc.data()).length !== 0) {
-          companies.push(doc.data());
-        };
-      });
-      setData(companies);
-    });
-  }, []);
 
-
-  function fiterChecked (e){
-    const {checked, value} = e.target; 
-    type[`${value}`] =  checked;
-    setType(type);
-    const arr = [];
-    for (let key in type){
-      if (type[key]){ arr.push(key)} 
+  //console.log(type)
+  const companies = companyCategoryArr.map(item => {
+    return (
+      <FormControlLabel
+        key = {item}
+        control ={<Checkbox/>}
+        label = {item}
+        value = {item}
+        onChange = {(e) => filterCompany(e.target.value) }
+      />
+    );
+  })
+  function filterCompany (value){
+    let arr = [...type];
+    const x = type.indexOf(value);
+    if (x < 0){
+      arr.push(value);
+    } else {
+      arr = arr.filter(item => item!== value)
     }
-    if(arr.length){
+    
+    setType([...arr]);
+    
+    if (arr.length){
       setAllCompanies(false);
     } else {
       setAllCompanies(true);
     }
     setCurrentPage(10);
   }
+  
+  useEffect(() => {
+    //getData().then(smth => setData(smth) );
+    setData(createData());
+  }, []);
 
-  function otherCopmanies (e) {
-    let num = e.target.innerHTML*10;
+  function otherCopmanies (e, i) {
+    let num = i*10;
+    //console.log(e.target)
     setCurrentPage(num);
   }
 
   function drawCompanies (data){
-    const arr = [];
-    let result = [];
-    for (let key in type){
-      if ( type[key] ){ arr.push(key)} 
-    }
-    for(let i = 0; i < arr.length; i++){
-      for (let j = 0; j < data.length; j++){
-        if (arr[i] === data[j].companyCategory){
-          result.push(data[j])
+    const result = [];
+    const len = data.length;
+    for (let i = 0; i < len; i++){
+      for (let j = 0; j < type.length; j++){
+        if (type[j]===data[i].companyCategory){
+          result.push(data[i])
         }
+        
       }
     }
-    // console.log(arr)
-    // console.log(result)
     return result
   }
-    // console.log(data.length)
     const employer = allCompanies ? [...data] : drawCompanies(data);
-    // console.log(employer);
     return(
-      <Switch>
-        <Route>
+
           <Container maxWidth = 'lg'>         
             <Grid container>
               <Grid 
@@ -147,7 +162,12 @@ function Companies (){
                 item xs ={3}
                 className =  'companyFilterByH'
               >
-                <CompanyFilter fiterChecked = {fiterChecked} filterBarArr = {Object.keys(type)}/>
+                <FormControl>
+                  <FormLabel>Filter By Industry</FormLabel>
+                    <FormGroup>
+                        {companies}
+                    </FormGroup>
+                </FormControl>
               </Grid>
               <Grid
                 container
@@ -160,12 +180,6 @@ function Companies (){
               </Grid>
             </Grid>     
           </Container>
-      </Route> 
-      <Route exact path = {`companies/:name`}>
-        <CompaniesSinglePage/>
-      </Route> 
-    </Switch>
+
     );
 }
-
-export default Companies;
