@@ -41,16 +41,13 @@ const Experiences = (props) => {
           <Grid item xs={4}>
             <h6>{item.companyName}</h6>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={4}>
             <p>{item.jobTitle}</p>
           </Grid>
           <Grid item xs={3}>
             <p>{`${item.from} - ${item.to}`}</p>
           </Grid>
-          <Grid item xs={2}>
-            {showItems && <Button className={classes.experienceBtn} color='primary' onClick={() => deleteItem(item.id)}>
-              <DeleteIcon color='error'/>
-            </Button>}
+          <Grid item xs={1}>
             {showItems && <Button className={classes.experienceBtn} color='primary' onClick={()=>{console.log(item.id)}}>
               <CreateIcon color='error'/>
             </Button>}
