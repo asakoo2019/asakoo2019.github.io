@@ -2,6 +2,8 @@ import React from 'react';
 import { Grid, Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { withStyles } from "@material-ui/core/styles";
+import { firestore } from '../../firebase/db';
+import { connect } from 'react-redux';
 
 const style = {
   languageBtn: {
@@ -11,7 +13,7 @@ const style = {
 };
 
 const Languages = (props) => {
-  const {user, classes} = props;
+  const { user, classes, showItems, dispatch } = props;
 
   const deleteItem = (id) => {
     const index = user.userLanguages.findIndex((el) => el.id === id);
@@ -19,7 +21,13 @@ const Languages = (props) => {
       ...user.userLanguages.slice(0, index),
       ...user.userLanguages.slice(index + 1)
     ];
-    props.setUserLanguages(newArray);
+    firestore.collection("users").doc(props.id)
+    .update({
+      userLanguages: newArray
+    }).catch(function(error) {
+      console.error("Error updating document: ", error);
+    });
+    dispatch({type: "SIGN-IN", payload: {...user, userLanguages: newArray}});
   };
 
   let language;
@@ -36,7 +44,7 @@ const Languages = (props) => {
             <p>{item.level}</p>
           </Grid>
           <Grid item xs={1}>
-            {props.setUserLanguages && <Button className={classes.languageBtn} color='primary' onClick={() => deleteItem(item.id)}>
+            {showItems && <Button className={classes.languageBtn} color='primary' onClick={() => deleteItem(item.id)}>
               <DeleteIcon color='error'/>
             </Button>}
           </Grid>
@@ -52,4 +60,4 @@ const Languages = (props) => {
   );
 };
 
-export default withStyles(style)(Languages);
+export default connect()(withStyles(style)(Languages));

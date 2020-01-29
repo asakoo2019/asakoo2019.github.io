@@ -7,6 +7,8 @@ import GenderSelect from '../../selects/gender-select';
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 import CreateIcon from '@material-ui/icons/Create';
+import { firestore } from '../../../firebase/db';
+import { connect } from 'react-redux';
 
 const style = {
   aboutUserModalBtn: {
@@ -19,16 +21,16 @@ const style = {
 };
 
 const AboutUserModal = (props) => {
-  const { classes, user } = props;
+  const { classes, user, dispatch, id } = props;
   const [open, setOpen] = useState(false);
   const [userName, setUserName] = useState(null);
   const [userSurname, setUserSurname] = useState(null);
   const [userPhoneNumber, setUserPhoneNumber] = useState(null);
   const [userAdress, setUserAdress] = useState(null);
-  const [userCity, setUserCity] = useState(' ');
-  const [userCountry, setUserCountry] = useState(' ');
-  const [userGender, setUserGender] = useState(' ');
-  const [userBirthDate, setUserBirthDate] = useState(user.userBirthDate);
+  const [userCity, setUserCity] = useState(null);
+  const [userCountry, setUserCountry] = useState(null);
+  const [userGender, setUserGender] = useState(null);
+  const [userBirthDate, setUserBirthDate] = useState(null);
 
   useEffect(() => {
     setUserName(user.userName);
@@ -43,14 +45,88 @@ const AboutUserModal = (props) => {
   };
 
   const handleSave = () => {
-    props.setUserName(userName);
-    props.setUserSurname(userSurname);
-    props.setUserPhoneNumber(userPhoneNumber);
-    props.setUserCity(userCity);
-    props.setUserCountry(userCountry);
-    props.setUserGender(userGender);
-    props.setUserAdress(userAdress);
-    props.setUserBirthDate(userBirthDate);
+    dispatch({type: "SIGN-IN", payload: {
+      ...user,
+      userName: userName,
+      userSurname: userSurname,
+      userPhoneNumber: userPhoneNumber,
+      userAdress: userAdress,
+      userCity: userCity,
+      userCountry: userCountry,
+      userGender: userGender,
+      userBirthDate: userBirthDate,
+    }});
+    if (userName !== null) {
+      firestore.collection("users").doc(id)
+      .update({
+        userName: userName
+      }).catch(function(error) {
+        console.error("Error updating document: ", error);
+      });
+    };
+
+    if (userSurname !== null) {
+      firestore.collection("users").doc(id)
+      .update({
+        userSurname: userSurname
+      }).catch(function(error) {
+        console.error("Error updating document: ", error);
+      });
+    };
+
+    if (userPhoneNumber !== null) {
+      firestore.collection("users").doc(id)
+      .update({
+        userPhoneNumber: userPhoneNumber
+      }).catch(function(error) {
+        console.error("Error updating document: ", error);
+      });
+    };
+
+    if (userAdress !== null) {
+      firestore.collection("users").doc(id)
+      .update({
+        userAdress: userAdress
+      }).catch(function(error) {
+        console.error("Error updating document: ", error);
+      });
+    };
+
+    if (userCity !== null) {
+      firestore.collection("users").doc(id)
+      .update({
+        userCity: userCity
+      }).catch(function(error) {
+        console.error("Error updating document: ", error);
+      });
+    };
+
+    if (userCountry !== null) {
+      firestore.collection("users").doc(id)
+      .update({
+        userCountry: userCountry
+      }).catch(function(error) {
+        console.error("Error updating document: ", error);
+      });
+    };
+
+    if (userGender !== null) {
+      firestore.collection("users").doc(id)
+      .update({
+        userGender: userGender
+      }).catch(function(error) {
+        console.error("Error updating document: ", error);
+      });
+    };
+
+    if (userBirthDate !== null) {
+      firestore.collection("users").doc(id)
+      .update({
+        userBirthDate: userBirthDate
+      }).catch(function(error) {
+        console.error("Error updating document: ", error);
+      });
+    };
     setOpen(false);
   };
 
@@ -143,4 +219,4 @@ const AboutUserModal = (props) => {
   );
 };
 
-export default withStyles(style)(AboutUserModal);
+export default connect()(withStyles(style)(AboutUserModal));

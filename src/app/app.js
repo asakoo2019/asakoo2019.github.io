@@ -24,7 +24,7 @@ const App = (props) => {
         setId(searchId);
       };
     });
-  }, []);
+  }, [history.location.pathname]);
 
   useEffect(() => {
     const docRefUser = firestore.collection("users").doc(id);
@@ -44,7 +44,7 @@ const App = (props) => {
     .catch(function(error) {
       console.log("Error getting document:", error);
     });
-  }, [id]);
+  }, [id, dispatch]);
 
   return (
     <>

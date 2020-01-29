@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { DialogContent, DialogActions, Dialog, Button, TextField, Grid, TextareaAutosize, DialogContentText } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
 import CreateIcon from '@material-ui/icons/Create';
+import { firestore } from '../../../firebase/db';
+import { connect } from 'react-redux';
 
 const style = {
   textAreaBlock: {
@@ -16,7 +18,7 @@ const style = {
 };
 
 const UserExperienceModal = (props) => {
-  const { classes, user } = props;
+  const { classes, user, dispatch } = props;
   const [open, setOpen] = useState(false);
   const [companyName, setCompanyName] = useState('');
   const [jobTitle, setJobTitle] = useState('');
@@ -38,12 +40,19 @@ const UserExperienceModal = (props) => {
 
   const handleSave = () => {
     if (to === '') {
-      to = 'until now'
+      to = 'until now';
     };
+    const currentExperiance = {companyName, jobTitle, location, from, to, jobDetails, id: id()};
     if (companyName !== '' && jobTitle !== '' && location !== '' && from !== ''){
-      props.setUserWorkExperience(
-        [...user.userWorkExperience, {companyName, jobTitle, location, from, to, jobDetails, id: id()}]
-      );
+      if (currentExperiance) {
+        firestore.collection("users").doc(props.id)
+        .update({
+          userWorkExperience: [...user.userWorkExperience, currentExperiance]
+        }).catch(function(error) {
+          console.error("Error updating document: ", error);
+        });
+        dispatch({type: "SIGN-IN", payload: {...user, userWorkExperience: [...user.userWorkExperience, currentExperiance]}});
+      };
     };
     setOpen(false);
   };
@@ -116,4 +125,4 @@ const UserExperienceModal = (props) => {
   );
 };
 
-export default withStyles(style)(UserExperienceModal);
+export default connect()(withStyles(style)(UserExperienceModal));
