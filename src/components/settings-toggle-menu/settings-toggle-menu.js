@@ -47,10 +47,10 @@ function SettingsToggleMenu(props) {
     props.setShowItems(false);
     history.replace('/home');
     dispatch({type: 'SIGN-OUT'});
-    const data = auth.currentUser;
-    const collectionName = props.data.registrationType === 'Employee' ? 'users' : 'companies';
-    const dataId = props.data.id;
-    data.delete().then(function() {
+    const deleteData = auth.currentUser;
+    const collectionName = data.registrationType === 'Employee' ? 'users' : 'companies';
+    const dataId = data.id;
+    deleteData.delete().then(function() {
     }).catch(function(error) {
      console.log(error);
     });
