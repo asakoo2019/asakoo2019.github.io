@@ -61,15 +61,13 @@ const UserLanguagesModal = (props) => {
   
   const handleSave = () => {
     if (language !== '' && level !== '') {
-      if (currentLanguage) {
-        firestore.collection("users").doc(props.id)
-        .update({
-          userLanguages: [...user.userLanguages, currentLanguage]
-        }).catch(function(error) {
-          console.error("Error updating document: ", error);
-        });
-        dispatch({type: "SIGN-IN", payload: {...user, userLanguages: [...user.userLanguages, currentLanguage]}});
-      };
+      firestore.collection("users").doc(props.id)
+      .update({
+        userLanguages: [...user.userLanguages, currentLanguage]
+      }).catch(function(error) {
+        console.error("Error updating document: ", error);
+      });
+      dispatch({type: "SIGN-IN", payload: {...user, userLanguages: [...user.userLanguages, currentLanguage]}});
     };
     setOpen(false);
   };

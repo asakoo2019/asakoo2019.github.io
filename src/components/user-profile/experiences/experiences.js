@@ -1,7 +1,6 @@
 import React from 'react';
 import { Grid, Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import CreateIcon from '@material-ui/icons/Create';
 import { withStyles } from "@material-ui/core/styles";
 import { firestore } from '../../firebase/db';
 import { connect } from 'react-redux';
@@ -48,8 +47,8 @@ const Experiences = (props) => {
             <p>{`${item.from} - ${item.to}`}</p>
           </Grid>
           <Grid item xs={1}>
-            {showItems && <Button className={classes.experienceBtn} color='primary' onClick={()=>{console.log(item.id)}}>
-              <CreateIcon color='error'/>
+            {showItems && <Button className={classes.experienceBtn} color='primary' onClick={()=>{deleteItem(item.id)}}>
+              <DeleteIcon color='error'/>
             </Button>}
           </Grid>
           <Grid item xs={12}>

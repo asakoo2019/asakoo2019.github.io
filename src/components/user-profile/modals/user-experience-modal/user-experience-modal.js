@@ -44,15 +44,13 @@ const UserExperienceModal = (props) => {
     };
     const currentExperiance = {companyName, jobTitle, location, from, to, jobDetails, id: id()};
     if (companyName !== '' && jobTitle !== '' && location !== '' && from !== ''){
-      if (currentExperiance) {
-        firestore.collection("users").doc(props.id)
-        .update({
-          userWorkExperience: [...user.userWorkExperience, currentExperiance]
-        }).catch(function(error) {
-          console.error("Error updating document: ", error);
-        });
-        dispatch({type: "SIGN-IN", payload: {...user, userWorkExperience: [...user.userWorkExperience, currentExperiance]}});
-      };
+      firestore.collection("users").doc(props.id)
+      .update({
+        userWorkExperience: [...user.userWorkExperience, currentExperiance]
+      }).catch(function(error) {
+        console.error("Error updating document: ", error);
+      });
+      dispatch({type: "SIGN-IN", payload: {...user, userWorkExperience: [...user.userWorkExperience, currentExperiance]}});
     };
     setOpen(false);
   };
