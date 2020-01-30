@@ -21,11 +21,13 @@ const useStyles = makeStyles({
 });
 
 const mStP = (state) => ({
-  user: state,
+  data: state,
 });
 
 function SettingsToggleMenu(props) {
-  let {registrationType, id} = props.user;
+  let { data } = props;
+  data = data ? data : {};
+  let {registrationType, id} = data;
   const {dispatch} = props;
   registrationType = !!registrationType ?  registrationType.toLowerCase() : '';
   const link = `/${registrationType}/${id}`;
@@ -39,31 +41,31 @@ function SettingsToggleMenu(props) {
 
   const handleClose = () => {
     setAnchorEl(null);
-  }
+  };
 
   function deleteAccount() {
-    const user = auth.currentUser;
-    const collectionName = props.user.registrationType === 'Employee' ? 'users' : 'companies';
-    const userId = props.user.id;
-
-    user.delete().then(function() {
+    props.setShowItems(false);
+    history.replace('/home');
+    dispatch({type: 'SIGN-OUT'});
+    const deleteData = auth.currentUser;
+    const collectionName = data.registrationType === 'Employee' ? 'users' : 'companies';
+    const dataId = data.id;
+    deleteData.delete().then(function() {
     }).catch(function(error) {
      console.log(error);
     });
-
-    firestore.collection(collectionName).doc(userId).delete().then(function() {
+    firestore.collection(collectionName).doc(dataId).delete().then(function() {
       console.log("Document successfully deleted!");
     }).catch(function(error) {
       console.error("Error removing document: ", error);
     });
-      dispatch({type: 'SIGN-OUT'});
-      history.replace('/home');
   };
 
   function signOut() {
     auth.signOut().then(function() {
-      dispatch({type: 'SIGN-OUT'});
+      props.setShowItems(false);
       history.replace('/home');
+      dispatch({type: 'SIGN-OUT'});
     }).catch(function(error) {
       // An error happened.
     });

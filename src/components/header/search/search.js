@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
 
 const mStP = (state) => ({
-  user: state,
+  searchData: state,
 });
 
 const Search = (props) => {
@@ -54,7 +54,7 @@ const Search = (props) => {
 
   useEffect(() => {
     dispatch({type: "SEARCH", payload: renderArray});
-  }, [renderArray]);
+  }, [renderArray, dispatch]);
 
   useEffect(() => {
     firestore.collection("companies").get().then((querySnapshot) => {
@@ -89,7 +89,7 @@ const Search = (props) => {
         </Grid>
       </Grid>
       <Grid container>
-        <RadioGroup
+        <RadioGroup defaultValue="jobs"
           onChange={(e) => setSearchUrl(e.target.value)}>
             <Grid container spacing={3}>
               <Grid item xs={6}>

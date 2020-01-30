@@ -1,6 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState } from 'react';
 import { DialogContent, DialogContentText, DialogActions, Dialog, TextareaAutosize, Button } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
+import CreateIcon from '@material-ui/icons/Create';
+import { connect } from 'react-redux';
+import { firestore } from '../../../firebase/db';
 
 const style = {
   textArea: {
@@ -12,20 +15,26 @@ const style = {
 };
 
 const UserSummaryModal = (props) => {
-  const { classes, user } = props;
+  const { classes, user, id, dispatch } = props;
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
 
-  useEffect(() => {
-    setValue(user.aboutUser);
-  }, [user]);
-
   const handleClickOpen = () => {
+    setValue(user.aboutUser);
     setOpen(true);
   };
 
   const handleSave = () => {
-    props.setAboutUser(value);
+    if (value !== null) {
+      firestore.collection("users").doc(id)
+      .update({
+        aboutUser: value
+      }).then(function() {
+      }).catch(function(error) {
+        console.error("Error updating document: ", error);
+      });
+    };
+    dispatch({type: "SIGN-IN", payload: {...user, aboutUser: value}});
     setOpen(false);
   };
 
@@ -34,8 +43,10 @@ const UserSummaryModal = (props) => {
   };
 
   return (
-    <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>+</Button>
+    <>
+      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+        <CreateIcon/>
+      </Button>
       <Dialog className={classes.formDialog} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogContent>
           <DialogContentText>
@@ -55,8 +66,8 @@ const UserSummaryModal = (props) => {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 };
 
-export default withStyles(style)(UserSummaryModal);
+export default connect()(withStyles(style)(UserSummaryModal));

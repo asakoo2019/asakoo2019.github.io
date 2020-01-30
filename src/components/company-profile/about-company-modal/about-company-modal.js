@@ -6,6 +6,9 @@ import CitySelect from '../selects/city-select';
 import CountrySelect from '../selects/country-select';
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
+import CreateIcon from '@material-ui/icons/Create';
+import { connect } from 'react-redux';
+import { firestore } from '../../firebase/db';
 
 const style = {
   aboutCompanyModalBtn: {
@@ -21,7 +24,7 @@ const style = {
 };
 
 const AboutCompanyModal = (props) => {
-  const { classes, company } = props;
+  const { classes, company, id, dispatch } = props;
   const [open, setOpen] = useState(false);
   const [companyName, setCompanyName] = useState(null);
   const [registerName, setRegisterName] = useState(null);
@@ -29,7 +32,7 @@ const AboutCompanyModal = (props) => {
   const [companyAdress, setCompanyAdress] = useState(null);
   const [companyCity, setCompanyCity] = useState(' ');
   const [companyCountry, setCompanyCountry] = useState(' ');
-  const [companyCreatingData, setCompanyCreatingData] = useState(company.companyCreatingData);
+  const [companyCreatingData, setCompanyCreatingData] = useState(null);
   const [companyCategory, setCompanyCategory] = useState(null);
 
   useEffect(() => {
@@ -46,14 +49,88 @@ const AboutCompanyModal = (props) => {
   };
 
   const handleSave = () => {
-    props.setCompanyName(companyName);
-    props.setRegisterName(registerName);
-    props.setCompanyPhoneNumber(companyPhoneNumber);
-    props.setCompanyCity(companyCity);
-    props.setCompanyCountry(companyCountry);
-    props.setCompanyAdress(companyAdress);
-    props.setCompanyCreatingData(companyCreatingData);
-    props.setCompanyCategory(companyCategory)
+    dispatch({type: "SIGN-IN", payload: {
+      ...company,
+      companyName: companyName,
+      registerName: registerName,
+      companyPhoneNumber: companyPhoneNumber,
+      companyAdress: companyAdress,
+      companyCity: companyCity,
+      companyCountry: companyCountry,
+      companyCreatingData: companyCreatingData,
+      companyCategory: companyCategory
+    }});
+    if (companyName !== null) {
+      firestore.collection("companies").doc(id)
+      .update({
+        companyName: companyName
+      }).catch(function(error) {
+        console.error("Error updating document: ", error);
+      });
+    };
+
+    if (registerName !== null) {
+      firestore.collection("companies").doc(id)
+      .update({
+        registerName: registerName
+      }).catch(function(error) {
+        console.error("Error updating document: ", error);
+      });
+    };
+
+    if (companyPhoneNumber !== null) {
+      firestore.collection("companies").doc(id)
+      .update({
+        companyPhoneNumber: companyPhoneNumber
+      }).catch(function(error) {
+        console.error("Error updating document: ", error);
+      });
+    };
+
+    if (companyAdress !== null) {
+      firestore.collection("companies").doc(id)
+      .update({
+        companyAdress: companyAdress
+      }).catch(function(error) {
+        console.error("Error updating document: ", error);
+      });
+    };
+
+    if (companyCity !== null) {
+      firestore.collection("companies").doc(id)
+      .update({
+        companyCity: companyCity
+      }).catch(function(error) {
+        console.error("Error updating document: ", error);
+      });
+    };
+
+    if (companyCountry !== null) {
+      firestore.collection("companies").doc(id)
+      .update({
+        companyCountry: companyCountry
+      }).catch(function(error) {
+        console.error("Error updating document: ", error);
+      });
+    };
+
+    if (companyCreatingData !== null) {
+      firestore.collection("companies").doc(id)
+      .update({
+        companyCreatingData: companyCreatingData
+      }).catch(function(error) {
+        console.error("Error updating document: ", error);
+      });
+    };
+
+    if (companyCategory !== null) {
+      firestore.collection("companies").doc(id)
+      .update({
+        companyCategory: companyCategory
+      }).catch(function(error) {
+        console.error("Error updating document: ", error);
+      });
+    };
     setOpen(false);
   };
 
@@ -99,7 +176,9 @@ const AboutCompanyModal = (props) => {
 
   return (
     <>
-      <Button className={classes.aboutCompanyModalBtn} variant="outlined" color="primary" onClick={handleClickOpen}>+</Button>
+      <Button className={classes.aboutCompanyModalBtn} variant="outlined" color="primary" onClick={handleClickOpen}>
+        <CreateIcon/>
+      </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogContent>
           <DialogContentText>
@@ -167,7 +246,7 @@ const AboutCompanyModal = (props) => {
                 <Select value={companyCategory}
                   onChange={(e) => setCompanyCategory(e.target.value)}>
                   <MenuItem value={'Finance/Banking/Insurance'}>Finance/Banking/Insurance</MenuItem>
-                  <MenuItem value={'Quality Assurance/Control'}>Information technologies</MenuItem>
+                  <MenuItem value={'Information technologies'}>Information technologies</MenuItem>
                   <MenuItem value={'Design/Architecture/Construction'}>Design/Architecture/Construction</MenuItem>
                   <MenuItem value={'Consulting/ Legal'}>Consulting/ Legal</MenuItem>
                   <MenuItem value={'Import/Export/Trade'}>Import/Export/Trade</MenuItem>
@@ -199,4 +278,4 @@ const AboutCompanyModal = (props) => {
   );
 };
 
-export default withStyles(style)(AboutCompanyModal);
+export default connect()(withStyles(style)(AboutCompanyModal));

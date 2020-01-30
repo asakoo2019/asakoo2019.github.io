@@ -4,6 +4,9 @@ import { DialogContent, DialogActions, Dialog, Button, TextField, Grid,
 import { withStyles } from "@material-ui/core/styles";
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
+import CreateIcon from '@material-ui/icons/Create';
+import { connect } from 'react-redux';
+import { firestore } from '../../firebase/db';
 
 const style = {
   textAreaBlock: {
@@ -25,7 +28,7 @@ const style = {
 };
 
 const CompanyJobsModal = (props) => {
-  const { classes, company } = props;
+  const { classes, company, showItems, dispatch } = props;
   const [open, setOpen] = useState(false);
   const [jobName, setJobName] = useState('');
   const [location, setLocation] = useState('');
@@ -33,8 +36,21 @@ const CompanyJobsModal = (props) => {
   const [jobType, setJobType] = useState('');
   const [jobDetails, setJobDetails] = useState('');
   const [term, setTerm] = useState('');
-  const [jobDeadline, setJobDeadline] = useState('');
+  const [jobDeadline, setJobDeadline] = useState(new Date());
   const id = require('uuid/v4');
+  const job = {
+    jobName,
+    term,
+    location,
+    jobCategory,
+    jobType,
+    jobDetails,
+    id: id(),
+    checked: false,
+    viewCount: 0,
+    jobDeadline: jobDeadline.toLocaleDateString(undefined, { day:'numeric', month: 'numeric', year: 'numeric' }),
+    companyName: company.companyName,
+  };
   
   useEffect(() => {
     switch (term) {
@@ -127,9 +143,13 @@ const CompanyJobsModal = (props) => {
 
   const handleSave = () => {
     if (jobName !== '' && term !== '' && location !== '' && jobCategory !== '' && jobType !== '' && jobDeadline !== ''){
-      props.setCompanyJobs(
-        [...company.companyJobs, {jobName, term, location, jobCategory, jobType, jobDetails, id: id(), checked: false,viewCount: 0, jobDeadline: jobDeadline.toLocaleDateString(undefined, { day:'numeric', month: 'numeric', year: 'numeric' }), companyName: company.companyName}]
-      );
+      firestore.collection("companies").doc(props.id)
+      .update({
+        companyJobs: [...company.companyJobs, job]
+      }).catch(function(error) {
+        console.error("Error updating document: ", error);
+      });
+      dispatch({type: "SIGN-IN", payload: {...company, companyJobs: [...company.companyJobs, job]}});
     };
     setOpen(false);
   };
@@ -140,7 +160,9 @@ const CompanyJobsModal = (props) => {
 
   return (
     <>
-      {props.setCompanyJobs && <Button variant="outlined" color="primary" onClick={handleClickOpen}>+</Button>}
+      {showItems && <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+          <CreateIcon/>
+        </Button>}
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogContent>
           <Grid container spacing={2}>
@@ -247,4 +269,4 @@ const CompanyJobsModal = (props) => {
   );
 };
 
-export default withStyles(style)(CompanyJobsModal);
+export default connect()(withStyles(style)(CompanyJobsModal));

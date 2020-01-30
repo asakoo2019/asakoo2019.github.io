@@ -1,8 +1,19 @@
 import React, {useState, useEffect} from 'react';
-import
-  { DialogContent, DialogContentText, DialogActions, Dialog, Button, FormControl, InputLabel, Select, MenuItem, Grid }
-from '@material-ui/core';
+import { DialogContent,
+    DialogContentText,
+    DialogActions,
+    Dialog,
+    Button,
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem,
+    Grid
+  } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
+import CreateIcon from '@material-ui/icons/Create';
+import { firestore } from '../../../firebase/db';
+import { connect } from 'react-redux';
 
 const style = {
   lenguageSelect: {
@@ -11,11 +22,12 @@ const style = {
 };
 
 const UserLanguagesModal = (props) => {
-  const { classes, user } = props;
+  const { classes, user, showItems, dispatch } = props;
   const [open, setOpen] = useState(false);
   const [language, setLanguage] = useState('');
   const [level, setLevel] = useState('');
   const id = require('uuid/v4');
+  const currentLanguage = {language, level, id: id()};
 
   useEffect(() => {
     switch (language) {
@@ -46,10 +58,16 @@ const UserLanguagesModal = (props) => {
     setLevel('');
     setOpen(true);
   };
-
+  
   const handleSave = () => {
-    if (language !== ' ' && level !== ' '){
-      props.setUserLanguages([...user.userLanguages, {language, level, id: id()}]);
+    if (language !== '' && level !== '') {
+      firestore.collection("users").doc(props.id)
+      .update({
+        userLanguages: [...user.userLanguages, currentLanguage]
+      }).catch(function(error) {
+        console.error("Error updating document: ", error);
+      });
+      dispatch({type: "SIGN-IN", payload: {...user, userLanguages: [...user.userLanguages, currentLanguage]}});
     };
     setOpen(false);
   };
@@ -60,7 +78,9 @@ const UserLanguagesModal = (props) => {
 
   return (
     <div>
-      {props.setUserLanguages && <Button variant="outlined" color="primary" onClick={handleClickOpen}>+</Button>}
+      {showItems && <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+          <CreateIcon/>
+        </Button>}
       <Dialog className={classes.formDialog} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogContent>
           <DialogContentText>
@@ -104,4 +124,4 @@ const UserLanguagesModal = (props) => {
   );
 };
 
-export default withStyles(style)(UserLanguagesModal);
+export default connect()(withStyles(style)(UserLanguagesModal));

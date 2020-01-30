@@ -1,10 +1,8 @@
-import React from 'react';
-import './home-companies.css';
-import companyLogo from './2.png';
-
+import React, { useState, useEffect } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Button } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
+import { firestore } from '../../firebase/db';
 
 const styles = {
   aboutCompany: {
@@ -27,105 +25,74 @@ const styles = {
   }
 };
 
-const companiesData = [
-  { companyName: 'Company1',
-    aboutCompany: 'This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description.',
-    companyImage: companyLogo,
-    viewCount: 2,
-    id: 1
-  },
-  { companyName: 'Company2',
-    aboutCompany: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. A deserunt cupiditate delectus tenetur reiciendis atque necessitatibus nisi odit laboriosam nostrum eum quaerat, voluptatum eius blanditiis consectetur dolore, iusto iste inventore?',
-    companyImage: companyLogo,
-    viewCount: 8,
-    id: 2
-  },
-  { companyName: 'Company3',
-    aboutCompany: 'urish text. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description.',
-    companyImage: companyLogo,
-    viewCount: 7,
-    id: 3
-  },
-  { companyName: 'Company4',
-    aboutCompany: 'vapshe urish text. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description.',
-    companyImage: companyLogo,
-    viewCount: 10,
-    id: 4
-  },
-];
+const HomeCompanies = (props) => {
+  const {classes} = props;
+  const [companies, setCompanies] = useState([]);
+  const history = useHistory();
 
+  useEffect(() => {
+    firestore.collection("companies").get().then((querySnapshot) => {
+      let currentCompany = [];
+      querySnapshot.forEach((doc) => {
+        if (Object.keys(doc.data()).length !== 0) {
+          currentCompany.push(doc.data());
+        };
+      });
+      setCompanies(currentCompany);
+    });
+  }, []);
 
-
-class HomeCompanies extends React.Component {
-
-  state = {
-    companiesData
+  const handleClick = () => {
+    history.push("/companies");
   };
-  
-  render () {
-    
-    const {classes} = this.props;
-    const {companiesData} = this.state;
-    
-    function GoAllCompanies() {
-      let history = useHistory();
-      function handleClick() {
-        history.push("/companies");
-      };
-      return (
-        <Button className={classes.allCompaniesBtn}
-                variant='contained'
-                onClick={handleClick}>
-          All companies
-        </Button>
-      );
+
+  const singleCompanyBtn = (id) => {
+    history.push(`companies/${id}`);
+  };
+
+  companies.sort((a, b) => {
+    return b.companyViewCount - a.companyViewCount;
+  });
+
+  const company = companies.slice(0, 3).map((el) => {
+    if (el.aboutCompany.length > 50) {
+      el.aboutCompany = el.aboutCompany.substring(0, 50) + "...";
     };
-
-    const newCompaniesData = [...companiesData];
-  
-    newCompaniesData.sort((a, b) => {
-      return b.viewCount - a.viewCount;
-    });
-    
-    const comp = newCompaniesData.slice(0, 3).map((el) => {
-      if (el.aboutCompany.length > 100) {
-        el.aboutCompany = el.aboutCompany.substring(0, 100) + "...";
-      };
-      return (
-        <Grid container
-              className={classes.aboutCompany}
-              alignItems="center"
-              item xs={3}
-              key={el.id}>
-          <Grid justify="center"
-                container>
-            <img className={classes.companyLogo}
-                src={el.companyImage}
-                alt={el.companyName}/>
-          </Grid>
-          <Grid>
-            <h6 className={classes.aboutCompanyText}>
-              {el.aboutCompany}
-            </h6>
-          </Grid>
-        </Grid>
-      );
-    });
-
     return (
-      <Grid className={classes.companies}
-            container
-            direction='column'
-            alignItems='center'>
-        <h2>Top companies</h2>
-        <Grid container
-             justify="space-around">
-          {comp}
+      <Grid container
+        className={classes.aboutCompany}
+        alignItems="center"
+        item xs={3}
+        key={el.id}
+        onClick={() => singleCompanyBtn(el.id)}>
+        <Grid justify="center"
+          container>
+          <img className={classes.companyLogo} src={el.companyImage} alt={el.companyName}/>
         </Grid>
-        <GoAllCompanies/>
+        <Grid>
+          <h6 className={classes.aboutCompanyText}> {el.aboutCompany} </h6>
+        </Grid>
       </Grid>
     );
-  };
+  });
+
+  return (
+    <Grid className={classes.companies}
+      container
+      direction='column'
+      alignItems='center'>
+      <h2>Top companies</h2>
+      <Grid container
+        justify="space-around">
+        {company}
+      </Grid>
+      <Button className={classes.allCompaniesBtn}
+        variant='contained'
+        onClick={handleClick}>
+        All companies
+      </Button>
+    </Grid>
+  );
 };
 
 export default withStyles(styles)(HomeCompanies);
