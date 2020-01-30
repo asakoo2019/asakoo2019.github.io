@@ -1,36 +1,68 @@
-import React, { Component } from 'react';
-import { Checkbox, FormControlLabel, Grid } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Checkbox, FormControlLabel, Grid, FormControl, FormLabel, FormGroup } from '@material-ui/core';
 
-export default class JobsFilter extends Component {
+const jobCategories = [
+    'Software development',
+    'Quality Assurance/Control',
+    'Web/Graphic design',
+    'Product/Project Management',
+    'Other IT',
+    'Sales/service management',
+    'Administrative/office-work',
+    'Tourism/Hospitality/HoReCa',
+    'Marketing/Advertising',
+    'Communications/Journalism/PR',
+    'Construction',
+    'Business/Management',
+    'Art/Design/Architecture',
+    'Production',
+    'Foreign language'
+];
 
-    checkboxChange = (uniqueJob, item) => {
-        
-        this.props.checkboxChange(uniqueJob, item);
-    }
-    render() {
-        const { jobs } = this.props;
+const JobsFilter = (props) => {
+    const [type, setType] = useState ([]);
 
-        const uniqueArr = jobs.map(item => item.jobCategory)
-        .filter((job, i, arr) => arr.indexOf(job) === i);
+    const filterJob = (value) => {
+        let arr = [...type];
+        const x = type.indexOf(value);
+        if (x < 0){
+          arr.push(value);
+        } else {
+          arr = arr.filter(item => item!== value)
+        }
+        setType([...arr]);
+        if (arr.length){
+          props.setAllJobs(false);
+        } else {
+          props.setAllJobs(true);
+        }
+        props.setCurrentPage(10);
+    };
 
-        const elements = jobs.map((item, i) => {
-            const { id, checked } = item;
-           
-            return uniqueArr[i] ? (
-                <FormControlLabel key={id} 
-                    control= {<Checkbox
-                        checked={checked}
-                        onChange = {() => this.checkboxChange(uniqueArr[i], item)}
-                        value={uniqueArr[i]} />}
-                    label={uniqueArr[i]} />
-            ): null;
-        })
+    const categories = jobCategories.map(item => {
         return (
-            <Grid container
-                direction='column'
-                item xs={3}>
-                { elements }
-            </Grid>
-        )
-    }
+          <FormControlLabel
+            key = {item}
+            control ={<Checkbox/>}
+            label = {item}
+            value = {item}
+            onChange = {(e) => filterJob(e.target.value) }
+          />
+        );
+      })    
+
+    return (
+        <Grid container
+            direction='column'
+            item xs={3}>
+            <FormControl>
+                <FormLabel>Filter By Category</FormLabel>
+                <FormGroup>
+                    {categories}
+                </FormGroup>
+            </FormControl>
+        </Grid>
+    )
 }
+
+export default JobsFilter;

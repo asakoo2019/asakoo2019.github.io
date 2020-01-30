@@ -6,6 +6,8 @@ import { firestore } from '../firebase/db';
 
 function Jobs() {
     const [jobs, setJobs] = useState([]);
+    const [allJobs, setAllJobs] = useState (true);
+    const [currPage, setCurrentPage] = useState(10);
 
     useEffect(() => {
         let job = [];
@@ -44,24 +46,23 @@ function Jobs() {
         const newItem = Object.assign(createJob(jobs[idx].jobCategory, jobs[idx].id), {
             checked: !checked,
             l: jobName,
-            ...rest})
+            ...rest});
 
         setJobs([
             ...before,
             newItem,
             ...after,
-        ])
+        ]);
 
-    }
+    };
     
-
     const jobsChecked = jobs.filter(item => item.checked)
     const checked = [];
 
     jobsChecked.forEach(item => {
 
-        if (item.l) checked.push(item.l)
-    })
+        if (item.l) checked.push(item.l);
+    });
 
     const newJob = jobs.filter(item => checked.includes(item.jobCategory))
 
@@ -69,14 +70,14 @@ function Jobs() {
         <Container>
             <Grid container
                 justify='space-between'>
-                <JobsFilter 
+                <JobsFilter
                     jobs = { jobs }
                     checkboxChange= { checkboxToggle } />
                 <JobsContainer
                     jobs = { checked.length ? newJob : jobs } />
             </Grid>
         </Container>
-    )
-}
+    );
+};
 
 export default Jobs;
