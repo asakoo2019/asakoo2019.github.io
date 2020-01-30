@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react';
 import { DialogContent, DialogContentText, DialogActions, Dialog, TextareaAutosize, Button } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
 import CreateIcon from '@material-ui/icons/Create';
+import { connect } from 'react-redux';
+import { firestore } from '../../firebase/db';
 
 const style = {
   textArea: {
@@ -13,7 +15,7 @@ const style = {
 };
 
 const CompanySummaryModal = (props) => {
-  const { classes, company } = props;
+  const { classes, company, id, dispatch } = props;
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
 
@@ -26,7 +28,16 @@ const CompanySummaryModal = (props) => {
   };
 
   const handleSave = () => {
-    props.setAboutCompany(value);
+    if (value !== null) {
+      firestore.collection("companies").doc(id)
+      .update({
+        aboutCompany: value
+      }).then(function() {
+      }).catch(function(error) {
+        console.error("Error updating document: ", error);
+      });
+    };
+    dispatch({type: "SIGN-IN", payload: {...company, aboutCompany: value}});
     setOpen(false);
   };
 
@@ -62,4 +73,4 @@ const CompanySummaryModal = (props) => {
   );
 };
 
-export default withStyles(style)(CompanySummaryModal);
+export default connect()(withStyles(style)(CompanySummaryModal));

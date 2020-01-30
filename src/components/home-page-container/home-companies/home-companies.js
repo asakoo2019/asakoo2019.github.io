@@ -30,7 +30,10 @@ const companiesData = [
     aboutCompany: 'This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description.',
     companyImage: companyLogo,
     viewCount: 2,
-    id: 1
+    id: 1,
+    a: {
+      b: {},
+    },
   },
   { companyName: 'Company2',
     aboutCompany: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. A deserunt cupiditate delectus tenetur reiciendis atque necessitatibus nisi odit laboriosam nostrum eum quaerat, voluptatum eius blanditiis consectetur dolore, iusto iste inventore?',
@@ -55,15 +58,14 @@ const companiesData = [
 const HomeCompanies = (props) => {
   const {classes} = props;
   const history = useHistory();
-  const newCompaniesData = [...companiesData];
   const handleClick = () => {
     history.push("/companies");
   };
-  newCompaniesData.sort((a, b) => {
+  companiesData.sort((a, b) => {
     return b.viewCount - a.viewCount;
   });
 
-  const company = newCompaniesData.slice(0, 3).map((el) => {
+  const company = companiesData.slice(0, 3).map((el) => {
     if (el.aboutCompany.length > 50) {
       el.aboutCompany = el.aboutCompany.substring(0, 50) + "...";
     };

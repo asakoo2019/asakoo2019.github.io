@@ -1,8 +1,9 @@
 import React from 'react';
 import { Grid, Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import CreateIcon from '@material-ui/icons/Create';
 import { withStyles } from "@material-ui/core/styles";
+import { firestore } from '../../firebase/db';
+import { connect } from 'react-redux';
 
 const style = {
   experienceBtn: {
@@ -12,14 +13,21 @@ const style = {
 };
 
 const Experiences = (props) => {
-  const {user, classes} = props;
+  const { user, classes, showItems, dispatch } = props;
+
   const deleteItem = (id) => {
     const index = user.userWorkExperience.findIndex((el) => el.id === id);
     const newArray = [
       ...user.userWorkExperience.slice(0, index),
       ...user.userWorkExperience.slice(index + 1)
     ];
-    props.setUserWorkExperience(newArray);
+    firestore.collection("users").doc(props.id)
+    .update({
+      userWorkExperience: newArray
+    }).catch(function(error) {
+      console.error("Error updating document: ", error);
+    });
+    dispatch({type: "SIGN-IN", payload: {...user, userWorkExperience: newArray}});
   };
 
   let experience;
@@ -32,18 +40,15 @@ const Experiences = (props) => {
           <Grid item xs={4}>
             <h6>{item.companyName}</h6>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={4}>
             <p>{item.jobTitle}</p>
           </Grid>
           <Grid item xs={3}>
             <p>{`${item.from} - ${item.to}`}</p>
           </Grid>
-          <Grid item xs={2}>
-            {props.setUserWorkExperience && <Button className={classes.experienceBtn} color='primary' onClick={() => deleteItem(item.id)}>
+          <Grid item xs={1}>
+            {showItems && <Button className={classes.experienceBtn} color='primary' onClick={()=>{deleteItem(item.id)}}>
               <DeleteIcon color='error'/>
-            </Button>}
-            {props.setUserWorkExperience && <Button className={classes.experienceBtn} color='primary' onClick={()=>{console.log(item.id)}}>
-              <CreateIcon color='error'/>
             </Button>}
           </Grid>
           <Grid item xs={12}>
@@ -61,4 +66,4 @@ const Experiences = (props) => {
   );
 };
 
-export default withStyles(style)(Experiences);
+export default connect()(withStyles(style)(Experiences));

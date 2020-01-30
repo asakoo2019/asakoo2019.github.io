@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { DropzoneDialog } from 'material-ui-dropzone';
 import Button from '@material-ui/core/Button';
-import { storage } from '../../firebase/db';
+import { storage, firestore } from '../../firebase/db';
+import { connect } from 'react-redux';
 
 const CompanyImageBlock = (props) => {
-
-	const { company, id } = props;
+	const { company, id, showItems, dispatch } = props;
 	const [open, setOpen] = useState(false);
 
 	const handleOpen = () => {
@@ -38,7 +38,16 @@ const CompanyImageBlock = (props) => {
 				alert('Autorize please');
 			}, () => {
 				uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-					props.setCompanyImage(downloadURL);
+					if (downloadURL !== null) {
+						firestore.collection("companies").doc(id)
+						.update({
+							companyImage: downloadURL
+						}).then(function() {
+						}).catch(function(error) {
+							console.error("Error updating document: ", error);
+						});
+					};
+					dispatch({type: "SIGN-IN", payload: {...company, companyImage: downloadURL}});
 				});
 			});
 			setOpen(false);
@@ -46,7 +55,7 @@ const CompanyImageBlock = (props) => {
 
 	return (
 		<>
-			{props.setCompanyImage ? <Button onClick={handleOpen}>
+			{showItems ? <Button onClick={handleOpen}>
 				<img src={company.companyImage} alt={company.companyName}/>
 			</Button> : <img src={company.companyImage} alt={company.companyName}/>}
 			<DropzoneDialog open={open}
@@ -60,4 +69,4 @@ const CompanyImageBlock = (props) => {
 	);
 };
 
-export default CompanyImageBlock;
+export default connect()(CompanyImageBlock);

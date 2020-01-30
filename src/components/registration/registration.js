@@ -137,7 +137,7 @@ function RegistrationComponent(props) {
                   userLanguages: [],
                   aboutUser: '',
                 };
-                firestore.collection("users").doc(id).set();
+                firestore.collection("users").doc(id).set(user);
                 dispatch({type: "SIGN-IN", payload: user});
                 history.push(`/${values.registrationType.toLowerCase()}/${id}`);
               } else {
