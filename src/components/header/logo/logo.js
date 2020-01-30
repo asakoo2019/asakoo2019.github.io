@@ -7,7 +7,7 @@ const Logo = () => {
   function GoHome() {
     let history = useHistory();
     function handleClick() {
-      history.push("/");
+      history.push("/home");
     };
     return (
       <img className='app-logo' src={appLogo} alt='TopTeam' onClick={handleClick}/>
