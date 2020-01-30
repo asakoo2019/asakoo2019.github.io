@@ -33,9 +33,9 @@ export default function CompaniesBar({ employer, otherCopmanies, currPage }) {
             />
         );
     });
-    // function handleChange (e, i){
-    //     return otherCopmanies(e, i)
-    // }
+    function handleChange (e, i){
+        return otherCopmanies(e, i)
+    }
     const button = (arr) => {
         let maxButtons = Math.ceil(arr.length / 10);
         let result = [];
@@ -43,7 +43,7 @@ export default function CompaniesBar({ employer, otherCopmanies, currPage }) {
             for (let i = 1; i <= maxButtons; i++) {
                 result.push(<Button
                     key={`${i}`}
-                    onClick={(e) => otherCopmanies(e, i)}
+                    onClick={(e) => handleChange(e, i)}
                 >
                     {i}
                 </Button>)
