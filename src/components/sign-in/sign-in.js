@@ -115,11 +115,11 @@ function SignIn(props) {
           variant="h4"
           className={classes.h1}
         >
-          Sign in
+          Login
         </Typography>
         <TextField
           autoFocus
-          label="Sign in"
+          label="Login"
           variant="outlined"
           className={classes.txtb}
           value={email}

@@ -246,7 +246,7 @@ const AboutCompanyModal = (props) => {
                 <Select value={companyCategory}
                   onChange={(e) => setCompanyCategory(e.target.value)}>
                   <MenuItem value={'Finance/Banking/Insurance'}>Finance/Banking/Insurance</MenuItem>
-                  <MenuItem value={'Information technologies'}>Information technologies</MenuItem>
+                  <MenuItem value={'Quality Assurance/Control'}>Information technologies</MenuItem>
                   <MenuItem value={'Design/Architecture/Construction'}>Design/Architecture/Construction</MenuItem>
                   <MenuItem value={'Consulting/ Legal'}>Consulting/ Legal</MenuItem>
                   <MenuItem value={'Import/Export/Trade'}>Import/Export/Trade</MenuItem>

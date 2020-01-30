@@ -46,7 +46,7 @@ function TopBar ({companyInfo}) {
                 </Grid>
                 <Grid >
                     <h1>{companyInfo.companyName}</h1>
-                    <p><span>{companyInfo.companyViewCount+1}</span> views</p>
+                    <p><span>{companyInfo.companyViewCount}</span> views</p>
                 </Grid>
                 <Grid >
                     <p>{companyInfo.companyJobs ? companyInfo.companyJobs.length : ''} activ jobs</p>

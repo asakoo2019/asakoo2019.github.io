@@ -89,7 +89,7 @@ const Search = (props) => {
         </Grid>
       </Grid>
       <Grid container>
-        <RadioGroup defaultValue="jobs"
+        <RadioGroup
           onChange={(e) => setSearchUrl(e.target.value)}>
             <Grid container spacing={3}>
               <Grid item xs={6}>

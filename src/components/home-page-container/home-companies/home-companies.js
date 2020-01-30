@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import companyLogo from './2.png';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Button } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
-import { firestore } from '../../firebase/db';
 
 const styles = {
   aboutCompany: {
@@ -25,36 +25,45 @@ const styles = {
   }
 };
 
+const companiesData = [
+  { companyName: 'Company1',
+    aboutCompany: 'This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description.',
+    companyImage: companyLogo,
+    viewCount: 2,
+    id: 1
+  },
+  { companyName: 'Company2',
+    aboutCompany: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. A deserunt cupiditate delectus tenetur reiciendis atque necessitatibus nisi odit laboriosam nostrum eum quaerat, voluptatum eius blanditiis consectetur dolore, iusto iste inventore?',
+    companyImage: companyLogo,
+    viewCount: 8,
+    id: 2
+  },
+  { companyName: 'Company3',
+    aboutCompany: 'urish text. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description.',
+    companyImage: companyLogo,
+    viewCount: 7,
+    id: 3
+  },
+  { companyName: 'Company4',
+    aboutCompany: 'vapshe urish text. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description.',
+    companyImage: companyLogo,
+    viewCount: 10,
+    id: 4
+  },
+];
+
 const HomeCompanies = (props) => {
   const {classes} = props;
-  const [companies, setCompanies] = useState([]);
   const history = useHistory();
-
-  useEffect(() => {
-    firestore.collection("companies").get().then((querySnapshot) => {
-      let currentCompany = [];
-      querySnapshot.forEach((doc) => {
-        if (Object.keys(doc.data()).length !== 0) {
-          currentCompany.push(doc.data());
-        };
-      });
-      setCompanies(currentCompany);
-    });
-  }, []);
-
+  const newCompaniesData = [...companiesData];
   const handleClick = () => {
     history.push("/companies");
   };
-
-  const singleCompanyBtn = (id) => {
-    history.push(`companies/${id}`);
-  };
-
-  companies.sort((a, b) => {
-    return b.companyViewCount - a.companyViewCount;
+  newCompaniesData.sort((a, b) => {
+    return b.viewCount - a.viewCount;
   });
 
-  const company = companies.slice(0, 3).map((el) => {
+  const company = newCompaniesData.slice(0, 3).map((el) => {
     if (el.aboutCompany.length > 50) {
       el.aboutCompany = el.aboutCompany.substring(0, 50) + "...";
     };
@@ -63,8 +72,7 @@ const HomeCompanies = (props) => {
         className={classes.aboutCompany}
         alignItems="center"
         item xs={3}
-        key={el.id}
-        onClick={() => singleCompanyBtn(el.id)}>
+        key={el.id}>
         <Grid justify="center"
           container>
           <img className={classes.companyLogo} src={el.companyImage} alt={el.companyName}/>
