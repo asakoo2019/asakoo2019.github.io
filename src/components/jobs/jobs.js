@@ -72,7 +72,7 @@ function Jobs() {
                 justify='space-between'>
                 <JobsFilter
                     jobs = { jobs }
-                    checkboxChange= { checkboxToggle } />
+                    checkboxChange= { checkboxToggle } setCurrentPage={setCurrentPage}/>
                 <JobsContainer
                     jobs = { checked.length ? newJob : jobs } />
             </Grid>
