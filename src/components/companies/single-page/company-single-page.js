@@ -100,12 +100,16 @@ function CompaniesSinglePage() {
   //     })
   //   setCompany(company);
   // }, [params.id]);
-
+  
   function drawPage() {
     if (company.hasOwnProperty('id')) {
       const aboutcompany = company.aboutCompany ? <AboutCompany companyInfo={company} /> : null;
       const activJobs = company.companyJobs.length ? <ActiveJobs companyInfo={company} /> : null;
       const contacts = (company.email || company.userCity || company.companyWebsite) ? <Contacts companyInfo={company} /> : null;
+      firestore.collection("companies").doc(params.id)
+      .update({
+        companyViewCount: (company.companyViewCount + 1)
+      })
       return (
         <Grid
           container
@@ -128,7 +132,7 @@ function CompaniesSinglePage() {
   useEffect(() => {
     firestore.collection("companies").get().then((querySnapshot) => {
       let data = [];
-      let company = null;
+      let company;
       querySnapshot.forEach((doc) => {
         if (Object.keys(doc.data()).length !== 0) {
           data.push(doc.data());
@@ -137,9 +141,9 @@ function CompaniesSinglePage() {
       data.forEach(item => {
         if (params.id === item.id) {
           company = item;
+          setCompany(company);
         }
       })
-      setCompany(company);
     });
   }, [params.id]);
 

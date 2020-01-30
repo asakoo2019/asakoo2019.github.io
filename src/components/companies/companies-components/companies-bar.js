@@ -28,18 +28,21 @@ export default function CompaniesBar({ employer, otherCopmanies, currPage }) {
     const comps = employer.slice(currPage - 10, currPage).map((item) => {
         return (
             <CompanyItem
-                key={`${item.id}asd`}
+                key={`${item.id}`}
                 currentCompany={item}
             />
         );
     });
+    // function handleChange (e, i){
+    //     return otherCopmanies(e, i)
+    // }
     const button = (arr) => {
         let maxButtons = Math.ceil(arr.length / 10);
         let result = [];
         if (maxButtons > 1) {
             for (let i = 1; i <= maxButtons; i++) {
                 result.push(<Button
-                    key={`${i}page`}
+                    key={`${i}`}
                     onClick={(e) => otherCopmanies(e, i)}
                 >
                     {i}

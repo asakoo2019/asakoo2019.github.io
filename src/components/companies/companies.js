@@ -92,6 +92,11 @@ export default function Companies (){
   const [allCompanies, setAllCompanies] = useState (true);
   const [type, setType] = useState ([]);
   const [data, setData] = useState([]);
+  //console.log(data);
+  useEffect(() => {
+    getData().then(smth => setData(smth.sort((a,b)=> b.companyViewCount - a.companyViewCount)) );
+    //setData(createData());
+  }, []);
 
   const companies = companyCategoryArr.map(item => {
     return (
@@ -104,6 +109,7 @@ export default function Companies (){
       />
     );
   })
+
   function filterCompany (value){
     let arr = [...type];
     const x = type.indexOf(value);
@@ -123,10 +129,6 @@ export default function Companies (){
     setCurrentPage(10);
   }
   
-  useEffect(() => {
-    getData().then(smth => setData(smth) );
-    //setData(createData());
-  }, []);
 
   function otherCopmanies (e, i) {
     let num = i*10;
@@ -159,7 +161,7 @@ export default function Companies (){
                 className =  'companyFilterByH'
               >
                 <FormControl>
-                  <FormLabel>Filter By Industry</FormLabel>
+                  <FormLabel>Filter By Category</FormLabel>
                     <FormGroup>
                         {companies}
                     </FormGroup>
