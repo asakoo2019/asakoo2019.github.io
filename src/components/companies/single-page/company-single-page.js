@@ -99,7 +99,7 @@ function CompaniesSinglePage (){
         }
       })
     setCompany(company);
-  }, []);
+  }, [params.id]);
 
   function drawPage() {
     if (company.hasOwnProperty('id')){

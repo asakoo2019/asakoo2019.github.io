@@ -75,7 +75,6 @@ const createData = () => {
 // const data = createData(); 
 
 // const getData = () => { 
-  
 //    return firestore.collection("companies").get().then((querySnapshot) => {
 //     debugger
 //     let companies = [];
