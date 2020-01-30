@@ -5,7 +5,9 @@ function counter(state = null, action) {
     case 'SIGN-IN':
       return action.payload;
     case 'SEARCH':
-        return action.payload;
+      return action.payload;
+    case 'JOB-ID':
+      return action.payload;
     case 'SIGN-OUT':
       return null;
     default:

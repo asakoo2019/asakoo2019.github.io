@@ -2,6 +2,7 @@ import React from 'react';
 import { Grid, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 const styles = {
     jobBlock: {
@@ -11,11 +12,16 @@ const styles = {
     },
 };
 
-const JobsContainer = (props) => {
+const mStP = (state) => ({
+    user: state,
+});
 
+const JobsContainer = (props) => {
+    const { dispatch } = props;
     const history = useHistory();
 
     const viewMore = (id) => {
+        dispatch({type: "JOB-ID", payload: id});
         history.push(`/jobs/${id}`);
     };
         
@@ -42,9 +48,9 @@ const JobsContainer = (props) => {
                 <Grid container justify= 'flex-end' item xs>
                     <p>{viewCount}</p>
                 </Grid>
-                <Button onClick={ () => viewMore(id)}>
-                    View More
-                </Button>
+                    <Button onClick={ () => viewMore(id)}>
+                        View More
+                    </Button>
             </Grid>
         )
     })
@@ -58,4 +64,4 @@ const JobsContainer = (props) => {
     )
 }
 
-export default withStyles(styles)(JobsContainer);
+export default connect(mStP)(withStyles(styles)(JobsContainer));

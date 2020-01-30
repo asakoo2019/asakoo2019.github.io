@@ -53,6 +53,7 @@ function Jobs() {
         ])
 
     }
+    
 
     const jobsChecked = jobs.filter(item => item.checked)
     const checked = [];
