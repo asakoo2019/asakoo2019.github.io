@@ -1,6 +1,5 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import Avatar from '@material-ui/core/Avatar';
+import {Grid, Button, Avatar} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 
@@ -43,9 +42,9 @@ function CompanyItem({ currentCompany }) {
       <Grid
         item xs={2}
       >
-        <button onClick={() => { history.push(`${match.url}/${currentCompany.id}`) }} >
+        <Button onClick={() => { history.push(`${match.url}/${currentCompany.id}`) }} >
           View More
-              </button>
+        </Button>
       </Grid>
     </Grid>
   );
