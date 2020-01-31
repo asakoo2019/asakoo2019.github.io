@@ -43,7 +43,7 @@ export default function ActiveJobs({ companyInfo }) {
         <Grid
             className={classes.root}
         >
-            <h1>ACTIVE JOBS {companyInfo.companyJobs.length}</h1>
+            <h3>ACTIVE JOBS {companyInfo.companyJobs.length}</h3>
             <Grid
                 container
                 direction="row"

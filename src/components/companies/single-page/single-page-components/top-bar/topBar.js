@@ -8,19 +8,20 @@ const useStyles = makeStyles(theme => ({
       flexGrow: 1,
       backgroundImage: bgimage,
       height: '400px',
+      width: '100%',
     },
     topBarDiv: {
       padding: theme.spacing(2),
       backgroundColor: 'rgb(255, 255, 255, 0.5)',
       textAlign: 'center',
-      width: '100%',
-      height: '180px',
     },
     topBarImg: {
-        width: '150px',
-        height: '150px',
+        width: '100%',
         backgroundColor: 'rgb(255, 255, 255)',
-    }
+    },
+    topBarInfo: {
+        marginLeft: 20,
+    },
 }));
 function TopBar ({companyInfo}) {
     const classes = useStyles();
@@ -28,28 +29,22 @@ function TopBar ({companyInfo}) {
     bgimage = companyInfo.companyBackground? companyInfo.companyBackground: bgimage;
     //console.log(companyInfo.companyBackground);
     return(
-        <Grid
-            container
-            alignItems="flex-end"
+        <Grid container
+            direction='column'
+            justify="flex-end"
             className = {classes.root}
         >
-            <Grid 
-                container
-                direction="row"
-                justify="space-between"
+            <Grid container
                 alignItems="center"
                 className = {classes.topBarDiv}
             >
-                <Grid 
-                >
-                    <img src = {companyInfo.companyImage} alt = 'Company pic' className = {classes.topBarImg}/>
+                <Grid item xs={2}>
+                    <img src = {companyInfo.companyImage} alt = {`${companyInfo.companyName} pic`} className = {classes.topBarImg}/>
                 </Grid>
-                <Grid >
-                    <h1>{companyInfo.companyName}</h1>
-                    <p><span>{companyInfo.companyViewCount+1}</span> views</p>
-                </Grid>
-                <Grid >
-                    <p>{companyInfo.companyJobs ? companyInfo.companyJobs.length : ''} activ jobs</p>
+                <Grid container item xs={9} direction='column' alignItems='flex-start' className={classes.topBarInfo}>
+                    <h4>{companyInfo.companyName}</h4>
+                    <p>{companyInfo.companyViewCount + 1} views</p>
+                    <p>{companyInfo.companyJobs.length} activ jobs</p>
                 </Grid>
             </Grid>
         </Grid>

@@ -9,9 +9,7 @@ const useStyles = makeStyles(theme => ({
     },
     aboutCompDiv: {
         width: "100%",
-    },
-    textDirection: {
-        textAlign: 'center',
+        textAlign: 'left',       
     },
 }));
 export default function AboutCompany ({companyInfo}) {
@@ -20,7 +18,7 @@ export default function AboutCompany ({companyInfo}) {
         <Grid
             className = {classes.root}
         >
-            <h1>ABOUT {companyInfo.companyName}</h1>
+            <h3>ABOUT {companyInfo.companyName}</h3>
             <Grid 
                container
                direction="column"
