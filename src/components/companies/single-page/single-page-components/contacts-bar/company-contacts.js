@@ -6,6 +6,7 @@ const useStyles = makeStyles(theme => ({
     root: {
       flexGrow: 1,
       textAlign: "center",
+      width: '100%',
     },
     
 }));
@@ -20,6 +21,7 @@ export default function Contacts ({companyInfo}) {
             className = {classes.root}
         >
             <h1>CONTACTS</h1>
+            
         </Grid>
     );
 }

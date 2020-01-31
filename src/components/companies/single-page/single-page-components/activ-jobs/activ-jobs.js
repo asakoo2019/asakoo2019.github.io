@@ -1,39 +1,41 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
     root: {
       flexGrow: 1,
       textAlign: 'center',
+      width: '100%',
     },
 
 }));
 export default function ActiveJobs ({companyInfo}) {
     const classes = useStyles();
-    //const comp = companyInfo.companyJobs;
-    
-    const jobs = (item) =>{
-        let drawJobs = null;
-        if (item) {
-            for (let i = 1; i <= item.length; i++){
-                    drawJobs = (<div> {i} </div>)
-                }
-        }
-        return drawJobs
-    };
+    const jobs = companyInfo.companyJobs.map(item=>{
+        return (
+            <Grid
+             key = {item.id}
+            >
+                <div>{item.jobCategory}</div>
+                <div>here must be job datails</div>
+                <div><Button>View More</Button></div>
+            </Grid>
+        );
+    })
     return(
         <Grid
             className = {classes.root}
         >
-            <h1>ACTIVE JOBS ({companyInfo.companyJobs ? companyInfo.companyJobs.length : ''})</h1>
+            <h1>ACTIVE JOBS {companyInfo.companyJobs.length}</h1>
                 <Grid
                     container
                     direction="row"
                     justify="space-evenly"
-                    alignItems="center" 
+                    alignItems="center"
                 >
-                    {jobs(companyInfo.companyJobs)}
+                    {jobs}
                 </Grid>  
         </Grid>
     );
