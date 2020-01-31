@@ -2,6 +2,8 @@ import React from 'react';
 import { Grid, Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { withStyles } from "@material-ui/core/styles";
+import { connect } from 'react-redux';
+import { firestore } from '../../firebase/db';
 
 const style = {
   jobBtn: {
@@ -11,7 +13,7 @@ const style = {
 };
 
 const CompanyJobs = (props) => {
-  const {company, classes} = props;
+  const { company, classes, showItems, dispatch } = props;
 
   const deleteItem = (id) => {
     const index = company.companyJobs.findIndex((el) => el.id === id);
@@ -19,7 +21,13 @@ const CompanyJobs = (props) => {
       ...company.companyJobs.slice(0, index),
       ...company.companyJobs.slice(index + 1)
     ];
-    props.setCompanyJobs(newArray);
+    firestore.collection("companies").doc(props.id)
+    .update({
+      companyJobs: newArray
+    }).catch(function(error) {
+      console.error("Error updating document: ", error);
+    });
+    dispatch({type: "SIGN-IN", payload: {...company, companyJobs: newArray}});
   };
 
   let job;
@@ -42,7 +50,7 @@ const CompanyJobs = (props) => {
             <h6>{item.location}</h6>
           </Grid>
           <Grid item xs={1}>
-            {props.setCompanyJobs && <Button className={classes.jobBtn} color='primary' onClick={() => deleteItem(item.id)}>
+            {showItems && <Button className={classes.jobBtn} color='primary' onClick={() => deleteItem(item.id)}>
               <DeleteIcon color='error'/>
             </Button>}
           </Grid>
@@ -61,4 +69,4 @@ const CompanyJobs = (props) => {
   );
 };
 
-export default withStyles(style)(CompanyJobs);
+export default connect()(withStyles(style)(CompanyJobs));

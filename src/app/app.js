@@ -1,55 +1,59 @@
-import React, { useEffect } from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import { BrowserRouter as Router } from "react-router-dom";
-import store from '../components/react-redux/store';
-import {Provider} from 'react-redux';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/header';
 import NavBar from '../components/header/nav-bar'
 import Footer from '../components/footer';
-import { auth } from '../components/firebase/db';
+import { auth, firestore } from '../components/firebase/db';
+import { connect } from 'react-redux';
+import { useHistory } from "react-router-dom";
 
-const styles = {
-  
-};
+const App = (props) => {
+  const history = useHistory();
+  const [id, setId] = useState(' ');
+  const {dispatch} = props;
+  const [showItems, setShowItems] = useState(false);
 
-function App(props) {
-const {dispatch} = props;
   useEffect(() => {
-    let unmounted = false;
-    // const pathName = history.location.pathname;
-    // const LastSleshIndex = pathName.lastIndexOf('/');
-    // const searchId = pathName.slice(LastSleshIndex + 1);
-    auth.onAuthStateChanged((logedInCompany) => {
-      debugger;
-      // if (logedInCompany) {
-      //   dispatch({type: "SIGN-IN", payload: company});
-      //   // if (!searchId) {
-      //   //   setId(logedInCompany.uid);
-      //   //   // dispatch({type: "SIGN-OUT", payload: company});
-      //   // } else {
-      //   //   setId(searchId);
-      //   // }
-      // } else {
-      //   if(!unmounted){
-      //     setId(searchId);
-      //   };
-      // };
+    auth.onAuthStateChanged((logedIn) => {
+      if (logedIn) {
+        setId(logedIn.uid);
+        setShowItems(true);
+      } else {
+        const pathName = history.location.pathname;
+        const LastSleshIndex = pathName.lastIndexOf('/');
+        const searchId = pathName.slice(LastSleshIndex + 1);
+        setId(searchId);
+      };
     });
-    return () => {
-      unmounted = true;
-    };
-  }, []);
+  }, [history.location.pathname]);
 
-  // const { classes } = props;
+  useEffect(() => {
+    const docRefUser = firestore.collection("users").doc(id);
+    const docRefCompany = firestore.collection("companies").doc(id);
+    docRefUser.get().then(function(doc) {
+      if (doc.exists) {
+        dispatch({type: "SIGN-IN", payload: doc.data()});
+      }})
+    .catch(function(error) {
+      console.log("Error getting document:", error);
+    });
+
+    docRefCompany.get().then(function(doc) {
+      if (doc.exists) {
+        dispatch({type: "SIGN-IN", payload: doc.data()});
+      }})
+    .catch(function(error) {
+      console.log("Error getting document:", error);
+    });
+  }, [id, dispatch]);
+
   return (
-    <Provider store = {store}>
-      <Router>
-       <Header />
-       <NavBar />
-       <Footer />
-     </Router>
-    </Provider>
+    <>
+      <Header />
+      <NavBar id = {id} showItems = {showItems} setShowItems = {setShowItems}/>
+      <Footer />
+    </>
   );
 };
 
-export default withStyles(styles)(App);
+export default connect()(App);
+

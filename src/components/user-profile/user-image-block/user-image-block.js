@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { DropzoneDialog } from 'material-ui-dropzone';
 import Button from '@material-ui/core/Button';
-import { storage } from '../../firebase/db';
+import { storage, firestore } from '../../firebase/db';
+import { connect } from 'react-redux';
 
 const UserImageBlock = (props) => {
-
-	const { user, id } = props;
+	const { user, id, dispatch, showItems } = props;
 	const [open, setOpen] = useState(false);
 
 	const handleOpen = () => {
@@ -17,36 +17,45 @@ const UserImageBlock = (props) => {
 	};
 
 	const handleSave = (files) => {
-			const selectedFile = files[0];
-			const fileName = selectedFile.name;
-			const dotIndex = fileName.lastIndexOf('.');
-			const storageRef = storage.ref(`/${id}/${id}${fileName.slice(dotIndex)}`);
-			const uploadTask = storageRef.put(selectedFile);
-			uploadTask.on('state_changed',function(snapshot){
-				const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-				console.log('Upload is ' + progress + '% done');
-				switch (snapshot.state) {
-					case 'paused':
-						console.log('Upload is paused');
-						break;
-					case 'running':
-						console.log('Upload is running');
-						break;
-					default: ;
+		const selectedFile = files[0];
+		const fileName = selectedFile.name;
+		const dotIndex = fileName.lastIndexOf('.');
+		const storageRef = storage.ref(`/${id}/${id}${fileName.slice(dotIndex)}`);
+		const uploadTask = storageRef.put(selectedFile);
+		uploadTask.on('state_changed',function(snapshot){
+			const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+			console.log('Upload is ' + progress + '% done');
+			switch (snapshot.state) {
+				case 'paused':
+					console.log('Upload is paused');
+					break;
+				case 'running':
+					console.log('Upload is running');
+					break;
+				default: ;
+			};
+		}, function() {
+			alert('Autorize please');
+		}, () => {
+			uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+				if (downloadURL !== null) {
+					firestore.collection("users").doc(id)
+					.update({
+						userImage: downloadURL
+					}).then(function() {
+					}).catch(function(error) {
+						console.error("Error updating document: ", error);
+					});
 				};
-			}, function(error) {
-				alert('Autorize please');
-			}, () => {
-				uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-					props.setUserImage(downloadURL);
-				});
+				dispatch({type: "SIGN-IN", payload: {...user, userImage: downloadURL}});
 			});
-			setOpen(false);
+		});
+		setOpen(false);
 	};
 
 	return (
 		<>
-			{props.setUserImage ? <Button onClick={handleOpen}>
+			{showItems ? <Button onClick={handleOpen}>
 				<img src={user.userImage} alt={user.userName}/>
 			</Button> : <img src={user.userImage} alt={user.userName}/>}
 			<DropzoneDialog open={open}
@@ -60,4 +69,4 @@ const UserImageBlock = (props) => {
 	);
 };
 
-export default UserImageBlock;
+export default connect()(UserImageBlock);

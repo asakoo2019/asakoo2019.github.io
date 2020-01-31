@@ -1,9 +1,7 @@
-import React, { useState, useEffect} from 'react';
+import React from 'react';
 import { Grid, Container } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import { firestore, auth } from '../firebase/db';
 import { connect } from 'react-redux';
-import { useHistory } from "react-router-dom";
 import classNames from 'classnames';
 import AboutCompanyModal from './about-company-modal';
 import CompanyImageBlock from './company-image-block';
@@ -43,194 +41,9 @@ const mStP = (state) => ({
 });
 
 const CompanyProfile = (props) => {
-  const [company, setCompany] = useState({});
-  const [id, setId] = useState(' ');
-  const [downloadURL, setCompanyImage] = useState(null);
-  const [companyName, setCompanyName] = useState(null);
-  const [registerName, setRegisterName] = useState(null);
-  const [companyPhoneNumber, setCompanyPhoneNumber] = useState(null);
-  const [companyAdress, setCompanyAdress] = useState(null);
-  const [companyCity, setCompanyCity] = useState(null);
-  const [companyCountry, setCompanyCountry] = useState(null);
-  const [companyCreatingData, setCompanyCreatingData] = useState(null);
-  const [aboutCompany, setAboutCompany] = useState(null);
-  const [companyCategory, setCompanyCategory] = useState(null);
-  const [companyJobs, setCompanyJobs] = useState(null);
-  const { classes, dispatch } = props;
-  const history = useHistory();
-
-  useEffect(() => {
-    let unmounted = false;
-    const pathName = history.location.pathname;
-    const LastSleshIndex = pathName.lastIndexOf('/');
-    const searchId = pathName.slice(LastSleshIndex + 1);
-    auth.onAuthStateChanged((logedInCompany) => {
-      if (logedInCompany) {
-        dispatch({type: "SIGN-IN", payload: company});
-        if (!searchId) {
-          setId(logedInCompany.uid);
-          // dispatch({type: "SIGN-OUT", payload: company});
-        } else {
-          setId(searchId);
-        }
-      } else {
-        if(!unmounted){
-          setId(searchId);
-        };
-      };
-    });
-    return () => {
-      unmounted = true;
-    };
-  }, [dispatch, history.location.pathname, company]);
-
-  useEffect(() => {
-    let unmounted = false;
-    if (id !== ' ') {
-      const docRef = firestore.collection("companies").doc(id);
-      docRef.get().then(function(doc) {
-        if (doc.exists) {
-          if(!unmounted) {
-            setCompany(doc.data());
-          };
-        } else {
-          console.log("No such document!");
-        }})
-      .catch(function(error) {
-        console.log("Error getting document:", error);
-      });
-    };
-    return () => {
-      unmounted = true;
-    };
-  }, [id, downloadURL, companyName, registerName, companyPhoneNumber, companyAdress, companyCity, companyCountry, companyCreatingData, aboutCompany, companyCategory, companyJobs])
-
-  useEffect(() => {
-    if (downloadURL !== null) {
-      firestore.collection("companies").doc(id)
-        .update({
-          companyImage: downloadURL
-        }).then(function() {
-          // console.log("Document successfully updated!");
-        }).catch(function(error) {
-          console.error("Error updating document: ", error);
-        });
-    };
-
-    if (companyName !== null) {
-      firestore.collection("companies").doc(id)
-        .update({
-          companyName: companyName
-        }).then(function() {
-          // console.log("Document successfully updated!");
-        }).catch(function(error) {
-          console.error("Error updating document: ", error);
-        });
-    };
-
-    if (registerName !== null) {
-      firestore.collection("companies").doc(id)
-        .update({
-          registerName: registerName
-        }).then(function() {
-          // console.log("Document successfully updated!");
-        }).catch(function(error) {
-          console.error("Error updating document: ", error);
-        });
-    };
-
-    if (companyPhoneNumber !== null) {
-      firestore.collection("companies").doc(id)
-        .update({
-          companyPhoneNumber: companyPhoneNumber
-        }).then(function() {
-          // console.log("Document successfully updated!");
-        }).catch(function(error) {
-          console.error("Error updating document: ", error);
-        });
-    };
-
-    if (companyAdress !== null) {
-      firestore.collection("companies").doc(id)
-        .update({
-          companyAdress: companyAdress
-        }).then(function() {
-          // console.log("Document successfully updated!");
-        }).catch(function(error) {
-          console.error("Error updating document: ", error);
-        });
-    };
-
-    if (companyCity !== null) {
-      firestore.collection("companies").doc(id)
-        .update({
-          companyCity: companyCity
-        }).then(function() {
-          // console.log("Document successfully updated!");
-        }).catch(function(error) {
-          console.error("Error updating document: ", error);
-        });
-    };
-
-    if (companyCountry !== null) {
-      firestore.collection("companies").doc(id)
-        .update({
-          companyCountry: companyCountry
-        }).then(function() {
-          // console.log("Document successfully updated!");
-        }).catch(function(error) {
-          console.error("Error updating document: ", error);
-        });
-    };
-
-    if (companyCreatingData !== null) {
-      firestore.collection("companies").doc(id)
-        .update({
-          companyCreatingData: companyCreatingData
-        }).then(function() {
-          // console.log("Document successfully updated!");
-        }).catch(function(error) {
-          console.error("Error updating document: ", error);
-        });
-    };
-
-    if (companyCategory !== null) {
-      firestore.collection("companies").doc(id)
-      .update({
-        companyCategory: companyCategory
-      }).then(function() {
-        // console.log("Document successfully updated!");
-      }).catch(function(error) {
-        console.error("Error updating document: ", error);
-      });
-    };
-  }, [id, downloadURL, companyName, registerName, companyPhoneNumber, companyAdress, companyCity, companyCountry, companyCreatingData, companyCategory]);
-  
-  useEffect(() => {
-    if (aboutCompany !== null) {
-      firestore.collection("companies").doc(id)
-      .update({
-        aboutCompany: aboutCompany
-      }).then(function() {
-        // console.log("Document successfully updated!");
-      }).catch(function(error) {
-        console.error("Error updating document: ", error);
-      });
-    };
-  }, [id, aboutCompany]);
-
-  useEffect(() => {
-    if (companyJobs !== null) {
-      firestore.collection("companies").doc(id)
-      .update({
-        companyJobs: companyJobs
-      }).then(function() {
-        // console.log("Document successfully updated!");
-      }).catch(function(error) {
-        console.error("Error updating document: ", error);
-      });
-    };
-  }, [id, companyJobs]);
+  let { classes, company, showItems } = props;
+  company = company ? company : {};
+  const id = company.id;
 
   return (
     <Container className='companyBlock'>
@@ -242,7 +55,7 @@ const CompanyProfile = (props) => {
         alignItems='center'>
         <Grid container
           item xs={12} sm={4} md={2}>
-          {props.company ? <CompanyImageBlock setCompanyImage={setCompanyImage} company={company} id={id} /> : <CompanyImageBlock company={company} id={id} />}
+          {showItems ? <CompanyImageBlock showItems={showItems} company={company} id={id} /> : <CompanyImageBlock company={company} id={id} />}
         </Grid>
         <Grid container
           item xs={12} sm={8} md={10}
@@ -254,16 +67,7 @@ const CompanyProfile = (props) => {
               <h5 className={classes.companyName}>{company.companyName}</h5>
               <h5>{company.registerName}</h5>
             </Grid>
-            {props.company && <AboutCompanyModal
-              company={company}
-              setCompanyName={setCompanyName}
-              setRegisterName={setRegisterName}
-              setCompanyCity={setCompanyCity}
-              setCompanyCountry={setCompanyCountry}
-              setCompanyPhoneNumber={setCompanyPhoneNumber}
-              setCompanyAdress={setCompanyAdress}
-              setCompanyCreatingData={setCompanyCreatingData}
-              setCompanyCategory={setCompanyCategory}/>}
+            {showItems && <AboutCompanyModal company={company} id={id} />}
           </Grid>
           <Grid container
             justify='space-around'>
@@ -318,10 +122,7 @@ const CompanyProfile = (props) => {
         </Grid>
         <Grid container item xs={1}
           justify='flex-end'>
-          {props.company && <CompanySummaryModal
-            company={company}
-            id={id}
-            setAboutCompany={setAboutCompany}/>}
+          {showItems && <CompanySummaryModal company={company} id={id} />}
         </Grid>
       </Grid>
 
@@ -332,11 +133,11 @@ const CompanyProfile = (props) => {
         justify='space-between'>
         <Grid item xs={10}>
           <h5>Jobs</h5>
-          {company.companyJobs ? (company.companyJobs.length ? (props.company ? <CompanyJobs company={company} setCompanyJobs={setCompanyJobs}/> : <CompanyJobs company={company} />) : 'Add jobs.') : null}
+          {company.companyJobs ? (company.companyJobs.length ? (showItems ? <CompanyJobs company={company} id={id} showItems={showItems}/> : <CompanyJobs company={company} id={id} />) : 'Add jobs.') : null}
         </Grid>
         <Grid container item xs={1}
           justify='flex-end'>
-          {props.company ? <CompanyJobsModal company={company} setCompanyJobs={setCompanyJobs} /> : <CompanyJobsModal company={company} />}
+          {showItems ? <CompanyJobsModal company={company} showItems={showItems} id={id} /> : <CompanyJobsModal company={company} id={id} />}
         </Grid>
       </Grid>
       
