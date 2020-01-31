@@ -2,66 +2,92 @@ import React from 'react';
 import { Grid, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
-import { connect } from 'react-redux';
 
 const styles = {
-    jobBlock: {
-        marginBottom: 10,
-        padding: '10px 0',
-        borderBottom: '1px solid',
-    },
+	jobBlock: {
+		marginBottom: 10,
+		padding: '10px 0',
+		borderBottom: '1px solid',
+	},
+	paginationBtn: {
+		padding: '8px 15px !important',
+		minWidth: 0,
+		marginBottom: 24,
+	},
 };
 
-const mStP = (state) => ({
-    user: state,
-});
-
 const JobsContainer = (props) => {
-    const { dispatch } = props;
-    const history = useHistory();
+	const history = useHistory();
+	const { renderJobs, classes, currentPage, otherJobs } = props;
+	const newJobs = [...renderJobs];
 
-    const viewMore = (id) => {
-        dispatch({type: "JOB-ID", payload: id});
-        history.push(`/jobs/${id}`);
-    };
-        
-    const { jobs, classes } = props;
-    const job1 = [...jobs];
-    
-    const elements = job1.sort((a, b) => b.viewCount - a.viewCount).map(item => {
-        const { jobCategory, id, jobImage, aboutJob,viewCount } = item;
-        return (
-            <Grid 
-                className={ classes.jobBlock}
-                key={ id }
-                container
-                justify='space-between'>
-                <Grid item xs>
-                    <img src={ jobImage } width='64' height='64' alt={ jobCategory } />
-                </Grid>
-                <Grid item xs>
-                    <p>{ jobCategory }</p>
-                </Grid>
-                <Grid item xs>
-                    <p>{ aboutJob }</p>
-                </Grid>
-                <Grid container justify= 'flex-end' item xs>
-                    <p>{viewCount}</p>
-                </Grid>
-                    <Button onClick={ () => viewMore(id)}>
-                        View More
-                    </Button>
-            </Grid>
-        )
-    })
-    
-    return (
-        <Grid container
-            
-            item xs = {8}>
-            { elements }
-        </Grid>
-    )
-}
+	const pagination = (arr) => {
+		let maxButtons = Math.ceil(arr.length / 10);
+		let buttonsArray = [];
+		if (maxButtons > 1) {
+			for (let i = 1; i <= maxButtons; i++) {
+				buttonsArray.push(
+					<Grid item key={i}>
+						<Button color='primary'
+							variant="outlined"
+							size='small'
+							onClick={() => otherJobs(i)}
+							className={classes.paginationBtn}>
+							{i}
+						</Button>
+					</Grid>
+				);
+			};
+		};
+		return buttonsArray;
+	};
 
-export default connect(mStP)(withStyles(styles)(JobsContainer));
+	const elements = newJobs
+	.slice(currentPage - 10, currentPage)
+	.sort((a, b) => b.viewCount - a.viewCount)
+	.map(item => {
+		const { jobCategory, id, jobImage, jobDetails, viewCount } = item;
+		return (
+			<Grid
+				className={ classes.jobBlock}
+				key={ id }
+				container
+				justify='space-between'>
+				<Grid item xs>
+					<img src={ jobImage } width='64' height='64' alt={ jobCategory } />
+				</Grid>
+				<Grid item xs>
+					<p>{ jobCategory }</p>
+				</Grid>
+				<Grid item xs>
+					<p>{ jobDetails }</p>
+				</Grid>
+				<Grid container justify= 'flex-end' item xs>
+					<p>{ viewCount }</p>
+				</Grid>
+				<Button onClick={() => viewMore(id)}>
+					View More
+				</Button>
+			</Grid>
+		);
+	});
+
+	const viewMore = (id) => {
+		history.push(`/jobs/${id}`);
+	};
+	
+	return (
+		<>
+			<Grid container
+				item xs={8}>
+				{ elements }
+			</Grid>
+			<Grid container
+				item xs={12} spacing={1}>
+				{pagination(newJobs)}
+			</Grid>
+		</>
+	);
+};
+
+export default withStyles(styles)(JobsContainer);

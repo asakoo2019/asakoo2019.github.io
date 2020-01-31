@@ -38,6 +38,7 @@ const CompanyJobsModal = (props) => {
   const [term, setTerm] = useState('');
   const [jobDeadline, setJobDeadline] = useState(new Date());
   const id = require('uuid/v4');
+  
   const job = {
     jobName,
     term,
@@ -46,10 +47,10 @@ const CompanyJobsModal = (props) => {
     jobType,
     jobDetails,
     id: id(),
-    checked: false,
     viewCount: 0,
     jobDeadline: jobDeadline.toLocaleDateString(undefined, { day:'numeric', month: 'numeric', year: 'numeric' }),
     companyName: company.companyName,
+    jobImage: company.companyImage,
   };
   
   useEffect(() => {
