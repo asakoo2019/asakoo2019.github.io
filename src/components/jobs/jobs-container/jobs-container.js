@@ -7,16 +7,14 @@ const styles = {
 	jobBlock: {
 		marginBottom: 10,
 		padding: '10px 0',
-		borderBottom: '1px solid',
-		height: 80,
+		borderBottom: '1px solid #FE654F',
 	},
 	paginationBtn: {
 		padding: '8px 15px !important',
 		minWidth: 0,
-		marginBottom: 24,
 	},
 	viewMoreBtn: {
-		height: 50,
+		height: 40,
 	},
 };
 
@@ -52,26 +50,28 @@ const JobsContainer = (props) => {
 	.map(item => {
 		const { jobCategory, id, jobImage, jobDetails, viewCount } = item;
 		return (
-			<Grid
+			<Grid container
+				alignItems='center'
+				justify='space-between'
 				className={ classes.jobBlock}
-				key={ id }
-				container
-				justify='space-between'>
-				<Grid item xs>
-					<img src={ jobImage } width='64' height='64' alt={ jobCategory } />
+				key={ id }>
+				<Grid item xs={2}>
+					<img src={ jobImage } width='100' height='100' alt={ jobCategory } />
 				</Grid>
-				<Grid item xs>
+				<Grid item xs={3}>
 					<p>{ jobCategory }</p>
 				</Grid>
-				<Grid item xs>
+				<Grid item xs={3}>
 					<p>{ jobDetails }</p>
 				</Grid>
-				<Grid container justify= 'flex-end' item xs>
-					<p>{ viewCount }</p>
+				<Grid item xs={2}>
+					<p>Total view { viewCount }</p>
 				</Grid>
-				<Button className={classes.viewMoreBtn} onClick={() => viewMore(id)}>
+				<Grid item xs={2}>
+					<Button className={classes.viewMoreBtn} onClick={() => viewMore(id)}>
 					View More
 				</Button>
+				</Grid>
 			</Grid>
 		);
 	});
@@ -82,12 +82,9 @@ const JobsContainer = (props) => {
 	
 	return (
 		<>
+			{ elements }
 			<Grid container
-				item xs={8}>
-				{ elements }
-			</Grid>
-			<Grid container
-				item xs={12} spacing={1}>
+				item spacing={1}>
 				{pagination(newJobs)}
 			</Grid>
 		</>

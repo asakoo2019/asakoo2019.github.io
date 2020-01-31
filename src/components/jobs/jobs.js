@@ -8,6 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 const styles = {
 	companies: {
 		marginTop: 24,
+		marginBottom: 24,
 	},
 };
 
@@ -60,15 +61,19 @@ const Jobs = (props) => {
 			<Grid container
 				justify='space-between'
 				className={classes.companies}>
-				<JobsFilter
-					jobs = { jobs }
-					setCurrentPage={setCurrentPage}
-					setCategories={setCategories}
-					setAllJobs={setAllJobs}/>
-				<JobsContainer
+				<Grid item xs={3}>
+					<JobsFilter
+						jobs = { jobs }
+						setCurrentPage={setCurrentPage}
+						setCategories={setCategories}
+						setAllJobs={setAllJobs}/>
+				</Grid>
+				<Grid item xs={9}>
+					<JobsContainer
 					renderJobs={renderJobs}
 					currentPage={currentPage}
 					otherJobs={otherJobs} />
+				</Grid>
 			</Grid>
 		</Container>
 	);

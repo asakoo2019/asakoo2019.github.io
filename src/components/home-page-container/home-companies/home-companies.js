@@ -72,7 +72,7 @@ const HomeCompanies = (props) => {
           <h6 className={classes.aboutCompanyText}> {el.companyName} </h6>
         </Grid>
         <Grid container justify='center'>
-          <h6 className={classes.aboutCompanyText}> {el.aboutCompany} </h6>
+          <p className={classes.aboutCompanyText}> {el.aboutCompany} </p>
         </Grid>
         <Grid container justify='center'>
           <Button className={classes.allCompaniesBtn}
