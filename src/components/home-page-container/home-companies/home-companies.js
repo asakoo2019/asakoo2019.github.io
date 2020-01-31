@@ -65,12 +65,21 @@ const HomeCompanies = (props) => {
         item xs={3}
         key={el.id}
         onClick={() => singleCompanyBtn(el.id)}>
-        <Grid justify="center"
-          container>
+        <Grid container justify='center'>
           <img className={classes.companyLogo} src={el.companyImage} alt={el.companyName}/>
         </Grid>
-        <Grid>
+        <Grid container justify='center'>
+          <h6 className={classes.aboutCompanyText}> {el.companyName} </h6>
+        </Grid>
+        <Grid container justify='center'>
           <h6 className={classes.aboutCompanyText}> {el.aboutCompany} </h6>
+        </Grid>
+        <Grid container justify='center'>
+          <Button className={classes.allCompaniesBtn}
+            variant='contained'
+            onClick={handleClick}>
+            View more
+          </Button>
         </Grid>
       </Grid>
     );

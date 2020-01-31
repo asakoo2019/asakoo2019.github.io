@@ -72,12 +72,21 @@ const HomeJobs = (props) => {
         item xs={3}
         key={el.id}
         onClick={() => singleJobBtn(el.id)}>
-        <Grid justify="center"
-          container>
+        <Grid container justify='center'>
           <img className={classes.jobLogo} src={el.jobImage} alt={el.jobName}/>
         </Grid>
-        <Grid>
-          <h6 className={classes.jobDetailsText}> {el.jobDetails} </h6>
+        <Grid container justify='center'>
+          <h6 className={classes.aboutJobText}> {el.jobName} </h6>
+        </Grid>
+        <Grid container justify='center'>
+          <h6 className={classes.aboutJobText}> {el.aboutJob} </h6>
+        </Grid>
+        <Grid container justify='center'>
+          <Button className={classes.allJobsBtn}
+            variant='contained'
+            onClick={handleClick}>
+            View more
+          </Button>
         </Grid>
       </Grid>
     );

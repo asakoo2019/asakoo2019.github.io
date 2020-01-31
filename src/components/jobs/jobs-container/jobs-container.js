@@ -8,11 +8,15 @@ const styles = {
 		marginBottom: 10,
 		padding: '10px 0',
 		borderBottom: '1px solid',
+		height: 80,
 	},
 	paginationBtn: {
 		padding: '8px 15px !important',
 		minWidth: 0,
 		marginBottom: 24,
+	},
+	viewMoreBtn: {
+		height: 50,
 	},
 };
 
@@ -65,7 +69,7 @@ const JobsContainer = (props) => {
 				<Grid container justify= 'flex-end' item xs>
 					<p>{ viewCount }</p>
 				</Grid>
-				<Button onClick={() => viewMore(id)}>
+				<Button className={classes.viewMoreBtn} onClick={() => viewMore(id)}>
 					View More
 				</Button>
 			</Grid>
