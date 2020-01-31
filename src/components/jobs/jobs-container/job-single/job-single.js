@@ -6,10 +6,12 @@ import { useHistory } from 'react-router-dom';
 const JobSingle = () => {
 	const [job, setJob] = useState([]);
 	const [element, setElement] = useState('');
+	const [id, setId] = useState('');
 	const history = useHistory();
 	const pathName = history.location.pathname;
 	const LastSleshIndex = pathName.lastIndexOf('/');
-	const id = pathName.slice(LastSleshIndex + 1);
+	const searchId = pathName.slice(LastSleshIndex + 1);
+	console.log(id);
 
 	useEffect(() => {
 		let job = [];
@@ -26,10 +28,10 @@ const JobSingle = () => {
 
 	useEffect(() => {
 		const element = job.map(item => {
-			if (item.id === id) {
+			if (item.id === searchId) {
+				setId(item.id);
 				return (
 					<Grid key={item.id}>
-						{console.log(item)}
 						<h1>{item.jobName}</h1>
 					</Grid>
 				);
@@ -37,7 +39,7 @@ const JobSingle = () => {
 			return null;
 		});
 		setElement(element);
-	}, [job, id]);
+	}, [job, searchId]);
 
 	return (
 		<Container>
