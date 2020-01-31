@@ -34,13 +34,9 @@ const HomeJobs = (props) => {
 
   useEffect(() => {
     let job = [];
-    let companies = [];
 		const docRef = firestore.collection("companies");
 		docRef.get().then(function(querySnapshot) {
 			querySnapshot.forEach(function(doc) {
-        if (Object.keys(doc.data()).length !== 0) {
-          companies.push(doc.data());
-        };
 				if (doc.data().companyJobs && doc.data().companyJobs.length !== 0){
 				job.push(doc.data().companyJobs);
 				let newArray = [];
