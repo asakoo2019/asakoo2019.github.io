@@ -36,7 +36,7 @@ export default function ActiveJobs({ companyInfo }) {
                 alignItems="center"
             >
                 <Button>{'<'}</Button>
-                {jobs}
+                    {jobs}
                 <Button>{'>'}</Button>
             </Grid>
         </Grid>

@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({
     root: {
       flexGrow: 1,
-      textAlign: 'left',
+      textAlign: 'center',
     },
     aboutCompDiv: {
         width: "100%",
