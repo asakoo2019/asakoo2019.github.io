@@ -23,7 +23,7 @@ export default function Contacts ({companyInfo}) {
             alignItems="center"
             className = {classes.root}
         >
-            <h1>CONTACTS</h1>
+            <h3>CONTACTS</h3>
             <div>
                 <p>e-mail: <span>{companyInfo.email},</span></p>
                 <p>adress: <span>{companyInfo.companyCity}, {companyInfo.companyAdress}</span></p>
