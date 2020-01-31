@@ -5,9 +5,12 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({
     root: {
       flexGrow: 1,
-      textAlign: "center",
       width: '100%',
     },
+    contactInfo :{
+        textAlign: 'left',
+        width: '100%',
+    }
     
 }));
 export default function Contacts ({companyInfo}) {
@@ -21,7 +24,12 @@ export default function Contacts ({companyInfo}) {
             className = {classes.root}
         >
             <h1>CONTACTS</h1>
+            <div>
+                <p>e-mail: <span>{companyInfo.email},</span></p>
+                <p>adress: <span>{companyInfo.companyCity}, {companyInfo.companyAdress}</span></p>
+                <p>website: <span>{companyInfo.email},</span></p>
+            </div>
             
-        </Grid>
+        </Grid> 
     );
 }

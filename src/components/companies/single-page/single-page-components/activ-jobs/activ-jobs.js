@@ -5,18 +5,18 @@ import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
     root: {
-      flexGrow: 1,
-      textAlign: 'center',
-      width: '100%',
+        flexGrow: 1,
+        textAlign: 'center',
+        width: '100%',
     },
 
 }));
-export default function ActiveJobs ({companyInfo}) {
+export default function ActiveJobs({ companyInfo }) {
     const classes = useStyles();
-    const jobs = companyInfo.companyJobs.map(item=>{
+    const jobs = companyInfo.companyJobs.slice(0, 3).map(item => {
         return (
             <Grid
-             key = {item.id}
+                key={item.id}
             >
                 <div>{item.jobCategory}</div>
                 <div>here must be job datails</div>
@@ -24,19 +24,21 @@ export default function ActiveJobs ({companyInfo}) {
             </Grid>
         );
     })
-    return(
+    return (
         <Grid
-            className = {classes.root}
+            className={classes.root}
         >
             <h1>ACTIVE JOBS {companyInfo.companyJobs.length}</h1>
-                <Grid
-                    container
-                    direction="row"
-                    justify="space-evenly"
-                    alignItems="center"
-                >
-                    {jobs}
-                </Grid>  
+            <Grid
+                container
+                direction="row"
+                justify="space-evenly"
+                alignItems="center"
+            >
+                <Button>{'<'}</Button>
+                {jobs}
+                <Button>{'>'}</Button>
+            </Grid>
         </Grid>
     );
 }
