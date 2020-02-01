@@ -48,23 +48,27 @@ const JobsContainer = (props) => {
 	.slice(currentPage - 10, currentPage)
 	.sort((a, b) => b.viewCount - a.viewCount)
 	.map(item => {
-		const { jobCategory, id, jobImage, jobDetails, viewCount } = item;
+		let { jobCategory, id, jobImage, jobDetails, viewCount } = item;
+		if (jobDetails.length > 50) {
+      jobDetails = jobDetails.substring(0, 50) + "...";
+    };
 		return (
 			<Grid container
 				alignItems='center'
 				justify='space-between'
 				className={ classes.jobBlock}
-				key={ id }>
-				<Grid item xs={2}>
+				key={ id }
+				spacing={1}>
+				<Grid container justify="center" item xs={2}>
 					<img src={ jobImage } width='100' height='100' alt={ jobCategory } />
 				</Grid>
-				<Grid item xs={3}>
+				<Grid container justify="center" item xs={4}>
 					<p>{ jobCategory }</p>
 				</Grid>
-				<Grid item xs={3}>
+				<Grid container justify="center" item xs={2}>
 					<p>{ jobDetails }</p>
 				</Grid>
-				<Grid item xs={2}>
+				<Grid container justify="center" item xs={2}>
 					<p>Total view { viewCount }</p>
 				</Grid>
 				<Grid item xs={2}>
