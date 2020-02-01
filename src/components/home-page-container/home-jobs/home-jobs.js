@@ -1,11 +1,11 @@
-import React from 'react';
-import jobLogo from './2.png';
+import React, { useState, useEffect } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Button } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
+import { firestore } from '../../firebase/db';
 
 const styles = {
-  aboutJob: {
+  jobDetails: {
     borderRadius: 10,
     marginTop: 6,
     padding: 20,
@@ -20,67 +20,73 @@ const styles = {
     borderRadius: 10,
     width: '90%'
   },
-  aboutJobText: {
+  jobDetailsText: {
     textAlign: 'center'
   }
 };
 
-const jobsData = [
-  { jobName: 'Job1',
-    aboutJob: 'This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description.',
-    jobImage: jobLogo,
-    viewCount: 12,
-    id: 1
-  },
-  { jobName: 'Job2',
-    aboutJob: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. A deserunt cupiditate delectus tenetur reiciendis atque necessitatibus nisi odit laboriosam nostrum eum quaerat, voluptatum eius blanditiis consectetur dolore, iusto iste inventore?',
-    jobImage: jobLogo,
-    viewCount: 8,
-    id: 2
-  },
-  { jobName: 'Job3',
-    aboutJob: 'urish text. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description.',
-    jobImage: jobLogo,
-    viewCount: 7,
-    id: 3
-  },
-  { jobName: 'Job4',
-    aboutJob: 'vapshe urish text. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description.',
-    jobImage: jobLogo,
-    viewCount: 10,
-    id: 4
-  }
-];
+
 
 const HomeJobs = (props) => {
   const {classes} = props;
-  const newJobsData = [...jobsData];
+  const [jobs, setJobs] = useState([]);
   const history = useHistory();
 
+  useEffect(() => {
+    let job = [];
+		const docRef = firestore.collection("companies");
+		docRef.get().then(function(querySnapshot) {
+			querySnapshot.forEach(function(doc) {
+				if (doc.data().companyJobs && doc.data().companyJobs.length !== 0){
+				job.push(doc.data().companyJobs);
+				let newArray = [];
+				job.forEach(item => {
+					newArray = newArray.concat(item);
+				});
+				setJobs(newArray);
+				};
+			});
+    });
+  }, []);
+  
   const handleClick = () => {
     history.push("/jobs");
   };
 
-  newJobsData.sort((a, b) => {
+  const singleJobBtn = (id) => {
+    history.push(`jobs/${id}`);
+  };
+
+  jobs.sort((a, b) => {
     return b.viewCount - a.viewCount;
   });
   
-  const job = newJobsData.slice(0, 3).map((el) => {
-    if (el.aboutJob.length > 50) {
-      el.aboutJob = el.aboutJob.substring(0, 50) + "...";
+  const job = jobs.slice(0, 3).map((el) => {
+    if (el.jobDetails.length > 50) {
+      el.jobDetails = el.jobDetails.substring(0, 50) + "...";
     };
     return (
       <Grid container
-        className={classes.aboutJob}
+        className={classes.jobDetails}
         alignItems="center"
         item xs={3}
-        key={el.id}>
-        <Grid justify="center"
-          container>
+        key={el.id}
+        onClick={() => singleJobBtn(el.id)}>
+        <Grid container justify='center'>
           <img className={classes.jobLogo} src={el.jobImage} alt={el.jobName}/>
         </Grid>
-        <Grid>
+        <Grid container justify='center'>
+          <h6 className={classes.aboutJobText}> {el.jobName} </h6>
+        </Grid>
+        <Grid container justify='center'>
           <h6 className={classes.aboutJobText}> {el.aboutJob} </h6>
+        </Grid>
+        <Grid container justify='center'>
+          <Button className={classes.allJobsBtn}
+            variant='contained'
+            onClick={handleClick}>
+            View more
+          </Button>
         </Grid>
       </Grid>
     );

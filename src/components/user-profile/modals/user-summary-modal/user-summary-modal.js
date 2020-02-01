@@ -12,6 +12,10 @@ const style = {
     outline: 'none',
     height: '200px !important',
   },
+  summaryModalBtn: {
+    padding: '5px !important',
+    minWidth: 0,
+  },
 };
 
 const UserSummaryModal = (props) => {
@@ -44,7 +48,7 @@ const UserSummaryModal = (props) => {
 
   return (
     <>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+      <Button className={classes.summaryModalBtn} variant="outlined" color="primary" onClick={handleClickOpen}>
         <CreateIcon/>
       </Button>
       <Dialog className={classes.formDialog} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">

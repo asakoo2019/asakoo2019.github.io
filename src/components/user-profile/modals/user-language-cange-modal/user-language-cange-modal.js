@@ -25,12 +25,13 @@ const style = {
   },
 };
 
-const UserLanguagesModal = (props) => {
+const UserLanguageCangeModal = (props) => {
   const { classes, user, showItems, dispatch } = props;
   const [open, setOpen] = useState(false);
   const [language, setLanguage] = useState('');
   const [level, setLevel] = useState('');
-  const id = require('uuid/v4');
+  const [currentLanguage, setCurrentLanguage] = useState(null);
+  const [languages, setLanguages] = useState([]);
 
   useEffect(() => {
     switch (language) {
@@ -56,24 +57,38 @@ const UserLanguagesModal = (props) => {
     };
   }, [level]);
 
+  useEffect(() => {
+    const current = {id: props.id, language, level};
+    setCurrentLanguage(current);
+  }, [language, level, props.id]);
+
   const handleClickOpen = () => {
-    setLanguage('');
-    setLevel('');
+    setLanguage(props.language);
+    setLevel(props.level);
+    user.userLanguages.forEach(item => {
+      if(item.id === props.id){
+        const index = user.userLanguages.findIndex((el) => el.id === item.id);
+        const newArray = [
+          ...user.userLanguages.slice(0, index),
+          ...user.userLanguages.slice(index + 1)
+        ];
+        setLanguages(newArray);
+      };
+    });
     setOpen(true);
   };
   
   const handleSave = () => {
-    if (language !== '' && level !== '') {
-    const currentLanguage = {language, level, id: id()};
-    firestore.collection("users").doc(props.id)
+    if(currentLanguage) {
+      firestore.collection("users").doc(user.id)
       .update({
-        userLanguages: [...user.userLanguages, currentLanguage]
+        userLanguages: [...languages, currentLanguage]
       }).catch(function(error) {
         console.error("Error updating document: ", error);
       });
-      dispatch({type: "SIGN-IN", payload: {...user, userLanguages: [...user.userLanguages, currentLanguage]}});
+      dispatch({type: "SIGN-IN", payload: {...user, userLanguages: [...languages, currentLanguage]}});
+      setOpen(false);
     };
-    setOpen(false);
   };
 
   const handleClose = () => {
@@ -82,8 +97,8 @@ const UserLanguagesModal = (props) => {
 
   return (
     <div>
-      {showItems && <Button className={classes.userLanguageModalBtn} variant='outlined' color="primary" onClick={handleClickOpen}>
-          <CreateIcon/>
+      {showItems && <Button className={classes.userLanguageModalBtn} onClick={handleClickOpen}>
+          <CreateIcon color='error'/>
         </Button>}
       <Dialog className={classes.formDialog} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogContent>
@@ -128,4 +143,4 @@ const UserLanguagesModal = (props) => {
   );
 };
 
-export default connect()(withStyles(style)(UserLanguagesModal));
+export default connect()(withStyles(style)(UserLanguageCangeModal));

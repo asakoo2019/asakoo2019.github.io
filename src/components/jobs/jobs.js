@@ -3,79 +3,80 @@ import JobsFilter from './jobs-filter';
 import JobsContainer from './jobs-container';
 import { Container, Grid } from '@material-ui/core';
 import { firestore } from '../firebase/db';
+import { withStyles } from '@material-ui/core/styles';
 
-function Jobs() {
-    const [jobs, setJobs] = useState([]);
+const styles = {
+	companies: {
+		marginTop: 24,
+		marginBottom: 24,
+	},
+};
 
-    useEffect(() => {
-        let job = [];
-        const docRef = firestore.collection("companies");
-        docRef.get().then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
-                if (doc.data().companyJobs && doc.data().companyJobs.length !== 0){
-                job.push(doc.data().companyJobs);
-                let newArray = [];
-                job.forEach(item => {
-                    newArray = newArray.concat(item)
-                });
-                setJobs(newArray);
-                };
-            });
-        });
-    }, []);
-    
-    const createJob = (jobCategory, id) => {
-        return {
-            jobCategory,
-            id,
-            checked: false,
-        }
-    }
+const Jobs = (props) => {
+	const { classes } = props;
+	const [jobs, setJobs] = useState([]);
+	const [allJobs, setAllJobs] = useState(true);
+	const [currentPage, setCurrentPage] = useState(10);
+  const [categories, setCategories] = useState([]);
 
-    const checkboxToggle = (jobName, item) => {
+	useEffect(() => {
+		let job = [];
+		const docRef = firestore.collection("companies");
+		docRef.get().then(function(querySnapshot) {
+			querySnapshot.forEach(function(doc) {
+				if (doc.data().companyJobs && doc.data().companyJobs.length !== 0){
+				job.push(doc.data().companyJobs);
+				let newArray = [];
+				job.forEach(item => {
+					newArray = newArray.concat(item);
+				});
+				setJobs(newArray);
+				};
+			});
+		});
+	}, []);
 
-        const { id, checked, ...rest  } = item;
+	const otherJobs = (i) => {
+    let num = i * 10;
+    setCurrentPage(num);
+  };
 
-        const idx = jobs.findIndex((item) => {
-            return item.id === id
-        })
-        const before = jobs.slice(0, idx);
-        const after = jobs.slice(idx + 1);
-        const newItem = Object.assign(createJob(jobs[idx].jobCategory, jobs[idx].id), {
-            checked: !checked,
-            l: jobName,
-            ...rest})
+  const drawJobs = (jobs) => {
+    const result = [];
+    const len = jobs.length;
+    for (let i = 0; i < len; i++){
+      for (let j = 0; j < categories.length; j++){
+        if (categories[j] === jobs[i].jobCategory){
+          result.push(jobs[i]);
+        };
+      };
+		};
+    return result;
+	};
+	
+	const renderJobs = allJobs ? [...jobs] : drawJobs(jobs);
 
-        setJobs([
-            ...before,
-            newItem,
-            ...after,
-        ])
+	return (
+		<Container>
+			<Grid container
+				justify='space-between'
+				className={classes.companies}>
+				<Grid item xs={3}>
+					<JobsFilter
+						jobs = { jobs }
+						setCurrentPage={setCurrentPage}
+						setCategories={setCategories}
+						setAllJobs={setAllJobs}/>
+				</Grid>
+				<Grid item xs={9}>
+					<JobsContainer
+					renderJobs={renderJobs}
+					currentPage={currentPage}
+					otherJobs={otherJobs} />
+				</Grid>
+			</Grid>
+		</Container>
+	);
+};
 
-    }
-
-    const jobsChecked = jobs.filter(item => item.checked)
-    const checked = [];
-
-    jobsChecked.forEach(item => {
-
-        if (item.l) checked.push(item.l)
-    })
-
-    const newJob = jobs.filter(item => checked.includes(item.jobCategory))
-
-    return (
-        <Container>
-            <Grid container
-                justify='space-between'>
-                <JobsFilter 
-                    jobs = { jobs }
-                    checkboxChange= { checkboxToggle } />
-                <JobsContainer
-                    jobs = { checked.length ? newJob : jobs } />
-            </Grid>
-        </Container>
-    )
-}
-
-export default Jobs;
+export default withStyles(styles)(Jobs);

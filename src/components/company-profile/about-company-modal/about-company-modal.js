@@ -12,7 +12,8 @@ import { firestore } from '../../firebase/db';
 
 const style = {
   aboutCompanyModalBtn: {
-    height: 34,
+    padding: '5px !important',
+    minWidth: 0,
   },
   select: {
     minWidth: 200,
