@@ -6,6 +6,7 @@ const useStyles = makeStyles(theme => ({
     root: {
       flexGrow: 1,
       textAlign: 'center',
+      backgroundColor: 'rgb(255, 255, 204)',
     },
     aboutCompDiv: {
         width: "100%",
@@ -32,8 +33,7 @@ export default function AboutCompany ({companyInfo}) {
             <Grid 
                 className = {classes.aboutCompDiv}
             >
-                <p>industry: {companyInfo.companyCategory}</p>
-                <p>Type: {}</p>    
+                <p>industry: {companyInfo.companyCategory}</p>    
             </Grid>
         </Grid>
     );

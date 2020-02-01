@@ -6,6 +6,7 @@ const useStyles = makeStyles(theme => ({
     root: {
       flexGrow: 1,
       width: '100%',
+      //backgroundColor: 'rgb(255, 255, 204)',
     },
     contactInfo :{
         textAlign: 'left',
@@ -25,9 +26,9 @@ export default function Contacts ({companyInfo}) {
         >
             <h3>CONTACTS</h3>
             <div>
-                <p>e-mail: <span>{companyInfo.email},</span></p>
+                <p>e-mail: <span>{companyInfo.email} </span></p>
                 <p>adress: <span>{companyInfo.companyCity}, {companyInfo.companyAdress}</span></p>
-                <p>website: <span>{companyInfo.email},</span></p>
+                <p>website: <span>{companyInfo.companyWebsite} </span></p>
             </div>
             
         </Grid> 
