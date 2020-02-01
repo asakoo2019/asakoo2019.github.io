@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DialogContent, DialogActions, Dialog, Button, TextField, Grid, TextareaAutosize, DialogContentText } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
 import CreateIcon from '@material-ui/icons/Create';
@@ -21,7 +21,7 @@ const style = {
   },
 };
 
-const UserExperienceModal = (props) => {
+const UserExperienceCangeModal = (props) => {
   const { classes, user, dispatch } = props;
   const [open, setOpen] = useState(false);
   const [companyName, setCompanyName] = useState('');
@@ -30,31 +30,46 @@ const UserExperienceModal = (props) => {
   const [from, setFrom] = useState('');
   let [to, setTo] = useState('');
   const [jobDetails, setJobDetails] = useState('');
-  const id = require('uuid/v4');
+  const [currentExperience, setCurrentExperience] = useState(null);
+  const [experience, setExperience] = useState([]);
 
   const handleClickOpen = () => {
-    setCompanyName('');
-    setJobTitle('');
-    setCategory('');
-    setFrom('');
-    setTo('');
-    setJobDetails('');
+    setCompanyName(props.item.companyName);
+    setJobTitle(props.item.jobTitle);
+    setCategory(props.item.category);
+    setFrom(props.item.from);
+    setTo(props.item.to);
+    setJobDetails(props.item.jobDetails);
+    user.userWorkExperience.forEach(item => {
+      if(item.id === props.item.id){
+        const index = user.userWorkExperience.findIndex((el) => el.id === item.id);
+        const newArray = [
+          ...user.userWorkExperience.slice(0, index),
+          ...user.userWorkExperience.slice(index + 1)
+        ];
+        setExperience(newArray);
+      };
+    });
     setOpen(true);
   };
+
+  useEffect(() => {
+    const current = {id: props.item.id, companyName, jobTitle, category, from, to, jobDetails};
+    setCurrentExperience(current);
+  }, [companyName, jobTitle, category, from, to, jobDetails, props.item.id]);
 
   const handleSave = () => {
     if (to === '') {
       to = 'until now';
     };
-    if (companyName !== '' && jobTitle !== '' && category !== '' && from !== ''){
-      const currentExperiance = {companyName, jobTitle, category, from, to, jobDetails, id: id()};
-      firestore.collection("users").doc(props.id)
+    if (companyName !== '' && jobTitle !== '' && category !== '' && from !== '' && currentExperience){
+      firestore.collection("users").doc(user.id)
       .update({
-        userWorkExperience: [...user.userWorkExperience, currentExperiance]
+        userWorkExperience: [...experience, currentExperience]
       }).catch(function(error) {
         console.error("Error updating document: ", error);
       });
-      dispatch({type: "SIGN-IN", payload: {...user, userWorkExperience: [...user.userWorkExperience, currentExperiance]}});
+      dispatch({type: "SIGN-IN", payload: {...user, userWorkExperience: [...experience, currentExperience]}});
     };
     setOpen(false);
   };
@@ -65,8 +80,8 @@ const UserExperienceModal = (props) => {
 
   return (
     <>
-      <Button className={classes.userExperianceModalBtn} variant="outlined" color="primary" onClick={handleClickOpen}>
-        <CreateIcon/>
+      <Button className={classes.userExperianceModalBtn} color="primary" onClick={handleClickOpen}>
+        <CreateIcon color='error'/>
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogContent>
@@ -127,4 +142,4 @@ const UserExperienceModal = (props) => {
   );
 };
 
-export default connect()(withStyles(style)(UserExperienceModal));
+export default connect()(withStyles(style)(UserExperienceCangeModal));

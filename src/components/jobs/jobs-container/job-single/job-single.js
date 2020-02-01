@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Grid } from '@material-ui/core';
-import { firestore } from '../../../firebase/db';
+import { firestore, database } from '../../../firebase/db';
 import { useHistory } from 'react-router-dom';
 
 const JobSingle = () => {
@@ -11,7 +11,6 @@ const JobSingle = () => {
 	const pathName = history.location.pathname;
 	const LastSleshIndex = pathName.lastIndexOf('/');
 	const searchId = pathName.slice(LastSleshIndex + 1);
-	console.log(id);
 
 	useEffect(() => {
 		let job = [];
@@ -26,10 +25,20 @@ const JobSingle = () => {
 		});
 	}, []);
 
+	// job.map(item => {
+	// 	if(item.id === searchId) {
+	// 		firestore.collection("companies").doc(id)
+	// 		.update({
+	// 			companyJobs: [...job, (job.viewCount + 1)]
+	// 		});
+	// 		console.log(item);
+	// 	};
+	// });
+
 	useEffect(() => {
 		const element = job.map(item => {
 			if (item.id === searchId) {
-				setId(item.id);
+				setId(item.companyId);
 				return (
 					<Grid key={item.id}>
 						<h1>{item.jobName}</h1>

@@ -68,7 +68,7 @@ const JobsContainer = (props) => {
 					<p>Total view { viewCount }</p>
 				</Grid>
 				<Grid item xs={2}>
-					<Button className={classes.viewMoreBtn} onClick={() => viewMore(id)}>
+					<Button color='primary' variant="outlined" className={classes.viewMoreBtn} onClick={() => viewMore(id)}>
 					View More
 				</Button>
 				</Grid>

@@ -4,6 +4,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from 'react-redux';
 import { firestore } from '../../firebase/db';
+import CompanyJobsCangeModal from '../company-jobs-cange-modal';
 
 const style = {
   jobBtn: {
@@ -37,22 +38,27 @@ const CompanyJobs = (props) => {
       return (
         <Grid container
           key={item.id}>
-          <Grid item xs={3}>
+          <Grid item xs={12} sm={3}>
             <h6>{item.jobName}</h6>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={12} sm={3}>
             <h6>{item.term}</h6>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={12} sm={3}>
             <h6>{item.jobType}</h6>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={12} sm={2}>
             <h6>{item.location}</h6>
           </Grid>
-          <Grid item xs={1}>
-            {showItems && <Button className={classes.jobBtn} color='primary' onClick={() => deleteItem(item.id)}>
-              <DeleteIcon color='error'/>
-            </Button>}
+          <Grid container item xs={1} sm={1} justify="center">
+            <Grid>
+              {showItems && <CompanyJobsCangeModal company={company} showItems={showItems} item={item}/>}
+            </Grid>
+            <Grid>
+              {showItems && <Button className={classes.jobBtn} color='primary' onClick={() => deleteItem(item.id)}>
+                <DeleteIcon color='error'/>
+              </Button>}
+            </Grid>
           </Grid>
           <Grid item xs={12}>
             <p>{item.jobDetails}</p>

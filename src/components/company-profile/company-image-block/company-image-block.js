@@ -48,6 +48,9 @@ const CompanyImageBlock = (props) => {
 						});
 					};
 					dispatch({type: "SIGN-IN", payload: {...company, companyImage: downloadURL}});
+					company.companyJobs.forEach(item => {
+						item.jobImage = downloadURL;
+					});
 				});
 			});
 			setOpen(false);

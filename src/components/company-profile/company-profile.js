@@ -14,6 +14,7 @@ import CompanySummaryModal from './company-summary-modal';
 import CompanyJobs from './company-jobs';
 import CompanyJobsModal from './company-jobs-modal';
 import './company-profile.css';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = {
   companyAllBlocks: {
@@ -34,6 +35,9 @@ const styles = {
   aboutCompanyIcons: {
     color: '#FE654F',
   },
+  companyProfileLoader: {
+    margin: 50,
+  },
 };
 
 const mStP = (state) => ({
@@ -47,99 +51,110 @@ const CompanyProfile = (props) => {
 
   return (
     <Container className='companyBlock'>
-      
-       {/* About Company Block */}
-       <Grid container
-        className={classNames(classes.aboutCompanyBlock, classes.companyAllBlocks)}
-        justify='space-between'
-        alignItems='center'>
+      {props.company ?
+      <>
+        {/* About Company Block */}
         <Grid container
-          item xs={12} sm={4} md={2}>
-          {showItems ? <CompanyImageBlock showItems={showItems} company={company} id={id} /> : <CompanyImageBlock company={company} id={id} />}
-        </Grid>
-        <Grid container
-          item xs={12} sm={8} md={10}
-          direction='column'>
+          className={classNames(classes.aboutCompanyBlock, classes.companyAllBlocks)}
+          justify='space-between'
+          alignItems='center'
+          spacing={2}>
           <Grid container
-            justify='space-around'
-            alignItems='center'>
-            <Grid container item xs={11}>
-              <h5 className={classes.companyName}>{company.companyName}</h5>
-              <h5>{company.registerName}</h5>
-            </Grid>
-            {showItems && <AboutCompanyModal company={company} id={id} />}
+            item xs={12} sm={4} md={2}>
+            {showItems ? <CompanyImageBlock showItems={showItems} company={company} id={id} /> : <CompanyImageBlock company={company} id={id} />}
           </Grid>
           <Grid container
-            justify='space-around'>
+            item xs={12} sm={8} md={10}
+            direction='column'>
             <Grid container
-              item lg={3} md={6} sm={12}
+              justify='space-around'
               alignItems='center'>
-              <PhoneIcon className={classes.aboutCompanyIcons}/>
-              <p className={classes.companyLine}>{company.companyPhoneNumber}</p>
+              <Grid container item xs={12} justify='space-between'>
+                <Grid>
+                  <h5 className={classes.companyName}>
+                    {company.companyName} {company.registerName}
+                  </h5>
+                </Grid>
+                <Grid>
+                  {showItems && <AboutCompanyModal company={company} id={id} />}
+                </Grid>
+              </Grid>
             </Grid>
             <Grid container
-              item lg={4} md={6} sm={12}
-              alignItems='center'>
-              <MailIcon className={classes.aboutCompanyIcons}/>
-              <p className={classes.companyLine}>{company.email}</p>
+              justify='space-around'>
+              <Grid container
+                item lg={3} md={6} sm={12}
+                alignItems='center'>
+                <PhoneIcon className={classes.aboutCompanyIcons}/>
+                <p className={classes.companyLine}>{company.companyPhoneNumber}</p>
+              </Grid>
+              <Grid container
+                item lg={4} md={6} sm={12}
+                alignItems='center'>
+                <MailIcon className={classes.aboutCompanyIcons}/>
+                <p className={classes.companyLine}>{company.email}</p>
+              </Grid>
+              <Grid container
+                item lg={5} sm={12}
+                alignItems='center'>
+              <LocationOnIcon className={classes.aboutCompanyIcons}/>
+                <p className={classes.companyLine}>
+                  {`${company.companyAdress} ${company.companyCity} ${company.companyCountry}`}
+                </p>
+              </Grid>
             </Grid>
             <Grid container
-              item lg={5} sm={12}
               alignItems='center'>
-            <LocationOnIcon className={classes.aboutCompanyIcons}/>
+              <DateRangeIcon className={classes.aboutCompanyIcons}/>
               <p className={classes.companyLine}>
-                {`${company.companyAdress} ${company.companyCity} ${company.companyCountry}`}
+                {company.companyCreatingData}
+              </p>
+            </Grid>
+            <Grid container
+              alignItems='center'>
+              <CategoryIcon className={classes.aboutCompanyIcons}/>
+              <p className={classes.companyLine}>
+                {company.companyCategory}
               </p>
             </Grid>
           </Grid>
-          <Grid container
-            alignItems='center'>
-            <DateRangeIcon className={classes.aboutCompanyIcons}/>
-            <p className={classes.companyLine}>
-              {company.companyCreatingData}
+        </Grid>
+
+        {/* Company Summary Block */}
+        <Grid container
+          className={classNames(classes.companySummaryBlock, classes.companyAllBlocks)}
+          alignItems='center'
+          justify='space-between'>
+          <Grid item xs={9} sm={10}>
+            <h5>Summary</h5>
+            <p>
+              {company.aboutCompany ? company.aboutCompany : 'Add a short professional introduction by highlighting your most valuable skills and experiences in a few sentences.'}
             </p>
           </Grid>
-          <Grid container
-            alignItems='center'>
-            <CategoryIcon className={classes.aboutCompanyIcons}/>
-            <p className={classes.companyLine}>
-              {company.companyCategory}
-            </p>
+          <Grid container item xs={2}
+            justify='flex-end'>
+            {showItems && <CompanySummaryModal company={company} id={id} />}
           </Grid>
         </Grid>
-      </Grid>
 
-      {/* Company Summary Block */}
-      <Grid container
-        className={classNames(classes.companySummaryBlock, classes.companyAllBlocks)}
-        alignItems='center'
-        justify='space-between'>
-        <Grid item xs={10}>
-          <h5>Summary</h5>
-          <p>
-            {company.aboutCompany ? company.aboutCompany : 'Add a short professional introduction by highlighting your most valuable skills and experiences in a few sentences.'}
-          </p>
+        {/* Company Jobs Block */}
+        <Grid container
+          className={classNames(classes.companyJobsBlock, classes.companyAllBlocks)}
+          alignItems='center'
+          justify='space-between'>
+          <Grid item xs={9} sm={10}>
+            <h5>Jobs</h5>
+            {company.companyJobs ? (company.companyJobs.length ? (showItems ? <CompanyJobs company={company} id={id} showItems={showItems}/> : <CompanyJobs company={company} id={id} />) : 'Add jobs.') : null}
+          </Grid>
+          <Grid container item xs={2}
+            justify='flex-end'>
+            {showItems ? <CompanyJobsModal company={company} showItems={showItems} id={id} /> : <CompanyJobsModal company={company} id={id} />}
+          </Grid>
         </Grid>
-        <Grid container item xs={1}
-          justify='flex-end'>
-          {showItems && <CompanySummaryModal company={company} id={id} />}
-        </Grid>
-      </Grid>
-
-      {/* Company Jobs Block */}
-      <Grid container
-        className={classNames(classes.companyJobsBlock, classes.companyAllBlocks)}
-        alignItems='center'
-        justify='space-between'>
-        <Grid item xs={10}>
-          <h5>Jobs</h5>
-          {company.companyJobs ? (company.companyJobs.length ? (showItems ? <CompanyJobs company={company} id={id} showItems={showItems}/> : <CompanyJobs company={company} id={id} />) : 'Add jobs.') : null}
-        </Grid>
-        <Grid container item xs={1}
-          justify='flex-end'>
-          {showItems ? <CompanyJobsModal company={company} showItems={showItems} id={id} /> : <CompanyJobsModal company={company} id={id} />}
-        </Grid>
-      </Grid>
+      </> : 
+      <Grid container justify='center'>
+        <CircularProgress size={150} className={classes.companyProfileLoader}/>
+      </Grid>}
       
     </Container>
   );
