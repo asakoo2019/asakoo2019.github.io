@@ -1,11 +1,14 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Grid } from '@material-ui/core';
+import { Button, Grid,  } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
     },
+    button: {
+        margin: theme.spacing(1),
+    }
 }));
 
 function PaginationBar({ maxPageButton, otherCopmanies }) {
@@ -17,6 +20,9 @@ function PaginationBar({ maxPageButton, otherCopmanies }) {
         let result = [];
         for (let i = 1; i <= maxPageButton; i++) {
             result.push(<Button
+                className={classes.button}
+                size="small"
+                variant="contained"
                 key={`${i}`}
                 onClick={(e) => handleChange(e, i)}
             >
@@ -33,6 +39,7 @@ function PaginationBar({ maxPageButton, otherCopmanies }) {
         >
             {button()}
         </Grid>
+
     );
 }
 export default PaginationBar;

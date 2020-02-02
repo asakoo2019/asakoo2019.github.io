@@ -11,9 +11,10 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(2),
         color: 'red',
     },
-    // formControlLabel:{
-    //     color: 'blue',
-    // }
+    formControlLabel:{
+        color: 'blue',
+        
+    }
 }));
 
 const companyCategoryArr = [
@@ -50,7 +51,7 @@ function CompanyFilterBar({ filterCompany }) {
                 <FormGroup>
                     {companyCategoryArr.map(item => {
                         return (
-                            <FormControlLabel className={classes.formControlLabel}
+                            <FormControlLabel className={classes.formControlLabel} 
                                 key={item}
                                 control={<Checkbox />}
                                 label={item}

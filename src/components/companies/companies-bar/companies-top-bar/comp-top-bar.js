@@ -5,6 +5,9 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
+        padding: theme.spacing(2),
+        backgroundColor: 'rgb(255, 224, 204, 0.5)',
+        color: "blue",
     },
 }));
 
