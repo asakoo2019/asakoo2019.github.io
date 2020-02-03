@@ -1,32 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { Grid, Container } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import TopBar from './top-bar/topBar';
+// import { makeStyles } from '@material-ui/core/styles';
+import TopBar from './top-bar/top-bar';
 import AboutCompany from './about-company-bar/about-company';
 import ActiveJobs from './activ-jobs-bar/activ-jobs';
 import Contacts from './contacts-bar/company-contacts';
 import { useParams } from "react-router-dom";
 import { firestore } from '../firebase/db';
 
-const useStyles = makeStyles(theme=> ({
-  root: {
-    flexGrow: 1,
-    overflow: 'hidden',
-    padding: theme.spacing(0, 3),
-  },
-  paper: {
-    maxWidth: 400,
-    margin: `${theme.spacing(1)}px auto`,
-    padding: theme.spacing(2),
-  },
+// const useStyles = makeStyles(theme=> ({
+//   root: {
+//     flexGrow: 1,
+//     // overflow: 'hidden',
+//     // padding: theme.spacing(0, 3),
+//   },
+//   // component: {
+//   //   marginTop: theme.spacing(1),
+//   //   // padding: theme.spacing(2),
+//   // },
   
-}));
+// }));
 
 function CompaniesSinglePage() {
   const [company, setCompany] = useState({});
   const params = useParams();
-  const classes = useStyles();
-  
+
   const drawPage = ()=> {
     if (company.hasOwnProperty('id')) {
       const aboutcompany = company.aboutCompany ? <AboutCompany companyInfo={company} /> : null;
@@ -70,9 +68,7 @@ function CompaniesSinglePage() {
   }, [params.id]);
 
   return (
-    <Container 
-      maxWidth='lg'
-      className = {classes.root}
+    <Container maxWidth='lg' //className = {classes.root}
     >
       {drawPage()}
     </Container>

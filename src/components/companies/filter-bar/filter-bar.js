@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, FormLabel, FormControl, FormGroup, FormControlLabel, Checkbox } from '@material-ui/core';
+import { FormLabel, FormControl, FormGroup, FormControlLabel, Checkbox } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
@@ -9,12 +9,12 @@ const useStyles = makeStyles(theme => ({
     },
     formControl: {
         padding: theme.spacing(2),
-        color: 'red',
+        // color: 'red',
     },
-    formControlLabel:{
-        color: 'blue',
+    // formControlLabel:{
+    //     color: 'blue',
         
-    }
+    // }
 }));
 
 const companyCategoryArr = [

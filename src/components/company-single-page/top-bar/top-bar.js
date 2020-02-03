@@ -1,6 +1,8 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
+import {Grid, Box} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import './top-bar.css';
+
 
 let bgimage = 'url(https://visme.co/blog/wp-content/uploads/2017/07/50-Beautiful-and-Minimalist-Presentation-Backgrounds-027.jpg)'
 const useStyles = makeStyles(theme => ({
@@ -9,10 +11,11 @@ const useStyles = makeStyles(theme => ({
       backgroundImage: bgimage,
       height: '400px',
       width: '100%',
+      margin: theme.spacing(2, 0),
     },
     topBarDiv: {
-      padding: theme.spacing(2),
-      backgroundColor: 'rgb(255, 255, 255, 0.5)',
+      padding: theme.spacing(1, 2),
+      backgroundColor: 'rgb(255, 255, 179, 0.5)',
       textAlign: 'center',
     },
     topBarImg: {
@@ -22,6 +25,9 @@ const useStyles = makeStyles(theme => ({
     topBarInfo: {
         marginLeft: 20,
     },
+    p: {
+        margin:  theme.spacing(0),
+    }
 }));
 function TopBar ({companyInfo}) {
     const classes = useStyles();
@@ -38,13 +44,13 @@ function TopBar ({companyInfo}) {
                 alignItems="center"
                 className = {classes.topBarDiv}
             >
-                <Grid item xs={2}>
+                <Grid item xs={3}>
                     <img src = {companyInfo.companyImage} alt = {`${companyInfo.companyName} pic`} className = {classes.topBarImg}/>
                 </Grid>
-                <Grid container item xs={9} direction='column' alignItems='flex-start' className={classes.topBarInfo}>
+                <Grid container item xs={7} direction='column' alignItems='flex-start' className={classes.topBarInfo}>
                     <h4>{companyInfo.companyName}</h4>
-                    <p>{companyInfo.companyViewCount + 1} views</p>
-                    <p>{companyInfo.companyJobs.length} activ jobs</p>
+                    <Box>{companyInfo.companyViewCount + 1} views</Box>
+                    <p>{companyInfo.companyJobs.length} active jobs</p>
                 </Grid>
             </Grid>
         </Grid>
