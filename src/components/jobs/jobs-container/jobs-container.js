@@ -9,6 +9,7 @@ const styles = {
 		marginBottom: 10,
 		padding: '10px 0',
 		borderBottom: '1px solid #FE654F',
+		cursor: 'pointer',
 	},
 	paginationBtn: {
 		padding: '8px 15px !important',
@@ -66,7 +67,8 @@ const JobsContainer = (props) => {
 				justify='space-between'
 				className={ classes.jobBlock}
 				key={ id }
-				spacing={1}>
+				spacing={1}
+				onClick={() => viewMore(id)}>
 				<Grid container justify="center" item xs={2}>
 					<img src={ jobImage } alt={ jobCategory } className={classes.jobImage}/>
 				</Grid>

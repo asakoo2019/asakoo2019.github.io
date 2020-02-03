@@ -18,11 +18,13 @@ const styles = {
   },
   companyLogo: {
     borderRadius: 10,
-    width: '90%'
+    width: '90%',
+    height: 200,
+    objectFit: 'cover',
   },
   aboutCompanyText: {
     textAlign: 'center'
-  }
+  },
 };
 
 const HomeCompanies = (props) => {
