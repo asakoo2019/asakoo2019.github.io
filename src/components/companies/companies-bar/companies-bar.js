@@ -9,9 +9,10 @@ import { Grid } from '@material-ui/core';
 const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
+        marginTop: theme.spacing(1),
     },
     gridSpace: {
-        padding: theme.spacing(2),
+        padding: theme.spacing(1),
         width: '100%',
     },
 }));
@@ -25,10 +26,9 @@ export default function CompaniesBar({ employer, otherCopmanies, currPage }) {
             direction="column"
             justify="flex-start"
             alignItems="flex-start"
+            className = {classes.root}
         >
-            <Grid item
-                className={classes.gridSpace}
-            >
+            <Grid item>
                 <CompaniesBarTop employer={employer} />
             </Grid>
             <Grid item

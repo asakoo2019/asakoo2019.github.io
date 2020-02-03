@@ -24,7 +24,7 @@ function PaginationBar({ maxPageButton, otherCopmanies }) {
                 size="small"
                 variant="contained"
                 key={`${i}`}
-                onClick={(e) => handleChange(e, i)}
+                onClick={() => handleChange(i)}
             >
                 {i}
             </Button>)

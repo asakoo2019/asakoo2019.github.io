@@ -1,6 +1,6 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import {Typography, Box, Grid} from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -26,12 +26,12 @@ export default function Contacts ({companyInfo}) {
             alignItems="center"
             className = {classes.root}
         >
-            <h3>CONTACTS</h3>
-            <div>
-                <p>e-mail: <span>{companyInfo.email} </span></p>
-                <p>adress: <span>{companyInfo.companyCity}, {companyInfo.companyAdress}</span></p>
-                <p>website: <span>{companyInfo.companyWebsite} </span></p>
-            </div>
+            <Typography variant ='h3'>CONTACTS</Typography>
+            <Box>
+                <Typography>e-mail: <span>{companyInfo.email} </span></Typography>
+                <Typography>adress: <span>{companyInfo.companyCity}, {companyInfo.companyAdress}</span></Typography>
+                <Typography>website: <span>{companyInfo.companyWebsite} </span></Typography>
+            </Box>
             
         </Grid> 
     );

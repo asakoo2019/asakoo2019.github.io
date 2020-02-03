@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button,Typography, Paper  } from '@material-ui/core';
+import { Button,Typography, Paper, Grid  } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import './activ-jobs.css';
 
@@ -39,7 +38,7 @@ export default function ActiveJobs({ companyInfo }) {
     const history = useHistory();
     const [plus, setPlus] = useState(0);
     const jobs = companyInfo.companyJobs.slice(plus, plus + 3).map(item => {
-        const jobCategoryText = item.jobDetails.length > 20 ? item.jobDetails.slice(0, 100) + '...' : item.jobDetails;
+        const jobCategoryText = item.jobDetails.length > 20 ? item.jobDetails.slice(0, 60) + '...' : item.jobDetails;
         return (
             <Grid item xs={3}
                 key={item.id}
@@ -48,11 +47,11 @@ export default function ActiveJobs({ companyInfo }) {
             >
                 <Paper className={classes.paper}>
                     <Grid>
-                        <h6 className={classes.jobName}>{item.jobName}</h6>
+                        <Typography variant="h6" className={classes.jobName}>{item.jobName}</Typography>
                     </Grid>
                     <Grid>
-                        <span>Deadline: {item.jobDeadline} </span>
-                        <span> {item.location}</span>
+                        <Typography>Deadline: {item.jobDeadline} </Typography>
+                        <Typography> {item.location}</Typography>
 
                     </Grid>
                     <Grid>
@@ -85,7 +84,7 @@ export default function ActiveJobs({ companyInfo }) {
         <Grid
             className={classes.root}
         >
-            <h3>ACTIVE JOBS ({companyInfo.companyJobs.length})</h3>
+            <Typography variant="h3">ACTIVE JOBS ({companyInfo.companyJobs.length})</Typography>
             <Grid
                 container
                 direction="row"

@@ -24,7 +24,23 @@ import { firestore } from '../firebase/db';
 function CompaniesSinglePage() {
   const [company, setCompany] = useState({});
   const params = useParams();
-
+  useEffect(() => {
+    firestore.collection("companies").get().then((querySnapshot) => {
+      let data = [];
+      let company;
+      querySnapshot.forEach((doc) => {
+        if (Object.keys(doc.data()).length !== 0) {
+          data.push(doc.data());
+        };
+      });
+      data.forEach(item => {
+        if (params.id === item.id) {
+          company = item;
+          setCompany(company);
+        }
+      })
+    });
+  }, [params.id]);
   const drawPage = ()=> {
     if (company.hasOwnProperty('id')) {
       const aboutcompany = company.aboutCompany ? <AboutCompany companyInfo={company} /> : null;
@@ -46,26 +62,10 @@ function CompaniesSinglePage() {
       );
 
     } else {
-      return (<div></div>);
+      return (null);
     }
   }
-  useEffect(() => {
-    firestore.collection("companies").get().then((querySnapshot) => {
-      let data = [];
-      let company;
-      querySnapshot.forEach((doc) => {
-        if (Object.keys(doc.data()).length !== 0) {
-          data.push(doc.data());
-        };
-      });
-      data.forEach(item => {
-        if (params.id === item.id) {
-          company = item;
-          setCompany(company);
-        }
-      })
-    });
-  }, [params.id]);
+
 
   return (
     <Container maxWidth='lg' //className = {classes.root}

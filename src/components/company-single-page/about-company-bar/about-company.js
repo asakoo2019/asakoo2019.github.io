@@ -1,6 +1,7 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import {Typography} from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -21,7 +22,7 @@ export default function AboutCompany ({companyInfo}) {
         <Grid
             className = {classes.root}
         >
-            <h3>ABOUT {companyInfo.companyName}</h3>
+            <Typography variant ='h3'>ABOUT {companyInfo.companyName}</Typography>
             <Grid 
                container
                direction="column"
@@ -30,12 +31,12 @@ export default function AboutCompany ({companyInfo}) {
                className = {classes.aboutCompDiv}
             >
                 
-                <p>{companyInfo.aboutCompany}</p> 
+                <Typography>{companyInfo.aboutCompany}</Typography> 
             </Grid>
             <Grid 
                 className = {classes.aboutCompDiv}
             >
-                <p>industry: {companyInfo.companyCategory}</p>    
+                <Typography>industry: {companyInfo.companyCategory}</Typography>    
             </Grid>
         </Grid>
     );
