@@ -4,6 +4,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { withStyles } from "@material-ui/core/styles";
 import { firestore } from '../../firebase/db';
 import { connect } from 'react-redux';
+import UserLanguageCangeModal from '../modals/user-language-cange-modal';
 
 const style = {
   languageBtn: {
@@ -36,17 +37,23 @@ const Languages = (props) => {
     language = user.userLanguages.map((item) => {
       return (
         <Grid container
-          key={item.id}>
-          <Grid item xs={3}>
+          key={item.id}
+          alignItems='center'>
+          <Grid item xs={12} sm={4}>
             <h6>{item.language}</h6>
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={12} sm={7}>
             <p>{item.level}</p>
           </Grid>
-          <Grid item xs={1}>
-            {showItems && <Button className={classes.languageBtn} color='primary' onClick={() => deleteItem(item.id)}>
-              <DeleteIcon color='error'/>
-            </Button>}
+          <Grid container item xs={12} sm={1} justify="center">
+            <Grid item>
+              {showItems && <UserLanguageCangeModal user={user} id={item.id} level={item.level} language={item.language} showItems={showItems}/>}
+            </Grid>
+            <Grid item>
+              {showItems && <Button className={classes.languageBtn} color='primary' onClick={() => deleteItem(item.id)}>
+                <DeleteIcon color='error'/>
+              </Button>}
+            </Grid>
           </Grid>
         </Grid>
       );

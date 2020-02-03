@@ -12,7 +12,8 @@ import { connect } from 'react-redux';
 
 const style = {
   aboutUserModalBtn: {
-    height: 34,
+    padding: '5px !important',
+    minWidth: 0,
   },
   userPhoneNumber: {
     maxWidth: 200,

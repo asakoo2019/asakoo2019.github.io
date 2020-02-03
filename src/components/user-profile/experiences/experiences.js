@@ -4,6 +4,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { withStyles } from "@material-ui/core/styles";
 import { firestore } from '../../firebase/db';
 import { connect } from 'react-redux';
+import UserExperienceCangeModal from '../modals/user-experience-cange-modal';
 
 const style = {
   experienceBtn: {
@@ -36,20 +37,26 @@ const Experiences = (props) => {
     experience = user.userWorkExperience.map((item) => {
       return (
         <Grid container
-          key={item.id}>
-          <Grid item xs={4}>
+          key={item.id}
+          alignItems='center'>
+          <Grid item xs={10} sm={4}>
             <h6>{item.companyName}</h6>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={10} sm={4}>
             <p>{item.jobTitle}</p>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={10} sm={3}>
             <p>{`${item.from} - ${item.to}`}</p>
           </Grid>
-          <Grid item xs={1}>
-            {showItems && <Button className={classes.experienceBtn} color='primary' onClick={()=>{deleteItem(item.id)}}>
+          <Grid container item xs={2} sm={1} justify="center">
+            <Grid>
+              {showItems && <UserExperienceCangeModal item={item} user={user} showItems={showItems}/>}
+            </Grid>
+            <Grid>
+              {showItems && <Button className={classes.experienceBtn} color='primary' onClick={()=>{deleteItem(item.id)}}>
               <DeleteIcon color='error'/>
             </Button>}
+            </Grid>
           </Grid>
           <Grid item xs={12}>
             <p>{item.experienceDetails}</p>

@@ -1,6 +1,8 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
+import {Grid, Box} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import './top-bar.css';
+
 
 let bgimage = 'url(https://visme.co/blog/wp-content/uploads/2017/07/50-Beautiful-and-Minimalist-Presentation-Backgrounds-027.jpg)'
 const useStyles = makeStyles(theme => ({
@@ -8,18 +10,23 @@ const useStyles = makeStyles(theme => ({
       flexGrow: 1,
       backgroundImage: bgimage,
       height: '400px',
+      width: '100%',
+      margin: theme.spacing(2, 0),
     },
     topBarDiv: {
-      padding: theme.spacing(2),
-      backgroundColor: 'rgb(255, 255, 255, 0.5)',
+      padding: theme.spacing(1, 2),
+      backgroundColor: 'rgb(255, 255, 179, 0.5)',
       textAlign: 'center',
-      width: '100%',
-      height: '180px',
     },
     topBarImg: {
-        width: '150px',
-        height: '150px',
+        width: '100%',
         backgroundColor: 'rgb(255, 255, 255)',
+    },
+    topBarInfo: {
+        marginLeft: 20,
+    },
+    p: {
+        margin:  theme.spacing(0),
     }
 }));
 function TopBar ({companyInfo}) {
@@ -28,28 +35,22 @@ function TopBar ({companyInfo}) {
     bgimage = companyInfo.companyBackground? companyInfo.companyBackground: bgimage;
     //console.log(companyInfo.companyBackground);
     return(
-        <Grid
-            container
-            alignItems="flex-end"
+        <Grid container
+            direction='column'
+            justify="flex-end"
             className = {classes.root}
         >
-            <Grid 
-                container
-                direction="row"
-                justify="space-between"
+            <Grid container
                 alignItems="center"
                 className = {classes.topBarDiv}
             >
-                <Grid 
-                >
-                    <img src = {companyInfo.companyImage} alt = 'Company pic' className = {classes.topBarImg}/>
+                <Grid item xs={3}>
+                    <img src = {companyInfo.companyImage} alt = {`${companyInfo.companyName} pic`} className = {classes.topBarImg}/>
                 </Grid>
-                <Grid >
-                    <h1>{companyInfo.companyName}</h1>
-                    <p><span>{companyInfo.companyViewCount+1}</span> views</p>
-                </Grid>
-                <Grid >
-                    <p>{companyInfo.companyJobs ? companyInfo.companyJobs.length : ''} activ jobs</p>
+                <Grid container item xs={7} direction='column' alignItems='flex-start' className={classes.topBarInfo}>
+                    <h4>{companyInfo.companyName}</h4>
+                    <Box>{companyInfo.companyViewCount + 1} views</Box>
+                    <p>{companyInfo.companyJobs.length} active jobs</p>
                 </Grid>
             </Grid>
         </Grid>

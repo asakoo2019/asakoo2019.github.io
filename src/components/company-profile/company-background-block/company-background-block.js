@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import { storage, firestore } from '../../firebase/db';
 import { connect } from 'react-redux';
 
-const CompanyImageBlock = (props) => {
+const CompanyBackgroundBlock = (props) => {
 	const { company, id, showItems, dispatch } = props;
 	const [open, setOpen] = useState(false);
 
@@ -20,7 +20,7 @@ const CompanyImageBlock = (props) => {
 			const selectedFile = files[0];
 			const fileName = selectedFile.name;
 			const dotIndex = fileName.lastIndexOf('.');
-			const storageRef = storage.ref(`/${id}/${id}${fileName.slice(dotIndex)}`);
+			const storageRef = storage.ref(`/${id}-background/${id}-background${fileName.slice(dotIndex)}`);
 			const uploadTask = storageRef.put(selectedFile);
 			uploadTask.on('state_changed',function(snapshot){
 				const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -41,16 +41,13 @@ const CompanyImageBlock = (props) => {
 					if (downloadURL !== null) {
 						firestore.collection("companies").doc(id)
 						.update({
-							companyImage: downloadURL
+							companyBackground: downloadURL
 						}).then(function() {
 						}).catch(function(error) {
 							console.error("Error updating document: ", error);
 						});
 					};
-					dispatch({type: "SIGN-IN", payload: {...company, companyImage: downloadURL}});
-					company.companyJobs.forEach(item => {
-						item.jobImage = downloadURL;
-					});
+					dispatch({type: "SIGN-IN", payload: {...company, companyBackground: downloadURL}});
 				});
 			});
 			setOpen(false);
@@ -58,9 +55,7 @@ const CompanyImageBlock = (props) => {
 
 	return (
 		<>
-			{showItems ? <Button onClick={handleOpen}>
-				<img src={company.companyImage} alt={company.companyName}/>
-			</Button> : <img src={company.companyImage} alt={company.companyName}/>}
+			{showItems && <Button variant='outlined' onClick={handleOpen}>Change background</Button>}
 			<DropzoneDialog open={open}
 				onSave={handleSave}
 				acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
@@ -72,4 +67,4 @@ const CompanyImageBlock = (props) => {
 	);
 };
 
-export default connect()(CompanyImageBlock);
+export default connect()(CompanyBackgroundBlock);

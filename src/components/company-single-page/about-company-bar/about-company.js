@@ -5,13 +5,14 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({
     root: {
       flexGrow: 1,
-      textAlign: 'left',
+      textAlign: 'center',
+      backgroundColor: 'rgb(255, 255, 179)',
+      margin: theme.spacing(2, 0),
+      padding: theme.spacing(3),
     },
     aboutCompDiv: {
         width: "100%",
-    },
-    textDirection: {
-        textAlign: 'center',
+        textAlign: 'left',       
     },
 }));
 export default function AboutCompany ({companyInfo}) {
@@ -20,7 +21,7 @@ export default function AboutCompany ({companyInfo}) {
         <Grid
             className = {classes.root}
         >
-            <h1>ABOUT {companyInfo.companyName}</h1>
+            <h3>ABOUT {companyInfo.companyName}</h3>
             <Grid 
                container
                direction="column"
@@ -34,8 +35,7 @@ export default function AboutCompany ({companyInfo}) {
             <Grid 
                 className = {classes.aboutCompDiv}
             >
-                <p>industry: {companyInfo.companyCategory}</p>
-                <p>Type: {}</p>    
+                <p>industry: {companyInfo.companyCategory}</p>    
             </Grid>
         </Grid>
     );

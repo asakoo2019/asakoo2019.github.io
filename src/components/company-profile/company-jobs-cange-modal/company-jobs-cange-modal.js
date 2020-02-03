@@ -31,7 +31,7 @@ const style = {
   },
 };
 
-const CompanyJobsModal = (props) => {
+const CompanyJobsCangeModal = (props) => {
   const { classes, company, showItems, dispatch } = props;
   const [open, setOpen] = useState(false);
   const [jobName, setJobName] = useState('');
@@ -41,7 +41,13 @@ const CompanyJobsModal = (props) => {
   const [jobDetails, setJobDetails] = useState('');
   const [term, setTerm] = useState('');
   const [jobDeadline, setJobDeadline] = useState(new Date());
-  const id = require('uuid/v4');
+  const [job, setJob] = useState([]);
+  const [currentJob, setCurrentJob] = useState(null);
+  
+  // const job = {
+  //   viewCount: 0,
+  //   companyName: company.companyName, jobImage: company.companyImage, companyId: company.id, jobMail: company.email,
+  // };
   
   useEffect(() => {
     switch (term) {
@@ -122,40 +128,68 @@ const CompanyJobsModal = (props) => {
   }, [jobCategory]);
 
   const handleClickOpen = () => {
-    setJobName('');
-    setLocation('');
-    setJobCategory('');
-    setJobType('');
-    setJobDetails('');
-    setTerm('');
+    setJobName(props.item.jobName);
+    setLocation(props.item.location);
+    setJobCategory(props.item.jobCategory);
+    setJobType(props.item.jobType);
+    setJobDetails(props.item.jobDetails);
+    setTerm(props.item.term);
     setJobDeadline(new Date());
+    company.companyJobs.forEach(item => {
+      if(item.id === props.item.id){
+        const index = company.companyJobs.findIndex((el) => el.id === item.id);
+        const newArray = [
+          ...company.companyJobs.slice(0, index),
+          ...company.companyJobs.slice(index + 1)
+        ];
+        setJob(newArray);
+      };
+    });
     setOpen(true);
   };
 
+  useEffect(() => {
+    const current = {
+      jobName,
+      location,
+      jobCategory,
+      jobType,
+      jobDetails,
+      term,
+      jobDeadline: jobDeadline.toLocaleDateString(undefined, { day:'numeric', month: 'numeric', year: 'numeric' }),
+      id: props.item.id,
+      viewCount: props.item.viewCount,
+      companyName: company.companyName,
+      jobImage: company.companyImage,
+      companyId: company.id,
+      jobMail: company.email,
+    };
+    setCurrentJob(current);
+  }, [
+    jobName,
+    location,
+    jobCategory,
+    jobType,
+    jobDetails,
+    term,
+    jobDeadline,
+    props.item.id,
+    props.item.viewCount,
+    company.companyName,
+    company.companyImage,
+    company.id,
+    company.email
+  ]);
+
   const handleSave = () => {
-    if (jobName !== '' && term !== '' && location !== '' && jobCategory !== '' && jobType !== '' && jobDeadline !== ''){
-      const job = {
-        jobName,
-        term,
-        location,
-        jobCategory,
-        jobType,
-        jobDetails,
-        id: id(),
-        viewCount: 0,
-        jobDeadline: jobDeadline.toLocaleDateString(undefined, { day:'numeric', month: 'numeric', year: 'numeric' }),
-        companyName: company.companyName,
-        jobImage: company.companyImage,
-        companyId: company.id,
-        jobMail: company.email,
-      };
-      firestore.collection("companies").doc(props.id)
+    if (jobName !== '' && term !== '' && location !== '' && jobCategory !== '' && jobType !== '' && jobDeadline !== '' && currentJob){
+      firestore.collection("companies").doc(company.id)
       .update({
-        companyJobs: [...company.companyJobs, job]
+        companyJobs: [...job, currentJob]
       }).catch(function(error) {
         console.error("Error updating document: ", error);
       });
-      dispatch({type: "SIGN-IN", payload: {...company, companyJobs: [...company.companyJobs, job]}});
+      dispatch({type: "SIGN-IN", payload: {...company, companyJobs: [...job, currentJob]}});
     };
     setOpen(false);
   };
@@ -166,8 +200,8 @@ const CompanyJobsModal = (props) => {
 
   return (
     <>
-      {showItems && <Button className={classes.jobModalBtn} variant="outlined" color="primary" onClick={handleClickOpen}>
-          <CreateIcon/>
+      {showItems && <Button className={classes.jobModalBtn} color="primary" onClick={handleClickOpen}>
+          <CreateIcon  color='error'/>
         </Button>}
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogContent>
@@ -275,4 +309,4 @@ const CompanyJobsModal = (props) => {
   );
 };
 
-export default connect()(withStyles(style)(CompanyJobsModal));
+export default connect()(withStyles(style)(CompanyJobsCangeModal));

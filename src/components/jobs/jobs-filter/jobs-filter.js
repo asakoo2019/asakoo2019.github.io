@@ -52,8 +52,7 @@ const JobsFilter = (props) => {
 
   return (
     <Grid container
-      direction='column'
-      item xs={3}>
+      direction='column'>
       <FormControl>
         <FormLabel>
           Filter By Category

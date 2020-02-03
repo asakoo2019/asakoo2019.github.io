@@ -11,8 +11,8 @@ import UserProfile from '../../user-profile';
 import CompanyProfile from '../../company-profile';
 import SettingsToggleMenu from '../../settings-toggle-menu';
 import { connect } from 'react-redux';
-import JobSingle from '../../jobs/jobs-container/job-single';
-import CompaniesSinglePage from '../../companies/single-page/company-single-page';
+import JobSingle from '../../jobs/job-single';
+import CompaniesSinglePage from '../../company-single-page';
 
 const styles = {
   navItem: {
