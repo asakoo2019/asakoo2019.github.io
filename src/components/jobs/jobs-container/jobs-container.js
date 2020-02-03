@@ -2,6 +2,7 @@ import React from 'react';
 import { Grid, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 const styles = {
 	jobBlock: {
@@ -15,6 +16,9 @@ const styles = {
 	},
 	viewMoreBtn: {
 		height: 40,
+	},
+	jobImage: {
+		width: '80%',
 	},
 };
 
@@ -42,6 +46,10 @@ const JobsContainer = (props) => {
 			};
 		};
 		return buttonsArray;
+	};	
+
+	const viewMore = (id) => {
+		history.push(`/jobs/${id}`);
 	};
 
 	const elements = newJobs
@@ -60,7 +68,7 @@ const JobsContainer = (props) => {
 				key={ id }
 				spacing={1}>
 				<Grid container justify="center" item xs={2}>
-					<img src={ jobImage } width='100' height='100' alt={ jobCategory } />
+					<img src={ jobImage } alt={ jobCategory } className={classes.jobImage}/>
 				</Grid>
 				<Grid container justify="center" item xs={4}>
 					<p>{ jobCategory }</p>
@@ -79,10 +87,6 @@ const JobsContainer = (props) => {
 			</Grid>
 		);
 	});
-
-	const viewMore = (id) => {
-		history.push(`/jobs/${id}`);
-	};
 	
 	return (
 		<>
@@ -95,4 +99,4 @@ const JobsContainer = (props) => {
 	);
 };
 
-export default withStyles(styles)(JobsContainer);
+export default connect()(withStyles(styles)(JobsContainer));
