@@ -54,12 +54,12 @@ function CompaniesSinglePage() {
       );
 
     } else {
-      return (null);
+      return (<div></div>);
     }
   }
   
   return (
-    <Container maxWidth='lg'>
+    <Container maxWidth='lg' >
       {drawPage()}
     </Container>
   );

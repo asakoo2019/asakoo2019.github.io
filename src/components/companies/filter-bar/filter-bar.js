@@ -5,15 +5,15 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({
     root: {
         marginTop: theme.spacing(1),
-        backgroundColor: 'rgb(255, 255, 204)',
+        // backgroundColor: 'rgb(255, 255, 204)',
     },
     formControl: {
         padding: theme.spacing(1),
         
     },
     size: {
-        width: '5px',
-        height: '5px',
+        width: '8px',
+        height: '8px',
     }
 }));
 
@@ -54,7 +54,7 @@ function CompanyFilterBar({ filterCompany }) {
                             <FormControlLabel className={classes.formControlLabel} 
                                 key={item}
                                 control={<Checkbox className = {classes.size}/>}
-                                label={<Typography variant="caption" display="block" gutterBottom>{item}</Typography>}
+                                label={<Typography>{item}</Typography>}
                                 value={item}
                                 onChange={(e) => handleCompChange(e.target.value)}
                             />
