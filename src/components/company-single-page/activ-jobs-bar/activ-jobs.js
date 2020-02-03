@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button,Typography, Paper, Grid  } from '@material-ui/core';
+import { Button, Typography, Paper, Grid } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import './activ-jobs.css';
+
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -20,14 +20,13 @@ const useStyles = makeStyles(theme => ({
         margin: theme.spacing(2),
     },
     activeJob: {
-        border: '1px solid black',
         margin: theme.spacing(2),
     },
     paper: {
         maxWidth: 400,
         margin: `${theme.spacing(1)}px auto`,
         padding: theme.spacing(2)
-      }
+    }
     // jobText :{
     //     textAlign: 'left',
     // },
@@ -38,20 +37,19 @@ export default function ActiveJobs({ companyInfo }) {
     const history = useHistory();
     const [plus, setPlus] = useState(0);
     const jobs = companyInfo.companyJobs.slice(plus, plus + 3).map(item => {
-        const jobCategoryText = item.jobDetails.length > 20 ? item.jobDetails.slice(0, 60) + '...' : item.jobDetails;
+        const jobCategoryText = item.jobDetails.length > 20 ? item.jobDetails.slice(0, 160) + '...' : item.jobDetails;
         return (
             <Grid item xs={3}
                 key={item.id}
-                // border={1}
-                // className={classes.activeJob}
+                className={classes.activeJob}
             >
                 <Paper className={classes.paper}>
                     <Grid>
                         <Typography variant="h6" className={classes.jobName}>{item.jobName}</Typography>
                     </Grid>
-                    <Grid>
-                        <Typography>Deadline: {item.jobDeadline} </Typography>
-                        <Typography> {item.location}</Typography>
+                    <Grid container justify='center'>
+                        <Typography variant="body2" gutterBottom>Deadline: {item.jobDeadline} </Typography>
+                        <Typography variant="body2" gutterBottom> {item.location}</Typography>
 
                     </Grid>
                     <Grid>
@@ -68,7 +66,6 @@ export default function ActiveJobs({ companyInfo }) {
                     </Grid>
                 </Paper>
             </Grid>
-
         );
     })
     function nextButton() {
@@ -90,14 +87,20 @@ export default function ActiveJobs({ companyInfo }) {
                 direction="row"
                 justify="space-evenly"
                 alignItems="center"
-                className={classes.jobContainer}
             >
                 <Button
                     variant="contained"
                     color="secondary"
                     onClick={previousButton}
                 >{'<'}</Button>
-                {jobs}
+                <Grid container
+                    direction="row"
+                    justify="space-evenly"
+                    alignItems="center"
+                    className={classes.jobContainer}
+                >
+                    {jobs}
+                </Grid>
                 <Button
                     variant="contained"
                     color="secondary"

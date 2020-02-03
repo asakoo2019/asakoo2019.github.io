@@ -1,27 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { Grid, Container } from '@material-ui/core';
-// import { makeStyles } from '@material-ui/core/styles';
-import TopBar from './top-bar/top-bar';
-import AboutCompany from './about-company-bar/about-company';
-import ActiveJobs from './activ-jobs-bar/activ-jobs';
-import Contacts from './contacts-bar/company-contacts';
+import { makeStyles } from '@material-ui/core/styles';
+import TopBar from './top-bar';
+import AboutCompany from './about-company-bar';
+import ActiveJobs from './activ-jobs-bar';
+import Contacts from './contacts-bar';
 import { useParams } from "react-router-dom";
 import { firestore } from '../firebase/db';
 
-// const useStyles = makeStyles(theme=> ({
-//   root: {
-//     flexGrow: 1,
-//     // overflow: 'hidden',
-//     // padding: theme.spacing(0, 3),
-//   },
-//   // component: {
-//   //   marginTop: theme.spacing(1),
-//   //   // padding: theme.spacing(2),
-//   // },
-  
-// }));
+const useStyles = makeStyles(theme=> ({
+  root: {
+    flexGrow: 1,
+  },
+}));
 
 function CompaniesSinglePage() {
+  const classes = useStyles();
   const [company, setCompany] = useState({});
   const params = useParams();
   useEffect(() => {
@@ -51,9 +45,7 @@ function CompaniesSinglePage() {
         companyViewCount: (company.companyViewCount + 1)
       })
       return (
-        <Grid
-          container
-        >
+        <Grid container >
           <TopBar companyInfo={company} />
             {aboutcompany}
             {activJobs}
@@ -65,11 +57,9 @@ function CompaniesSinglePage() {
       return (null);
     }
   }
-
-
+  
   return (
-    <Container maxWidth='lg' //className = {classes.root}
-    >
+    <Container maxWidth='lg'>
       {drawPage()}
     </Container>
   );

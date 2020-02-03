@@ -1,7 +1,6 @@
 import React from 'react';
 import {Grid, Box} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import './top-bar.css';
 
 
 let bgimage = 'url(https://visme.co/blog/wp-content/uploads/2017/07/50-Beautiful-and-Minimalist-Presentation-Backgrounds-027.jpg)'

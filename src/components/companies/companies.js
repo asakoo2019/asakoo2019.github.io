@@ -19,7 +19,7 @@ export default function Companies(props) {
   const [allCompanies, setAllCompanies] = useState(true);
   const [type, setType] = useState([]);
   const [data, setData] = useState([]);
-
+ 
   useEffect(() => {
     firestore.collection("companies").get().then((querySnapshot) => {
       let companies = [];

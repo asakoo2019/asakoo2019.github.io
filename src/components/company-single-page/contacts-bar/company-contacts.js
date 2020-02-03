@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
     }
     
 }));
-export default function Contacts ({companyInfo}) {
+function Contacts ({companyInfo}) {
     const classes = useStyles();
     return(
         <Grid
@@ -36,3 +36,4 @@ export default function Contacts ({companyInfo}) {
         </Grid> 
     );
 }
+export default  Contacts;

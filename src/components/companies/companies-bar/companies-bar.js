@@ -1,7 +1,7 @@
 import React from 'react';
-import CompanyItem from './items-block/company-item';
-import CompaniesBarTop from './companies-top-bar/comp-top-bar';
-import PaginationBar from './pagination-bar/pagination-bar';
+import CompanyItem from './items-block';
+import CompaniesBarTop from './companies-top-bar';
+import PaginationBar from './pagination-bar';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 
