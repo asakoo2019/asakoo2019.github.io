@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Grid } from '@material-ui/core';
 import { firestore } from '../../firebase/db';
-import { useHistory } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { useParams } from "react-router-dom";
 
 const styles = {
 	jobSingleLoader: {
     margin: 50,
-  },
+	},
+	jobHeader: {
+		height: 200,
+	},
+	jobImage: {
+		width: 100,
+	},
 };
 
 const JobSingle = (props) => {
@@ -18,17 +24,16 @@ const JobSingle = (props) => {
 	const [currentJob, setCurrentJob] = useState(null);
 	const [job, setJob] = useState(null);
 	const [companyId, setCompanyId] = useState('');
-	const history = useHistory();
-	const pathName = history.location.pathname;
-	const LastSleshIndex = pathName.lastIndexOf('/');
-	const searchId = pathName.slice(LastSleshIndex + 1);
+	const [company, setCompany] = useState(null);
+  const params = useParams();
+	const searchId = params.id;
 
 	useEffect(() => {
 		let jobs = [];
 		const docRef = firestore.collection("companies");
 		docRef.get().then(function(querySnapshot) {
 			querySnapshot.forEach(function(doc) {
-				if (doc.data().companyJobs && doc.data().companyJobs.length !== 0){
+				if (doc.data().companyJobs && doc.data().companyJobs.length){
 					jobs = jobs.concat(doc.data().companyJobs);
 					setJobs(jobs);
 					jobs.forEach(item => {
@@ -48,19 +53,36 @@ const JobSingle = (props) => {
 	}, [searchId]);
 
 	useEffect(() => {
-		const element = jobs.map(item => {
-			if (item.id === searchId) {
-				return (
-					<Grid key={item.id}>
-						<h1>{item.jobName}</h1>
-						<h1>{item.viewCount + 1}</h1>
-					</Grid>
-				);
-			};
-			return null;
-		});
-		setElement(element);
-	}, [jobs, searchId]);
+		if (companyId !== '') {
+			firestore.collection("companies").doc(companyId).get().then(function(doc) {
+				if (doc.exists) {
+					setCompany(doc.data());
+				};
+			}).catch(function(error) {
+				console.log("Error getting document:", error);
+			});
+		};
+	}, [companyId]);
+
+	useEffect(() => {
+		if (company !== null) {
+			const element = jobs.map(item => {
+				if (item.id === searchId) {
+					return (
+						<Grid key={item.id}>
+							<Grid className={classes.jobHeader} style={{ backgroundImage: `url(${company.companyBackground})` }}>
+								<img src={company.companyImage} alt={item.jobName} className={classes.jobImage}/>
+							</Grid>
+							<h1>{item.jobName}</h1>
+							<h1>{item.viewCount + 1}</h1>
+						</Grid>
+					);
+				};
+				return null;
+			});
+			setElement(element);
+		};
+	}, [jobs, searchId, company, classes.jobHeader, classes.jobImage]);
 
 	useEffect(() => {
 		if (jobs.length) {
@@ -89,7 +111,7 @@ const JobSingle = (props) => {
 
 	return (
 		<Container>
-			{jobs.length ? element : 
+			{(jobs.length && company && element) ? element : 
       <Grid container justify='center'>
         <CircularProgress size={150} className={classes.jobSingleLoader}/>
       </Grid>}

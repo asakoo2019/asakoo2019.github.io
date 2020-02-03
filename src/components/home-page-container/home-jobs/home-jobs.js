@@ -10,22 +10,23 @@ const styles = {
     marginTop: 6,
     padding: 20,
     background: 'linear-gradient(to right, rgba(244, 67, 54, 0.2), rgba(76, 175, 80, .2))',
-    cursor: 'pointer'
+    boxShadow: '0px 0px 15px 0px rgba(56,55,56,1)',
+    cursor: 'pointer',
   },
   allJobsBtn: {
     margin: 20,
-    backgroundColor: '#FE654F'
+    backgroundColor: '#FE654F',
   },
   jobLogo: {
     borderRadius: 10,
-    width: '90%'
+    width: '90%',
+    height: 200,
+    objectFit: 'cover',
   },
   jobDetailsText: {
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 };
-
-
 
 const HomeJobs = (props) => {
   const {classes} = props;

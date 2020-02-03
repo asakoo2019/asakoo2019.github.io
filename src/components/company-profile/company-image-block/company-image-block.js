@@ -58,9 +58,11 @@ const CompanyImageBlock = (props) => {
 
 	return (
 		<>
-			{showItems ? <Button onClick={handleOpen}>
+			{showItems ? 
+			<Button onClick={handleOpen}>
 				<img src={company.companyImage} alt={company.companyName}/>
-			</Button> : <img src={company.companyImage} alt={company.companyName}/>}
+			</Button> :
+			<img src={company.companyImage} alt={company.companyName}/>}
 			<DropzoneDialog open={open}
 				onSave={handleSave}
 				acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}

@@ -145,9 +145,9 @@ const CompanyJobsModal = (props) => {
         viewCount: 0,
         jobDeadline: jobDeadline.toLocaleDateString(undefined, { day:'numeric', month: 'numeric', year: 'numeric' }),
         companyName: company.companyName,
-        jobImage: company.companyImage,
         companyId: company.id,
         jobMail: company.email,
+        jobImage: company.companyImage,
       };
       firestore.collection("companies").doc(props.id)
       .update({

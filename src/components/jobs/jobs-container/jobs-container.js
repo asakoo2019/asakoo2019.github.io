@@ -47,7 +47,7 @@ const JobsContainer = (props) => {
 			};
 		};
 		return buttonsArray;
-	};	
+	};
 
 	const viewMore = (id) => {
 		history.push(`/jobs/${id}`);
@@ -60,7 +60,7 @@ const JobsContainer = (props) => {
 		let { jobCategory, id, jobImage, jobDetails, viewCount } = item;
 		if (jobDetails.length > 50) {
       jobDetails = jobDetails.substring(0, 50) + "...";
-    };
+		};
 		return (
 			<Grid container
 				alignItems='center'

@@ -10,11 +10,12 @@ const styles = {
     marginTop: 6,
     padding: 20,
     background: 'linear-gradient(to right, rgba(244, 67, 54, 0.2), rgba(76, 175, 80, .2))',
-    cursor: 'pointer'
+    boxShadow: '0px 0px 15px 0px rgba(56,55,56,1)',
+    cursor: 'pointer',
   },
   allCompaniesBtn: {
     margin: 20,
-    backgroundColor: '#FE654F'
+    backgroundColor: '#FE654F',
   },
   companyLogo: {
     borderRadius: 10,
@@ -23,7 +24,7 @@ const styles = {
     objectFit: 'cover',
   },
   aboutCompanyText: {
-    textAlign: 'center'
+    textAlign: 'center',
   },
 };
 
