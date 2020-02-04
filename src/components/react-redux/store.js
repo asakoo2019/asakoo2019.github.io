@@ -1,6 +1,4 @@
-import { createStore } from 'redux';
-
-function counter(state = null, action) {
+export default function data(state = null, action) {
   switch (action.type) {
     case 'SIGN-IN':
       return action.payload;
@@ -10,7 +8,3 @@ function counter(state = null, action) {
       return state;
   };
 };
-
-const store = createStore(counter);
-
-export default store;

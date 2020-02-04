@@ -23,10 +23,15 @@ const styles = {
 	},
 };
 
+const mStP = (state) => ({
+  state,
+});
+
+
 const JobsContainer = (props) => {
 	const history = useHistory();
 	const { renderJobs, classes, currentPage, otherJobs } = props;
-	const newJobs = [...renderJobs];
+	const newJobs = props.state.search.length ? props.state.search : [...renderJobs];
 
 	const pagination = (arr) => {
 		let maxButtons = Math.ceil(arr.length / 10);
@@ -101,4 +106,4 @@ const JobsContainer = (props) => {
 	);
 };
 
-export default connect()(withStyles(styles)(JobsContainer));
+export default connect(mStP)(withStyles(styles)(JobsContainer));
