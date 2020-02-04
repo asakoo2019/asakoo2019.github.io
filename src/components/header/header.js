@@ -1,22 +1,19 @@
 import React from 'react';
-import './header.css';
 import { Grid } from '@material-ui/core';
 import Logo from './logo';
 import Search from './search';
 
 const Header = () => {
-
   return (
     <header>
       <Grid container
         alignItems="center">
-        <Grid container item xs={1}
-          justify='center'>
+        <Grid container item xs={12} sm={2}
+          justify='flex-start'>
           <Logo />
         </Grid>
-        <Grid item xs={1}>
-        </Grid>
-        <Grid item xs={10}>
+        <Grid container item xs={12} sm={10}
+          justify='center'>
           <Search />
         </Grid>
       </Grid>

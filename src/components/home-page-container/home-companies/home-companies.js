@@ -8,7 +8,7 @@ const styles = {
   aboutCompany: {
     borderRadius: 10,
     marginTop: 6,
-    padding: 20,
+    padding: 15,
     background: 'linear-gradient(to right, rgba(244, 67, 54, 0.2), rgba(76, 175, 80, .2))',
     boxShadow: '0px 0px 15px 0px rgba(56,55,56,1)',
     cursor: 'pointer',
@@ -89,21 +89,24 @@ const HomeCompanies = (props) => {
   });
 
   return (
-    <Grid className={classes.companies}
-      container
-      direction='column'
-      alignItems='center'>
-      <h2>Top companies</h2>
-      <Grid container
-        justify="space-around">
-        {company}
-      </Grid>
-      <Button className={classes.allCompaniesBtn}
-        variant='contained'
-        onClick={handleClick}>
-        All companies
-      </Button>
-    </Grid>
+    <>
+      {companies.length ?
+      <Grid className={classes.companies}
+        container
+        direction='column'
+        alignItems='center'>
+        <h2>{'Top companies'.toUpperCase()}</h2>
+        <Grid container
+          justify="space-around">
+          {company}
+        </Grid>
+        <Button className={classes.allCompaniesBtn}
+          variant='contained'
+          onClick={handleClick}>
+          All companies
+        </Button>
+      </Grid> : null}
+    </>
   );
 };
 

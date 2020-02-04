@@ -39,6 +39,7 @@ const styles = {
   },
   userProfileLoader: {
     margin: 50,
+    color: '#FE654F',
   },
 };
 

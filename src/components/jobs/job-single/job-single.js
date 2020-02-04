@@ -8,12 +8,37 @@ import { useParams } from "react-router-dom";
 const styles = {
 	jobSingleLoader: {
     margin: 50,
+    color: '#FE654F',
 	},
 	jobHeader: {
-		height: 200,
+		height: 300,
+		backgroundPosition: 'center',
+		backgroundRepeat: 'no-repeat',
+  	backgroundSize: 'cover',
 	},
 	jobImage: {
-		width: 100,
+		width: 150,
+	},
+	singleJob: {
+		marginTop: 24,
+		marginBottom: 24,
+	},
+	secondText: {
+		marginLeft: ".5em",
+	},
+	firstText: {
+		color: '#FE654F',
+	},
+	singleJobContainer: {
+		marginTop: 24,
+	},
+	jobDetailsText: {
+		textAlign: 'justify',
+	},
+	allBlocks: {
+		marginTop: 15,
+		paddingBottom: 15,
+		borderBottom: '1px solid #FE654F',
 	},
 };
 
@@ -69,12 +94,85 @@ const JobSingle = (props) => {
 			const element = jobs.map(item => {
 				if (item.id === searchId) {
 					return (
-						<Grid key={item.id}>
-							<Grid className={classes.jobHeader} style={{ backgroundImage: `url(${company.companyBackground})` }}>
-								<img src={company.companyImage} alt={item.jobName} className={classes.jobImage}/>
+						<Grid key={item.id}  className={classes.singleJob}>
+
+							{/* Single Job Header */}
+							<Grid container className={classes.jobHeader}
+								style={{ backgroundImage: `url(${company.companyBackground})` }}
+								spacing={2}
+								alignItems='flex-end'>
+								<Grid container justify='center' item xs={12} sm={4} md={2}>
+									<img src={company.companyImage} alt={item.jobName} className={classes.jobImage}/>
+								</Grid>
+								<Grid container item direction='column' xs={12} sm={8} md={10}>
+									<Grid container item alignItems='center'>
+										<h5 className={classes.firstText}>Company category:</h5>
+										<p className={classes.secondText}>{company.companyCategory}</p>
+									</Grid>
+									<Grid container item alignItems='center'>
+										<h5 className={classes.firstText}>Company name:</h5>
+										<p className={classes.secondText}>{company.companyName}</p>
+									</Grid>
+									<Grid container item alignItems='center'>
+										<h5 className={classes.firstText}>Company total views:</h5>
+										<p className={classes.secondText}>{company.companyViewCount + 1}</p>
+									</Grid>
+								</Grid>
 							</Grid>
-							<h1>{item.jobName}</h1>
-							<h1>{item.viewCount + 1}</h1>
+
+							{/* Single Job Container */}
+							<Grid container className={classes.singleJobContainer}>
+								<Grid item xs={12}>
+									<h2 className={classes.firstText}>{item.jobName.toUpperCase()}</h2>
+								</Grid>
+								<Grid container className={classes.allBlocks}>
+									<Grid container item xs={12} sm={4} direction='column' spacing={2}>
+										<Grid container item alignItems='center'>
+											<h5 className={classes.firstText}>Employment term:</h5>
+											<p className={classes.secondText}>{item.term}</p>
+										</Grid>
+										<Grid container item alignItems='center'>
+											<h5 className={classes.firstText}>Category:</h5>
+											<p className={classes.secondText}>{item.jobCategory}</p>
+										</Grid>
+									</Grid>
+									<Grid container item xs={12} sm={4} direction='column' spacing={2}>
+										<Grid container item alignItems='center'>
+											<h5 className={classes.firstText}>Job type:</h5>
+											<p className={classes.secondText}>{item.jobType}</p>
+										</Grid>
+										<Grid container item alignItems='center'>
+											<h5 className={classes.firstText}>Location:</h5>
+											<p className={classes.secondText}>{item.location}</p>
+										</Grid>
+									</Grid>
+									<Grid container item xs={12} sm={4} direction='column' spacing={2}>
+										<Grid container item alignItems='center'>
+											<h5 className={classes.firstText}>Job deadline:</h5>
+											<p className={classes.secondText}>{item.jobDeadline}</p>
+										</Grid>
+										<Grid container item alignItems='center'>
+											<h5 className={classes.firstText}>Job view counts:</h5>
+											<p className={classes.secondText}>{item.viewCount + 1}</p>
+										</Grid>
+									</Grid>
+								</Grid>
+								{item.jobDetails ? <Grid container className={classes.allBlocks}>
+									<Grid container direction='column'>
+										<h5 className={classes.firstText}>Job details:</h5>
+										<p className={classes.jobDetailsText}>{item.jobDetails}</p>
+									</Grid>
+								</Grid> : null}
+								<Grid container className={classes.allBlocks}>
+									<Grid container direction='column'>
+										<h5 className={classes.firstText}>Additional information:</h5>
+										<p className={classes.jobDetailsText}>
+											Interested candidates who meet the requirements above and are confident that their background and experience qualify them for the position, are welcome to send their resume to: {item.jobMail} mentioning the position title ("{item.jobName}") in the subject line of the email.
+										</p>
+									</Grid>
+								</Grid>
+							</Grid>
+
 						</Grid>
 					);
 				};
@@ -82,7 +180,19 @@ const JobSingle = (props) => {
 			});
 			setElement(element);
 		};
-	}, [jobs, searchId, company, classes.jobHeader, classes.jobImage]);
+	}, [
+		jobs,
+		searchId,
+		company,
+		classes.jobHeader,
+		classes.jobImage,
+		classes.singleJob,
+		classes.secondText,
+		classes.firstText,
+		classes.singleJobContainer,
+		classes.jobDetailsText,
+		classes.allBlocks,
+	]);
 
 	useEffect(() => {
 		if (jobs.length) {

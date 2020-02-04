@@ -13,6 +13,7 @@ const styles = {
 	},
 	jobsLoader: {
     margin: 50,
+    color: '#FE654F',
   },
 };
 
@@ -65,14 +66,14 @@ const Jobs = (props) => {
 			{jobs.length ? <Grid container
 				justify='space-between'
 				className={classes.companies}>
-				<Grid item xs={3}>
+				<Grid item xs={12} sm={4} lg={3}>
 					<JobsFilter
 						jobs={jobs}
 						setCurrentPage={setCurrentPage}
 						setCategories={setCategories}
 						setAllJobs={setAllJobs}/>
 				</Grid>
-				<Grid item xs={9}>
+				<Grid item xs={12} sm={8} lg={9}>
 					<JobsContainer
 					renderJobs={renderJobs}
 					currentPage={currentPage}

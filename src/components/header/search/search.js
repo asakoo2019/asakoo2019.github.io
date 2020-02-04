@@ -13,7 +13,7 @@ const Search = (props) => {
   const [term, setTerm] = useState('');
   const [companySearch, setCompanySearch] = useState('');
   const [jobSearch, setJobSearch] = useState('');
-  const [searchUrl, setSearchUrl] = useState('');
+  const [searchUrl, setSearchUrl] = useState('jobs');
   const [renderArray, setRenderArray] = useState([]);
   const history = useHistory();
   const { dispatch } = props;
@@ -74,7 +74,7 @@ const Search = (props) => {
   }, []);
 
   return (
-    <Grid container>
+    <>
       <Grid container
         spacing={1}
         alignItems="flex-end">
@@ -91,17 +91,17 @@ const Search = (props) => {
       <Grid container>
         <RadioGroup defaultValue="jobs"
           onChange={(e) => setSearchUrl(e.target.value)}>
-            <Grid container spacing={3}>
-              <Grid item xs={6}>
-                <FormControlLabel value="jobs" control={<Radio color="primary" />} label="Jobs" />
-              </Grid>
-              <Grid item xs={6}>
-                <FormControlLabel value="companies" control={<Radio color="primary" />} label="Companies" />
-              </Grid>
+          <Grid container spacing={6}>
+            <Grid item xs={6}>
+              <FormControlLabel value="jobs" control={<Radio color="primary" />} label="Jobs" />
             </Grid>
-          </RadioGroup>
-      </Grid>
+            <Grid item xs={6}>
+              <FormControlLabel value="companies" control={<Radio color="primary" />} label="Companies" />
+            </Grid>
+          </Grid>
+        </RadioGroup>
     </Grid>
+    </>
   );
 };
 

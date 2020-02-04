@@ -38,6 +38,7 @@ const styles = {
   },
   companyProfileLoader: {
     margin: 50,
+    color: '#FE654F',
   },
   companyBG: {
     marginTop: 8,

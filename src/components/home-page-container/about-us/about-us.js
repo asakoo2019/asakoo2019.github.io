@@ -6,7 +6,8 @@ const styles = {
   aboutUsContainer: {
     background: 'linear-gradient(to right, rgba(244, 67, 54, 0.2), rgba(76, 175, 80, .2))',
     borderRadius: 10,
-    padding: 20
+    padding: 15,
+    boxShadow: '0px 0px 15px 0px rgba(56,55,56,1)',
   },
   text: {
     textAlign: 'justify',
@@ -19,7 +20,7 @@ const AboutUs = (props) => {
     <Grid className="aboutAs"
       container
       justify='center'>
-      <h2 className={classes.aboutUsTitle}>About Us</h2>
+      <h2 className={classes.aboutUsTitle}>{'about us'.toUpperCase()}</h2>
       <Grid className={classes.aboutUsContainer}>
       <p className={classes.text}>
         We are a team of IT enthusiasts ready to put our efforts and skills into building viable and high quality software. We have graduated the “JavaScript” course at Armenian Code Academy (ACA). In the course of our studies, we have covered such topics as Variables, Operators, Loops, Functions, HTML/CSS, Front-end development base concepts, Arrays, Strings, ES 6.

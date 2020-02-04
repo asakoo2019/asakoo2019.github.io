@@ -69,19 +69,19 @@ const JobsContainer = (props) => {
 				key={ id }
 				spacing={1}
 				onClick={() => viewMore(id)}>
-				<Grid container justify="center" item xs={2}>
+				<Grid container justify="center" item xs={6} lg={2}>
 					<img src={ jobImage } alt={ jobCategory } className={classes.jobImage}/>
 				</Grid>
-				<Grid container justify="center" item xs={4}>
+				<Grid container justify="center" item xs={6} lg={4}>
 					<p>{ jobCategory }</p>
 				</Grid>
-				<Grid container justify="center" item xs={2}>
+				<Grid container justify="center" item xs={6} lg={2}>
 					<p>{ jobDetails }</p>
 				</Grid>
-				<Grid container justify="center" item xs={2}>
+				<Grid container justify="center" item xs={6} lg={2}>
 					<p>Total view { viewCount }</p>
 				</Grid>
-				<Grid item xs={2}>
+				<Grid container justify='center' item xs={12} lg={2}>
 					<Button color='primary' variant="outlined" className={classes.viewMoreBtn} onClick={() => viewMore(id)}>
 					View More
 				</Button>
