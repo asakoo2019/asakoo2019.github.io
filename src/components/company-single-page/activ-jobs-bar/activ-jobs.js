@@ -3,6 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Button, Typography, Grid, withWidth } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import EventIcon from '@material-ui/icons/Event';
+
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -19,10 +22,24 @@ const useStyles = makeStyles(theme => ({
         margin: theme.spacing(1),
         padding: theme.spacing(1),
         borderRadius: '20px',
+
     },
     jobName: {
-        margin: theme.spacing(2),
+        borderRadius: '10px',
         height: 60,
+        fontSize: '18px',
+        fontWeight: '500',
+        backgroundColor: '#FE654F',
+        color: "#fff"
+    },
+    aboutJobInfo :{
+        fontSize: '15px',
+        width: '100%',
+        padding: theme.spacing(1),
+    },
+    aboutJobIcon: {
+        fontSize: '15px',
+        color: '#FE654F',
     },
 }));
 
@@ -42,14 +59,13 @@ function ActiveJobs({ companyInfo, width }) {
         // const jobCategoryText = item.jobDetails.length > 20 ? item.jobDetails.slice(0, 160) + '...' : item.jobDetails;
 
         return (
-            <Grid item xs={8} sm={8} md={5} lg = {3} key={item.id} className={classes.jobIpapetem}>
-                <Grid className={classes.jobItem} >
-                    <Grid container alignItems='center' justify='center' className={classes.jobName}>
-                        <Typography variant="subtitle1" className={classes.jobName}>{item.jobName}</Typography>
+            <Grid item xs={8} sm={8} md={5} lg = {3} key={item.id} className={classes.jobItem}>
+                     <Grid className={classes.jobName}>
+                        <Typography  className={classes.jobName}>{item.jobName}</Typography>
                     </Grid>
-                    <Grid container justify='center'>
-                        <Typography variant="body2" gutterBottom>Deadline: {item.jobDeadline} </Typography>
-                        <Typography variant="body2" gutterBottom> {item.location}</Typography>
+                    <Grid >
+                        <Typography className = {classes.aboutJobInfo}><EventIcon className = {classes.aboutJobIcon}/> {item.jobDeadline} </Typography>
+                        <Typography className = {classes.aboutJobInfo}><LocationOnIcon className = {classes.aboutJobIcon}/> {item.location}</Typography>
 
                     </Grid>
                     {/* <Grid>
@@ -64,7 +80,6 @@ function ActiveJobs({ companyInfo, width }) {
                             View More
                     </Button>
                     </Grid>
-                </Grid>
             </Grid>
         );
     })
@@ -81,7 +96,7 @@ function ActiveJobs({ companyInfo, width }) {
         <Grid item
             className={classes.root}
         >
-            <Typography variant="h3">ACTIVE JOBS ({companyInfo.companyJobs.length})</Typography>
+            <Typography variant="h4" gutterBottom>ACTIVE JOBS ({companyInfo.companyJobs.length})</Typography>
             <Grid container
                 direction="row"
                 justify="space-evenly"

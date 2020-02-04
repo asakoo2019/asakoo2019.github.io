@@ -1,7 +1,5 @@
 import React from 'react';
-import {Grid, Box} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-
+import {Grid, Typography, makeStyles} from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -43,10 +41,17 @@ function TopBar ({companyInfo}) {
                 <Grid item xs={3}>
                     <img src = {companyInfo.companyImage} alt = {`${companyInfo.companyName} pic`} className = {classes.topBarImg}/>
                 </Grid>
-                <Grid container item xs={7} direction='column' alignItems='flex-start' className={classes.topBarInfo}>
-                    <h4>{companyInfo.companyName}</h4>
-                    <Box>{companyInfo.companyViewCount + 1} views</Box>
-                    <p>{companyInfo.companyJobs.length} active jobs</p>
+                <Grid  item xs={7} className={classes.topBarInfo}>
+                    <Grid container  
+                        direction="column"
+                        justify="center"
+                        alignItems="flex-start"
+                    >
+                        <Typography variant = 'h5' gutterBottom>{companyInfo.companyName}</Typography>
+                        <Typography variant="subtitle2" gutterBottom>{companyInfo.companyViewCount + 1} views</Typography>
+                        <Typography variant="subtitle2" gutterBottom>{companyInfo.companyJobs.length} active jobs</Typography>
+                    </Grid>
+                        
                 </Grid>
             </Grid>
         </Grid>

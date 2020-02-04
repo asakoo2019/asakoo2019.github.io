@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, Container } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Grid, Container, makeStyles } from '@material-ui/core';
 import TopBar from './top-bar';
 import AboutCompany from './about-company-bar';
 import ActiveJobs from './activ-jobs-bar';
