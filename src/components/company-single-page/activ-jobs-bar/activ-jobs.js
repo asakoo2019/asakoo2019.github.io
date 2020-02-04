@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Typography, Paper, Grid } from '@material-ui/core';
+import { Button, Typography, Grid, withWidth } from '@material-ui/core';
+import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -12,50 +12,50 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: 'rgb(255, 255, 179)',
         margin: theme.spacing(2, 0),
         padding: theme.spacing(3),
+
     },
-    jobContainer: {
-        backgroundColor: "white"
+    jobItem: {
+        backgroundColor: "white",
+        margin: theme.spacing(1),
+        padding: theme.spacing(1),
+        borderRadius: '20px',
     },
     jobName: {
         margin: theme.spacing(2),
+        height: 60,
     },
-    activeJob: {
-        margin: theme.spacing(2),
-    },
-    paper: {
-        maxWidth: 400,
-        margin: `${theme.spacing(1)}px auto`,
-        padding: theme.spacing(2)
-    }
-    // jobText :{
-    //     textAlign: 'left',
-    // },
-
 }));
-export default function ActiveJobs({ companyInfo }) {
-    const classes = useStyles();
+
+function ActiveJobs({ companyInfo, width }) {
+    const classes = useStyles(1);
     const history = useHistory();
     const [plus, setPlus] = useState(0);
-    const jobs = companyInfo.companyJobs.slice(plus, plus + 3).map(item => {
-        const jobCategoryText = item.jobDetails.length > 20 ? item.jobDetails.slice(0, 160) + '...' : item.jobDetails;
+    let numQuantity = 3;
+    switch (width) {
+        case 'xs': numQuantity = 1; break;
+        case 'sm': numQuantity = 1; break;
+        case 'md': numQuantity = 2; break;
+        default: numQuantity = 3; break;
+    }
+
+    const jobs = companyInfo.companyJobs.slice(plus, plus + numQuantity).map((item, index) => {
+        // const jobCategoryText = item.jobDetails.length > 20 ? item.jobDetails.slice(0, 160) + '...' : item.jobDetails;
+
         return (
-            <Grid item xs={3}
-                key={item.id}
-                className={classes.activeJob}
-            >
-                <Paper className={classes.paper}>
-                    <Grid>
-                        <Typography variant="h6" className={classes.jobName}>{item.jobName}</Typography>
+            <Grid item xs={8} sm={8} md={5} lg = {3} key={item.id} className={classes.jobIpapetem}>
+                <Grid className={classes.jobItem} >
+                    <Grid container alignItems='center' justify='center' className={classes.jobName}>
+                        <Typography variant="subtitle1" className={classes.jobName}>{item.jobName}</Typography>
                     </Grid>
                     <Grid container justify='center'>
                         <Typography variant="body2" gutterBottom>Deadline: {item.jobDeadline} </Typography>
                         <Typography variant="body2" gutterBottom> {item.location}</Typography>
 
                     </Grid>
-                    <Grid>
-                        <Typography>{jobCategoryText}</Typography>
-                    </Grid>
-                    <Grid>
+                    {/* <Grid>
+                        <Typography  height = '50px'>{item.jobDetails}</Typography>
+                    </Grid> */}
+                    <Grid container justify='center'>
                         <Button
                             variant="outlined"
                             color="secondary"
@@ -64,7 +64,7 @@ export default function ActiveJobs({ companyInfo }) {
                             View More
                     </Button>
                     </Grid>
-                </Paper>
+                </Grid>
             </Grid>
         );
     })
@@ -78,35 +78,47 @@ export default function ActiveJobs({ companyInfo }) {
     }
 
     return (
-        <Grid
+        <Grid item
             className={classes.root}
         >
             <Typography variant="h3">ACTIVE JOBS ({companyInfo.companyJobs.length})</Typography>
-            <Grid
-                container
+            <Grid container
                 direction="row"
                 justify="space-evenly"
                 alignItems="center"
+
             >
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={previousButton}
-                >{'<'}</Button>
-                <Grid container
-                    direction="row"
-                    justify="space-evenly"
-                    alignItems="center"
-                    className={classes.jobContainer}
-                >
-                    {jobs}
+                <Grid item xs={1}>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={previousButton}
+                    >{'<'}
+                    </Button>
                 </Grid>
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={nextButton}
-                >{'>'}</Button>
+                <Grid item xs={10} >
+                    <Grid container
+                        direction="row"
+                        justify="center"
+                        alignItems="center"
+
+                    >
+                        {jobs}
+                    </Grid>
+                </Grid>
+                <Grid item xs={1}>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={nextButton}
+                    >{'>'}
+                    </Button>
+                </Grid>
             </Grid>
         </Grid>
     );
 }
+ActiveJobs.propTypes = {
+    width: PropTypes.oneOf(["lg", "md", "sm", "xl", "xs"]).isRequired
+};
+export default withWidth()(ActiveJobs)

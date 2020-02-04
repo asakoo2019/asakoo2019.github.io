@@ -45,7 +45,7 @@ function CompaniesSinglePage() {
         companyViewCount: (company.companyViewCount + 1)
       })
       return (
-        <Grid container >
+        <Grid container className = {classes.root}>
           <TopBar companyInfo={company} />
             {aboutcompany}
             {activJobs}
