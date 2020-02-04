@@ -51,7 +51,7 @@ const mStP = (state) => ({
 
 const CompanyProfile = (props) => {
   let { classes, company, showItems } = props;
-  company = company ? company : {};
+  company = company.data ? company.data : {};
   const id = company.id;
 
   return (

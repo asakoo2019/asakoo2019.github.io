@@ -26,7 +26,7 @@ const mStP = (state) => ({
 
 function SettingsToggleMenu(props) {
   let { data } = props;
-  data = data ? data : {};
+  data = data.data ? data.data : {};
   let {registrationType, id} = data;
   const {dispatch} = props;
   registrationType = !!registrationType ?  registrationType.toLowerCase() : '';

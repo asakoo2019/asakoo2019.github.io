@@ -5,7 +5,6 @@ import { Container, Grid } from '@material-ui/core';
 import { firestore } from '../firebase/db';
 import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { connect } from 'react-redux';
 
 const styles = {
 	companies: {
