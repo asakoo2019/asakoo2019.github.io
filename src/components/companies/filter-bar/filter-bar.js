@@ -1,20 +1,20 @@
 import React from 'react';
-import { FormLabel, FormControl, FormGroup, FormControlLabel, Checkbox } from '@material-ui/core';
+import { Grid, FormLabel, FormControl, FormGroup, FormControlLabel, Checkbox, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
     root: {
-        display: 'flex',
-        backgroundColor: 'rgb(255, 255, 204)',
+        marginTop: theme.spacing(1),
+        // backgroundColor: 'rgb(255, 255, 204)',
     },
     formControl: {
-        padding: theme.spacing(2),
-        // color: 'red',
-    },
-    // formControlLabel:{
-    //     color: 'blue',
+        padding: theme.spacing(1),
         
-    // }
+    },
+    size: {
+        width: '8px',
+        height: '8px',
+    }
 }));
 
 const companyCategoryArr = [
@@ -43,8 +43,8 @@ function CompanyFilterBar({ filterCompany }) {
     }
 
     return (
-        <div className={classes.root}>
-            <FormControl
+        <Grid container className={classes.root}>
+            <FormControl 
                 className={classes.formControl}
             >
                 <FormLabel className={classes.formControl}>Filter By Category</FormLabel>
@@ -53,8 +53,8 @@ function CompanyFilterBar({ filterCompany }) {
                         return (
                             <FormControlLabel className={classes.formControlLabel} 
                                 key={item}
-                                control={<Checkbox />}
-                                label={item}
+                                control={<Checkbox className = {classes.size}/>}
+                                label={<Typography>{item}</Typography>}
                                 value={item}
                                 onChange={(e) => handleCompChange(e.target.value)}
                             />
@@ -62,8 +62,7 @@ function CompanyFilterBar({ filterCompany }) {
                     })}
                 </FormGroup>
             </FormControl>
-        </div>
-
+        </Grid>
     );
 }
 export default CompanyFilterBar;

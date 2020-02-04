@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Button, Avatar } from '@material-ui/core';
+import { Grid, Button, Avatar, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 
@@ -13,21 +13,16 @@ const useStyles = makeStyles(theme => ({
       backgroundColor: "rgb(242, 242, 242)",
     },
   },
-  avatarBlock: {
-    marginLeft: theme.spacing(2),
-    marginTop: theme.spacing(1),
-  },
   companyNameText: {
     fontWeight: '700',
-    margin: theme.spacing(0),
   },
-  viewText:{
-    fontSize:'14px',
-    margin: theme.spacing(0),
+  large: {
+    width: theme.spacing(7),
+    height: theme.spacing(7),
   },
-  button: {
-    marginTop: theme.spacing(1.5),
-  }
+  height: {
+    height: '100%',
+  },
 }));
 
 function CompanyItem({ currentCompany }) {
@@ -35,33 +30,29 @@ function CompanyItem({ currentCompany }) {
   const history = useHistory();
 
   return (
-    <Grid container
-      className={classes.root}
-    >
-      <Grid item xs={5}>
-        <Grid container
-          direction="row"
-          justify="flex-start"
-          alignItems="center"
-        >
-          <Grid className = {classes.avatarBlock}>
-            <Avatar src={currentCompany.companyImage} />
+    <Grid container className={classes.root}>
+      <Grid item xs={12} sm={7} md={7} lg={6} zeroMinWidth>
+        <Grid container spacing={2} >
+          <Grid item xs={12} sm={2}>
+            <Avatar className={classes.large} src={currentCompany.companyImage} alt={currentCompany.companyName} />
           </Grid>
-
-          <Grid  className = {classes.avatarBlock}>
-            <p className = {classes.companyNameText}> {currentCompany.companyName}</p>
-            <p className = {classes.viewText}>{currentCompany.companyViewCount} total views </p>
+          <Grid item xs={12} sm={10}>
+            <Typography className={classes.companyNameText}> {currentCompany.companyName}</Typography>
+            <Typography variant="body2" gutterBottom>{currentCompany.companyViewCount} total views </Typography>
           </Grid>
-
         </Grid>
       </Grid>
-      <Grid item xs={5}>
-        <p>Active jobs({currentCompany.companyJobs.length})</p>
+      <Grid item xs={6} sm={2} md={2} lg={2} zeroMinWidth>
+        <Grid container alignItems="center" className ={classes.height}>
+          <Typography variant="body2">Active jobs({currentCompany.companyJobs.length})</Typography>
+        </Grid>
       </Grid>
-      <Grid item xs={2} >
-        <Button className ={classes.button} variant="outlined" color="secondary" onClick={() => { history.push(`companies/${currentCompany.id}`) }} >
-          View More
+      <Grid item xs={6} sm={3} md={3} lg={4} zeroMinWidth>
+        <Grid container justify={"flex-end"} alignItems="center" className ={classes.height}>
+          <Button variant="outlined" color="secondary" onClick={() => { history.push(`companies/${currentCompany.id}`) }} >
+            View More
         </Button>
+        </Grid>
       </Grid>
     </Grid>
   );
