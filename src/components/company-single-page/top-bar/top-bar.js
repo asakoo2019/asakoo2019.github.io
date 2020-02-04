@@ -7,6 +7,9 @@ const useStyles = makeStyles(theme => ({
       height: '400px',
       width: '100%',
       margin: theme.spacing(2, 0),
+      backgroundPosition: 'center',
+		backgroundRepeat: 'no-repeat',
+  	    backgroundSize: 'cover',
     },
     topBarDiv: {
       padding: theme.spacing(1, 2),
@@ -31,12 +34,12 @@ function TopBar ({companyInfo}) {
         <Grid container
             direction='column'
             justify="flex-end"
+            style = {{backgroundImage:` url(${bgImage})`}}
             className = {classes.root}
         >
             <Grid container
                 alignItems="center"
                 className = {classes.topBarDiv}
-                style = {{backgroundImage:` url(${bgImage})`}}
             >
                 <Grid item xs={3}>
                     <img src = {companyInfo.companyImage} alt = {`${companyInfo.companyName} pic`} className = {classes.topBarImg}/>

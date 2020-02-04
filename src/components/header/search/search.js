@@ -14,7 +14,6 @@ const Search = (props) => {
   const [companySearch, setCompanySearch] = useState('');
   const [jobSearch, setJobSearch] = useState('');
   const [searchUrl, setSearchUrl] = useState('jobs');
-  const [renderArray, setRenderArray] = useState([]);
   const history = useHistory();
   const { dispatch } = props;
 
@@ -26,11 +25,11 @@ const Search = (props) => {
           if (typeof value === 'string'){
             if (value.toLowerCase() === term.toLowerCase()) {
               newArray.push(item);
-              setRenderArray(newArray);
             };
           };
         };
       });
+      dispatch({type: "SEARCH", payload: newArray});
       history.push(`/${searchUrl}`);
     };
   };
@@ -43,18 +42,15 @@ const Search = (props) => {
           if (typeof value === 'string'){
             if (value.toLowerCase() === term.toLowerCase()) {
               newArray.push(item);
-              setRenderArray(newArray);
             };
           };
         };
       });
+      dispatch({type: "SEARCH", payload: newArray});
       history.push(`/${searchUrl}`);
     };
   };
 
-  useEffect(() => {
-    dispatch({type: "SEARCH", payload: renderArray});
-  }, [renderArray, dispatch]);
 
   useEffect(() => {
     firestore.collection("companies").get().then((querySnapshot) => {

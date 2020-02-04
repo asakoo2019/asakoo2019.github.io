@@ -4,6 +4,7 @@ import CompaniesBar from './companies-bar/companies-bar';
 import { Grid, Container} from '@material-ui/core';
 import { firestore } from '../firebase/db';
 import { makeStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
 //import dataArray from './companyArray';
 
 const useStyles = makeStyles(theme => ({
@@ -13,7 +14,14 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Companies(props) {
+const mStP = (state) => ({
+  state,
+});
+
+
+
+
+function Companies({state, dispatch}) {
   const classes = useStyles();
   const [currPage, setCurrentPage] = useState(10);
   const [allCompanies, setAllCompanies] = useState(true);
@@ -21,17 +29,22 @@ export default function Companies(props) {
   const [data, setData] = useState([]);
  
   useEffect(() => {
-    firestore.collection("companies").get().then((querySnapshot) => {
-      let companies = [];
-      querySnapshot.forEach((doc) => {
-        if (Object.keys(doc.data()).length !== 0) {
-          companies.push(doc.data());
-        };
+    if (state.search.length){
+      setData(state.search);
+      dispatch({type: "SEARCH", payload: []});
+    } else {
+      firestore.collection("companies").get().then((querySnapshot) => {
+        let companies = [];
+        querySnapshot.forEach((doc) => {
+          if (Object.keys(doc.data()).length !== 0) {
+            companies.push(doc.data());
+          };
+        });
+        companies.sort((a, b) => b.companyViewCount - a.companyViewCount);
+        setData(companies);
       });
-      companies.sort((a, b) => b.companyViewCount - a.companyViewCount);
-      setData(companies);
-    });
-  }, []);
+    }  
+  }, [ dispatch, state.search]);
 
   function filterCompany(value) {
     let arr = [...type];
@@ -64,7 +77,7 @@ export default function Companies(props) {
     <Container maxWidth='lg' className={classes.root}>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12} md={3} zeroMinWidth>
-          <CompanyFilterBar filterCompany={filterCompany} />
+          {data.length ? <CompanyFilterBar filterCompany={filterCompany}/>: null}
         </Grid>
         <Grid item xs={12} sm={12} md={9} zeroMinWidth>
           <CompaniesBar employer={employer} currPage={currPage} otherCopmanies={otherCopmanies} />
@@ -74,3 +87,4 @@ export default function Companies(props) {
 
   );
 }
+export default connect(mStP)(Companies);
