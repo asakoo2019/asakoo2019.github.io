@@ -4,20 +4,26 @@ import JobsContainer from './jobs-container';
 import { Container, Grid } from '@material-ui/core';
 import { firestore } from '../firebase/db';
 import { withStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = {
 	companies: {
 		marginTop: 24,
 		marginBottom: 24,
 	},
+	jobsLoader: {
+    margin: 50,
+    color: '#FE654F',
+  },
 };
+
 
 const Jobs = (props) => {
 	const { classes } = props;
 	const [jobs, setJobs] = useState([]);
 	const [allJobs, setAllJobs] = useState(true);
 	const [currentPage, setCurrentPage] = useState(10);
-  const [categories, setCategories] = useState([]);
+	const [categories, setCategories] = useState([]);
 
 	useEffect(() => {
 		let job = [];
@@ -58,23 +64,26 @@ const Jobs = (props) => {
 
 	return (
 		<Container>
-			<Grid container
+			{jobs.length ? <Grid container
 				justify='space-between'
 				className={classes.companies}>
-				<Grid item xs={3}>
+				<Grid item xs={12} sm={4} lg={3}>
 					<JobsFilter
-						jobs = { jobs }
+						jobs={jobs}
 						setCurrentPage={setCurrentPage}
 						setCategories={setCategories}
 						setAllJobs={setAllJobs}/>
 				</Grid>
-				<Grid item xs={9}>
+				<Grid item xs={12} sm={8} lg={9}>
 					<JobsContainer
 					renderJobs={renderJobs}
 					currentPage={currentPage}
 					otherJobs={otherJobs} />
 				</Grid>
-			</Grid>
+			</Grid> :
+			<Grid container justify='center'>
+        <CircularProgress size={150} className={classes.jobsLoader}/>
+      </Grid>}
 		</Container>
 	);
 };

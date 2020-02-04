@@ -3,8 +3,10 @@ a:visited {
   text-decoration: none;
   color: #000;
 }
+
 body {
-  margin: 0;
+	margin: 4px;
+	padding: 0;
 }
 
 body,
@@ -22,7 +24,7 @@ textarea {
 	text-align: justify;
 }
 
-h1{
+h1 {
 	font-family: Helvetica, sans-serif;
 	font-size: 48px;
 	line-height: 66px;
@@ -30,7 +32,7 @@ h1{
   margin: .25em 0;
 }
 
-h2{
+h2 {
 	font-family: Helvetica, sans-serif;
 	font-size: 38px;
 	line-height: 50px;
@@ -38,7 +40,7 @@ h2{
   margin: .25em 0;
 }
 
-h3{
+h3 {
 	font-family: Helvetica, sans-serif;
 	font-size: 32px;
 	line-height: 44px;
@@ -46,7 +48,7 @@ h3{
   margin: .25em 0;
 }
 
-h4{
+h4 {
 	font-family: Helvetica, sans-serif;
 	font-size: 26px;
 	line-height: 36px;
@@ -54,7 +56,7 @@ h4{
   margin: .25em 0;
 }
 
-h5{
+h5 {
 	font-family: Helvetica, sans-serif;
 	font-size: 20px;
 	line-height: 28px;
@@ -105,6 +107,12 @@ nav .active {
   background-color: #fff;
 }
 
+.app-logo {
+  width: 85px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
 /*Large devices (desktops, less than 1200px)*/
 @media (max-width: 1199px) {
 
@@ -117,27 +125,27 @@ nav .active {
 
 /*Small devices (landscape phones, less than 768px)*/
 @media (max-width: 767px) {
-  h1{
+  h1 {
 		font-size: 24px;
 		line-height: 32px;
 	}
 	
-	h2{
+	h2 {
 		font-size: 22px;
 		line-height: 30px;
 	}
 	
-	h3{
+	h3 {
 		font-size: 20px;
 		line-height: 28px;
 	}
 	
-	h4{
+	h4 {
 		font-size: 18px;
 		line-height: 26px;
 	}
 	
-	h5{
+	h5 {
 		font-size: 16px;
 		line-height: 24px;
 	}
@@ -202,27 +210,27 @@ nav .active {
 
 /*Medium devices (tablets, 768px and up)*/
 @media (min-width: 768px) and (max-width: 991px) {
-  h1{
+  h1 {
 		font-size: 34px;
 		line-height: 44px;
 	}
 	
-	h2{
+	h2 {
 		font-size: 30px;
 		line-height: 40px;
 	}
 	
-	h3{
+	h3 {
 		font-size: 26px;
 		line-height: 34px;
 	}
 	
-	h4{
+	h4 {
 		font-size: 22px;
 		line-height: 28px;
 	}
 	
-	h5{
+	h5 {
 		font-size: 18px;
 		line-height: 24px;
 	}

@@ -3,29 +3,38 @@ import { withStyles } from '@material-ui/core/styles';
 import { Grid, Button } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
 import { firestore } from '../../firebase/db';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = {
   jobDetails: {
     borderRadius: 10,
     marginTop: 6,
-    padding: 20,
+    padding: 15,
     background: 'linear-gradient(to right, rgba(244, 67, 54, 0.2), rgba(76, 175, 80, .2))',
-    cursor: 'pointer'
+    boxShadow: '0px 0px 15px 0px rgba(56,55,56,1)',
+    cursor: 'pointer',
   },
   allJobsBtn: {
     margin: 20,
-    backgroundColor: '#FE654F'
+    backgroundColor: '#FE654F',
   },
   jobLogo: {
     borderRadius: 10,
-    width: '90%'
+    width: '90%',
+    height: 200,
+    objectFit: 'cover',
   },
   jobDetailsText: {
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
+  homeLoader: {
+    margin: 50,
+    color: '#FE654F',
+  },
+  aboutJobText: {
+    textAlign: 'center',
+  },
 };
-
-
 
 const HomeJobs = (props) => {
   const {classes} = props;
@@ -79,7 +88,7 @@ const HomeJobs = (props) => {
           <h6 className={classes.aboutJobText}> {el.jobName} </h6>
         </Grid>
         <Grid container justify='center'>
-          <h6 className={classes.aboutJobText}> {el.aboutJob} </h6>
+          <p className={classes.aboutJobText}> {el.jobDetails} </p>
         </Grid>
         <Grid container justify='center'>
           <Button className={classes.allJobsBtn}
@@ -93,21 +102,27 @@ const HomeJobs = (props) => {
   });
 
   return (
-    <Grid className={classes.jobs}
-      container
-      direction='column'
-      alignItems='center'>
-      <h2>Top jobs</h2>
-      <Grid container
-        justify="space-around">
-        {job}
-      </Grid>
-      <Button className={classes.allJobsBtn}
-        variant='contained'
-        onClick={handleClick}>
-        All jobs
-      </Button>
-    </Grid>
+    <>
+      {jobs.length ?
+      <Grid className={classes.jobs}
+        container
+        direction='column'
+        alignItems='center'>
+        <h2>{'Top jobs'.toUpperCase()}</h2>
+        <Grid container
+          justify="space-around">
+          {job}
+        </Grid>
+        <Button className={classes.allJobsBtn}
+          variant='contained'
+          onClick={handleClick}>
+          All jobs
+        </Button>
+      </Grid> :
+      <Grid container justify='center'>
+        <CircularProgress size={150} className={classes.homeLoader}/>
+      </Grid>}
+    </>
   );
 };
 

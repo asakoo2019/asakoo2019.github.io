@@ -134,7 +134,7 @@ const CompanyJobsCangeModal = (props) => {
     setJobType(props.item.jobType);
     setJobDetails(props.item.jobDetails);
     setTerm(props.item.term);
-    setJobDeadline(props.item.jobDeadline);
+    setJobDeadline(new Date());
     company.companyJobs.forEach(item => {
       if(item.id === props.item.id){
         const index = company.companyJobs.findIndex((el) => el.id === item.id);
@@ -156,7 +156,7 @@ const CompanyJobsCangeModal = (props) => {
       jobType,
       jobDetails,
       term,
-      jobDeadline,
+      jobDeadline: jobDeadline.toLocaleDateString(undefined, { day:'numeric', month: 'numeric', year: 'numeric' }),
       id: props.item.id,
       viewCount: props.item.viewCount,
       companyName: company.companyName,

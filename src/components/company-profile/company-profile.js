@@ -15,6 +15,7 @@ import CompanyJobs from './company-jobs';
 import CompanyJobsModal from './company-jobs-modal';
 import './company-profile.css';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import CompanyBackgroundBlock from './company-background-block';
 
 const styles = {
   companyAllBlocks: {
@@ -37,6 +38,10 @@ const styles = {
   },
   companyProfileLoader: {
     margin: 50,
+    color: '#FE654F',
+  },
+  companyBG: {
+    marginTop: 8,
   },
 };
 
@@ -46,7 +51,7 @@ const mStP = (state) => ({
 
 const CompanyProfile = (props) => {
   let { classes, company, showItems } = props;
-  company = company ? company : {};
+  company = company.data ? company.data : {};
   const id = company.id;
 
   return (
@@ -116,6 +121,11 @@ const CompanyProfile = (props) => {
               <p className={classes.companyLine}>
                 {company.companyCategory}
               </p>
+            </Grid>
+            <Grid container
+              alignItems='center'
+              className={classes.companyBG}>
+              <CompanyBackgroundBlock showItems={showItems} company={company} id={id}/>
             </Grid>
           </Grid>
         </Grid>

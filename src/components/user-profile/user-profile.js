@@ -39,6 +39,7 @@ const styles = {
   },
   userProfileLoader: {
     margin: 50,
+    color: '#FE654F',
   },
 };
 
@@ -48,7 +49,7 @@ const mStP = (state) => ({
 
 const UserProfile = (props) => {
   let { classes, user, id, showItems } = props;
-  user = user ? user : {};
+  user = user.data ? user.data : {};
 
   return (
     <Container className='userBlock'>
