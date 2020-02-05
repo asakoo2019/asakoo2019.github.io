@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import CompanyFilterBar from './hiddenFilter/filter-bar';
+import CompanyFilterBar from './hidden-filter-bar';
 import CompaniesBar from './companies-bar/companies-bar';
 import { Grid, Container, makeStyles } from '@material-ui/core';
 import { firestore } from '../firebase/db';

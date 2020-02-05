@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
     Grid,
     FormLabel,
@@ -7,33 +7,19 @@ import {
     FormControlLabel,
     Checkbox,
     Typography,
-    makeStyles,
-    withWidth
+    makeStyles
 } from '@material-ui/core';
-import PropTypes from 'prop-types';
-
-import {
-    Hidden,
-    Button,
-
-} from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
     root: {
         marginTop: theme.spacing(1),
-        // backgroundColor: 'rgb(255, 255, 204)',
     },
     formControl: {
         padding: theme.spacing(1),
-
     },
     size: {
         width: '8px',
         height: '8px',
-    },
-    toggleButton: {
-        backgroundColor: 'red',
-        color: 'white',
     },
     filterName: {
         [theme.breakpoints.down('md')]: {
@@ -41,6 +27,7 @@ const useStyles = makeStyles(theme => ({
           },
     }
 }));
+
 
 const companyCategoryArr = [
     'Finance/Banking/Insurance',
@@ -60,7 +47,7 @@ const companyCategoryArr = [
     'Online Service',
 ];
 
-function CompanyFilterBar({ filterCompany, type, hideShow }) {
+function CompanyFilterBar({ filterCompany, type }) {
     const classes = useStyles();
 
     function handleCompChange(e) {
@@ -81,7 +68,7 @@ function CompanyFilterBar({ filterCompany, type, hideShow }) {
                             <FormControlLabel className={classes.formControlLabel}
                                 key={item}
                                 control={<Checkbox className={classes.size} checked={checked} />}
-                                label={<Typography className = {classes.filterName}>{item}</Typography>}
+                                label={<Typography className={classes.filterName}>{item}</Typography>}
                                 value={item}
                                 onChange={(e) => handleCompChange(e.target.value)}
                             />
@@ -92,40 +79,4 @@ function CompanyFilterBar({ filterCompany, type, hideShow }) {
         </Grid>
     );
 }
-
-function HiddenFilterBar({ filterCompany, type, width }) {
-    const classes = useStyles();
-    const [view, setView] = useState(true);
-
-    function hideShow() {
-        if (width === 'md') {
-            setView(true)
-        } else {
-            setView(!view);
-        }
-    };
-
-    const filterbar = <CompanyFilterBar filterCompany={filterCompany} type={type} hideShow ={hideShow}/>
-    return (
-        <>
-            <Hidden mdUp={width === 'md' ? true : view}>
-                <Button
-                    className={classes.toggleButton}
-                    onClick={hideShow}
-                >
-                    Filter Companies
-                </Button>
-
-            </Hidden>
-            <Hidden smDown={view} >
-                {filterbar}
-            </Hidden>
-
-        </>
-    );
-}
-HiddenFilterBar.propTypes = {
-    width: PropTypes.oneOf(["lg", "md", "sm", "xl", "xs"]).isRequired
-};
-export default withWidth()(HiddenFilterBar)
-
+export default CompanyFilterBar;
