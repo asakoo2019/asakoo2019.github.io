@@ -40,6 +40,10 @@ const styles = {
 		paddingBottom: 15,
 		borderBottom: '1px solid #FE654F',
 	},
+	jobMail: {
+		color: '#FE654F',
+		fontWeight: 'bold',
+	},
 };
 
 const JobSingle = (props) => {
@@ -152,7 +156,7 @@ const JobSingle = (props) => {
 											<p className={classes.secondText}>{item.jobDeadline}</p>
 										</Grid>
 										<Grid container item alignItems='center'>
-											<h5 className={classes.firstText}>Job view counts:</h5>
+											<h5 className={classes.firstText}>Job total views:</h5>
 											<p className={classes.secondText}>{item.viewCount + 1}</p>
 										</Grid>
 									</Grid>
@@ -167,12 +171,11 @@ const JobSingle = (props) => {
 									<Grid container direction='column'>
 										<h5 className={classes.firstText}>Additional information:</h5>
 										<p className={classes.jobDetailsText}>
-											Interested candidates who meet the requirements above and are confident that their background and experience qualify them for the position, are welcome to send their resume to: {item.jobMail} mentioning the position title ("{item.jobName}") in the subject line of the email.
+											Interested candidates who meet the requirements above and are confident that their background and experience qualify them for the position, are welcome to send their resume to: <span className={classes.jobMail}>{item.jobMail}</span> mentioning the position title ( "{item.jobName}" ) in the subject line of the email.
 										</p>
 									</Grid>
 								</Grid>
 							</Grid>
-
 						</Grid>
 					);
 				};
@@ -192,6 +195,7 @@ const JobSingle = (props) => {
 		classes.singleJobContainer,
 		classes.jobDetailsText,
 		classes.allBlocks,
+		classes.jobMail,
 	]);
 
 	useEffect(() => {

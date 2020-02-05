@@ -17,6 +17,8 @@ const styles = {
 	},
 	viewMoreBtn: {
 		height: 40,
+		color: '#FE654F',
+		border: '1px solid #FE654F',
 	},
 	jobImage: {
 		width: '80%',
@@ -62,7 +64,7 @@ const JobsContainer = (props) => {
 	.slice(currentPage - 10, currentPage)
 	.sort((a, b) => b.viewCount - a.viewCount)
 	.map(item => {
-		let { jobCategory, id, jobImage, jobDetails, viewCount } = item;
+		let { id, jobImage, jobDetails, viewCount, jobName } = item;
 		if (jobDetails.length > 50) {
       jobDetails = jobDetails.substring(0, 50) + "...";
 		};
@@ -75,19 +77,20 @@ const JobsContainer = (props) => {
 				spacing={1}
 				onClick={() => viewMore(id)}>
 				<Grid container justify="center" item xs={6} lg={2}>
-					<img src={ jobImage } alt={ jobCategory } className={classes.jobImage}/>
+					<img src={ jobImage } alt={ jobName } className={classes.jobImage}/>
 				</Grid>
-				<Grid container justify="center" item xs={6} lg={4}>
-					<p>{ jobCategory }</p>
+				<Grid container justify="center" item xs={6} lg={3}>
+					<h6>{ jobName }</h6>
 				</Grid>
-				<Grid container justify="center" item xs={6} lg={2}>
+				<Grid container justify="center" item xs={6} lg={3}>
 					<p>{ jobDetails }</p>
 				</Grid>
-				<Grid container justify="center" item xs={6} lg={2}>
-					<p>Total view { viewCount }</p>
+				<Grid direction='column' container alignItems="center" item xs={6} lg={2}>
+					<p>Total views</p>
+					<p>{ viewCount }</p>
 				</Grid>
 				<Grid container justify='center' item xs={12} lg={2}>
-					<Button color='primary' variant="outlined" className={classes.viewMoreBtn} onClick={() => viewMore(id)}>
+					<Button variant="outlined" className={classes.viewMoreBtn} onClick={() => viewMore(id)}>
 					View More
 				</Button>
 				</Grid>
