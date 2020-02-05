@@ -26,12 +26,14 @@ const Jobs = (props) => {
 	const { classes } = props;
 	const [jobs, setJobs] = useState([]);
 	const [allJobs, setAllJobs] = useState(true);
+	const [show, setShow] = useState(false);
 	const [currentPage, setCurrentPage] = useState(10);
 	const [categories, setCategories] = useState([]);
 	const [emptySearch, setEmptySearch] = useState('');
 
 	useEffect(() => {
 		if(typeof props.state.search === 'string') {
+			setShow(true);
 			setEmptySearch(props.state.search);
 		} else {
 			let job = [];
@@ -44,12 +46,14 @@ const Jobs = (props) => {
 					job.forEach(item => {
 						newArray = newArray.concat(item);
 					});
-					setJobs(props.state.search.length ? props.state.search : newArray);
+						setShow(true);
+						setEmptySearch('');
+						setJobs(props.state.search.length ? props.state.search : newArray);
 					};
 				});
 			});
 		};
-	}, []);
+	}, [props.state.search]);
 
 	const otherJobs = (i) => {
     let num = i * 10;
@@ -73,7 +77,7 @@ const Jobs = (props) => {
 
 	return (
 		<Container>
-			{jobs.length ? <Grid container
+			{show ? <Grid container
 				justify='space-between'
 				className={classes.companies}>
 				<Grid item xs={12} sm={4} lg={3}>

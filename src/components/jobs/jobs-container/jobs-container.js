@@ -28,7 +28,6 @@ const JobsContainer = (props) => {
 	const history = useHistory();
 	const { renderJobs, classes, currentPage, otherJobs } = props;
 	const newJobs = [...renderJobs];
-	console.log(props.emptySearch);
 
 	const pagination = (arr) => {
 		let maxButtons = Math.ceil(arr.length / 10);
