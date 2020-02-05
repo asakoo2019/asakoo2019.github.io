@@ -44,9 +44,13 @@ function SettingsToggleMenu(props) {
   };
 
   function deleteAccount() {
-    props.setShowItems(false);
-    history.replace('/home');
-    dispatch({type: 'SIGN-OUT'});
+    auth.signOut().then(function() {
+      props.setShowItems(false);
+      history.replace('/home');
+      dispatch({type: 'SIGN-OUT'});
+    }).catch(function(error) {
+      // An error happened.
+    });
     const deleteData = auth.currentUser;
     const collectionName = data.registrationType === 'Employee' ? 'users' : 'companies';
     const dataId = data.id;
