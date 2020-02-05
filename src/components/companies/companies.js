@@ -24,12 +24,15 @@ function Companies({ state}) {
   const [type, setType] = useState([]);
   const [data, setData] = useState([]);
   const [noData, setNoData] =useState('');
+  // console.log(state)
+
   useEffect(() => {
-    if (typeof state.search === 'string'){
-      console.log(state.search)
+    ;
+    if (typeof state.search === 'string'){  
       setNoData(state.search)
     }  else if (state.search.length) {
-      setData([...state.search])
+      setData([...state.search]);
+      setNoData('');
     } else {
       firestore.collection("companies").get().then((querySnapshot) => {
         let companies = [];
@@ -40,10 +43,11 @@ function Companies({ state}) {
         });
         companies.sort((a, b) => b.companyViewCount - a.companyViewCount);
         setData(companies);
+        setNoData('')
       });
 
     }
-  }, [ state]);
+  }, [state]);
 
   function filterCompany(value) {
     let arr = [...type];
@@ -79,7 +83,7 @@ function Companies({ state}) {
           <CompanyFilterBar filterCompany={filterCompany} type ={type}/>
         </Grid>
         <Grid item xs={12} sm={12} md={9} zeroMinWidth>
-          <CompaniesBar employer={employer} currPage={currPage} otherCopmanies={otherCopmanies} />
+          <CompaniesBar employer={employer} currPage={currPage} otherCopmanies={otherCopmanies} noData ={noData}/>
         </Grid>
       </Grid>
     </Container>
