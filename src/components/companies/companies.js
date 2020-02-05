@@ -17,15 +17,18 @@ const mStP = (state) => ({
   state,
 });
 
-function Companies({ state, dispatch }) {
+function Companies({ state}) {
   const classes = useStyles();
   const [currPage, setCurrentPage] = useState(10);
   const [allCompanies, setAllCompanies] = useState(true);
   const [type, setType] = useState([]);
   const [data, setData] = useState([]);
+  const [noData, setNoData] =useState('');
   useEffect(() => {
-
-    if (state.search.length) {
+    if (typeof state.search === 'string'){
+      console.log(state.search)
+      setNoData(state.search)
+    }  else if (state.search.length) {
       setData([...state.search])
     } else {
       firestore.collection("companies").get().then((querySnapshot) => {
@@ -40,7 +43,7 @@ function Companies({ state, dispatch }) {
       });
 
     }
-  }, [dispatch, state]);
+  }, [ state]);
 
   function filterCompany(value) {
     let arr = [...type];

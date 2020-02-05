@@ -13,8 +13,8 @@ const useStyles = makeStyles(theme => ({
         marginTop: theme.spacing(1),
     },
     toggleButton: {
-        backgroundColor: 'red',
-        color: 'white',
+        backgroundColor: '#FE654F',
+        color: '#fff',
     },
 }));
 
@@ -23,17 +23,17 @@ function HiddenFilterBar({ filterCompany, type, width }) {
     const [view, setView] = useState(true);
 
     function hideShow() {
-        if (width === 'md' || width === 'lg') {
+        if (width === 'md') {
             setView(true)
         } else {
             setView(!view);
         }
     };
 
-    const filterbar = <CompanyFilterBar filterCompany={filterCompany} type={type} hideShow={hideShow} />
+    const filterbar = <CompanyFilterBar filterCompany={filterCompany} type={type} />
     return (
         <>
-            <Hidden mdUp={width === 'md' ? true : view}>
+            <Hidden mdUp={(width === 'md' || width === 'lg' || width === 'xl') ? true : view}>
                 <Button
                     className={classes.toggleButton}
                     onClick={hideShow}
