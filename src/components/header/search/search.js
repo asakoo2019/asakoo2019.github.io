@@ -35,8 +35,8 @@ const Search = (props) => {
   };
 
   const searchingCompanies = () => {
+    let newArray = [];
     if (term) {
-      let newArray = [];
       companySearch.forEach(item => {
         for(let value of Object.values(item)) {
           if (typeof value === 'string'){
@@ -46,9 +46,11 @@ const Search = (props) => {
           };
         };
       });
-      dispatch({type: "SEARCH", payload: newArray});
+      dispatch({type: "SEARCH", payload: [...newArray]});
       history.push(`/${searchUrl}`);
-    };
+    } else {
+      dispatch({type: "SEARCH", payload: [...newArray]});
+    }
   };
 
 

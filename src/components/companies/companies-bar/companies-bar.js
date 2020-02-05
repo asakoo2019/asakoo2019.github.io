@@ -2,8 +2,7 @@ import React from 'react';
 import CompanyItem from './items-block';
 import CompaniesBarTop from './companies-top-bar';
 import PaginationBar from './pagination-bar';
-import { makeStyles } from '@material-ui/core/styles';
-import { Grid } from '@material-ui/core';
+import { Grid, makeStyles } from '@material-ui/core';
 
 
 const useStyles = makeStyles(theme => ({
@@ -56,5 +55,6 @@ export default function CompaniesBar({ employer, otherCopmanies, currPage }) {
                 { maxPageButton > 1?<PaginationBar employer = {employer} maxPageButton = {maxPageButton} otherCopmanies = {otherCopmanies}/>: null}
             </Grid>
         </Grid>
+        
     );
 }

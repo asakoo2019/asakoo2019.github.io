@@ -25,9 +25,11 @@ const mStP = (state) => ({
 });
 
 const NavBar = (props) => {
-  const { classes, showItems } = props;
+  const { classes, showItems, dispatch } = props;
   const regAndLogArray = [<NavLink key={1} to="/sign-in" activeClassName='active' className={classes.navItem}>Sign In</NavLink>, <NavLink key={2} to="/registration" activeClassName='active' className={classes.navItem}>Registration</NavLink>];
-
+  function handleChange (){
+    dispatch({type: "SEARCH", payload: []});
+  }
   return (
     <>
       <nav>
@@ -37,8 +39,8 @@ const NavBar = (props) => {
             container
             justify='flex-start'>
             <NavLink to="/home" activeClassName='active' className={classes.navItem}>Home</NavLink>
-            <NavLink to="/jobs" activeClassName='active' className={classes.navItem}>Jobs</NavLink>
-            <NavLink to="/companies" activeClassName='active' className={classes.navItem}>Companies</NavLink>
+            <NavLink to="/jobs" activeClassName='active' className={classes.navItem} onClick = {handleChange}>Jobs</NavLink>
+            <NavLink to="/companies" activeClassName='active' className={classes.navItem} onClick = {handleChange}>Companies</NavLink>
           </Grid>
           <Grid item xs={4}
             container

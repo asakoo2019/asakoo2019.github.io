@@ -6,8 +6,6 @@ const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
         padding: theme.spacing(2),
-        // backgroundColor: 'rgb(255, 255, 204)',
-        // color: "blue",
     },
 }));
 
@@ -21,9 +19,9 @@ function CompaniesBarTop({employer}) {
             <Grid>
                 <span>1 - 10 company results from {employer.length} total companies on asakoo.am</span>
             </Grid>
-            <Grid>
+            {/* <Grid>
                 somthing
-            </Grid>
+            </Grid> */}
         </Grid>
     );
 }

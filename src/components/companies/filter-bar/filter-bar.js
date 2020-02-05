@@ -1,6 +1,14 @@
 import React from 'react';
-import { Grid, FormLabel, FormControl, FormGroup, FormControlLabel, Checkbox, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import {
+    Grid,
+    FormLabel,
+    FormControl,
+    FormGroup,
+    FormControlLabel,
+    Checkbox,
+    Typography,
+    makeStyles
+} from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -9,7 +17,7 @@ const useStyles = makeStyles(theme => ({
     },
     formControl: {
         padding: theme.spacing(1),
-        
+
     },
     size: {
         width: '8px',
@@ -44,16 +52,16 @@ function CompanyFilterBar({ filterCompany }) {
 
     return (
         <Grid container className={classes.root}>
-            <FormControl 
+            <FormControl
                 className={classes.formControl}
             >
                 <FormLabel className={classes.formControl}>Filter By Category</FormLabel>
                 <FormGroup>
                     {companyCategoryArr.map(item => {
                         return (
-                            <FormControlLabel className={classes.formControlLabel} 
+                            <FormControlLabel className={classes.formControlLabel}
                                 key={item}
-                                control={<Checkbox className = {classes.size}/>}
+                                control={<Checkbox className={classes.size} />}
                                 label={<Typography>{item}</Typography>}
                                 value={item}
                                 onChange={(e) => handleCompChange(e.target.value)}
