@@ -46,11 +46,9 @@ const Search = (props) => {
           };
         };
       });
-      dispatch({type: "SEARCH", payload: [...newArray]});
+      dispatch({type: "SEARCH", payload: newArray});
       history.push(`/${searchUrl}`);
-    } else {
-      dispatch({type: "SEARCH", payload: [...newArray]});
-    }
+    };
   };
 
 
