@@ -6,25 +6,30 @@ import { firestore } from '../../firebase/db';
 
 const styles = {
   aboutCompany: {
-    borderRadius: 10,
     marginTop: 6,
     padding: 15,
-    // background: 'linear-gradient(to right, rgba(244, 67, 54, 0.2), rgba(76, 175, 80, .2))',
-    boxShadow: '0px 0px 15px 0px rgba(254,101,79,1)',
+    backgroundColor: 'rgb(255, 255, 255)',
     cursor: 'pointer',
+    transition: '.3s',
+		"&:hover": {
+			boxShadow: '0px 0px 10px 3px rgba(0,0,0,0.5)',
+			transition: '.3s',
+		}
   },
   allCompaniesBtn: {
     margin: 20,
     backgroundColor: 'rgba(254, 101, 79, .5)',
   },
   companyLogo: {
-    borderRadius: 10,
     width: '90%',
     height: 200,
     objectFit: 'cover',
   },
   aboutCompanyText: {
     textAlign: 'center',
+  },
+  topCompaniesTitle: {
+    color: '#FE654F',
   },
 };
 
@@ -95,7 +100,7 @@ const HomeCompanies = (props) => {
         container
         direction='column'
         alignItems='center'>
-        <h2>{'Top companies'.toUpperCase()}</h2>
+        <h2 className={classes.topCompaniesTitle}>{'Top companies'.toUpperCase()}</h2>
         <Grid container
           justify="space-around">
           {company}

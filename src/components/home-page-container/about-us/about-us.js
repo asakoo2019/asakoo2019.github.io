@@ -4,13 +4,19 @@ import {Grid} from '@material-ui/core';
 
 const styles = {
   aboutUsContainer: {
-    background: 'linear-gradient(to right, rgba(244, 67, 54, 0.2), rgba(76, 175, 80, .2))',
-    borderRadius: 10,
     padding: 15,
-    boxShadow: '0px 0px 15px 0px rgba(56,55,56,1)',
+    backgroundColor: 'rgb(255, 255, 255)',
+    transition: '.3s',
+		"&:hover": {
+			boxShadow: '0px 0px 10px 3px rgba(0,0,0,0.5)',
+			transition: '.3s',
+		}
   },
   text: {
     textAlign: 'justify',
+  },
+  aboutUsTitle: {
+    color: '#FE654F',
   },
 };
 

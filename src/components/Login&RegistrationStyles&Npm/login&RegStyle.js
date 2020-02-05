@@ -1,24 +1,22 @@
 const style = {
     h1: {
-      marginBottom: 30
+      marginBottom: 30,
     },
     form: {
       width: '25vw',
       background: "#fff",
       padding: 70,
       borderRadius: 10,
-      // border: '1px solid #FE654F',
-      boxShadow: '0px 0px 15px 0px rgba(254,101,79,1)',
+      boxShadow: '5px -5px 10px -3px rgba(0,0,0,0.75)',
     },
     mainDiv: {
       padding: "20px 0",
-      // background: 'linear-gradient(120deg, #FE654F, #8e44ad)',
     },
     txtb: {
       margin: 10
     },
     btn: {
-      background: "linear-gradient(120deg, #FE654F, #8e44ad, #FE654F)",
+      background: "linear-gradient(120deg, #FE654F, #BEBEBE, #FE654F)",
       backgroundSize: "200%",
       margin: 10,
       color: "#fff",

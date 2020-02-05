@@ -17,6 +17,11 @@ import CompaniesSinglePage from '../../company-single-page';
 const styles = {
   navItem: {
     padding: 15,
+    borderRight: '1px solid rgb(200, 200, 200)',
+  },
+  navRightItem: {
+    padding: 15,
+    borderLeft: '1px solid rgb(200, 200, 200)',
   },
 };
 
@@ -26,7 +31,7 @@ const mStP = (state) => ({
 
 const NavBar = (props) => {
   const { classes, showItems, dispatch } = props;
-  const regAndLogArray = [<NavLink key={1} to="/sign-in" activeClassName='active' className={classes.navItem}>Sign In</NavLink>, <NavLink key={2} to="/registration" activeClassName='active' className={classes.navItem}>Registration</NavLink>];
+  const regAndLogArray = [<NavLink key={1} to="/sign-in" activeClassName='active' className={classes.navRightItem}>Sign In</NavLink>, <NavLink key={2} to="/registration" activeClassName='active' className={classes.navRightItem}>Registration</NavLink>];
 
   function handleChange (){
     dispatch({type: 'SEARCH-OFF'});
