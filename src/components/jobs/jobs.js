@@ -5,6 +5,7 @@ import { Container, Grid } from '@material-ui/core';
 import { firestore } from '../firebase/db';
 import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { connect } from 'react-redux';
 
 const styles = {
 	companies: {
@@ -17,6 +18,9 @@ const styles = {
   },
 };
 
+const mStP = (state) => ({
+  state,
+});
 
 const Jobs = (props) => {
 	const { classes } = props;
@@ -24,22 +28,27 @@ const Jobs = (props) => {
 	const [allJobs, setAllJobs] = useState(true);
 	const [currentPage, setCurrentPage] = useState(10);
 	const [categories, setCategories] = useState([]);
+	const [emptySearch, setEmptySearch] = useState('');
 
 	useEffect(() => {
-		let job = [];
-		const docRef = firestore.collection("companies");
-		docRef.get().then(function(querySnapshot) {
-			querySnapshot.forEach(function(doc) {
-				if (doc.data().companyJobs && doc.data().companyJobs.length !== 0){
-				job.push(doc.data().companyJobs);
-				let newArray = [];
-				job.forEach(item => {
-					newArray = newArray.concat(item);
+		if(typeof props.state.search === 'string') {
+			setEmptySearch(props.state.search);
+		} else {
+			let job = [];
+			const docRef = firestore.collection("companies");
+			docRef.get().then(function(querySnapshot) {
+				querySnapshot.forEach(function(doc) {
+					if (doc.data().companyJobs && doc.data().companyJobs.length !== 0){
+					job.push(doc.data().companyJobs);
+					let newArray = [];
+					job.forEach(item => {
+						newArray = newArray.concat(item);
+					});
+					setJobs(props.state.search.length ? props.state.search : newArray);
+					};
 				});
-				setJobs(newArray);
-				};
 			});
-		});
+		};
 	}, []);
 
 	const otherJobs = (i) => {
@@ -78,7 +87,8 @@ const Jobs = (props) => {
 					<JobsContainer
 					renderJobs={renderJobs}
 					currentPage={currentPage}
-					otherJobs={otherJobs} />
+					otherJobs={otherJobs}
+					emptySearch={emptySearch} />
 				</Grid>
 			</Grid> :
 			<Grid container justify='center'>
@@ -88,4 +98,4 @@ const Jobs = (props) => {
 	);
 };
 
-export default withStyles(styles)(Jobs);
+export default connect(mStP)(withStyles(styles)(Jobs));

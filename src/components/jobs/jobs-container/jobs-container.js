@@ -2,7 +2,6 @@ import React from 'react';
 import { Grid, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
-import { connect } from 'react-redux';
 
 const styles = {
 	jobBlock: {
@@ -25,15 +24,11 @@ const styles = {
 	},
 };
 
-const mStP = (state) => ({
-  state,
-});
-
-
 const JobsContainer = (props) => {
 	const history = useHistory();
 	const { renderJobs, classes, currentPage, otherJobs } = props;
-	const newJobs = props.state.search.length ? props.state.search : [...renderJobs];
+	const newJobs = [...renderJobs];
+	console.log(props.emptySearch);
 
 	const pagination = (arr) => {
 		let maxButtons = Math.ceil(arr.length / 10);
@@ -100,13 +95,17 @@ const JobsContainer = (props) => {
 	
 	return (
 		<>
-			{ elements }
-			<Grid container
-				item spacing={1}>
-				{pagination(newJobs)}
-			</Grid>
+			{props.emptySearch.length ? props.emptySearch :
+			<>
+				{ elements }
+				<Grid container
+					item spacing={1}>
+					{pagination(newJobs)}
+				</Grid>
+			</>
+			}
 		</>
 	);
 };
 
-export default connect(mStP)(withStyles(styles)(JobsContainer));
+export default withStyles(styles)(JobsContainer);
