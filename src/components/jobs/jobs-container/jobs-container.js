@@ -5,10 +5,15 @@ import { useHistory } from 'react-router-dom';
 
 const styles = {
 	jobBlock: {
-		marginBottom: 10,
-		padding: '10px 0',
-		borderBottom: '1px solid #FE654F',
+		marginBottom: 24,
+		backgroundColor: 'rgb(255, 255, 255)',
 		cursor: 'pointer',
+		padding: '12px 0',
+		transition: '.3s',
+		"&:hover": {
+			boxShadow: '0px 0px 10px 3px rgba(0,0,0,0.5)',
+			transition: '.3s',
+		}
 	},
 	paginationBtn: {
 		padding: '8px 15px !important',
@@ -16,11 +21,10 @@ const styles = {
 	},
 	viewMoreBtn: {
 		height: 40,
-		color: '#FE654F',
-		border: '1px solid #FE654F',
+		backgroundColor: '#FE654F',
 	},
 	jobImage: {
-		width: '80%',
+		width: '60%',
 	},
 };
 
@@ -68,7 +72,6 @@ const JobsContainer = (props) => {
 				justify='space-between'
 				className={ classes.jobBlock}
 				key={ id }
-				spacing={1}
 				onClick={() => viewMore(id)}>
 				<Grid container justify="center" item xs={6} lg={2}>
 					<img src={ jobImage } alt={ jobName } className={classes.jobImage}/>
@@ -84,7 +87,7 @@ const JobsContainer = (props) => {
 					<p>{ viewCount }</p>
 				</Grid>
 				<Grid container justify='center' item xs={12} lg={2}>
-					<Button variant="outlined" className={classes.viewMoreBtn} onClick={() => viewMore(id)}>
+					<Button className={classes.viewMoreBtn} onClick={() => viewMore(id)}>
 					View More
 				</Button>
 				</Grid>
@@ -94,7 +97,7 @@ const JobsContainer = (props) => {
 	
 	return (
 		<>
-			{props.emptySearch.length ? props.emptySearch :
+			{props.emptySearch.length ? <h6>{props.emptySearch}</h6> :
 			<>
 				{ elements }
 				<Grid container

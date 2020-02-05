@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Checkbox, FormControlLabel, Grid, FormControl, FormLabel, FormGroup } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 
 const jobCategories = [
   'Software development',
@@ -19,8 +20,20 @@ const jobCategories = [
   'Foreign language',
 ];
 
+const styles = {
+  checkboxSize: {
+    padding: '3px 0',
+    color: '#FE654F',
+  },
+	jobsFilter: {
+    padding: '15px 0 12px 15px',
+		backgroundColor: 'rgb(255, 255, 255)',
+  },
+};
+
 const JobsFilter = (props) => {
   const [categories, setCategories] = useState([]);
+  const { classes } = props;
   props.setCategories(categories);
 
   const filterJob = (value) => {
@@ -43,7 +56,7 @@ const JobsFilter = (props) => {
   const renderCategories = jobCategories.map(item => {
     return (
       <FormControlLabel key = {item}
-        control ={<Checkbox color='primary'/>}
+        control ={<Checkbox color='primary' className={classes.checkboxSize}/>}
         label = {item}
         value = {item}
         onChange = {(e) => filterJob(e.target.value)} />
@@ -51,18 +64,19 @@ const JobsFilter = (props) => {
   });
 
   return (
-    <Grid container
-      direction='column'>
-      <FormControl>
-        <FormLabel>
-          Filter By Category
-        </FormLabel>
-        <FormGroup>
-          {renderCategories}
-        </FormGroup>
-      </FormControl>
-    </Grid>
+    <FormControl>
+      <Grid container
+        className={classes.jobsFilter}
+        direction='column'>
+          <FormLabel>
+            Filter By Category
+          </FormLabel>
+          <FormGroup>
+            {renderCategories}
+          </FormGroup>
+      </Grid>
+    </FormControl>
   );
 };
 
-export default JobsFilter;
+export default withStyles(styles)(JobsFilter);
