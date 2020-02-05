@@ -16,12 +16,10 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function CompaniesBar({ employer, otherCopmanies, currPage }) {
+export default function CompaniesBar({ employer, otherCopmanies, currPage, noData }) {
     const classes = useStyles();
     let maxPageButton = Math.ceil(employer.length / 10);
-
-    return (
-        <Grid container
+    const companiesBar = () =>( <Grid container
             direction="column"
             justify="flex-start"
             alignItems="flex-start"
@@ -45,7 +43,7 @@ export default function CompaniesBar({ employer, otherCopmanies, currPage }) {
                                 currentCompany={item}
                             />
                         );
-                    })}
+                        })}
                 </Grid>
 
             </Grid>
@@ -54,7 +52,9 @@ export default function CompaniesBar({ employer, otherCopmanies, currPage }) {
             >
                 { maxPageButton > 1?<PaginationBar employer = {employer} maxPageButton = {maxPageButton} otherCopmanies = {otherCopmanies}/>: null}
             </Grid>
-        </Grid>
-        
+        </Grid>)
+    return (
+       <> {noData.length ? <h4>{noData}</h4> : companiesBar()}</>
+       
     );
 }

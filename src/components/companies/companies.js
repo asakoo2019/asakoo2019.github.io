@@ -17,16 +17,22 @@ const mStP = (state) => ({
   state,
 });
 
-function Companies({ state, dispatch }) {
+function Companies({ state}) {
   const classes = useStyles();
   const [currPage, setCurrentPage] = useState(10);
   const [allCompanies, setAllCompanies] = useState(true);
   const [type, setType] = useState([]);
   const [data, setData] = useState([]);
-  useEffect(() => {
+  const [noData, setNoData] =useState('');
+  // console.log(state)
 
-    if (state.search.length) {
-      setData([...state.search])
+  useEffect(() => {
+    ;
+    if (typeof state.search === 'string'){  
+      setNoData(state.search)
+    }  else if (state.search.length) {
+      setData([...state.search]);
+      setNoData('');
     } else {
       firestore.collection("companies").get().then((querySnapshot) => {
         let companies = [];
@@ -37,10 +43,11 @@ function Companies({ state, dispatch }) {
         });
         companies.sort((a, b) => b.companyViewCount - a.companyViewCount);
         setData(companies);
+        setNoData('')
       });
 
     }
-  }, [dispatch, state]);
+  }, [state]);
 
   function filterCompany(value) {
     let arr = [...type];
@@ -76,7 +83,7 @@ function Companies({ state, dispatch }) {
           <CompanyFilterBar filterCompany={filterCompany} type ={type}/>
         </Grid>
         <Grid item xs={12} sm={12} md={9} zeroMinWidth>
-          <CompaniesBar employer={employer} currPage={currPage} otherCopmanies={otherCopmanies} />
+          <CompaniesBar employer={employer} currPage={currPage} otherCopmanies={otherCopmanies} noData ={noData}/>
         </Grid>
       </Grid>
     </Container>
