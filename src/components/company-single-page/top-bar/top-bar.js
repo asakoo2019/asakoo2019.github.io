@@ -17,7 +17,9 @@ const useStyles = makeStyles(theme => ({
       textAlign: 'center',
     },
     topBarImg: {
-        width: '100%',
+        width: '200px',
+        height: '200px',
+        objectFit: 'cover',
         backgroundColor: 'rgb(255, 255, 255)',
     },
     topBarInfo: {
@@ -41,10 +43,10 @@ function TopBar ({companyInfo}) {
                 alignItems="center"
                 className = {classes.topBarDiv}
             >
-                <Grid item xs={3}>
+                <Grid item xs={3} zeroMinWidth>
                     <img src = {companyInfo.companyImage} alt = {`${companyInfo.companyName} pic`} className = {classes.topBarImg}/>
                 </Grid>
-                <Grid  item xs={7} className={classes.topBarInfo}>
+                <Grid  item xs={7} className={classes.topBarInfo} zeroMinWidth>
                     <Grid container  
                         direction="column"
                         justify="center"

@@ -6,7 +6,7 @@ const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
         textAlign: 'center',
-        backgroundColor: 'rgb(255, 255, 179)',
+        backgroundColor: 'rgb(255, 255, 255)',
         margin: theme.spacing(2, 0),
         padding: theme.spacing(3),
     },

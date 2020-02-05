@@ -8,7 +8,7 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     marginTop: theme.spacing(1),
     padding: theme.spacing(1),
-    border: "1px solid rgb(255, 153, 102, 0.5)",
+    // border: "1px solid rgb(255, 153, 102, 0.5)",
     boxShadow: '0px 0px 5px 0px ',
     '&:hover': {
       backgroundColor: "rgb(242, 242, 242)",
