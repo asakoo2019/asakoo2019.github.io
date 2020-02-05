@@ -9,13 +9,13 @@ const styles = {
     borderRadius: 10,
     marginTop: 6,
     padding: 15,
-    background: 'linear-gradient(to right, rgba(244, 67, 54, 0.2), rgba(76, 175, 80, .2))',
-    boxShadow: '0px 0px 15px 0px rgba(56,55,56,1)',
+    // background: 'linear-gradient(to right, rgba(244, 67, 54, 0.2), rgba(76, 175, 80, .2))',
+    boxShadow: '0px 0px 15px 0px rgba(254,101,79,1)',
     cursor: 'pointer',
   },
   allCompaniesBtn: {
     margin: 20,
-    backgroundColor: '#FE654F',
+    backgroundColor: 'rgba(254, 101, 79, .5)',
   },
   companyLogo: {
     borderRadius: 10,

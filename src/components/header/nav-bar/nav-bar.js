@@ -27,9 +27,11 @@ const mStP = (state) => ({
 const NavBar = (props) => {
   const { classes, showItems, dispatch } = props;
   const regAndLogArray = [<NavLink key={1} to="/sign-in" activeClassName='active' className={classes.navItem}>Sign In</NavLink>, <NavLink key={2} to="/registration" activeClassName='active' className={classes.navItem}>Registration</NavLink>];
+
   function handleChange (){
-    dispatch({type: "SEARCH", payload: []});
-  }
+    dispatch({type: 'SEARCH-OFF'});
+  };
+
   return (
     <>
       <nav>

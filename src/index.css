@@ -77,7 +77,8 @@ p {
 	font-size: 16px;
 	line-height: 22px;
 	color: #000;
-	margin-bottom: 1.5em;
+	margin: .25em 0;
+	text-align: justify;
 }
 
 .MuiDialog-paperWidthSm {

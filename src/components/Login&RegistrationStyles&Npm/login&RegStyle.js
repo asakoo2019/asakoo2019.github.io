@@ -7,17 +7,18 @@ const style = {
       background: "#fff",
       padding: 70,
       borderRadius: 10,
+      // border: '1px solid #FE654F',
+      boxShadow: '0px 0px 15px 0px rgba(254,101,79,1)',
     },
     mainDiv: {
       padding: "20px 0",
-      // minHeight: "100vh",
-      background: 'linear-gradient(120deg, #3498db, #8e44ad)',
+      // background: 'linear-gradient(120deg, #FE654F, #8e44ad)',
     },
     txtb: {
       margin: 10
     },
     btn: {
-      background: "linear-gradient(120deg, #3498db, #8e44ad, #3498db)",
+      background: "linear-gradient(120deg, #FE654F, #8e44ad, #FE654F)",
       backgroundSize: "200%",
       margin: 10,
       color: "#fff",

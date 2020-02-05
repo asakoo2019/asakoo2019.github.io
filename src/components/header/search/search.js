@@ -29,7 +29,7 @@ const Search = (props) => {
           };
         };
       });
-      dispatch({type: "SEARCH", payload: newArray});
+      newArray.length ? dispatch({type: "SEARCH", payload: newArray}) : dispatch({type: "EMPTY-SEARCH"});
       history.push(`/${searchUrl}`);
     };
   };
@@ -46,13 +46,10 @@ const Search = (props) => {
           };
         };
       });
-      dispatch({type: "SEARCH", payload: [...newArray]});
+      newArray.length ? dispatch({type: "SEARCH", payload: newArray}) : dispatch({type: "EMPTY-SEARCH"});
       history.push(`/${searchUrl}`);
-    } else {
-      dispatch({type: "SEARCH", payload: [...newArray]});
-    }
+    };
   };
-
 
   useEffect(() => {
     firestore.collection("companies").get().then((querySnapshot) => {
