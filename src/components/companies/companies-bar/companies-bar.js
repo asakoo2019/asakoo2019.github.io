@@ -54,7 +54,7 @@ export default function CompaniesBar({ employer, otherCopmanies, currPage, noDat
             </Grid>
         </Grid>)
     return (
-       <> {noData.length ? <h4>{noData}</h4> : companiesBar()}</>
+       <> {noData.length ? <h6>{noData}</h6> : companiesBar()}</>
        
     );
 }

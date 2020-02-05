@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
         flexGrow: 1,
         textAlign: 'center',
         width: '100%',
-        backgroundColor: 'rgb(255, 255, 179)',
+        backgroundColor: 'rgb(255, 255, 255)',
         margin: theme.spacing(2, 0),
         padding: theme.spacing(3),
 
