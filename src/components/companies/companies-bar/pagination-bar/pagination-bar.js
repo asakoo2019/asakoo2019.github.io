@@ -17,9 +17,7 @@ const useStyles = makeStyles(theme => ({
 
 function PaginationBar({ maxPageButton, otherCopmanies }) {
     const classes = useStyles();
-    function handleChange(i) {
-        return otherCopmanies(i)
-    }
+
     const button = () => {
         let result = [];
         for (let i = 1; i <= maxPageButton; i++) {
@@ -28,7 +26,7 @@ function PaginationBar({ maxPageButton, otherCopmanies }) {
                 size="small"
                 variant="contained"
                 key={`${i}`}
-                onClick={() => handleChange(i)}
+                onClick={() => otherCopmanies(i)}
             >
                 {i}
             </Button>)
