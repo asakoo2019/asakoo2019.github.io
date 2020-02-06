@@ -11,9 +11,6 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     marginTop: theme.spacing(1),
   },
-  xy: {
-    border: "3px solid",
-  }
 }));
 
 const mStP = (state) => ({
@@ -82,10 +79,10 @@ function Companies({ state}) {
   return (
     <Container maxWidth='lg' className={classes.root}>
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={12} md={3} zeroMinWidth className = {classes.xy}>
+        <Grid item xs={12} sm={12} md={4} lg = {3}zeroMinWidth>
           <CompanyFilterBar filterCompany={filterCompany} type ={type}/>
         </Grid>
-        <Grid item xs={12} sm={12} md={9} zeroMinWidth >
+        <Grid item xs={12} sm={12} md={8} lg = {9} zeroMinWidth >
           <CompaniesBar employer={employer} currPage={currPage} otherCopmanies={otherCopmanies} noData ={noData}/>
         </Grid>
       </Grid>

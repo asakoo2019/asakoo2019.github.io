@@ -8,7 +8,11 @@ const useStyles = makeStyles(theme => ({
     },
     button: {
         margin: theme.spacing(1),
-    }
+        backgroundColor: '#FE654F',
+        fontSize: 18,
+        fontWeight: 600,
+    },
+    
 }));
 
 function PaginationBar({ maxPageButton, otherCopmanies }) {
