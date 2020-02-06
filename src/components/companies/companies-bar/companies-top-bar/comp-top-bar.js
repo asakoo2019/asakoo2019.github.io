@@ -18,7 +18,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function CompaniesBarTop({length, currPage}) {
-    console.log(length)
     const classes = useStyles();
     return (
         <Grid container

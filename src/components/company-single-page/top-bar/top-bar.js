@@ -17,8 +17,8 @@ const useStyles = makeStyles(theme => ({
       textAlign: 'center',
     },
     topBarImg: {
-        width: '200px',
-        height: '200px',
+        width: theme.spacing(15),
+        height: theme.spacing(15),
         objectFit: 'cover',
         backgroundColor: 'rgb(255, 255, 255)',
     },
