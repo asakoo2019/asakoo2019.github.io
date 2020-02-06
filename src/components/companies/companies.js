@@ -7,16 +7,12 @@ import { connect } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
 
-const styles = {
-	companies: {
-		marginTop: 24,
-		marginBottom: 24,
-	},
-	companiesLoader: {
-    margin: 50,
-    color: '#FE654F',
-	},
-};
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+    marginTop: theme.spacing(1),
+  },
+}));
 
 const mStP = (state) => ({
   state,
@@ -82,13 +78,13 @@ function Companies({state, classes}) {
   const employer = allCompanies ? [...data] : drawCompanies(data);
 
   return (
-    <Container>
-      {show ? <Grid container spacing={2} className={classes.companies}>
-        <Grid item xs={12} sm={4} lg={3}>
-          <CompanyFilterBar filterCompany={filterCompany} type={type}/>
+    <Container maxWidth='lg' className={classes.root}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={12} md={4} lg = {3}zeroMinWidth>
+          <CompanyFilterBar filterCompany={filterCompany} type ={type}/>
         </Grid>
-        <Grid item xs={12} sm={8} lg={9}>
-          <CompaniesBar employer={employer} currPage={currPage} otherCopmanies={otherCopmanies} noData={noData}/>
+        <Grid item xs={12} sm={12} md={8} lg = {9} zeroMinWidth >
+          <CompaniesBar employer={employer} currPage={currPage} otherCopmanies={otherCopmanies} noData ={noData}/>
         </Grid>
       </Grid> :
 			<Grid container justify='center'>

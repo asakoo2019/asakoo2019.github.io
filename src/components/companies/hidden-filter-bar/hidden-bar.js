@@ -9,9 +9,6 @@ import {
 import PropTypes from 'prop-types';
 
 const useStyles = makeStyles(theme => ({
-    root: {
-        marginTop: theme.spacing(1),
-    },
     toggleButton: {
         backgroundColor: '#FE654F',
         color: '#fff',
@@ -32,7 +29,7 @@ function HiddenFilterBar({ filterCompany, type, width }) {
 
     const filterbar = <CompanyFilterBar filterCompany={filterCompany} type={type} />
     return (
-        <>
+        <div className = {classes.root}>
             <Hidden mdUp={(width === 'md' || width === 'lg' || width === 'xl') ? true : view}>
                 <Button
                     className={classes.toggleButton}
@@ -41,10 +38,10 @@ function HiddenFilterBar({ filterCompany, type, width }) {
                     Filter Companies
                 </Button>
             </Hidden>
-            <Hidden smDown={view} >
+            <Hidden smDown={view}>
                 {filterbar}
             </Hidden>
-        </>
+        </div>
     );
 }
 HiddenFilterBar.propTypes = {

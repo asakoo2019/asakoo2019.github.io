@@ -12,19 +12,28 @@ import {
 
 const useStyles = makeStyles(theme => ({
     root: {
+        flexGrow: 1,
         marginTop: theme.spacing(1),
+        backgroundColor: 'rgb(255, 255, 255)',
     },
     formControl: {
-        padding: theme.spacing(1),
+        [theme.breakpoints.up('md')]: {
+            margin: theme.spacing(3),
+        },
+        [theme.breakpoints.down('md')]: {
+            marginLeft: theme.spacing(3),
+        },
+      
     },
     size: {
-        padding: 4,
+        padding: '3px 0',
+        color: '#FE654F',
     },
-    filterName: {
-        [theme.breakpoints.down('md')]: {
-            fontSize: '14px',
-          },
-    }
+    // filterName: {
+    //     [theme.breakpoints.down('md')]: {
+    //         fontSize: '14px',
+    //     },
+    // }
 }));
 
 const companyCategoryArr = [
@@ -53,12 +62,10 @@ function CompanyFilterBar({ filterCompany, type }) {
     }
 
     return (
-        <Grid className={classes.root}>
-            <FormControl
-                className={classes.formControl}
-            >
-                <FormLabel className={classes.formControl}>Filter By Category</FormLabel>
-                <FormGroup>
+        <Grid item className={classes.root} zeroMinWidth>
+            <FormControl className = {classes.formControl}>
+                <FormLabel>Filter By Category</FormLabel>
+                <FormGroup >
                     {companyCategoryArr.map(item => {
                         let checked = false;
                         type.forEach(str => { if (str === item) { checked = true } })

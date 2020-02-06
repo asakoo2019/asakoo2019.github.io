@@ -18,7 +18,8 @@ const useStyles = makeStyles(theme => ({
 
 export default function CompaniesBar({ employer, otherCopmanies, currPage, noData }) {
     const classes = useStyles();
-    let maxPageButton = Math.ceil(employer.length / 10);
+    const length =employer.length;
+    const maxPageButton = Math.ceil(length / 10);
     const companiesBar = () =>( <Grid container
             direction="column"
             justify="flex-start"
@@ -26,7 +27,7 @@ export default function CompaniesBar({ employer, otherCopmanies, currPage, noDat
             className = {classes.root}
         >
             <Grid item>
-                <CompaniesBarTop employer={employer} />
+                <CompaniesBarTop length={length} currPage = {currPage}/>
             </Grid>
             <Grid item
                 className={classes.gridSpace}
@@ -50,7 +51,7 @@ export default function CompaniesBar({ employer, otherCopmanies, currPage, noDat
             <Grid item
                 className={classes.gridSpace}
             >
-                { maxPageButton > 1?<PaginationBar employer = {employer} maxPageButton = {maxPageButton} otherCopmanies = {otherCopmanies}/>: null}
+                { maxPageButton > 1?<PaginationBar maxPageButton = {maxPageButton} otherCopmanies = {otherCopmanies}/>: null}
             </Grid>
         </Grid>)
     return (
