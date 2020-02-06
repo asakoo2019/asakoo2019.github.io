@@ -34,9 +34,11 @@ const CompanyImageBlock = (props) => {
 						break;
 					default: ;
 				};
-			}, function(error) {
+			},
+			() => {
 				alert('Autorize please');
-			}, () => {
+			},
+			() => {
 				uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
 					if (downloadURL !== null) {
 						firestore.collection("companies").doc(id)
@@ -46,14 +48,14 @@ const CompanyImageBlock = (props) => {
 						}).catch(function(error) {
 							console.error("Error updating document: ", error);
 						});
+						company.companyJobs.forEach(item => {
+							item.jobImage = downloadURL;
+						});
 					};
 					dispatch({type: "SIGN-IN", payload: {...company, companyImage: downloadURL}});
-					company.companyJobs.forEach(item => {
-						item.jobImage = downloadURL;
-					});
 				});
 			});
-			setOpen(false);
+		setOpen(false);
 	};
 
 	return (
