@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(3),
     },
     contactInfo :{
-        fontSize: '20px',
+        fontSize: '15px',
         // textAlign: 'left',
         width: '100%',
         padding: theme.spacing(1),
@@ -23,7 +23,9 @@ const useStyles = makeStyles(theme => ({
         fontSize: '20px',
         color: '#FE654F',
     },
-
+    componentTitle: {
+        color: '#FE654F',
+    },
     
 }));
 function Contacts ({companyInfo}) {
@@ -40,7 +42,7 @@ function Contacts ({companyInfo}) {
             alignItems="center"
             className = {classes.root}
         >
-            <Typography variant ='h4' gutterBottom>CONTACTS</Typography>
+            <Typography variant ='h4' gutterBottom className = {classes.componentTitle}>CONTACTS</Typography>
             <Grid  container
                 direction="column"
                 justify="center"

@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
 		backgroundColor: '#FE654F',
 	},
   companyNameText: {
-    fontWeight: '700',
+    fontWeight: 700,
   },
   companyImage: {
     width: theme.spacing(12),
