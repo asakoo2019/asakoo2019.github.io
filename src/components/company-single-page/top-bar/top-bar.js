@@ -23,12 +23,12 @@ const useStyles = makeStyles(theme => ({
         [theme.breakpoints.up('md')]: {
             width: '100%',
             height: theme.spacing(20),
-            padding: theme.spacing(0, 0, 0,  2),
+            padding: theme.spacing(0, 0, 0, 2),
         },
         [theme.breakpoints.only('sm')]: {
             width: '100%',
             height: theme.spacing(17),
-            padding: theme.spacing(0, 0, 0,  2),
+            padding: theme.spacing(0, 0, 0, 2),
         },
         [theme.breakpoints.only('xs')]: {
             width: '50%',
@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
             padding: theme.spacing(1),
         },
     },
-    topBarImg: {     
+    topBarImg: {
         [theme.breakpoints.up('sm')]: {
             width: theme.spacing(15),
             height: theme.spacing(15),
@@ -70,13 +70,13 @@ function TopBar({ companyInfo }) {
         >
             <Grid container
                 alignItems="center"
-                justify = 'flex-start'
+                justify='flex-start'
                 className={classes.topBarDiv}
             >
-                <Grid item xs={12} sm = {3} md = {3} lg = {3} xl = {4}zeroMinWidth>
+                <Grid item xs={12} sm={3} md={3} lg={3} xl={4} zeroMinWidth>
                     <img src={companyInfo.companyImage} alt={`${companyInfo.companyName} pic`} className={classes.topBarImg} />
                 </Grid>
-                <Grid item xs={12} sm = {9} md = {9} lg = {9} xl = {8}className={classes.topBarInfo} zeroMinWidth>
+                <Grid item xs={12} sm={9} md={9} lg={9} xl={8} className={classes.topBarInfo} zeroMinWidth>
                     <Grid container
                         direction="column"
                         justify="center"

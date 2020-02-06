@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Typography, Grid,IconButton, withWidth } from '@material-ui/core';
+import { Button, Typography, Grid, IconButton, withWidth } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
@@ -23,17 +23,17 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: "white",
         margin: theme.spacing(1),
         padding: theme.spacing(1),
-		boxShadow: '0px 0px 5px 2px rgba(0,0,0,0.5)',
-        
+        boxShadow: '0px 0px 5px 2px rgba(0,0,0,0.5)',
+
     },
     jobNames: {
-        
+
         backgroundColor: 'rgb(190, 190, 190, 0.3)',
         color: "#fff",
-        [theme.breakpoints.up('sm')]:{
+        [theme.breakpoints.up('sm')]: {
             height: theme.spacing(10),
         },
-        [theme.breakpoints.down('xs')]:{
+        [theme.breakpoints.down('xs')]: {
             height: 'auto',
         }
     },
@@ -42,10 +42,10 @@ const useStyles = makeStyles(theme => ({
         textAlign: 'center',
         padding: theme.spacing(2),
         color: '#FE654F',
-        [theme.breakpoints.up('sm')]:{
+        [theme.breakpoints.up('sm')]: {
             fontSize: 18,
         },
-        [theme.breakpoints.down('xs')]:{
+        [theme.breakpoints.down('xs')]: {
             fontSize: 15,
         },
     },
@@ -62,7 +62,7 @@ const useStyles = makeStyles(theme => ({
         color: '#000',
         height: 40,
         backgroundColor: '#FE654F',
-        },
+    },
     button: {
         padding: theme.spacing(2),
         backgroundColor: '#FE654F',
@@ -103,7 +103,7 @@ function ActiveJobs({ companyInfo, width }) {
                         variant="outlined"
                         color="secondary"
                         onClick={() => history.push(`/jobs/${item.id}`)}
-                        className = {classes.viewMoreBtn}
+                        className={classes.viewMoreBtn}
                     >
                         View More
                     </Button>
@@ -124,7 +124,7 @@ function ActiveJobs({ companyInfo, width }) {
         <Grid item
             className={classes.root}
         >
-            <Typography variant="h4" gutterBottom className = {classes.componentTitle}>ACTIVE JOBS ({companyInfo.companyJobs.length})</Typography>
+            <Typography variant="h4" gutterBottom className={classes.componentTitle}>ACTIVE JOBS ({companyInfo.companyJobs.length})</Typography>
             <Grid container
                 direction="row"
                 justify="space-evenly"
@@ -134,9 +134,9 @@ function ActiveJobs({ companyInfo, width }) {
                 <Grid item xs={1}>
                     <IconButton
                         onClick={previousButton}
-                        className = {classes.button}
+                        className={classes.button}
                     >
-                        <ArrowBackIosIcon/>
+                        <ArrowBackIosIcon />
                     </IconButton>
                 </Grid>
                 <Grid item xs={10} >
@@ -152,9 +152,9 @@ function ActiveJobs({ companyInfo, width }) {
                 <Grid item xs={1}>
                     <IconButton
                         onClick={nextButton}
-                        className = {classes.button}
+                        className={classes.button}
                     >
-                        <ArrowForwardIosIcon/>
+                        <ArrowForwardIosIcon />
                     </IconButton>
                 </Grid>
             </Grid>

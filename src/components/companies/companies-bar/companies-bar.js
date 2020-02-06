@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function CompaniesBar({ data, otherCopmanies, currPage, length}) {
+export default function CompaniesBar({ data, otherCopmanies, currPage, length }) {
     const classes = useStyles();
     const maxPageButton = Math.ceil(length / 10);
 

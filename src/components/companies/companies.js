@@ -22,7 +22,7 @@ function Companies({ state }) {
   const [currPage, setCurrentPage] = useState(10);
   const [type, setType] = useState([]);
   const [data, setData] = useState([]);
-   const [length, setLength] = useState()
+  const [length, setLength] = useState()
   const noData = 'No results found, perhaps you’ve gone too far away. Try less keywords or filters.';
   useEffect(() => {
     if (typeof state.search === 'string') {
@@ -30,24 +30,6 @@ function Companies({ state }) {
     } else if (state.search.length) {
       setData([...state.search]);
     } else {
-      // const companies = [...dataArray];
-      // let result = []
-      // setLength(companies.length);
-      // const typeLength = type.length;
-      // if (typeLength) {
-      //   companies.forEach(item => {
-      //     for (let i = 0; i < typeLength; i++) {
-      //       if (type[i] === item.companyCategory) {
-      //         result.push(item)
-      //       }
-      //     }
-      //   })
-      // }
-      // if (!result.length) result = companies;
-      // result.sort((a, b) => b.companyViewCount - a.companyViewCount);
-      // setData(result);
-      // setNoData('')
-
       firestore.collection("companies").get().then((querySnapshot) => {
         const companies = [];
         let result = []
@@ -93,7 +75,7 @@ function Companies({ state }) {
           <CompanyFilterBar filterCompany={filterCompany} type={type} />
         </Grid>
         <Grid item xs={12} sm={12} md={8} lg={9} zeroMinWidth >
-          {data.length ? <CompaniesBar data={data} currPage={currPage} otherCopmanies={otherCopmanies} length = {length}/>: <h6>{noData}</h6>}
+          {data.length ? <CompaniesBar data={data} currPage={currPage} otherCopmanies={otherCopmanies} length={length} /> : <h6>{noData}</h6>}
         </Grid>
       </Grid>
     </Container>

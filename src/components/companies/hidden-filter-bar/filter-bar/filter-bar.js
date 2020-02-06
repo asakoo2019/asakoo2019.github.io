@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
         [theme.breakpoints.down('md')]: {
             marginLeft: theme.spacing(3),
         },
-      
+
     },
     size: {
         padding: '3px 0',
@@ -64,7 +64,7 @@ function CompanyFilterBar({ filterCompany, type }) {
 
     return (
         <Grid item className={classes.root} zeroMinWidth>
-            <FormControl className = {classes.formControl}>
+            <FormControl className={classes.formControl}>
                 <FormLabel>Filter By Category</FormLabel>
                 <FormGroup >
                     {companyCategoryArr.map(item => {

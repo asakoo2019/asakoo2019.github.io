@@ -67,3 +67,21 @@ const createData = () => {
   }
   const data = createData(); 
   export default data;
+
+    // const companies = [...dataArray];
+      // let result = []
+      // setLength(companies.length);
+      // const typeLength = type.length;
+      // if (typeLength) {
+      //   companies.forEach(item => {
+      //     for (let i = 0; i < typeLength; i++) {
+      //       if (type[i] === item.companyCategory) {
+      //         result.push(item)
+      //       }
+      //     }
+      //   })
+      // }
+      // if (!result.length) result = companies;
+      // result.sort((a, b) => b.companyViewCount - a.companyViewCount);
+      // setData(result);
+      // setNoData('')

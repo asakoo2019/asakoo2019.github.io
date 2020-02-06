@@ -22,7 +22,7 @@ export default function AboutCompany({ companyInfo }) {
     const classes = useStyles();
     return (
         <Grid className={classes.root}>
-            <Typography variant='h4' gutterBottom className = {classes.componentTitle}>ABOUT {companyInfo.companyName}</Typography>
+            <Typography variant='h4' gutterBottom className={classes.componentTitle}>ABOUT {companyInfo.companyName}</Typography>
             <Grid container spacing={2}
             >
                 <Grid item
@@ -38,8 +38,8 @@ export default function AboutCompany({ companyInfo }) {
                 <Grid item
                     className={classes.aboutCompDiv}
                 >
-                    <Typography><span className = {classes.componentTitle}>industry:</span> {companyInfo.companyCategory}</Typography>
-                    <Typography><span className = {classes.componentTitle}>create date:</span> {companyInfo.companyCreatingData}</Typography>
+                    <Typography><span className={classes.componentTitle}>industry:</span> {companyInfo.companyCategory}</Typography>
+                    <Typography><span className={classes.componentTitle}>create date:</span> {companyInfo.companyCreatingData}</Typography>
                 </Grid>
             </Grid>
         </Grid>
