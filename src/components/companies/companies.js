@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CompanyFilterBar from './hidden-filter-bar';
 import CompaniesBar from './companies-bar/companies-bar';
-import { Grid, Container } from '@material-ui/core';
+import { Grid, Container, makeStyles } from '@material-ui/core';
 import { firestore } from '../firebase/db';
 import { connect } from 'react-redux';
 // import dataArray from './companyArray';
@@ -62,7 +62,7 @@ function Companies({ state }) {
     (x < 0) ? arr.push(value) : arr = arr.filter(item => item !== value);
     setType([...arr]);
     setCurrentPage(10);
-  };
+  }
 
   function otherCopmanies(i) {
     let num = i * 10;
@@ -77,12 +77,8 @@ function Companies({ state }) {
         <Grid item xs={12} sm={12} md={8} lg={9} zeroMinWidth >
           {data.length ? <CompaniesBar data={data} currPage={currPage} otherCopmanies={otherCopmanies} length={length} /> : <h6>{noData}</h6>}
         </Grid>
-      </Grid> :
-			<Grid container justify='center'>
-        <CircularProgress size={150} className={classes.companiesLoader}/>
       </Grid>
     </Container>
   );
-};
-
+}
 export default connect(mStP)(Companies);
