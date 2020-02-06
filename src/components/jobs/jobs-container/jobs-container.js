@@ -1,19 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Grid, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import DateRangeIcon from '@material-ui/icons/DateRange';
+import { firestore } from '../../firebase/db';
 
 const styles = {
 	jobBlock: {
 		marginBottom: 24,
 		backgroundColor: 'rgb(255, 255, 255)',
 		cursor: 'pointer',
-		padding: '12px 0',
+		padding: 12,
 		transition: '.3s',
 		"&:hover": {
 			boxShadow: '0px 0px 10px 3px rgba(0,0,0,0.5)',
 			transition: '.3s',
-		}
+		},
 	},
 	paginationBtn: {
 		padding: '8px 15px !important',
@@ -26,6 +29,10 @@ const styles = {
 	jobImage: {
 		width: '60%',
 	},
+	jobTextColor: {
+		color: '#FE654F',
+		marginRight: 8,
+	}
 };
 
 const JobsContainer = (props) => {
@@ -62,10 +69,7 @@ const JobsContainer = (props) => {
 	.slice(currentPage - 10, currentPage)
 	.sort((a, b) => b.viewCount - a.viewCount)
 	.map(item => {
-		let { id, jobImage, jobDetails, viewCount, jobName } = item;
-		if (jobDetails.length > 50) {
-      jobDetails = jobDetails.substring(0, 50) + "...";
-		};
+		let { id, jobDeadline, jobName, companyName, location, jobImage } = item;
 		return (
 			<Grid container
 				alignItems='center'
@@ -73,19 +77,29 @@ const JobsContainer = (props) => {
 				className={ classes.jobBlock}
 				key={ id }
 				onClick={() => viewMore(id)}>
-				<Grid container justify="center" item xs={6} lg={2}>
-					<img src={ jobImage } alt={ jobName } className={classes.jobImage}/>
+
+				<Grid container justify="center" item xs={6} sm={7}>
+					<Grid item xs={12} sm={6}>
+						<img src={ jobImage } alt={ jobName } className={classes.jobImage}/>
+					</Grid>
+					<Grid container direction='column' justify="center" item xs={12} sm={6}>
+						<h6 className={classes.jobTextColor}>{ jobName }</h6>
+						<Grid direction='column' container>
+							<p>{ companyName }</p>
+						</Grid>
+					</Grid>
 				</Grid>
-				<Grid container justify="center" item xs={6} lg={3}>
-					<h6>{ jobName }</h6>
+
+				<Grid container direction='column' justify="center" item xs={6} sm={3}>
+					<Grid container>
+						<DateRangeIcon className={classes.jobTextColor}/>
+						<p>{ jobDeadline }</p></Grid>
+					<Grid container>
+						<LocationOnIcon className={classes.jobTextColor}/>
+						<p>{ location }</p>
+					</Grid>
 				</Grid>
-				<Grid container justify="center" item xs={6} lg={3}>
-					<p>{ jobDetails }</p>
-				</Grid>
-				<Grid direction='column' container alignItems="center" item xs={6} lg={2}>
-					<p>Total views</p>
-					<p>{ viewCount }</p>
-				</Grid>
+
 				<Grid container justify='center' item xs={12} lg={2}>
 					<Button className={classes.viewMoreBtn} onClick={() => viewMore(id)}>
 					View More

@@ -18,8 +18,7 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(1),
     },
     size: {
-        width: '8px',
-        height: '8px',
+        padding: 4,
     },
     filterName: {
         [theme.breakpoints.down('md')]: {
@@ -27,7 +26,6 @@ const useStyles = makeStyles(theme => ({
           },
     }
 }));
-
 
 const companyCategoryArr = [
     'Finance/Banking/Insurance',

@@ -1,36 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import CompanyFilterBar from './hidden-filter-bar';
 import CompaniesBar from './companies-bar/companies-bar';
-import { Grid, Container, makeStyles } from '@material-ui/core';
+import { Grid, Container } from '@material-ui/core';
 import { firestore } from '../firebase/db';
 import { connect } from 'react-redux';
-//import dataArray from './companyArray';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { withStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-    marginTop: theme.spacing(1),
-  },
-  xy: {
-    border: "3px solid",
-  }
-}));
+const styles = {
+	companies: {
+		marginTop: 24,
+		marginBottom: 24,
+	},
+	companiesLoader: {
+    margin: 50,
+    color: '#FE654F',
+	},
+};
 
 const mStP = (state) => ({
   state,
 });
 
-function Companies({ state}) {
-  const classes = useStyles();
+function Companies({state, classes}) {
   const [currPage, setCurrentPage] = useState(10);
   const [allCompanies, setAllCompanies] = useState(true);
   const [type, setType] = useState([]);
   const [data, setData] = useState([]);
   const [noData, setNoData] =useState('');
-  // console.log(state)
+	const [show, setShow] = useState(false);
 
   useEffect(() => {
-    ;
     if (typeof state.search === 'string'){  
       setNoData(state.search)
     }  else if (state.search.length) {
@@ -46,10 +46,10 @@ function Companies({ state}) {
         });
         companies.sort((a, b) => b.companyViewCount - a.companyViewCount);
         setData(companies);
+        setShow(true);
         setNoData('')
       });
-
-    }
+    };
   }, [state]);
 
   function filterCompany(value) {
@@ -59,12 +59,12 @@ function Companies({ state}) {
     setType([...arr]);
     (arr.length) ? setAllCompanies(false) : setAllCompanies(true);
     setCurrentPage(10);
-  }
+  };
 
   function otherCopmanies(i) {
     let num = i * 10;
     setCurrentPage(num);
-  }
+  };
 
   function drawCompanies(data) {
     const result = [];
@@ -73,24 +73,29 @@ function Companies({ state}) {
       for (let j = 0; j < type.length; j++) {
         if (type[j] === data[i].companyCategory) {
           result.push(data[i])
-        }
-      }
-    }
+        };
+      };
+    };
     return result
-  }
-  const employer = allCompanies ? [...data] : drawCompanies(data);
-  return (
-    <Container maxWidth='lg' className={classes.root}>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={12} md={3} zeroMinWidth className = {classes.xy}>
-          <CompanyFilterBar filterCompany={filterCompany} type ={type}/>
-        </Grid>
-        <Grid item xs={12} sm={12} md={9} zeroMinWidth >
-          <CompaniesBar employer={employer} currPage={currPage} otherCopmanies={otherCopmanies} noData ={noData}/>
-        </Grid>
-      </Grid>
-    </Container>
+  };
 
+  const employer = allCompanies ? [...data] : drawCompanies(data);
+
+  return (
+    <Container>
+      {show ? <Grid container spacing={2} className={classes.companies}>
+        <Grid item xs={12} sm={4} lg={3}>
+          <CompanyFilterBar filterCompany={filterCompany} type={type}/>
+        </Grid>
+        <Grid item xs={12} sm={8} lg={9}>
+          <CompaniesBar employer={employer} currPage={currPage} otherCopmanies={otherCopmanies} noData={noData}/>
+        </Grid>
+      </Grid> :
+			<Grid container justify='center'>
+        <CircularProgress size={150} className={classes.companiesLoader}/>
+      </Grid>}
+    </Container>
   );
-}
-export default connect(mStP)(Companies);
+};
+
+export default connect(mStP)(withStyles(styles)(Companies));

@@ -4,17 +4,19 @@ import { firestore } from '../../firebase/db';
 import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useParams } from "react-router-dom";
+import classNames from 'classnames';
 
 const styles = {
 	jobSingleLoader: {
     margin: 50,
     color: '#FE654F',
 	},
-	jobHeader: {
-		height: 300,
+	jobBackgroud: {
+		height: 400,
 		backgroundPosition: 'center',
 		backgroundRepeat: 'no-repeat',
-  	backgroundSize: 'cover',
+		backgroundSize: 'cover',
+		position: 'relative',
 	},
 	jobImage: {
 		width: 150,
@@ -36,13 +38,22 @@ const styles = {
 		textAlign: 'justify',
 	},
 	allBlocks: {
-		marginTop: 15,
-		paddingBottom: 15,
-		borderBottom: '1px solid #FE654F',
+		marginTop: 24,
+		padding: 15,
+    backgroundColor: 'rgb(255, 255, 255)',
 	},
 	jobMail: {
 		color: '#FE654F',
 		fontWeight: 'bold',
+		"&:visited": {
+			color: '#FE654F',
+		},
+	},
+	jobHeader: {
+		position: 'absolute',
+		backgroundColor: 'rgb(255, 255, 255, .8)',
+		height: 170,
+		bottom: 0,
 	},
 };
 
@@ -101,35 +112,32 @@ const JobSingle = (props) => {
 						<Grid key={item.id}  className={classes.singleJob}>
 
 							{/* Single Job Header */}
-							<Grid container className={classes.jobHeader}
-								style={{ backgroundImage: `url(${company.companyBackground})` }}
-								spacing={2}
-								alignItems='flex-end'>
-								<Grid container justify='center' item xs={12} sm={4} md={2}>
-									<img src={company.companyImage} alt={item.jobName} className={classes.jobImage}/>
-								</Grid>
-								<Grid container item direction='column' xs={12} sm={8} md={10}>
-									<Grid container item alignItems='center'>
-										<h5 className={classes.firstText}>Company category:</h5>
-										<p className={classes.secondText}>{company.companyCategory}</p>
+							<Grid container className={classes.jobBackgroud}
+								style={{ backgroundImage: `url(${company.companyBackground})` }}>
+								<Grid container spacing={2} alignItems='flex-end' className={classNames(classes.jobHeader, 'job-header')}>
+									<Grid container justify='center' item xs={12} sm={4} md={2}>
+										<img src={company.companyImage} alt={item.jobName} className={classes.jobImage}/>
 									</Grid>
-									<Grid container item alignItems='center'>
-										<h5 className={classes.firstText}>Company name:</h5>
-										<p className={classes.secondText}>{company.companyName}</p>
-									</Grid>
-									<Grid container item alignItems='center'>
-										<h5 className={classes.firstText}>Company total views:</h5>
-										<p className={classes.secondText}>{company.companyViewCount + 1}</p>
+									<Grid container item direction='column' xs={12} sm={8} md={10}>
+										<Grid container item alignItems='center'>
+											<h6 className={classes.secondText}>{company.companyCategory}</h6>
+										</Grid>
+										<Grid container item alignItems='center'>
+											<h6 className={classes.secondText}>{company.companyName}</h6>
+										</Grid>
+										<Grid container item alignItems='center'>
+											<h6 className={classes.secondText}>{company.companyViewCount + 1} views</h6>
+										</Grid>
 									</Grid>
 								</Grid>
 							</Grid>
 
 							{/* Single Job Container */}
 							<Grid container className={classes.singleJobContainer}>
-								<Grid item xs={12}>
-									<h2 className={classes.firstText}>{item.jobName.toUpperCase()}</h2>
-								</Grid>
 								<Grid container className={classes.allBlocks}>
+									<Grid item xs={12}>
+										<h2 className={classes.firstText}>{item.jobName.toUpperCase()}</h2>
+									</Grid>
 									<Grid container item xs={12} sm={4} direction='column' spacing={2}>
 										<Grid container item alignItems='center'>
 											<h5 className={classes.firstText}>Employment term:</h5>
@@ -171,7 +179,7 @@ const JobSingle = (props) => {
 									<Grid container direction='column'>
 										<h5 className={classes.firstText}>Additional information:</h5>
 										<p className={classes.jobDetailsText}>
-											Interested candidates who meet the requirements above and are confident that their background and experience qualify them for the position, are welcome to send their resume to: <span className={classes.jobMail}>{item.jobMail}</span> mentioning the position title ( "{item.jobName}" ) in the subject line of the email.
+											Interested candidates who meet the requirements above and are confident that their background and experience qualify them for the position, are welcome to send their resume to: <a className={classes.jobMail} title={item.jobMail} target='_blank' rel="noopener noreferrer" href={`mailto:${item.jobMail}`}>{item.jobMail}</a> mentioning the position title ( "{item.jobName}" ) in the subject line of the email.
 										</p>
 									</Grid>
 								</Grid>
@@ -196,6 +204,7 @@ const JobSingle = (props) => {
 		classes.jobDetailsText,
 		classes.allBlocks,
 		classes.jobMail,
+		classes.jobBackgroud,
 	]);
 
 	useEffect(() => {

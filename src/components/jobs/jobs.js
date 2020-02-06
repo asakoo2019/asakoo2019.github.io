@@ -81,14 +81,14 @@ const Jobs = (props) => {
 				justify='space-between'
 				className={classes.jobs}
 				spacing={2}>
-				<Grid item xs={12} sm={4} lg={3}>
+				<Grid item xs={12} sm={4} lg={3} zeroMinWidth>
 					<JobsFilter
 						jobs={jobs}
 						setCurrentPage={setCurrentPage}
 						setCategories={setCategories}
 						setAllJobs={setAllJobs}/>
 				</Grid>
-				<Grid item xs={12} sm={8} lg={9}>
+				<Grid item xs={12} sm={8} lg={9} zeroMinWidth>
 					<JobsContainer
 					renderJobs={renderJobs}
 					currentPage={currentPage}
