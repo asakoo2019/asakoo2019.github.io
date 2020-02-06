@@ -29,7 +29,7 @@ function HiddenFilterBar({ filterCompany, type, width }) {
 
     const filterbar = <CompanyFilterBar filterCompany={filterCompany} type={type} />
     return (
-        <div className = {classes.root}>
+        <div className={classes.root}>
             <Hidden mdUp={(width === 'md' || width === 'lg' || width === 'xl') ? true : view}>
                 <Button
                     className={classes.toggleButton}

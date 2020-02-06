@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Typography, Grid, withWidth } from '@material-ui/core';
+import { Button, Typography, Grid, IconButton, withWidth } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import EventIcon from '@material-ui/icons/Event';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
 
 const useStyles = makeStyles(theme => ({
@@ -21,24 +23,53 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: "white",
         margin: theme.spacing(1),
         padding: theme.spacing(1),
-        borderRadius: '20px',
+        boxShadow: '0px 0px 5px 2px rgba(0,0,0,0.5)',
 
     },
-    jobName: {
-        borderRadius: '10px',
-        height: 60,
-        fontSize: '18px',
-        fontWeight: '500',
-        backgroundColor: '#FE654F',
-        color: "#fff"
+    jobNames: {
+
+        backgroundColor: 'rgb(190, 190, 190, 0.3)',
+        color: "#fff",
+        [theme.breakpoints.up('sm')]: {
+            height: theme.spacing(10),
+        },
+        [theme.breakpoints.down('xs')]: {
+            height: 'auto',
+        }
     },
-    aboutJobInfo :{
-        fontSize: '15px',
+    jobName: {
+        fontWeight: 500,
+        textAlign: 'center',
+        padding: theme.spacing(2),
+        color: '#FE654F',
+        [theme.breakpoints.up('sm')]: {
+            fontSize: 18,
+        },
+        [theme.breakpoints.down('xs')]: {
+            fontSize: 15,
+        },
+    },
+    aboutJobInfo: {
+        fontSize: 15,
         width: '100%',
-        padding: theme.spacing(1),
+        padding: theme.spacing(0),
     },
     aboutJobIcon: {
         fontSize: '15px',
+        color: '#FE654F',
+    },
+    viewMoreBtn: {
+        color: '#000',
+        height: 40,
+        backgroundColor: '#FE654F',
+    },
+    button: {
+        padding: theme.spacing(2),
+        backgroundColor: '#FE654F',
+        fontSize: 18,
+        fontWeight: 600,
+    },
+    componentTitle: {
         color: '#FE654F',
     },
 }));
@@ -56,30 +87,27 @@ function ActiveJobs({ companyInfo, width }) {
     }
 
     const jobs = companyInfo.companyJobs.slice(plus, plus + numQuantity).map((item, index) => {
-        // const jobCategoryText = item.jobDetails.length > 20 ? item.jobDetails.slice(0, 160) + '...' : item.jobDetails;
 
         return (
-            <Grid item xs={8} sm={8} md={5} lg = {3} key={item.id} className={classes.jobItem}>
-                     <Grid className={classes.jobName}>
-                        <Typography  className={classes.jobName}>{item.jobName}</Typography>
-                    </Grid>
-                    <Grid >
-                        <Typography className = {classes.aboutJobInfo}><EventIcon className = {classes.aboutJobIcon}/> {item.jobDeadline} </Typography>
-                        <Typography className = {classes.aboutJobInfo}><LocationOnIcon className = {classes.aboutJobIcon}/> {item.location}</Typography>
+            <Grid item xs={8} sm={8} md={5} lg={3} key={item.id} className={classes.jobItem}>
+                <Grid className={classes.jobNames}>
+                    <Typography className={classes.jobName}>{item.jobName}</Typography>
+                </Grid>
+                <Grid >
+                    <Typography className={classes.aboutJobInfo}><EventIcon className={classes.aboutJobIcon} /> {item.jobDeadline} </Typography>
+                    <Typography className={classes.aboutJobInfo}><LocationOnIcon className={classes.aboutJobIcon} /> {item.location}</Typography>
 
-                    </Grid>
-                    {/* <Grid>
-                        <Typography  height = '50px'>{item.jobDetails}</Typography>
-                    </Grid> */}
-                    <Grid container justify='center'>
-                        <Button
-                            variant="outlined"
-                            color="secondary"
-                            onClick={() => history.push(`/jobs/${item.id}`)}
-                        >
-                            View More
+                </Grid>
+                <Grid container justify='center'>
+                    <Button
+                        variant="outlined"
+                        color="secondary"
+                        onClick={() => history.push(`/jobs/${item.id}`)}
+                        className={classes.viewMoreBtn}
+                    >
+                        View More
                     </Button>
-                    </Grid>
+                </Grid>
             </Grid>
         );
     })
@@ -96,7 +124,7 @@ function ActiveJobs({ companyInfo, width }) {
         <Grid item
             className={classes.root}
         >
-            <Typography variant="h4" gutterBottom>ACTIVE JOBS ({companyInfo.companyJobs.length})</Typography>
+            <Typography variant="h4" gutterBottom className={classes.componentTitle}>ACTIVE JOBS ({companyInfo.companyJobs.length})</Typography>
             <Grid container
                 direction="row"
                 justify="space-evenly"
@@ -104,12 +132,12 @@ function ActiveJobs({ companyInfo, width }) {
 
             >
                 <Grid item xs={1}>
-                    <Button
-                        variant="contained"
-                        color="secondary"
+                    <IconButton
                         onClick={previousButton}
-                    >{'<'}
-                    </Button>
+                        className={classes.button}
+                    >
+                        <ArrowBackIosIcon />
+                    </IconButton>
                 </Grid>
                 <Grid item xs={10} >
                     <Grid container
@@ -122,12 +150,12 @@ function ActiveJobs({ companyInfo, width }) {
                     </Grid>
                 </Grid>
                 <Grid item xs={1}>
-                    <Button
-                        variant="contained"
-                        color="secondary"
+                    <IconButton
                         onClick={nextButton}
-                    >{'>'}
-                    </Button>
+                        className={classes.button}
+                    >
+                        <ArrowForwardIosIcon />
+                    </IconButton>
                 </Grid>
             </Grid>
         </Grid>

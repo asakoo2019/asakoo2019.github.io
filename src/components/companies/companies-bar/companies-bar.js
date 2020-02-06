@@ -16,18 +16,20 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function CompaniesBar({ employer, otherCopmanies, currPage, noData }) {
+export default function CompaniesBar({ data, otherCopmanies, currPage, length }) {
     const classes = useStyles();
-    const length =employer.length;
     const maxPageButton = Math.ceil(length / 10);
-    const companiesBar = () =>( <Grid container
+
+    return (
+
+        <Grid container
             direction="column"
             justify="flex-start"
             alignItems="flex-start"
-            className = {classes.root}
+            className={classes.root}
         >
             <Grid item>
-                <CompaniesBarTop length={length} currPage = {currPage}/>
+                <CompaniesBarTop length={length} currPage={currPage} />
             </Grid>
             <Grid item
                 className={classes.gridSpace}
@@ -37,25 +39,22 @@ export default function CompaniesBar({ employer, otherCopmanies, currPage, noDat
                     justify="flex-start"
                     alignItems="flex-start"
                 >
-                    {employer.slice(currPage - 10, currPage).map((item) => {
+                    {data.map((item) => {
                         return (
                             <CompanyItem
                                 key={`${item.id}`}
                                 currentCompany={item}
                             />
                         );
-                        })}
+                    })}
                 </Grid>
 
             </Grid>
             <Grid item
                 className={classes.gridSpace}
             >
-                { maxPageButton > 1?<PaginationBar maxPageButton = {maxPageButton} otherCopmanies = {otherCopmanies}/>: null}
+                {maxPageButton > 1 ? <PaginationBar maxPageButton={maxPageButton} otherCopmanies={otherCopmanies} /> : null}
             </Grid>
-        </Grid>)
-    return (
-       <> {noData.length ? <h6>{noData}</h6> : companiesBar()}</>
-       
+        </Grid>
     );
 }

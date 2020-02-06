@@ -7,7 +7,7 @@ import Contacts from './contacts-bar';
 import { useParams } from "react-router-dom";
 import { firestore } from '../firebase/db';
 
-const useStyles = makeStyles(theme=> ({
+const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
   },
@@ -34,21 +34,21 @@ function CompaniesSinglePage() {
       })
     });
   }, [params.id]);
-  const drawPage = ()=> {
+  const drawPage = () => {
     if (company.hasOwnProperty('id')) {
       const aboutcompany = company.aboutCompany ? <AboutCompany companyInfo={company} /> : null;
       const activJobs = company.companyJobs.length ? <ActiveJobs companyInfo={company} /> : null;
       const contacts = (company.email || company.userCity || company.companyWebsite) ? <Contacts companyInfo={company} /> : null;
       firestore.collection("companies").doc(params.id)
-      .update({
-        companyViewCount: (company.companyViewCount + 1)
-      })
+        .update({
+          companyViewCount: (company.companyViewCount + 1)
+        })
       return (
-        <Grid container className = {classes.root}>
+        <Grid container className={classes.root}>
           <TopBar companyInfo={company} />
-            {aboutcompany}
-            {activJobs}
-            {contacts}
+          {aboutcompany}
+          {activJobs}
+          {contacts}
         </Grid>
       );
 
@@ -56,7 +56,7 @@ function CompaniesSinglePage() {
       return (<div></div>);
     }
   }
-  
+
   return (
     <Container maxWidth='lg' >
       {drawPage()}
