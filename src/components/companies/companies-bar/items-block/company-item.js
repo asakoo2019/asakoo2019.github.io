@@ -44,12 +44,12 @@ function CompanyItem({ currentCompany }) {
         </Grid>
       </Grid>
       <Grid item xs={6} sm={2} md={2} lg={2} zeroMinWidth>
-        <Grid container alignItems="center" className ={classes.height}>
+        <Grid container alignItems="center" className={classes.height}>
           <Typography variant="body2">Active jobs({currentCompany.companyJobs.length})</Typography>
         </Grid>
       </Grid>
       <Grid item xs={6} sm={3} md={3} lg={4} zeroMinWidth>
-        <Grid container justify={"flex-end"} alignItems="center" className ={classes.height}>
+        <Grid container justify={"flex-end"} alignItems="center" className={classes.height}>
           <Button variant="outlined" color="secondary" onClick={() => { history.push(`companies/${currentCompany.id}`) }} >
             View More
         </Button>
