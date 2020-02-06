@@ -17,8 +17,8 @@ const useStyles = makeStyles(theme => ({
 
 function PaginationBar({ maxPageButton, otherCopmanies }) {
     const classes = useStyles();
-    function handleChange(e, i) {
-        return otherCopmanies(e, i)
+    function handleChange (i) {
+        return otherCopmanies(i)
     }
     const button = () => {
         let result = [];
