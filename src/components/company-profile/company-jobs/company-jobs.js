@@ -41,7 +41,8 @@ const CompanyJobs = (props) => {
       return (
         <Grid container
           key={item.id}
-          className={classes.companyJobs}>
+          className={classes.companyJobs}
+          spacing={2}>
           <Grid item xs={12} sm={3}>
             <h6>{item.jobName}</h6>
           </Grid>
