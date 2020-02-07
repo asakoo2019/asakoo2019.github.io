@@ -60,7 +60,7 @@ const CompanyProfile = (props) => {
 
   return (
     <Container className={classNames(classes.companyBlock, 'companyBlock')}>
-      {props.company ?
+      {props.company.data ?
       <>
         {/* About Company Block */}
         <Grid container

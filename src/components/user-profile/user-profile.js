@@ -56,7 +56,7 @@ const UserProfile = (props) => {
 
   return (
     <Container className='userBlock'>
-      {props.user ?
+      {props.user.data ?
       <>
         {/* About User Block */}
         <Grid container

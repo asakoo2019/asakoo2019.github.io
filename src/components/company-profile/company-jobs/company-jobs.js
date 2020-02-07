@@ -11,6 +11,9 @@ const style = {
     padding: '5px !important',
     minWidth: 0,
   },
+  companyJobs: {
+    marginBottom: 20,
+  },
 };
 
 const CompanyJobs = (props) => {
@@ -37,7 +40,8 @@ const CompanyJobs = (props) => {
     job = company.companyJobs.map((item) => {
       return (
         <Grid container
-          key={item.id}>
+          key={item.id}
+          className={classes.companyJobs}>
           <Grid item xs={12} sm={3}>
             <h6>{item.jobName}</h6>
           </Grid>

@@ -11,6 +11,9 @@ const style = {
     padding: '5px !important',
     minWidth: 0,
   },
+  userLanguages: {
+    marginBottom: 20,
+  },
 };
 
 const Languages = (props) => {
@@ -38,7 +41,8 @@ const Languages = (props) => {
       return (
         <Grid container
           key={item.id}
-          alignItems='center'>
+          alignItems='center'
+          className={classes.userLanguages}>
           <Grid item xs={12} sm={4}>
             <h6>{item.language}</h6>
           </Grid>
