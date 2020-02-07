@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Grid, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
-import { connect } from 'react-redux';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import DateRangeIcon from '@material-ui/icons/DateRange';
+import { firestore } from '../../firebase/db';
 
 const styles = {
 	jobBlock: {
-		marginBottom: 10,
-		padding: '10px 0',
-		borderBottom: '1px solid #FE654F',
+		marginBottom: 24,
+		backgroundColor: 'rgb(255, 255, 255)',
+		cursor: 'pointer',
+		padding: 12,
+		transition: '.3s',
+		"&:hover": {
+			boxShadow: '0px 0px 10px 3px rgba(0,0,0,0.5)',
+			transition: '.3s',
+		},
 	},
 	paginationBtn: {
 		padding: '8px 15px !important',
@@ -16,10 +24,15 @@ const styles = {
 	},
 	viewMoreBtn: {
 		height: 40,
+		backgroundColor: '#FE654F',
 	},
 	jobImage: {
-		width: '80%',
+		width: '60%',
 	},
+	jobTextColor: {
+		color: '#FE654F',
+		marginRight: 8,
+	}
 };
 
 const JobsContainer = (props) => {
@@ -46,7 +59,7 @@ const JobsContainer = (props) => {
 			};
 		};
 		return buttonsArray;
-	};	
+	};
 
 	const viewMore = (id) => {
 		history.push(`/jobs/${id}`);
@@ -56,31 +69,39 @@ const JobsContainer = (props) => {
 	.slice(currentPage - 10, currentPage)
 	.sort((a, b) => b.viewCount - a.viewCount)
 	.map(item => {
-		let { jobCategory, id, jobImage, jobDetails, viewCount } = item;
-		if (jobDetails.length > 50) {
-      jobDetails = jobDetails.substring(0, 50) + "...";
-    };
+		let { id, jobDeadline, jobName, companyName, location, jobImage } = item;
 		return (
 			<Grid container
 				alignItems='center'
 				justify='space-between'
 				className={ classes.jobBlock}
 				key={ id }
-				spacing={1}>
-				<Grid container justify="center" item xs={2}>
-					<img src={ jobImage } alt={ jobCategory } className={classes.jobImage}/>
+				onClick={() => viewMore(id)}>
+
+				<Grid container justify="center" item xs={6} sm={7}>
+					<Grid item xs={12} sm={6}>
+						<img src={ jobImage } alt={ jobName } className={classes.jobImage}/>
+					</Grid>
+					<Grid container direction='column' justify="center" item xs={12} sm={6}>
+						<h6 className={classes.jobTextColor}>{ jobName }</h6>
+						<Grid direction='column' container>
+							<p>{ companyName }</p>
+						</Grid>
+					</Grid>
 				</Grid>
-				<Grid container justify="center" item xs={4}>
-					<p>{ jobCategory }</p>
+
+				<Grid container direction='column' justify="center" item xs={6} sm={3}>
+					<Grid container>
+						<DateRangeIcon className={classes.jobTextColor}/>
+						<p>{ jobDeadline }</p></Grid>
+					<Grid container>
+						<LocationOnIcon className={classes.jobTextColor}/>
+						<p>{ location }</p>
+					</Grid>
 				</Grid>
-				<Grid container justify="center" item xs={2}>
-					<p>{ jobDetails }</p>
-				</Grid>
-				<Grid container justify="center" item xs={2}>
-					<p>Total view { viewCount }</p>
-				</Grid>
-				<Grid item xs={2}>
-					<Button color='primary' variant="outlined" className={classes.viewMoreBtn} onClick={() => viewMore(id)}>
+
+				<Grid container justify='center' item xs={12} lg={2}>
+					<Button className={classes.viewMoreBtn} onClick={() => viewMore(id)}>
 					View More
 				</Button>
 				</Grid>
@@ -90,13 +111,17 @@ const JobsContainer = (props) => {
 	
 	return (
 		<>
-			{ elements }
-			<Grid container
-				item spacing={1}>
-				{pagination(newJobs)}
-			</Grid>
+			{props.emptySearch.length ? <h6>{props.emptySearch}</h6> :
+			<>
+				{ elements }
+				<Grid container
+					item spacing={1}>
+					{pagination(newJobs)}
+				</Grid>
+			</>
+			}
 		</>
 	);
 };
 
-export default connect()(withStyles(styles)(JobsContainer));
+export default withStyles(styles)(JobsContainer);

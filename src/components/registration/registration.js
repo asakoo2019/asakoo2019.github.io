@@ -27,6 +27,7 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import userImage from './avatar.png';
 import companyImage from './company-icon.png';
+import companyBackground from './clear-background-png-7.png';
 import { connect } from 'react-redux';
 
 function RegistrationComponent(props) {
@@ -155,11 +156,9 @@ function RegistrationComponent(props) {
                   companyViewCount: 0,
                   aboutCompany: '',
                   companyImage: companyImage,
-                  companyBackground: null,
+                  companyBackground: companyBackground,
                   companyJobs: [],
-                  companyWebsite: null,
                   companyPhoneNumber: '',
-                  companySocialMedias: {},
                   companyCategory: '',
                   companyCity: 'Yerevan',
                   companyCountry: 'Armenia',

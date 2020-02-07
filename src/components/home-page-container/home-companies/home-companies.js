@@ -6,23 +6,31 @@ import { firestore } from '../../firebase/db';
 
 const styles = {
   aboutCompany: {
-    borderRadius: 10,
     marginTop: 6,
-    padding: 20,
-    background: 'linear-gradient(to right, rgba(244, 67, 54, 0.2), rgba(76, 175, 80, .2))',
-    cursor: 'pointer'
+    padding: 15,
+    backgroundColor: 'rgb(255, 255, 255)',
+    cursor: 'pointer',
+    transition: '.3s',
+		"&:hover": {
+			boxShadow: '0px 0px 10px 3px rgba(0,0,0,0.5)',
+			transition: '.3s',
+		}
   },
   allCompaniesBtn: {
     margin: 20,
-    backgroundColor: '#FE654F'
+    backgroundColor: '#FE654F',
   },
   companyLogo: {
-    borderRadius: 10,
-    width: '90%'
+    width: '90%',
+    height: 200,
+    objectFit: 'cover',
   },
   aboutCompanyText: {
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
+  topCompaniesTitle: {
+    color: '#FE654F',
+  },
 };
 
 const HomeCompanies = (props) => {
@@ -86,21 +94,24 @@ const HomeCompanies = (props) => {
   });
 
   return (
-    <Grid className={classes.companies}
-      container
-      direction='column'
-      alignItems='center'>
-      <h2>Top companies</h2>
-      <Grid container
-        justify="space-around">
-        {company}
-      </Grid>
-      <Button className={classes.allCompaniesBtn}
-        variant='contained'
-        onClick={handleClick}>
-        All companies
-      </Button>
-    </Grid>
+    <>
+      {companies.length ?
+      <Grid className={classes.companies}
+        container
+        direction='column'
+        alignItems='center'>
+        <h2 className={classes.topCompaniesTitle}>{'Top companies'.toUpperCase()}</h2>
+        <Grid container
+          justify='space-between'>
+          {company}
+        </Grid>
+        <Button className={classes.allCompaniesBtn}
+          variant='contained'
+          onClick={handleClick}>
+          All companies
+        </Button>
+      </Grid> : null}
+    </>
   );
 };
 

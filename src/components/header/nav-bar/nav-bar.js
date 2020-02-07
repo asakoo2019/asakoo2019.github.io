@@ -17,6 +17,11 @@ import CompaniesSinglePage from '../../company-single-page';
 const styles = {
   navItem: {
     padding: 15,
+    borderRight: '1px solid rgb(190, 190, 190)',
+  },
+  navRightItem: {
+    padding: 15,
+    borderLeft: '1px solid rgb(190, 190, 190)',
   },
 };
 
@@ -25,8 +30,12 @@ const mStP = (state) => ({
 });
 
 const NavBar = (props) => {
-  const { classes, showItems } = props;
-  const regAndLogArray = [<NavLink key={1} to="/sign-in" activeClassName='active' className={classes.navItem}>Sign In</NavLink>, <NavLink key={2} to="/registration" activeClassName='active' className={classes.navItem}>Registration</NavLink>];
+  const { classes, showItems, dispatch } = props;
+  const regAndLogArray = [<NavLink key={1} to="/sign-in" activeClassName='active' className={classes.navRightItem}>Sign In</NavLink>, <NavLink key={2} to="/registration" activeClassName='active' className={classes.navRightItem}>Registration</NavLink>];
+
+  function handleChange (){
+    dispatch({type: 'SEARCH-OFF'});
+  };
 
   return (
     <>
@@ -37,8 +46,8 @@ const NavBar = (props) => {
             container
             justify='flex-start'>
             <NavLink to="/home" activeClassName='active' className={classes.navItem}>Home</NavLink>
-            <NavLink to="/jobs" activeClassName='active' className={classes.navItem}>Jobs</NavLink>
-            <NavLink to="/companies" activeClassName='active' className={classes.navItem}>Companies</NavLink>
+            <NavLink to="/jobs" activeClassName='active' className={classes.navItem} onClick = {handleChange}>Jobs</NavLink>
+            <NavLink to="/companies" activeClassName='active' className={classes.navItem} onClick = {handleChange}>Companies</NavLink>
           </Grid>
           <Grid item xs={4}
             container
@@ -49,7 +58,7 @@ const NavBar = (props) => {
       </nav>
       <Switch>
         <Route exact path="/jobs" component={Jobs} />
-        <Route exact path="/jobs/:id" component={JobSingle} />
+        <Route exact path="/jobs/:id"zz component={JobSingle} />
         <Route exact path="/companies" component={Companies} />
         <Route exact path="/companies/:id" component={CompaniesSinglePage} />
         <Route exact path="/sign-in" component={SignIn} />

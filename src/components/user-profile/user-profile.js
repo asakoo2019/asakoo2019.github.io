@@ -20,9 +20,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = {
   userAllBlocks: {
-    borderBottom: '1px solid #FE654F',
-    marginBottom: 20,
-    paddingBottom: 20,
+    marginBottom: 24,
+		backgroundColor: 'rgb(255, 255, 255)',
+		padding: 12,
   },
   aboutUserBlock: {
     marginTop: 20,
@@ -39,6 +39,10 @@ const styles = {
   },
   userProfileLoader: {
     margin: 50,
+    color: '#FE654F',
+  },
+  aboutJobText: {
+    paddingLeft: 10,
   },
 };
 
@@ -48,25 +52,25 @@ const mStP = (state) => ({
 
 const UserProfile = (props) => {
   let { classes, user, id, showItems } = props;
-  user = user ? user : {};
+  user = user.data ? user.data : {};
 
   return (
     <Container className='userBlock'>
-      {props.user ?
+      {props.user.data ?
       <>
         {/* About User Block */}
         <Grid container
           className={classNames(classes.aboutUserBlock, classes.userAllBlocks)}
           justify='space-between'
-          alignItems='center'
-          spacing={2}>
+          alignItems='center'>
           <Grid container
             item xs={12} sm={4} md={2}>
             {showItems ? <UserImageBlock showItems={showItems} user={user} id={id}/> : <UserImageBlock user={user} id={id}/>}
           </Grid>
           <Grid container
             item xs={12} sm={8} md={10}
-            direction='column'>
+            direction='column'
+            className={classes.aboutJobText}>
             <Grid container
               justify='space-around'
               alignItems='center'>

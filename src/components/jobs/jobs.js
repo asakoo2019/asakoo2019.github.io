@@ -5,40 +5,55 @@ import { Container, Grid } from '@material-ui/core';
 import { firestore } from '../firebase/db';
 import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { connect } from 'react-redux';
 
 const styles = {
-	companies: {
+	jobs: {
 		marginTop: 24,
 		marginBottom: 24,
 	},
 	jobsLoader: {
     margin: 50,
-  },
+    color: '#FE654F',
+	},
 };
+
+const mStP = (state) => ({
+  state,
+});
 
 const Jobs = (props) => {
 	const { classes } = props;
 	const [jobs, setJobs] = useState([]);
 	const [allJobs, setAllJobs] = useState(true);
+	const [show, setShow] = useState(false);
 	const [currentPage, setCurrentPage] = useState(10);
 	const [categories, setCategories] = useState([]);
+	const [emptySearch, setEmptySearch] = useState('');
 
 	useEffect(() => {
-		let job = [];
-		const docRef = firestore.collection("companies");
-		docRef.get().then(function(querySnapshot) {
-			querySnapshot.forEach(function(doc) {
-				if (doc.data().companyJobs && doc.data().companyJobs.length !== 0){
-				job.push(doc.data().companyJobs);
-				let newArray = [];
-				job.forEach(item => {
-					newArray = newArray.concat(item);
+		if(typeof props.state.search === 'string') {
+			setShow(true);
+			setEmptySearch(props.state.search);
+		} else {
+			let job = [];
+			const docRef = firestore.collection("companies");
+			docRef.get().then(function(querySnapshot) {
+				querySnapshot.forEach(function(doc) {
+					if (doc.data().companyJobs && doc.data().companyJobs.length !== 0){
+					job.push(doc.data().companyJobs);
+					let newArray = [];
+					job.forEach(item => {
+						newArray = newArray.concat(item);
+					});
+						setShow(true);
+						setEmptySearch('');
+						setJobs(props.state.search.length ? props.state.search : newArray);
+					};
 				});
-				setJobs(newArray);
-				};
 			});
-		});
-	}, []);
+		};
+	}, [props.state.search]);
 
 	const otherJobs = (i) => {
     let num = i * 10;
@@ -62,21 +77,23 @@ const Jobs = (props) => {
 
 	return (
 		<Container>
-			{jobs.length ? <Grid container
+			{show ? <Grid container
 				justify='space-between'
-				className={classes.companies}>
-				<Grid item xs={3}>
+				className={classes.jobs}
+				spacing={2}>
+				<Grid item xs={12} sm={4} lg={3} zeroMinWidth>
 					<JobsFilter
 						jobs={jobs}
 						setCurrentPage={setCurrentPage}
 						setCategories={setCategories}
 						setAllJobs={setAllJobs}/>
 				</Grid>
-				<Grid item xs={9}>
+				<Grid item xs={12} sm={8} lg={9} zeroMinWidth>
 					<JobsContainer
 					renderJobs={renderJobs}
 					currentPage={currentPage}
-					otherJobs={otherJobs} />
+					otherJobs={otherJobs}
+					emptySearch={emptySearch} />
 				</Grid>
 			</Grid> :
 			<Grid container justify='center'>
@@ -86,4 +103,4 @@ const Jobs = (props) => {
 	);
 };
 
-export default withStyles(styles)(Jobs);
+export default connect(mStP)(withStyles(styles)(Jobs));
