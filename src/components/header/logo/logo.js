@@ -1,5 +1,5 @@
 import React from 'react';
-import appLogo from './topteam.jpg';
+import appLogo from './topteam.png';
 import { useHistory } from "react-router-dom";
 
 const Logo = () => {
