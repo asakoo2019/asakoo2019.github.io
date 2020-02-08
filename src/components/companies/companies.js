@@ -21,9 +21,11 @@ function Companies({ state }) {
   const classes = useStyles();
   const [currPage, setCurrentPage] = useState(10);
   const [type, setType] = useState([]);
+  const [allCompanies, setAllCompanies] = useState(true);
   const [data, setData] = useState([]);
-  const [length, setLength] = useState()
+  let length = data.length;
   const noData = 'No results found, perhaps you’ve gone too far away. Try less keywords or filters.';
+
   useEffect(() => {
     if (typeof state.search === 'string') {
       setData([])
@@ -32,35 +34,42 @@ function Companies({ state }) {
     } else {
       firestore.collection("companies").get().then((querySnapshot) => {
         const companies = [];
-        let result = []
         querySnapshot.forEach((doc) => {
           if (Object.keys(doc.data()).length !== 0) {
             companies.push(doc.data());
           };
-        });
-        setLength(companies.length);
-        const typeLength = type.length;
-        if (typeLength) {
-          companies.forEach(item => {
-            for (let i = 0; i < typeLength; i++) {
-              if (type[i] === item.companyCategory) {
-                result.push(item)
-              }
-            }
-          })
-        }
-        if (!result.length && !typeLength) result = companies;
-        result.sort((a, b) => b.companyViewCount - a.companyViewCount);
-        setData(result.slice(currPage - 10, currPage));
+        })
+        setData(companies);
       });
     }
-  }, [state, type, currPage]);
+  }, [state]);
+
+function drawCompanies(data) {
+  let result = [];
+  let companies = [...data];
+  const typeLength = type.length;
+  if (typeLength) {
+    companies.forEach(item => {
+      for (let i = 0; i < typeLength; i++) {
+        if (type[i] === item.companyCategory) {
+          result.push(item)
+        }
+      }
+    })
+  } 
+  if (!result.length && !typeLength) {result = companies;}
+  result.sort((a, b) => b.companyViewCount - a.companyViewCount);
+  length = result.length;
+  result = result.slice(currPage - 10, currPage);
+  return result
+}
 
   function filterCompany(value) {
     let arr = [...type];
     const x = type.indexOf(value);
     (x < 0) ? arr.push(value) : arr = arr.filter(item => item !== value);
     setType([...arr]);
+    (arr.length) ? setAllCompanies(false):setAllCompanies(true);
     setCurrentPage(10);
   }
 
@@ -68,6 +77,7 @@ function Companies({ state }) {
     let num = i * 10;
     setCurrentPage(num);
   }
+  const employer = allCompanies ? [...data] : drawCompanies(data);
   return (
     <Container maxWidth='lg' className={classes.root}>
       <Grid container spacing={2}>
@@ -75,7 +85,7 @@ function Companies({ state }) {
           <CompanyFilterBar filterCompany={filterCompany} type={type} />
         </Grid>
         <Grid item xs={12} sm={12} md={8} lg={9} zeroMinWidth >
-          {data.length ? <CompaniesBar data={data} currPage={currPage} otherCopmanies={otherCopmanies} length={length} /> : <h6>{noData}</h6>}
+          {employer.length ? <CompaniesBar employer={employer} currPage={currPage} otherCopmanies={otherCopmanies} length={length} /> : <h6>{noData}</h6>}
         </Grid>
       </Grid>
     </Container>
