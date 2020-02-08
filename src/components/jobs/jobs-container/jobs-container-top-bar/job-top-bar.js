@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
+        margin: theme.spacing(2)
     },
     toptext: {
         margin: theme.spacing(0, 1),
@@ -17,8 +18,12 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function CompaniesBarTop({ length, currPage }) {
+function JobsBarTop({ length, currPage }) {
     const classes = useStyles();
+    
+    console.log(length)
+    //stex petq stanas mi ejwum qani hat joba nkarum chem karum stanam ete 10-ic poqra nora grelu
+    
     return (
         <Grid container
             alignItems="flex-start"
@@ -30,4 +35,4 @@ function CompaniesBarTop({ length, currPage }) {
         </Grid>
     );
 }
-export default CompaniesBarTop; 
+export default JobsBarTop; 

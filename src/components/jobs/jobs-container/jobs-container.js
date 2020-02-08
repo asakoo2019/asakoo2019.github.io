@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import DateRangeIcon from '@material-ui/icons/DateRange';
+import JobsBarTop from './jobs-container-top-bar'
 import { firestore } from '../../firebase/db';
 
 const styles = {
@@ -77,7 +78,7 @@ const JobsContainer = (props) => {
 				className={ classes.jobBlock}
 				key={ id }
 				onClick={() => viewMore(id)}>
-
+				
 				<Grid container justify="center" item xs={6} sm={7}>
 					<Grid item xs={12} sm={6}>
 						<img src={ jobImage } alt={ jobName } className={classes.jobImage}/>
@@ -110,7 +111,7 @@ const JobsContainer = (props) => {
 	});
 	
 	return (
-		<>
+		<>	<JobsBarTop currentPage ={currentPage} length = {renderJobs.length}/>
 			{props.emptySearch.length ? <h6>{props.emptySearch}</h6> :
 			<>
 				{ elements }

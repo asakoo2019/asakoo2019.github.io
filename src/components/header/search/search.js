@@ -63,7 +63,7 @@ const Search = (props) => {
         backendArray.push(str);
       }
     }
-    // starts checking
+
     for (let i = 0; i < userArray.length; i++) {
       for (let j = 0; j < backendArray.length; j++) {
         if (userArray[i] === backendArray[j]) {
@@ -152,7 +152,7 @@ const Search = (props) => {
           />
         </Grid>
         <Grid item>
-          {/* <Button onClick={searchUrl === 'jobs' ? searchingJobs : searchingCompanies}> */}
+
           <Button onClick={() => searching(searchUrl, data)}>
             <SearchIcon />
           </Button>
