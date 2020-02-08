@@ -18,11 +18,8 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function JobsBarTop({ length, currPage }) {
+function JobsBarTop({ length, currentPage }) {
     const classes = useStyles();
-    
-    console.log(length)
-    //stex petq stanas mi ejwum qani hat joba nkarum chem karum stanam ete 10-ic poqra nora grelu
     
     return (
         <Grid container
@@ -30,7 +27,7 @@ function JobsBarTop({ length, currPage }) {
             className={classes.root}
         >
             <Grid className={classes.toptext}>
-                <Typography>{currPage - 10 + 1}-{currPage > length ? length : currPage} company results from <span className={classes.total}>{length}</span> total companies on asakoo.am</Typography>
+                <Typography>{currentPage - 10 + 1}-{currentPage > length ? length : currentPage} company results from <span className={classes.total}>{length}</span> total companies on asakoo.am</Typography>
             </Grid>
         </Grid>
     );
