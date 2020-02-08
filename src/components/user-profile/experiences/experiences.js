@@ -11,6 +11,9 @@ const style = {
     padding: '5px !important',
     minWidth: 0,
   },
+  userExperience: {
+    marginBottom: 20,
+  },
 };
 
 const Experiences = (props) => {
@@ -38,7 +41,8 @@ const Experiences = (props) => {
       return (
         <Grid container
           key={item.id}
-          alignItems='center'>
+          alignItems='center'
+          className={classes.userExperience}>
           <Grid item xs={10} sm={4}>
             <h6>{item.companyName}</h6>
           </Grid>

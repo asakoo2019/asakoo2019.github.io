@@ -6,11 +6,6 @@ const styles = {
   aboutUsContainer: {
     padding: 15,
     backgroundColor: 'rgb(255, 255, 255)',
-    transition: '.3s',
-		"&:hover": {
-			boxShadow: '0px 0px 10px 3px rgba(0,0,0,0.5)',
-			transition: '.3s',
-		}
   },
   text: {
     textAlign: 'justify',

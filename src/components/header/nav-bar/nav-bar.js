@@ -17,11 +17,11 @@ import CompaniesSinglePage from '../../company-single-page';
 const styles = {
   navItem: {
     padding: 15,
-    borderRight: '1px solid rgb(200, 200, 200)',
+    borderRight: '1px solid rgb(190, 190, 190)',
   },
   navRightItem: {
     padding: 15,
-    borderLeft: '1px solid rgb(200, 200, 200)',
+    borderLeft: '1px solid rgb(190, 190, 190)',
   },
 };
 
@@ -58,7 +58,7 @@ const NavBar = (props) => {
       </nav>
       <Switch>
         <Route exact path="/jobs" component={Jobs} />
-        <Route exact path="/jobs/:id" component={JobSingle} />
+        <Route exact path="/jobs/:id"zz component={JobSingle} />
         <Route exact path="/companies" component={Companies} />
         <Route exact path="/companies/:id" component={CompaniesSinglePage} />
         <Route exact path="/sign-in" component={SignIn} />

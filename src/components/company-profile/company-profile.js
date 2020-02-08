@@ -19,12 +19,13 @@ import CompanyBackgroundBlock from './company-background-block';
 
 const styles = {
   companyAllBlocks: {
-    borderBottom: '1px solid #FE654F',
-    marginBottom: 20,
-    paddingBottom: 20,
+    marginBottom: 24,
+		backgroundColor: 'rgb(255, 255, 255)',
+		padding: 12,
   },
-  aboutCompanyBlock: {
-    marginTop: 20,
+  companyBlock: {
+    marginTop: 24,
+    marginBottom: 24,
   },
   companyName: {
     marginRight: 15,
@@ -43,6 +44,9 @@ const styles = {
   companyBG: {
     marginTop: 8,
   },
+  aboutCompanyText: {
+    paddingLeft: 10,
+  },
 };
 
 const mStP = (state) => ({
@@ -55,22 +59,22 @@ const CompanyProfile = (props) => {
   const id = company.id;
 
   return (
-    <Container className='companyBlock'>
-      {props.company ?
+    <Container className={classNames(classes.companyBlock, 'companyBlock')}>
+      {props.company.data ?
       <>
         {/* About Company Block */}
         <Grid container
           className={classNames(classes.aboutCompanyBlock, classes.companyAllBlocks)}
           justify='space-between'
-          alignItems='center'
-          spacing={2}>
+          alignItems='center'>
           <Grid container
             item xs={12} sm={4} md={2}>
             {showItems ? <CompanyImageBlock showItems={showItems} company={company} id={id} /> : <CompanyImageBlock company={company} id={id} />}
           </Grid>
           <Grid container
             item xs={12} sm={8} md={10}
-            direction='column'>
+            direction='column'
+            className={classes.aboutCompanyText}>
             <Grid container
               justify='space-around'
               alignItems='center'>

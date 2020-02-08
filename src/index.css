@@ -171,6 +171,7 @@ nav .active {
 		max-width: 700px !important;
 		min-width: 300px !important;
 	}
+
 }
 /*Extra small devices (portrait phones, less than 640px)*/
 @media (max-width: 640px) {
@@ -179,7 +180,9 @@ nav .active {
 
 /*Extra small devices (portrait phones, less than 576px)*/
 @media (max-width: 575px) {
-
+	.job-header {
+		height: 260px !important;
+	}
 }
 /*Extra small devices (portrait phones, less than 576px)*/
 @media (max-width: 500px) {

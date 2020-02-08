@@ -19,7 +19,7 @@ const styles = {
   },
   allJobsBtn: {
     margin: 20,
-    backgroundColor: 'rgba(254, 101, 79, .5)',
+    backgroundColor: '#FE654F',
   },
   jobLogo: {
     width: '90%',
@@ -115,7 +115,7 @@ const HomeJobs = (props) => {
         alignItems='center'>
         <h2 className={classes.topJobsTitle}>{'Top jobs'.toUpperCase()}</h2>
         <Grid container
-          justify="space-around">
+          justify='space-between'>
           {job}
         </Grid>
         <Button className={classes.allJobsBtn}

@@ -36,7 +36,6 @@ const useStyles = makeStyles(theme => ({
     // }
 }));
 
-
 const companyCategoryArr = [
     'Finance/Banking/Insurance',
     'Quality Assurance/Control',
