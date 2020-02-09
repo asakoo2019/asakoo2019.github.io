@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function CompaniesBar({ data, otherCopmanies, currPage, length }) {
+export default function CompaniesBar({ employer, otherCopmanies, currPage, length }) {
     const classes = useStyles();
     const maxPageButton = Math.ceil(length / 10);
 
@@ -39,7 +39,7 @@ export default function CompaniesBar({ data, otherCopmanies, currPage, length })
                     justify="flex-start"
                     alignItems="flex-start"
                 >
-                    {data.map((item) => {
+                    {employer.map((item) => {
                         return (
                             <CompanyItem
                                 key={`${item.id}`}
