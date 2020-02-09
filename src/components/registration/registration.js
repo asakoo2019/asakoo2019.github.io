@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { auth, firestore } from '../firebase/db';
 import style from '../Login&RegistrationStyles&Npm/login&RegStyle';
 import { withStyles } from "@material-ui/core/styles";
@@ -49,10 +49,26 @@ function RegistrationComponent(props) {
     password: "",
     showPassword: false,
     repeatPassword: '',
-    registrationType: 'Employee',
-    gender: "Female",
+    registrationType: '',
+    gender: "",
   });
   const [birthday, setBirthday] = useState(new Date());
+
+  const handleEnter = (event) => {
+    passRegistration(event);
+  }
+  const handleKeyPress = (event) => {
+    if (event.keyCode === 13) {
+      handleEnter(event);
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyPress);
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }); 
   
   const handleDateChange = date => {
     setBirthday(date);
