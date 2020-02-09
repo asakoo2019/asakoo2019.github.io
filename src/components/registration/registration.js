@@ -49,8 +49,8 @@ function RegistrationComponent(props) {
     password: "",
     showPassword: false,
     repeatPassword: '',
-    registrationType: '',
-    gender: "",
+    registrationType: 'Employee',
+    gender: "Female",
   });
   const [birthday, setBirthday] = useState(new Date());
 
