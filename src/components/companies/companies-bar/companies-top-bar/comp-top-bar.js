@@ -25,7 +25,7 @@ function CompaniesBarTop({ length, currPage }) {
             className={classes.root}
         >
             <Grid className={classes.toptext}>
-                <Typography>{currPage - 10 + 1}-{currPage > length ? length : currPage} company results from <span className={classes.total}>{length}</span> total companies on asakoo.am</Typography>
+                <Typography>{currPage - 10 + 1}-{currPage > length ? length : currPage} company results from <span className={classes.total}>{length}</span> total companies on TopTeam.am</Typography>
             </Grid>
         </Grid>
     );

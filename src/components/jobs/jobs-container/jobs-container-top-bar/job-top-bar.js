@@ -4,11 +4,9 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
     root: {
-        flexGrow: 1,
-        margin: theme.spacing(2)
+        marginBottom: 24,
     },
     toptext: {
-        margin: theme.spacing(0, 1),
         padding: theme.spacing(1, 3),
         backgroundColor: 'rgb(255, 255, 255)',
     },
@@ -27,7 +25,7 @@ function JobsBarTop({ length, currentPage }) {
             className={classes.root}
         >
             <Grid className={classes.toptext}>
-                <Typography>{currentPage - 10 + 1}-{currentPage > length ? length : currentPage} company results from <span className={classes.total}>{length}</span> total companies on asakoo.am</Typography>
+                <Typography>{currentPage - 10 + 1}-{currentPage > length ? length : currentPage} company results from <span className={classes.total}>{length}</span> total companies on TopTeam.am</Typography>
             </Grid>
         </Grid>
     );
