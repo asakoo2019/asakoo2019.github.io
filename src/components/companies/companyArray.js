@@ -1,6 +1,6 @@
 const companyCategoryArr = [
     'Finance/Banking/Insurance',
-    'Quality Assurance/Control',
+    'Information technologies',
     'Design/Architecture/Construction',
     'Consulting/ Legal',
     'Import/Export/Trade',

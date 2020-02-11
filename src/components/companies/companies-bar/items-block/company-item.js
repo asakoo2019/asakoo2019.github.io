@@ -39,7 +39,7 @@ function CompanyItem({ currentCompany }) {
   const history = useHistory();
 
   return (
-    <Grid container className={classes.root}>
+    <Grid container className={classes.root} onClick={() => { history.push(`companies/${currentCompany.id}`) }}>
       <Grid item xs={12} sm={7} md={7} lg={6} zeroMinWidth>
         <Grid container spacing={2} >
           <Grid item xs={12} sm={4} md={4} lg={3}>
@@ -58,7 +58,7 @@ function CompanyItem({ currentCompany }) {
       </Grid>
       <Grid item xs={6} sm={3} md={3} lg={4} zeroMinWidth>
         <Grid container justify={"flex-end"} alignItems="center" className={classes.height}>
-          <Button variant="outlined" color="secondary" onClick={() => { history.push(`companies/${currentCompany.id}`) }} className={classes.viewMoreBtn}>
+          <Button variant="outlined" color="secondary"  className={classes.viewMoreBtn}>
             View More
         </Button>
         </Grid>

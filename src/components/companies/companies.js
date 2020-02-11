@@ -30,39 +30,23 @@ function Companies({ state }) {
     if (typeof state.search === 'string') {
       setData([])
     } else if (state.search.length) {
-      setData([...state.search]);
+      let companies = [...state.search];
+      companies.sort((a, b) => b.companyViewCount - a.companyViewCount);
+      setData(companies);
     } else {
       firestore.collection("companies").get().then((querySnapshot) => {
-        const companies = [];
+        let companies = [];
         querySnapshot.forEach((doc) => {
           if (Object.keys(doc.data()).length !== 0) {
             companies.push(doc.data());
           };
         })
+        companies.sort((a, b) => b.companyViewCount - a.companyViewCount);
         setData(companies);
       });
     }
   }, [state]);
 
-function drawCompanies(data) {
-  let result = [];
-  let companies = [...data];
-  const typeLength = type.length;
-  if (typeLength) {
-    companies.forEach(item => {
-      for (let i = 0; i < typeLength; i++) {
-        if (type[i] === item.companyCategory) {
-          result.push(item)
-        }
-      }
-    })
-  } 
-  if (!result.length && !typeLength) {result = companies;}
-  result.sort((a, b) => b.companyViewCount - a.companyViewCount);
-  length = result.length;
-  result = result.slice(currPage - 10, currPage);
-  return result
-}
 
   function filterCompany(value) {
     let arr = [...type];
@@ -77,7 +61,27 @@ function drawCompanies(data) {
     let num = i * 10;
     setCurrentPage(num);
   }
-  const employer = allCompanies ? [...data] : drawCompanies(data);
+  function drawCompanies(data) {
+    alert('drawcompanies');
+    let result = [];
+    let companies = [...data];
+    const typeLength = type.length;
+    if (typeLength) {
+      companies.forEach(item => {
+        for (let i = 0; i < typeLength; i++) {
+          if (type[i] === item.companyCategory) {
+            result.push(item)
+          }
+        }
+      })
+    } 
+    if (!result.length && !typeLength) {result = companies;}
+    result.sort((a, b) => b.companyViewCount - a.companyViewCount);
+    return result
+  }
+
+  const employer = allCompanies ? data.slice(currPage - 10, currPage) : drawCompanies(data);
+
   return (
     <Container maxWidth='lg' className={classes.root}>
       <Grid container spacing={2}>
