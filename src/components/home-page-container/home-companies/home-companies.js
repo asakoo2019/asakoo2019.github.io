@@ -1,54 +1,103 @@
-import React, { useState, useEffect } from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import { Grid, Button } from '@material-ui/core';
+import React, { useState, useEffect, useRef } from 'react';
+import SliderIcons from './sliderIcons';
+import { makeStyles, withWidth, Grid, Button} from '@material-ui/core';
+import PropTypes from 'prop-types';
 import { useHistory } from "react-router-dom";
 import { firestore } from '../../firebase/db';
 
-const styles = {
+const useStyles = makeStyles(theme => ({
+  root : {
+    flexGrow: 1,
+  },
   aboutCompany: {
-    marginTop: 6,
-    padding: 15,
+    [theme.breakpoints.up('sm')]: {
+      minWidth: theme.spacing(35),
+    },
+    [theme.breakpoints.down('sm')]: {
+      minWidth: theme.spacing(25),
+    },
+    marginTop: theme.spacing(3),
+    padding: theme.spacing(2),
     backgroundColor: 'rgb(255, 255, 255)',
     cursor: 'pointer',
-    transition: '.3s',
-		"&:hover": {
-			boxShadow: '0px 0px 10px 3px rgba(0,0,0,0.5)',
-			transition: '.3s',
-		}
-  },
-  allCompaniesBtn: {
+     transition: '.3s',
+    "&:hover": {
+        boxShadow: '0px 0px 10px 3px rgba(0,0,0,0.5)',
+        transition: '.3s',
+    }
+},
+// currentCompany: {
+//     marginTop: 6,
+//     padding: 15,
+//     backgroundColor: 'rgb(255, 255, 255)',
+//     cursor: 'pointer',
+//     // transition: '.3s',
+//     boxShadow: '0px 0px 10px 3px rgba(0,0,0,0.5)',
+//     "&:hover": {
+//         transition: '.3s',
+//         boxShadow: '0px 0px 15px 6px rgba(0,0,0,0.5)',
+//     }
+// },
+allCompaniesBtn: {
     margin: 20,
     backgroundColor: '#FE654F',
+},
+companyLogo: {
+  [theme.breakpoints.up('sm')]: {
+    width: theme.spacing(30),
+    height: theme.spacing(30),
   },
-  companyLogo: {
-    width: '90%',
-    height: 200,
-    objectFit: 'cover',
+  [theme.breakpoints.down('sm')]: {
+    width: theme.spacing(25),
+    height: theme.spacing(25),
   },
-  aboutCompanyText: {
+  objectFit: 'cover',
+},
+aboutCompanyText: {
     textAlign: 'center',
-  },
-  topCompaniesTitle: {
+},
+topCompaniesTitle: {
     color: '#FE654F',
-  },
-};
+},
+}));
 
-const HomeCompanies = (props) => {
-  const {classes} = props;
-  const [companies, setCompanies] = useState([]);
+function HomeCompanies ({width, companies}) {
+  const classes = useStyles();
+  const [companiesData, setCompaniesData] = useState([]);
+  const [companySlider, setCompanySlider] = useState(5);
   const history = useHistory();
+  let timer = useRef(null);
+  let numQuantity = useRef(3);
 
+  switch (width) {
+    case 'xs': numQuantity.current = 1; break;
+    case 'sm': numQuantity.current = 2; break;
+    default: numQuantity.current = 3; break;
+  }
   useEffect(() => {
-    firestore.collection("companies").get().then((querySnapshot) => {
-      let currentCompany = [];
-      querySnapshot.forEach((doc) => {
-        if (Object.keys(doc.data()).length !== 0) {
-          currentCompany.push(doc.data());
-        };
-      });
-      setCompanies(currentCompany);
-    });
-  }, []);
+    const data = [...companies];    
+      let a = companySlider;
+      const result = [];
+      for (let i = 0; i < numQuantity.current; i++) {
+        if (a > 5) {
+          a = 0;
+          result.push(data[a++]);
+        } else {
+          result.push(data[a++]);
+        }
+      }
+      setCompaniesData(result);
+      timer.current = setTimeout(() => {
+        let b = companySlider;
+        setCompanySlider(b < 5 ? b + 1 : 0);
+      }, 3000);
+  }, [companySlider, numQuantity]);
+
+  function setCurrentSlider(slide) {
+    clearTimeout(timer.current)
+    setCompanySlider(slide)
+
+  }
 
   const handleClick = () => {
     history.push("/companies");
@@ -58,11 +107,8 @@ const HomeCompanies = (props) => {
     history.push(`companies/${id}`);
   };
 
-  companies.sort((a, b) => {
-    return b.companyViewCount - a.companyViewCount;
-  });
 
-  const company = companies.slice(0, 3).map((el) => {
+  const company = companiesData.map((el) => {
     if (el.aboutCompany.length > 50) {
       el.aboutCompany = el.aboutCompany.substring(0, 50) + "...";
     };
@@ -70,7 +116,7 @@ const HomeCompanies = (props) => {
       <Grid container
         className={classes.aboutCompany}
         alignItems="center"
-        item xs={3}
+        item xs={9} sm = {5} md = {3} lg = {3} xl = {3}
         key={el.id}
         onClick={() => singleCompanyBtn(el.id)}>
         <Grid container justify='center'>
@@ -96,15 +142,15 @@ const HomeCompanies = (props) => {
   return (
     <>
       {companies.length ?
-      <Grid className={classes.companies}
+      <Grid className={classes.root}
         container
         direction='column'
         alignItems='center'>
-        <h2 className={classes.topCompaniesTitle}>{'Top companies'.toUpperCase()}</h2>
-        <Grid container
-          justify='space-between'>
+        <h2 className={classes.topCompaniesTitle}>TOP 6 COMPANIES</h2>
+        <Grid container justify={width === 'xs' ? 'center' : 'space-evenly'}>
           {company}
         </Grid>
+        <SliderIcons companySlider = {companySlider} setCurrentSlider = {setCurrentSlider}/>
         <Button className={classes.allCompaniesBtn}
           variant='contained'
           onClick={handleClick}>
@@ -115,4 +161,7 @@ const HomeCompanies = (props) => {
   );
 };
 
-export default withStyles(styles)(HomeCompanies);
+HomeCompanies.propTypes = {
+  width: PropTypes.oneOf(["lg", "md", "sm", "xl", "xs"]).isRequired
+};
+export default withWidth()(HomeCompanies)

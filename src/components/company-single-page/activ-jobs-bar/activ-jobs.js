@@ -75,7 +75,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function ActiveJobs({ companyInfo, width }) {
-    const classes = useStyles(1);
+    const classes = useStyles();
     const history = useHistory();
     const [plus, setPlus] = useState(0);
     let numQuantity = 3;

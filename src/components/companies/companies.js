@@ -62,7 +62,6 @@ function Companies({ state }) {
     setCurrentPage(num);
   }
   function drawCompanies(data) {
-    alert('drawcompanies');
     let result = [];
     let companies = [...data];
     const typeLength = type.length;
