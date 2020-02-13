@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useState}from 'react';
 import { Switch, Route, Redirect, NavLink } from "react-router-dom";
-import { makeStyles, withWidth, Grid, Hidden, IconButton } from '@material-ui/core';
+import { makeStyles, withWidth, Grid, Hidden, IconButton, Menu, MenuItem } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu'
 import PropTypes from 'prop-types';
 import Companies from '../../companies';
@@ -17,12 +17,16 @@ import CompaniesSinglePage from '../../company-single-page';
 
 const useStyles = makeStyles(theme => ({
   navItem: {
-    padding: 15,
-    borderRight: '1px solid rgb(190, 190, 190)',
+    [theme.breakpoints.up('sm')]:{
+      padding: 15,
+      borderRight: '1px solid rgb(190, 190, 190)',
+    }
   },
   navRightItem: {
-    padding: 15,
-    borderLeft: '1px solid rgb(190, 190, 190)',
+    [theme.breakpoints.up('sm')]:{
+      padding: 15,
+      borderLeft: '1px solid rgb(190, 190, 190)',
+    }
   },
   menuButton: {
     marginLeft: theme.spacing(2)
@@ -33,13 +37,27 @@ const mStP = (state) => ({
   user: state,
 });
 
-const NavBar = ({ id, showItems, dispatch, setShowItems }) => {
+const NavBar = ({ id, showItems, dispatch, setShowItems, width }) => {
   const classes = useStyles();
-  const regAndLogArray = [<NavLink key={1} to="/sign-in" activeClassName='active' className={classes.navRightItem}>Sign In</NavLink>, <NavLink key={2} to="/registration" activeClassName='active' className={classes.navRightItem}>Registration</NavLink>];
-
-  function handleChange() {
+  const regAndLogArray = [
+    <NavLink key={1} to="/sign-in" activeClassName='active' className={classes.navRightItem}>Sign In</NavLink>, 
+    <NavLink key={2} to="/registration" activeClassName='active' className={classes.navRightItem}>Registration</NavLink>
+  ];
+    function handleChange() {
     dispatch({ type: 'SEARCH-OFF' });
   };
+
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const leftPart = (<Grid container >
     <NavLink to="/home" activeClassName='active' className={classes.navItem}>Home</NavLink>
     <NavLink to="/jobs" activeClassName='active' className={classes.navItem} onClick={handleChange}>Jobs</NavLink>
@@ -67,12 +85,27 @@ const NavBar = ({ id, showItems, dispatch, setShowItems }) => {
         </Hidden>
         <Hidden smUp>
           <Grid container>
-            <IconButton edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer">
-              <MenuIcon />
+            <IconButton 
+              aria-controls="topteam-menu" 
+              aria-haspopup="true" 
+              onClick = {handleClick}
+            >
+              <MenuIcon/>          
             </IconButton>
+            <Menu
+              id="topteam-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClose}> <NavLink to="/home" activeClassName='active' className={classes.navItem}>Home</NavLink></MenuItem>
+              <MenuItem onClick={handleClose}><NavLink to="/jobs" activeClassName='active' className={classes.navItem} onClick={handleChange}>Jobs</NavLink></MenuItem>
+              <MenuItem onClick={handleClose}><NavLink to="/companies" activeClassName='active' className={classes.navItem} onClick={handleChange}>Companies</NavLink></MenuItem>
+              {showItems ?  <MenuItem><SettingsToggleMenu setShowItems={setShowItems} /></MenuItem>: null}
+              {!showItems ?  <MenuItem onClick={handleClose}>{regAndLogArray[0]}</MenuItem>: null}
+              {!showItems ?  <MenuItem onClick={handleClose}>{regAndLogArray[1]}</MenuItem>: null}             
+            </Menu>
           </Grid>
         </Hidden>
       </nav>
