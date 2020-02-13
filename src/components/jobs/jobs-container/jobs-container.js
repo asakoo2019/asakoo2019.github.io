@@ -70,7 +70,7 @@ const JobsContainer = (props) => {
 	.slice(currentPage - 10, currentPage)
 	.sort((a, b) => b.viewCount - a.viewCount)
 	.map(item => {
-		let { id, jobDeadline, jobName, companyName, location, jobImage } = item;
+		let { id, jobDeadline, jobName, viewCount, companyName, location, jobImage } = item;
 		return (
 			<Grid container
 				alignItems='center'
@@ -87,6 +87,7 @@ const JobsContainer = (props) => {
 						<h6 className={classes.jobTextColor}>{ jobName }</h6>
 						<Grid direction='column' container>
 							<p>{ companyName }</p>
+							<p>{ viewCount } total views</p>
 						</Grid>
 					</Grid>
 				</Grid>

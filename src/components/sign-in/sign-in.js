@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   TextField,
   Typography,
@@ -33,6 +33,22 @@ function SignIn(props) {
   const { classes } = props;
   const {email, password, showPassword} = values;
   const {emailError, passwordError} = error; 
+
+  const handleEnter = () => {
+    passLogin();
+  }
+  const handleKeyPress = (event) => {
+    if (event.keyCode === 13) {
+      handleEnter();
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyPress);
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }); 
 
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value });

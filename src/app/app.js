@@ -56,3 +56,4 @@ const App = (props) => {
 };
 
 export default connect()(App);
+
