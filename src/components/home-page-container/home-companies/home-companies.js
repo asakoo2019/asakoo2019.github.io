@@ -75,15 +75,14 @@ function HomeCompanies ({width, companies}) {
     default: numQuantity.current = 3; break;
   }
   useEffect(() => {
-    const data = [...companies];    
       let a = companySlider;
       const result = [];
       for (let i = 0; i < numQuantity.current; i++) {
         if (a > 5) {
           a = 0;
-          result.push(data[a++]);
+          result.push(companies[a++]);
         } else {
-          result.push(data[a++]);
+          result.push(companies[a++]);
         }
       }
       setCompaniesData(result);

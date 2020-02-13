@@ -70,15 +70,14 @@ function HomeJobs({ width, jobs }) {
   }
 
   useEffect(() => {
-    let data = [...jobs];
       let a = jobSlider;
       const result = [];
       for (let i = 0; i < numJobQuantity.current; i++) {
         if (a > 5) {
           a = 0;
-          result.push(data[a++]);
+          result.push(jobs[a++]);
         } else {
-          result.push(data[a++]);
+          result.push(jobs[a++]);
         }
       }
       setJobsData(result);
