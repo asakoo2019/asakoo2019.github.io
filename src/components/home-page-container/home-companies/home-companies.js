@@ -3,7 +3,6 @@ import SliderIcons from './sliderIcons';
 import { makeStyles, withWidth, Grid, Button} from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useHistory } from "react-router-dom";
-import { firestore } from '../../firebase/db';
 
 const useStyles = makeStyles(theme => ({
   root : {
@@ -90,7 +89,10 @@ function HomeCompanies ({width, companies}) {
         let b = companySlider;
         setCompanySlider(b < 5 ? b + 1 : 0);
       }, 3000);
-  }, [companySlider, numQuantity]);
+      return () => {
+        clearTimeout(timer.current)
+      }
+  }, [companySlider, numQuantity, companies]);
 
   function setCurrentSlider(slide) {
     clearTimeout(timer.current)
@@ -161,6 +163,6 @@ function HomeCompanies ({width, companies}) {
 };
 
 HomeCompanies.propTypes = {
-  width: PropTypes.oneOf(["lg", "md", "sm", "xl", "xs"]).isRequired
+  width: PropTypes.oneOf(["lg", "md", "sm", "xl", "xs"]).isRequired,
 };
 export default withWidth()(HomeCompanies)

@@ -85,7 +85,10 @@ function HomeJobs({ width, jobs }) {
         let b = jobSlider;
         setJobSlider(b < 5 ? b + 1 : 0);
       }, 3000);
-  }, [jobSlider]);
+      return () => {
+        clearTimeout(jobTimer.current)
+      }
+  }, [jobs, jobSlider]);
 
   function setCurrentSlider(slide) {
     clearTimeout(jobTimer.current)
@@ -93,10 +96,12 @@ function HomeJobs({ width, jobs }) {
   }
 
   const handleClick = () => {
+    clearTimeout(jobTimer.current)
     history.push("/jobs");
   };
 
   const singleJobBtn = (id) => {
+    clearTimeout(jobTimer.current)
     history.push(`jobs/${id}`);
   };
 
@@ -110,7 +115,7 @@ function HomeJobs({ width, jobs }) {
       <Grid container
         className={classes.jobDetails}
         alignItems="center"
-        item  item xs={9} sm = {5} md = {3} lg = {3} xl = {3}
+        item xs={9} sm = {5} md = {3} lg = {3} xl = {3}
         key={el.id}
         onClick={() => singleJobBtn(el.id)}>
         <Grid container justify='center'>

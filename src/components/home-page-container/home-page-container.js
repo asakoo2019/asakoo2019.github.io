@@ -17,6 +17,7 @@ const HomePageContainer = (props) => {
   const { classes } = props;
   const [jobs, setJobs] = useState([]);
   const [companies, setCompanies]= useState([]);
+  
   useEffect(() => {
     const docRef = firestore.collection("companies");
     docRef.get().then(function (querySnapshot) {
