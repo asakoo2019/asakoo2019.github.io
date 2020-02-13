@@ -1,6 +1,7 @@
 import React from 'react';
 import { Switch, Route, Redirect, NavLink } from "react-router-dom";
-import {makeStyles, withWidth, Grid, Hidden, Button } from '@material-ui/core';
+import { makeStyles, withWidth, Grid, Hidden, IconButton } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu'
 import PropTypes from 'prop-types';
 import Companies from '../../companies';
 import Jobs from '../../jobs';
@@ -23,20 +24,32 @@ const useStyles = makeStyles(theme => ({
     padding: 15,
     borderLeft: '1px solid rgb(190, 190, 190)',
   },
+  menuButton: {
+    marginLeft: theme.spacing(2)
+  },
 }));
 
 const mStP = (state) => ({
   user: state,
 });
 
-const NavBar = ({id, showItems, dispatch, setShowItems}) => {
+const NavBar = ({ id, showItems, dispatch, setShowItems }) => {
   const classes = useStyles();
   const regAndLogArray = [<NavLink key={1} to="/sign-in" activeClassName='active' className={classes.navRightItem}>Sign In</NavLink>, <NavLink key={2} to="/registration" activeClassName='active' className={classes.navRightItem}>Registration</NavLink>];
 
   function handleChange() {
     dispatch({ type: 'SEARCH-OFF' });
   };
-
+  const leftPart = (<Grid container >
+    <NavLink to="/home" activeClassName='active' className={classes.navItem}>Home</NavLink>
+    <NavLink to="/jobs" activeClassName='active' className={classes.navItem} onClick={handleChange}>Jobs</NavLink>
+    <NavLink to="/companies" activeClassName='active' className={classes.navItem} onClick={handleChange}>Companies</NavLink>
+  </Grid>
+  );
+  const rightPart = (<Grid container justify='flex-end'>
+      {showItems ? <SettingsToggleMenu setShowItems={setShowItems} /> : regAndLogArray}
+    </Grid>
+  );
   return (
     <>
       <nav>
@@ -44,29 +57,22 @@ const NavBar = ({id, showItems, dispatch, setShowItems}) => {
           <Grid container
             alignItems='center'
           >
-            <Grid item xs={7} sm={7} md = {7} lg = {7} xl = {7}>
-              <Grid container >
-                <NavLink to="/home" activeClassName='active' className={classes.navItem}>Home</NavLink>
-                <NavLink to="/jobs" activeClassName='active' className={classes.navItem} onClick={handleChange}>Jobs</NavLink>
-                <NavLink to="/companies" activeClassName='active' className={classes.navItem} onClick={handleChange}>Companies</NavLink>
-              </Grid>
-
+            <Grid item xs={7} sm={7} md={7} lg={7} xl={7}>
+              {leftPart}
             </Grid>
-            <Grid item xs={5} sm={5} md = {5} lg = {5} xl = {5}>
-              <Grid container justify='flex-end'>
-                {showItems ? <SettingsToggleMenu setShowItems={setShowItems} /> : regAndLogArray}
-              </Grid>
-
+            <Grid item xs={5} sm={5} md={5} lg={5} xl={5}>
+              {rightPart}
             </Grid>
           </Grid>
         </Hidden>
         <Hidden smUp>
           <Grid container>
-          <Button
-          
-          >
-            menu
-          </Button>
+            <IconButton edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="open drawer">
+              <MenuIcon />
+            </IconButton>
           </Grid>
         </Hidden>
       </nav>
